@@ -1,10 +1,11 @@
-"""Balanced Tempo v0: melon cash, then cattle and strawberries, with an early exit."""
+"""Balanced Tempo v0.2: a bounded three-attention baseline for Kaggriculture."""
 
 from __future__ import annotations
 
 
 CROPS = {
     "WHEAT": {"max_yield_day": 4, "ongoing": False},
+    "TOMATO": {"max_yield_day": 11, "ongoing": True},
     "STRAWBERRY": {"max_yield_day": 10, "ongoing": True},
     "MELON": {"max_yield_day": 12, "ongoing": False},
 }
@@ -15,6 +16,7 @@ PASTURE_CELLS = ((0, 4), (1, 4), (2, 4), (3, 4))
 MELON_CELLS = ((0, 0), (1, 0), (2, 0), (3, 0), (4, 0), (0, 1), (1, 1), (2, 1), (3, 1), (4, 1))
 WHEAT_CELLS = ((0, 2), (1, 2), (2, 2), (3, 2), (4, 2))
 STRAWBERRY_CELLS = MELON_CELLS + ((0, 3), (1, 3), (2, 3), (3, 3), (4, 3))
+RECURRING_CELLS = STRAWBERRY_CELLS
 
 
 def _distance(a, b):
@@ -47,7 +49,45 @@ def _count_tiles(farm, predicate):
     return sum(1 for row in farm["tiles"] for tile in row if predicate(tile))
 
 
-def _market_plan(obs, farm, private):
+def _opponent_attention(obs, player):
+    """Classify only strong, visible commitments and choose one bounded response."""
+    opponents = [farm for index, farm in enumerate(obs.get("farms", [])) if index != player]
+    if not opponents:
+        return {"archetype": "unknown", "confidence": 0, "recurring_crop": "STRAWBERRY"}
+
+    opponent = opponents[0]
+    crop_counts = {
+        crop: _count_tiles(
+            opponent,
+            lambda tile, crop=crop: isinstance(tile, dict) and tile.get("crop") == crop,
+        )
+        for crop in ("TOMATO", "STRAWBERRY", "MELON")
+    }
+    animals = _count_tiles(opponent, lambda tile: isinstance(tile, dict) and "animal" in tile)
+    quadrants = len(opponent.get("unlocked_quadrants", []))
+
+    # Strawberry prices punish shared oversupply sharply. Differentiate only after
+    # the rival has visibly committed at least six tiles, avoiding noisy counters.
+    if crop_counts["STRAWBERRY"] >= 6:
+        return {"archetype": "strawberry-heavy", "confidence": 2, "recurring_crop": "TOMATO"}
+    if animals >= 3:
+        return {"archetype": "livestock-heavy", "confidence": 2, "recurring_crop": "STRAWBERRY"}
+    if quadrants >= 2 or crop_counts["MELON"] >= 6:
+        return {"archetype": "expansion-heavy", "confidence": 2, "recurring_crop": "STRAWBERRY"}
+    return {"archetype": "unclear", "confidence": 0, "recurring_crop": "STRAWBERRY"}
+
+
+def _horizon_attention(obs):
+    """Gate investments by whether they can still produce and be liquidated."""
+    day = int(obs.get("day", 0))
+    if day >= 27:
+        return {"phase": "liquidate", "allow_land": False, "allow_animals": False, "allow_recurring": False}
+    if day >= 20:
+        return {"phase": "protect", "allow_land": False, "allow_animals": False, "allow_recurring": False}
+    return {"phase": "compound", "allow_land": day <= 18, "allow_animals": True, "allow_recurring": True}
+
+
+def _market_plan(obs, farm, private, opponent_signal, horizon):
     day = int(obs.get("day", 0))
     hour = int(obs.get("hour", 0))
     shed = private.get("shed", {})
@@ -61,7 +101,7 @@ def _market_plan(obs, farm, private):
             orders.append(["SELL", item, shed[item]])
 
     # Hard terminal gate: stop all investment and turn reachable inventory into bank.
-    if day >= 27:
+    if horizon["phase"] == "liquidate":
         return orders[:10]
 
     if hour == 0:
@@ -72,11 +112,11 @@ def _market_plan(obs, farm, private):
         crop: _count_tiles(farm, lambda tile, crop=crop: isinstance(tile, dict) and tile.get("crop") == crop)
         for crop in CROPS
     }
-    desired = {"WHEAT": 5}
+    desired = {"WHEAT": 5} if day <= 25 else {}
     if day <= 12:
         desired["MELON"] = 10
-    else:
-        desired["STRAWBERRY"] = 15
+    elif horizon["allow_recurring"]:
+        desired[opponent_signal["recurring_crop"]] = 15
 
     for crop, target in desired.items():
         shortfall = max(0, target - planted.get(crop, 0) - int(seeds.get(crop, 0)))
@@ -88,7 +128,7 @@ def _market_plan(obs, farm, private):
         farm, lambda tile: isinstance(tile, dict) and tile.get("kind") == "PASTURE" and "animal" not in tile
     )
     carried_cows = sum(int(inv.get("COW", 0)) for inv in inventories)
-    if day >= 11:
+    if 11 <= day <= 20 and horizon["allow_animals"]:
         cow_shortfall = max(0, 4 - animals - int(shed.get("COW", 0)) - carried_cows)
         if cow_shortfall:
             orders.append(["BUY_ANIMAL", "COW", cow_shortfall])
@@ -98,13 +138,19 @@ def _market_plan(obs, farm, private):
             orders.append(["BUY_PRODUCT", "WHEAT", feed_target - feed_on_hand])
 
     # Add the first expansion only after the opening payout is available.
-    if day >= 13 and len(farm.get("unlocked_quadrants", [])) == 1 and farm.get("money", 0) >= 2200:
+    if (
+        13 <= day <= 18
+        and horizon["allow_land"]
+        and len(farm.get("unlocked_quadrants", [])) == 1
+        and farm.get("money", 0) >= 2200
+    ):
         orders.append(["BUY_LAND"])
 
     return orders[:10]
 
 
-def _tasks(obs, farm, private):
+def _operations_attention(obs, farm, private, opponent_signal, horizon):
+    """Build the deadline-ordered work queue for farmer and hands."""
     day = int(obs.get("day", 0))
     shed = private.get("shed", {})
     tasks = []
@@ -132,17 +178,17 @@ def _tasks(obs, farm, private):
                 if int(tile.get("yield_units", 0)) > 0:
                     tasks.append((0, position, ["HARVEST"]))
 
-    if 11 <= day < 27:
+    if 11 <= day <= 20 and horizon["allow_animals"]:
         for position in PASTURE_CELLS:
             if _tile(farm, position) is None:
                 tasks.append((4, position, ["BUILD_PASTURE"]))
 
     crop_cells = []
-    if day < 27:
-        crop_cells = [(position, "WHEAT") for position in WHEAT_CELLS]
+    if horizon["phase"] != "liquidate":
+        crop_cells = [(position, "WHEAT") for position in WHEAT_CELLS] if day <= 25 else []
         crop_cells += [(position, "MELON") for position in MELON_CELLS] if day <= 12 else [
-            (position, "STRAWBERRY") for position in STRAWBERRY_CELLS
-        ]
+            (position, opponent_signal["recurring_crop"]) for position in RECURRING_CELLS
+        ] if horizon["allow_recurring"] else []
     seeds = private.get("seeds", {})
     for position, crop in crop_cells:
         tile = _tile(farm, position)
@@ -180,6 +226,8 @@ def agent(obs):
         return {"farmer": ["PASS"], "hands": [], "market": []}
 
     farm = farms[player]
+    opponent_signal = _opponent_attention(obs, player)
+    horizon = _horizon_attention(obs)
     positions = [tuple(farm["farmer"])] + [tuple(position) for position in farm.get("hands", [])]
     inventories = list(private.get("inventories", []))
     while len(inventories) < len(positions):
@@ -187,10 +235,20 @@ def agent(obs):
 
     actions = [["PASS"] for _ in positions]
     available = set(range(len(positions)))
-    tasks = _tasks(obs, farm, private)
+    tasks = _operations_attention(obs, farm, private, opponent_signal, horizon)
+
+    # During liquidation every carried sellable item immediately routes to the shed.
+    if horizon["phase"] == "liquidate":
+        for index, (position, inventory) in enumerate(zip(positions, inventories)):
+            if any(int(inventory.get(item, 0)) > 0 for item in SELLABLE_PRODUCTS):
+                target = _nearest_shed(position)
+                actions[index] = ["DROP"] if position == target else _step_toward(position, target)
+                available.discard(index)
 
     # Carried resources take precedence because they unlock care and placement.
     for index, (position, inventory) in enumerate(zip(positions, inventories)):
+        if index not in available:
+            continue
         if inventory.get("COW", 0) > 0:
             targets = [
                 (2, (x, y), ["PLACE", "COW"])
@@ -239,7 +297,7 @@ def agent(obs):
     return {
         "farmer": actions[0],
         "hands": actions[1:],
-        "market": _market_plan(obs, farm, private),
+        "market": _market_plan(obs, farm, private, opponent_signal, horizon),
     }
 
 

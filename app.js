@@ -5,7 +5,7 @@
     checklist: "kaggriculture-fieldbook-checklist-v1",
     experiments: "kaggriculture-fieldbook-experiments-v1",
     submissions: "kaggriculture-fieldbook-submissions-v1",
-    submissionGate: "kaggriculture-submission-gate-v1",
+    submissionGate: "kaggriculture-submission-gate-v2",
     roadmap: "kaggriculture-fieldbook-roadmap-v1",
     balancedNotes: "kaggriculture-balanced-notes-v1",
   };
@@ -263,6 +263,7 @@
     fallback: true,
     selfplay: true,
     coverage: true,
+    liquidation: true,
     version: true,
   });
   const submissionGateInputs = $$('[data-submit-check]');
@@ -636,11 +637,11 @@
 
   // Roadmap
   const starterRoadmap = [
-    { id: "first-submission", title: "Ship interpretable v0.1", description: "Freeze the artifact, pass self-play, and enter the ladder.", impact: 5, confidence: 5, effort: 2, status: "testing" },
-    { id: "liquidation", title: "Late-game liquidation", description: "Sell everything before turn 720.", impact: 5, confidence: 4, effort: 2, status: "planned" },
-    { id: "opponent-model", title: "Opponent archetype classifier", description: "Infer commitments from visible farms and market signals.", impact: 5, confidence: 3, effort: 3, status: "planned" },
+    { id: "first-submission", title: "Ship interpretable v0.2", description: "Freeze the artifact, pass self-play, and enter the ladder.", impact: 5, confidence: 5, effort: 2, status: "testing" },
+    { id: "liquidation", title: "Late-game liquidation", description: "Sell everything before turn 720.", impact: 5, confidence: 4, effort: 2, status: "testing" },
+    { id: "opponent-model", title: "Opponent archetype classifier", description: "Infer commitments from visible farms and market signals.", impact: 5, confidence: 3, effort: 3, status: "testing" },
     { id: "lookahead", title: "Short-horizon simulator", description: "Compare baseline and counter-strategy branches over the next few days.", impact: 5, confidence: 2, effort: 5, status: "planned" },
-    { id: "attention", title: "Attention controller", description: "Protect survival and exit work before adaptive responses.", impact: 5, confidence: 4, effort: 3, status: "planned" },
+    { id: "attention", title: "Attention controller", description: "Protect survival and exit work before adaptive responses.", impact: 5, confidence: 4, effort: 3, status: "testing" },
     { id: "loss-tags", title: "Loss replay taxonomy", description: "Tag opener, first divergence, execution failure, and terminal inventory.", impact: 4, confidence: 5, effort: 2, status: "planned" },
   ];
   let roadmap = readStore(KEYS.roadmap, starterRoadmap);

@@ -259,13 +259,13 @@
             <div class="run-summary" aria-label="Experiment summary">
               <div><span>Episodes <button class="info-tip" type="button" aria-label="An episode is one 720-turn head-to-head match between two bots." data-tip="One complete 720-turn match: our bot controls one farm and the opponent controls the other.">(i)</button></span><strong>20</strong><small>10 seeds · both seats</small></div>
               <div><span>Finished ahead <button class="info-tip" type="button" aria-label="How often our final bank was larger than the starter bot's final bank." data-tip="Episodes where our bank was larger at turn 720. This benchmark finished ahead in all 20.">(i)</button></span><strong>20 / 20</strong><small>against the starter bot</small></div>
-              <div><span>Average final bank <button class="info-tip" type="button" aria-label="Mean coins in our bank at the end of each episode." data-tip="Our mean bank at turn 720. Useful for diagnosing the economy, but Kaggle rating uses the match outcome.">(i)</button></span><strong>31,337</strong></div>
+              <div><span>Average final bank <button class="info-tip" type="button" aria-label="Mean coins in our bank at the end of each episode." data-tip="Our mean bank at turn 720. Useful for diagnosing the economy, but Kaggle rating uses the match outcome.">(i)</button></span><strong>29,900</strong></div>
               <div><span>Runtime failures <button class="info-tip" type="button" aria-label="Episodes stopped by an exception timeout or invalid action." data-tip="Episodes that failed because of an exception, timeout, or invalid action. These cannot produce a normal result.">(i)</button></span><strong>0</strong></div>
             </div>
             <div class="table-wrap compact-table-wrap">
               <table class="production-table run-table">
                 <thead><tr><th>Seat</th><th>Episodes</th><th>Finished ahead</th><th>Average final bank</th></tr></thead>
-                <tbody><tr><td>First</td><td>10</td><td>10 / 10</td><td>31,622</td></tr><tr><td>Second</td><td>10</td><td>10 / 10</td><td>31,052</td></tr></tbody>
+                <tbody><tr><td>First</td><td>10</td><td>10 / 10</td><td>29,984</td></tr><tr><td>Second</td><td>10</td><td>10 / 10</td><td>29,815</td></tr></tbody>
               </table>
             </div>
             <p class="notebook-caption">Local benchmark: Balanced Tempo v0 versus Kaggle's starter bot. This is matchup evidence, not a Kaggle leaderboard rating.</p>
@@ -476,7 +476,7 @@
         <section class="section shell" aria-labelledby="first-plan-title">
           <div class="section-heading"><div><p class="eyebrow">Learning plan</p><h2 id="first-plan-title">Submit early, diagnose carefully</h2></div></div>
           <ol class="system-flow submit-flow">
-            <li><span>01</span><div><strong>Freeze v0.1</strong><p>Keep Balanced Tempo readable, deterministic where possible, and protected by a safe fallback action.</p></div><em>one known policy</em></li>
+            <li><span>01</span><div><strong>Freeze v0.2</strong><p>Keep the three attention modules readable, bounded, and protected by a safe fallback action.</p></div><em>one known policy</em></li>
             <li><span>02</span><div><strong>Pass local gates</strong><p>Complete self-play, starter matches, both seats, varied seeds, and the late-game liquidation test.</p></div><em>zero runtime failures</em></li>
             <li><span>03</span><div><strong>Enter the ladder</strong><p>Kaggle first validates the bot against a copy of itself, then matches it with similarly rated submissions.</p></div><em>public evidence</em></li>
             <li><span>04</span><div><strong>Wait for signal</strong><p>Record rating, rank, and episode count at consistent checkpoints instead of reacting to every move.</p></div><em>50 · 100 · 250 episodes</em></li>
@@ -484,13 +484,22 @@
             <li><span>06</span><div><strong>Change one mechanism</strong><p>Improve opponent modeling, lookahead, attention, or a strategy rule—then submit a new version.</p></div><em>causal iteration</em></li>
           </ol>
         </section>
+        <section class="section shell" aria-labelledby="candidate-architecture-title">
+          <div class="section-heading"><div><p class="eyebrow">Candidate architecture</p><h2 id="candidate-architecture-title">Three attention modules, one safe policy</h2></div><p class="section-note">Each module has a narrow decision boundary.</p></div>
+          <div class="mechanism-grid">
+            <article data-state="ready"><span>01 · Operations</span><strong>Protect mandatory work</strong><p>Prioritize harvest, watering, feed, care, placement, and worker routing by deadline and travel distance.</p></article>
+            <article data-state="ready"><span>02 · Opponent</span><strong>Counter visible commitments</strong><p>Classify expansion, livestock, or recurring-crop concentration. Only a strong strawberry signal switches our recurring crop to tomato.</p></article>
+            <article data-state="ready"><span>03 · Horizon</span><strong>Respect payback time</strong><p>Stop land, livestock, and recurring-crop investment before they lose time to mature; route carried value to the shed during liquidation.</p></article>
+            <article data-state="next"><span>Feedback loop</span><strong>Freeze this bot as the opponent</strong><p>Future architectures play both seats against the exact v0.2 artifact. Promote one mechanism at a time, then compare ladder evidence.</p></article>
+          </div>
+        </section>
         <section class="section shell" aria-labelledby="submission-gate-title">
-          <div class="section-heading"><div><p class="eyebrow">Release gate</p><h2 id="submission-gate-title">v0.1 readiness</h2></div><strong class="progress-label" id="submission-progress">0 / 6 ready</strong></div>
+          <div class="section-heading"><div><p class="eyebrow">Release gate</p><h2 id="submission-gate-title">v0.2 readiness</h2></div><strong class="progress-label" id="submission-progress">0 / 6 ready</strong></div>
           <div class="candidate-evidence" aria-label="Validated candidate evidence">
             <div><span>Self-play</span><strong>3 / 3 seeds</strong><small>both bots reached DONE</small></div>
             <div><span>Starter benchmark</span><strong>20 / 20 ahead</strong><small>both seats · 10 seeds</small></div>
             <div><span>Runtime failures</span><strong>0</strong><small>across 20 episodes</small></div>
-            <div><span>Terminal shed</span><strong>0–4 items</strong><small>15 / 20 ended empty</small></div>
+            <div><span>Terminal shed</span><strong>0–1 items</strong><small>17 / 20 ended empty</small></div>
           </div>
           <div class="progress-track" aria-hidden="true"><span id="submission-progress-bar"></span></div>
           <div class="checklist submission-checklist">
@@ -512,12 +521,13 @@
         "market": []
     }</code></pre>
             <div class="contract-list">
-              <div><strong>Entry point</strong><span><code>main.py</code> at archive root with <code>agent(obs)</code></span></div>
+              <div><strong>Entry point</strong><span><code>main.py</code> at the <code>tar.gz</code> root with <code>agent(obs)</code></span></div>
               <div><strong>Validation</strong><span>The first episode runs your agent against a copy of itself</span></div>
               <div><strong>Tracking</strong><span>Only the latest two submissions remain active for final evaluation</span></div>
               <div><strong>Daily limit</strong><span>Up to five agent submissions per team</span></div>
             </div>
           </div>
+          <p class="source-note"><strong>Frozen local opponent:</strong> <code>artifacts/kaggriculture-v0.2.0.tar.gz</code>. Build with <code>npm run submission:build</code>; validate the exact archive with <code>npm run submission:validate</code>.</p>
           <p class="source-note">Submission and ranking behavior: <a href="https://www.kaggle.com/competitions/kaggriculture/overview" target="_blank" rel="noreferrer">official Kaggriculture evaluation section ↗</a>.</p>
         </section>
       </section>

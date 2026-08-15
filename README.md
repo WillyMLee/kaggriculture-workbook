@@ -61,13 +61,28 @@ The project-local runtime loads the official Kaggriculture environment plugin fr
 
 ## First submission candidate
 
-`main.py` is the safe Kaggle entry point for Balanced Tempo v0.1. The policy now stops new investment on day 27, sells wheat with other reachable inventory, and falls back to a valid `PASS` action if an unexpected state raises an exception.
+`main.py` is the safe Kaggle entry point for Balanced Tempo v0.2. The policy separates operations, opponent, and horizon attention; uses explicit payback cutoffs; routes terminal inventory to the shed; and falls back to a valid `PASS` action if an unexpected state raises an exception.
 
 Validate the exact entry point through self-play and benchmark it against the starter:
 
 ```powershell
 .\.venv\Scripts\python.exe scripts\validate_submission.py --seeds 3
-.\.venv\Scripts\python.exe scripts\run_balanced_experiment.py --seeds 10 --output results\balanced_tempo_v0_1.json
+.\.venv\Scripts\python.exe scripts\run_balanced_experiment.py --seeds 10 --output results\balanced_tempo_v0_2.json
+```
+
+Build and validate the exact multi-file upload:
+
+```powershell
+npm run submission:build
+npm run submission:validate
+```
+
+The generated `artifacts/kaggriculture-v0.2.0.tar.gz` becomes the frozen first-opponent artifact for future head-to-head experiments.
+
+Compare a future architecture with that artifact in both seats:
+
+```powershell
+.\.venv\Scripts\python.exe scripts\run_challenger.py agents.experimental:agent --seeds 10
 ```
 
 ## Sources

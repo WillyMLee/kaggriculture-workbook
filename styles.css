@@ -539,7 +539,8 @@ main { margin-left: var(--rail-width); }
 .run-summary span { color: var(--ink-soft); font-size: .65rem; letter-spacing: .08em; text-transform: uppercase; }
 .run-summary strong { color: var(--ink); font-size: 1.05rem; font-weight: 300; }
 .run-summary small { color: var(--ink-soft); font-size: .62rem; }
-.info-tip { position: relative; z-index: 3; display: inline; padding: 1px 2px; border: 0; background: transparent; color: var(--leaf); font: inherit; font-size: .62rem; letter-spacing: 0; text-transform: none; cursor: help; }
+.info-tip { position: relative; z-index: 3; display: inline-grid; place-items: center; width: 14px; height: 14px; margin-left: 2px; padding: 0; border: 1px solid currentColor; border-radius: 50%; background: transparent; color: var(--leaf); font: inherit; font-size: 0; line-height: 1; letter-spacing: 0; text-transform: none; vertical-align: .05em; cursor: help; }
+.info-tip::before { content: "i"; font-size: .58rem; font-style: normal; font-weight: 500; line-height: 1; }
 .info-tip::after { content: attr(data-tip); position: absolute; z-index: 20; bottom: calc(100% + 9px); left: 50%; width: 240px; padding: 10px 12px; border: 1px solid var(--line-strong); background: var(--paper-deep); color: var(--ink); box-shadow: var(--shadow); font-size: .7rem; font-weight: 300; line-height: 1.5; letter-spacing: 0; text-align: left; text-transform: none; white-space: normal; opacity: 0; pointer-events: none; transform: translate(-50%,4px); transition: opacity 140ms ease, transform 140ms ease; }
 .info-tip:hover::after, .info-tip:focus-visible::after { opacity: 1; transform: translate(-50%,0); }
 .metric-glossary { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); margin: 30px 0 0; border-top: 1px solid var(--line); }

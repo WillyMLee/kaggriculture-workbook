@@ -5,6 +5,8 @@
   "description": "A visual fieldbook for Kaggle's Kaggriculture competition.",
   "scripts": {
     "build": "node scripts/build-site.mjs",
+    "submission:build": ".\\.venv\\Scripts\\python.exe scripts\\build_submission.py",
+    "submission:validate": ".\\.venv\\Scripts\\python.exe scripts\\validate_artifact.py artifacts\\kaggriculture-v0.2.0.tar.gz --seeds 3",
     "deploy": "npm run build && wrangler pages deploy dist --project-name kaggriculture-workbook --branch main"
   },
   "devDependencies": {
