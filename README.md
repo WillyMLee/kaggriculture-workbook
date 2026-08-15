@@ -59,9 +59,9 @@ Run it with:
 
 The project-local runtime loads the official Kaggriculture environment plugin from `.vendor/kaggle-environments` while remaining compatible with Python 3.9.
 
-## First submission candidate
+## Phase Tempo candidate
 
-`main.py` is the safe Kaggle entry point for Balanced Tempo v0.2. The policy separates operations, opponent, and horizon attention; uses explicit payback cutoffs; routes terminal inventory to the shed; and falls back to a valid `PASS` action if an unexpected state raises an exception.
+`main.py` is the safe Kaggle entry point for Phase Tempo v0.3. The policy separates early, middle, late optimization, and final execution; keeps survival labor active through the close; reserves feed before selling wheat; and collects livestock fertilizer. Unexpected states still fall back to a valid `PASS` action.
 
 Validate the exact entry point through self-play and benchmark it against the starter:
 
@@ -77,15 +77,17 @@ npm run submission:build
 npm run submission:validate
 ```
 
-The generated `artifacts/kaggriculture-v0.2.1.tar.gz` contains one self-contained `main.py` and becomes the frozen first-opponent artifact for future head-to-head experiments.
+The generated `artifacts/kaggriculture-v0.3.0.tar.gz` contains one self-contained `main.py`. The accepted `artifacts/kaggriculture-v0.2.1.tar.gz` remains the frozen first-opponent artifact.
 
-Kaggle accepted v0.2.1 after v0.2.0 exposed a runtime package-name collision with the generic module name `agents`. The accepted artifact began at rating 600.0 and rank 2,862 before matched ladder play.
+Kaggle accepted v0.2.1 after v0.2.0 exposed a runtime package-name collision with the generic module name `agents`. Four reviewed matches produced a 1–3 record and exposed fixed labor, market-crowding, and terminal liquidation failures. The compact archive is `results/kaggle_v0_2_1_match_history.json`.
 
 Compare a future architecture with that artifact in both seats:
 
 ```powershell
-.\.venv\Scripts\python.exe scripts\run_challenger.py agents.experimental:agent --seeds 10
+.\.venv\Scripts\python.exe scripts\run_challenger.py agents.balanced_tempo:agent --seeds 10 --output results\phase_tempo_v0_3_vs_v0_2_1.json
 ```
+
+The v0.3 candidate won 19 of 20 local games against the exact v0.2.1 artifact, averaged a +5,024.25 bank margin, and recorded zero runtime failures.
 
 ## Sources
 

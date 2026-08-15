@@ -1,0 +1,254 @@
+{
+  "baseline": "kaggriculture-v0.2.1.tar.gz",
+  "challenger": "agents.balanced_tempo:agent",
+  "summary": {
+    "episodes": 20,
+    "wins": 19,
+    "losses": 1,
+    "ties": 0,
+    "average_margin": 5024.25,
+    "runtime_failures": 0
+  },
+  "games": [
+    {
+      "seed": 0,
+      "seat": 0,
+      "result": "win",
+      "challenger_bank": 34287.0,
+      "baseline_bank": 23359.0,
+      "margin": 10928.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "seed": 0,
+      "seat": 1,
+      "result": "win",
+      "challenger_bank": 34739.0,
+      "baseline_bank": 26354.0,
+      "margin": 8385.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "seed": 1,
+      "seat": 0,
+      "result": "win",
+      "challenger_bank": 34408.0,
+      "baseline_bank": 24960.0,
+      "margin": 9448.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "seed": 1,
+      "seat": 1,
+      "result": "win",
+      "challenger_bank": 26319.0,
+      "baseline_bank": 26285.0,
+      "margin": 34.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "seed": 2,
+      "seat": 0,
+      "result": "win",
+      "challenger_bank": 29126.0,
+      "baseline_bank": 23118.0,
+      "margin": 6008.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "seed": 2,
+      "seat": 1,
+      "result": "win",
+      "challenger_bank": 27390.0,
+      "baseline_bank": 23159.0,
+      "margin": 4231.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "seed": 3,
+      "seat": 0,
+      "result": "win",
+      "challenger_bank": 34204.0,
+      "baseline_bank": 29719.0,
+      "margin": 4485.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "seed": 3,
+      "seat": 1,
+      "result": "win",
+      "challenger_bank": 32584.0,
+      "baseline_bank": 28106.0,
+      "margin": 4478.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "seed": 4,
+      "seat": 0,
+      "result": "win",
+      "challenger_bank": 27273.0,
+      "baseline_bank": 21811.0,
+      "margin": 5462.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "seed": 4,
+      "seat": 1,
+      "result": "win",
+      "challenger_bank": 23749.0,
+      "baseline_bank": 19291.0,
+      "margin": 4458.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "seed": 5,
+      "seat": 0,
+      "result": "win",
+      "challenger_bank": 35586.0,
+      "baseline_bank": 27293.0,
+      "margin": 8293.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "seed": 5,
+      "seat": 1,
+      "result": "loss",
+      "challenger_bank": 28757.0,
+      "baseline_bank": 30885.0,
+      "margin": -2128.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "seed": 6,
+      "seat": 0,
+      "result": "win",
+      "challenger_bank": 31215.0,
+      "baseline_bank": 26606.0,
+      "margin": 4609.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "seed": 6,
+      "seat": 1,
+      "result": "win",
+      "challenger_bank": 31215.0,
+      "baseline_bank": 26606.0,
+      "margin": 4609.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "seed": 7,
+      "seat": 0,
+      "result": "win",
+      "challenger_bank": 26120.0,
+      "baseline_bank": 25207.0,
+      "margin": 913.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "seed": 7,
+      "seat": 1,
+      "result": "win",
+      "challenger_bank": 30477.0,
+      "baseline_bank": 25631.0,
+      "margin": 4846.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "seed": 8,
+      "seat": 0,
+      "result": "win",
+      "challenger_bank": 32676.0,
+      "baseline_bank": 26535.0,
+      "margin": 6141.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "seed": 8,
+      "seat": 1,
+      "result": "win",
+      "challenger_bank": 32676.0,
+      "baseline_bank": 26535.0,
+      "margin": 6141.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "seed": 9,
+      "seat": 0,
+      "result": "win",
+      "challenger_bank": 25930.0,
+      "baseline_bank": 20890.0,
+      "margin": 5040.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "seed": 9,
+      "seat": 1,
+      "result": "win",
+      "challenger_bank": 25057.0,
+      "baseline_bank": 20953.0,
+      "margin": 4104.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ]
+    }
+  ]
+}

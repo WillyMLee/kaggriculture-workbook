@@ -16,7 +16,7 @@ SUBMISSION_FILES = ((Path("agents/balanced_tempo.py"), "main.py"),)
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--version", default="v0.2.1")
+    parser.add_argument("--version", default="v0.3.0")
     args = parser.parse_args()
 
     artifact_dir = PROJECT_ROOT / "artifacts"

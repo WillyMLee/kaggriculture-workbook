@@ -1,4 +1,4 @@
-"""Balanced Tempo v0.2: a bounded three-attention baseline for Kaggriculture."""
+"""Phase Tempo v0.3: a chess-like, phase-aware Kaggriculture policy."""
 
 from __future__ import annotations
 
@@ -77,17 +77,32 @@ def _opponent_attention(obs, player):
     return {"archetype": "unclear", "confidence": 0, "recurring_crop": "STRAWBERRY"}
 
 
-def _horizon_attention(obs):
-    """Gate investments by whether they can still produce and be liquidated."""
+def _phase_attention(obs):
+    """Name the strategic phase and gate only investments, never survival work."""
     day = int(obs.get("day", 0))
-    if day >= 27:
-        return {"phase": "liquidate", "allow_land": False, "allow_animals": False, "allow_recurring": False}
-    if day >= 20:
-        return {"phase": "protect", "allow_land": False, "allow_animals": False, "allow_recurring": False}
-    return {"phase": "compound", "allow_land": day <= 18, "allow_animals": True, "allow_recurring": True}
+    if day <= 11:
+        return {
+            "phase": "early",
+            "late_mode": None,
+            "allow_animals": False,
+            "allow_recurring": False,
+        }
+    if day <= 21:
+        return {
+            "phase": "middle",
+            "late_mode": None,
+            "allow_animals": day <= 20,
+            "allow_recurring": day <= 18,
+        }
+    return {
+        "phase": "late",
+        "late_mode": "optimize" if day <= 27 else "execute",
+        "allow_animals": False,
+        "allow_recurring": False,
+    }
 
 
-def _market_plan(obs, farm, private, opponent_signal, horizon):
+def _market_plan(obs, farm, private, opponent_signal, phase):
     day = int(obs.get("day", 0))
     hour = int(obs.get("hour", 0))
     shed = private.get("shed", {})
@@ -95,27 +110,40 @@ def _market_plan(obs, farm, private, opponent_signal, horizon):
     inventories = private.get("inventories", [])
     orders = []
 
-    # Convert completed output into score continuously; wheat is operating inventory until the exit phase.
-    for item in SELLABLE_PRODUCTS if day >= 27 else PRODUCTS:
+    animals = _count_tiles(farm, lambda tile: isinstance(tile, dict) and tile.get("animal") == "COW")
+
+    # Labor is operating capacity, not an investment. Keep it through the last
+    # day so feeding and harvesting are not abandoned during liquidation.
+    if hour == 0:
+        hire_target = 6 if phase["phase"] == "early" else 8
+        orders.extend([["HIRE"] for _ in range(hire_target)])
+
+    # Convert completed output continuously. Wheat remains feed until late
+    # execution, when only the amount above the remaining feed reserve is sold.
+    for item in PRODUCTS:
         if shed.get(item, 0) > 0:
             orders.append(["SELL", item, shed[item]])
-
-    # Hard terminal gate: stop all investment and turn reachable inventory into bank.
-    if horizon["phase"] == "liquidate":
-        return orders[:10]
-
-    if hour == 0:
-        for _ in range(6):
-            orders.append(["HIRE"])
+    if phase["late_mode"] == "execute":
+        future_feed_days = max(0, 29 - day)
+        unfed_today = _count_tiles(
+            farm,
+            lambda tile: isinstance(tile, dict)
+            and tile.get("animal") == "COW"
+            and not tile.get("fed_today", False),
+        )
+        feed_reserve = animals * future_feed_days + unfed_today
+        wheat_to_sell = max(0, int(shed.get("WHEAT", 0)) - feed_reserve)
+        if wheat_to_sell:
+            orders.append(["SELL", "WHEAT", wheat_to_sell])
 
     planted = {
         crop: _count_tiles(farm, lambda tile, crop=crop: isinstance(tile, dict) and tile.get("crop") == crop)
         for crop in CROPS
     }
     desired = {"WHEAT": 5} if day <= 25 else {}
-    if day <= 12:
+    if phase["phase"] == "early":
         desired["MELON"] = 10
-    elif horizon["allow_recurring"]:
+    elif phase["allow_recurring"]:
         desired[opponent_signal["recurring_crop"]] = 15
 
     for crop, target in desired.items():
@@ -123,12 +151,11 @@ def _market_plan(obs, farm, private, opponent_signal, horizon):
         if shortfall:
             orders.append(["BUY_SEED", crop, shortfall])
 
-    animals = _count_tiles(farm, lambda tile: isinstance(tile, dict) and tile.get("animal") == "COW")
     empty_pastures = _count_tiles(
         farm, lambda tile: isinstance(tile, dict) and tile.get("kind") == "PASTURE" and "animal" not in tile
     )
     carried_cows = sum(int(inv.get("COW", 0)) for inv in inventories)
-    if 11 <= day <= 20 and horizon["allow_animals"]:
+    if 12 <= day <= 20 and phase["allow_animals"]:
         cow_shortfall = max(0, 4 - animals - int(shed.get("COW", 0)) - carried_cows)
         if cow_shortfall:
             orders.append(["BUY_ANIMAL", "COW", cow_shortfall])
@@ -137,19 +164,10 @@ def _market_plan(obs, farm, private, opponent_signal, horizon):
         if feed_on_hand < feed_target:
             orders.append(["BUY_PRODUCT", "WHEAT", feed_target - feed_on_hand])
 
-    # Add the first expansion only after the opening payout is available.
-    if (
-        13 <= day <= 18
-        and horizon["allow_land"]
-        and len(farm.get("unlocked_quadrants", [])) == 1
-        and farm.get("money", 0) >= 2200
-    ):
-        orders.append(["BUY_LAND"])
-
     return orders[:10]
 
 
-def _operations_attention(obs, farm, private, opponent_signal, horizon):
+def _operations_attention(obs, farm, private, opponent_signal, phase):
     """Build the deadline-ordered work queue for farmer and hands."""
     day = int(obs.get("day", 0))
     shed = private.get("shed", {})
@@ -173,27 +191,29 @@ def _operations_attention(obs, farm, private, opponent_signal, horizon):
             if "animal" in tile:
                 if not tile.get("fed_today", False):
                     tasks.append((2, position, ["FEED"]))
+                if tile.get("fertilizer_available", False):
+                    tasks.append((3, position, ["COLLECT_FERTILIZER"]))
                 if not tile.get("cared_today", False):
-                    tasks.append((3, position, ["CARE"]))
+                    tasks.append((4, position, ["CARE"]))
                 if int(tile.get("yield_units", 0)) > 0:
                     tasks.append((0, position, ["HARVEST"]))
 
-    if 11 <= day <= 20 and horizon["allow_animals"]:
+    if 12 <= day <= 20 and phase["allow_animals"]:
         for position in PASTURE_CELLS:
             if _tile(farm, position) is None:
-                tasks.append((4, position, ["BUILD_PASTURE"]))
+                tasks.append((5, position, ["BUILD_PASTURE"]))
 
     crop_cells = []
-    if horizon["phase"] != "liquidate":
+    if phase["late_mode"] != "execute":
         crop_cells = [(position, "WHEAT") for position in WHEAT_CELLS] if day <= 25 else []
-        crop_cells += [(position, "MELON") for position in MELON_CELLS] if day <= 12 else [
+        crop_cells += [(position, "MELON") for position in MELON_CELLS] if phase["phase"] == "early" else [
             (position, opponent_signal["recurring_crop"]) for position in RECURRING_CELLS
-        ] if horizon["allow_recurring"] else []
+        ] if phase["allow_recurring"] else []
     seeds = private.get("seeds", {})
     for position, crop in crop_cells:
         tile = _tile(farm, position)
         if tile is None and seeds.get(crop, 0) > 0:
-            tasks.append((5, position, ["PLANT", crop]))
+            tasks.append((6, position, ["PLANT", crop]))
 
     # One worker can carry several feed units or one cow from the shed.
     animal_tiles = [
@@ -211,7 +231,7 @@ def _operations_attention(obs, farm, private, opponent_signal, horizon):
     if animal_tiles and shed.get("WHEAT", 0) > 0:
         for position in SHED_ACCESS:
             tasks.append((1, position, ["PICKUP", "WHEAT", min(len(animal_tiles), shed["WHEAT"])]))
-    if day < 27 and empty_pastures and shed.get("COW", 0) > 0:
+    if day <= 20 and empty_pastures and shed.get("COW", 0) > 0:
         for position in SHED_ACCESS:
             tasks.append((2, position, ["PICKUP", "COW", 1]))
 
@@ -227,7 +247,7 @@ def _policy(obs):
 
     farm = farms[player]
     opponent_signal = _opponent_attention(obs, player)
-    horizon = _horizon_attention(obs)
+    phase = _phase_attention(obs)
     positions = [tuple(farm["farmer"])] + [tuple(position) for position in farm.get("hands", [])]
     inventories = list(private.get("inventories", []))
     while len(inventories) < len(positions):
@@ -235,17 +255,10 @@ def _policy(obs):
 
     actions = [["PASS"] for _ in positions]
     available = set(range(len(positions)))
-    tasks = _operations_attention(obs, farm, private, opponent_signal, horizon)
-
-    # During liquidation every carried sellable item immediately routes to the shed.
-    if horizon["phase"] == "liquidate":
-        for index, (position, inventory) in enumerate(zip(positions, inventories)):
-            if any(int(inventory.get(item, 0)) > 0 for item in SELLABLE_PRODUCTS):
-                target = _nearest_shed(position)
-                actions[index] = ["DROP"] if position == target else _step_toward(position, target)
-                available.discard(index)
+    tasks = _operations_attention(obs, farm, private, opponent_signal, phase)
 
     # Carried resources take precedence because they unlock care and placement.
+    reserved_targets = set()
     for index, (position, inventory) in enumerate(zip(positions, inventories)):
         if index not in available:
             continue
@@ -254,17 +267,38 @@ def _policy(obs):
                 (2, (x, y), ["PLACE", "COW"])
                 for y, row in enumerate(farm["tiles"])
                 for x, tile in enumerate(row)
-                if isinstance(tile, dict) and tile.get("kind") == "PASTURE" and "animal" not in tile
+                if isinstance(tile, dict)
+                and tile.get("kind") == "PASTURE"
+                and "animal" not in tile
+                and (x, y) not in reserved_targets
             ]
             if targets:
                 _, target, operation = min(targets, key=lambda task: (_distance(position, task[1]), task[1]))
                 actions[index] = operation if position == target else _step_toward(position, target)
                 available.discard(index)
+                reserved_targets.add(target)
         elif inventory.get("WHEAT", 0) > 0:
-            feed_targets = [task for task in tasks if task[2][0] == "FEED"]
+            feed_targets = [
+                task for task in tasks
+                if task[2][0] == "FEED" and task[1] not in reserved_targets
+            ]
             if feed_targets:
                 _, target, operation = min(feed_targets, key=lambda task: (_distance(position, task[1]), task[1]))
                 actions[index] = operation if position == target else _step_toward(position, target)
+                available.discard(index)
+                reserved_targets.add(target)
+
+    # In the execution subphase, carried output returns to the shed after any
+    # feed delivery has been reserved. This prevents the old day-27 starvation.
+    if phase["late_mode"] == "execute":
+        for index, (position, inventory) in enumerate(zip(positions, inventories)):
+            if index not in available:
+                continue
+            has_output = any(int(inventory.get(item, 0)) > 0 for item in PRODUCTS)
+            terminal_wheat = day == 29 and hour >= 20 and int(inventory.get("WHEAT", 0)) > 0
+            if has_output or terminal_wheat:
+                target = _nearest_shed(position)
+                actions[index] = ["DROP"] if position == target else _step_toward(position, target)
                 available.discard(index)
 
     # Assign remaining work greedily, preferring deadlines before travel distance.
@@ -297,7 +331,7 @@ def _policy(obs):
     return {
         "farmer": actions[0],
         "hands": actions[1:],
-        "market": _market_plan(obs, farm, private, opponent_signal, horizon),
+        "market": _market_plan(obs, farm, private, opponent_signal, phase),
     }
 
 

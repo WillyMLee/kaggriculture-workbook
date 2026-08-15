@@ -183,6 +183,17 @@
           </div>
         </section>
 
+        <section class="section shell" aria-labelledby="match-history-title">
+          <div class="section-heading"><div><p class="eyebrow">Replay archive</p><h2 id="match-history-title">Reviewed ladder matches</h2></div><p class="section-note">v0.2.1 · four completed matches · raw replay IDs preserved</p></div>
+          <div class="match-ledger" role="list">
+            <article role="listitem" data-result="loss"><span>93429256 · Loss</span><strong>Kinshuk Aggarwal</strong><p><b>24,881</b> vs 77,264</p><small>Led through day 16; the rival’s livestock, strawberry, and fertilizer engine crossed us on day 19.</small></article>
+            <article role="listitem" data-result="loss"><span>93427489 · Loss</span><strong>Hawksartelier</strong><p><b>14,591</b> vs 55,935</p><small>Opponent showed 21 melons by day 8. Our fixed opener stayed in the crowded market instead of switching.</small></article>
+            <article role="listitem" data-result="win"><span>93428379 · Win</span><strong>Sundareswaran Rajaguru</strong><p><b>23,318</b> vs 19,963</p><small>The mixed engine beat a crop-only farm. We moved permanently ahead on day 27.</small></article>
+            <article role="listitem" data-result="loss"><span>93430151 · Loss</span><strong>Sisu16</strong><p><b>26,036</b> vs 27,953</p><small>Led after day 27, then sold feed, stopped hiring, and lost all four cows before scoring.</small></article>
+          </div>
+          <p class="source-note">Compact evidence: <code>results/kaggle_v0_2_1_match_history.json</code>. Raw replays remain external because each source file is roughly 14 MB.</p>
+        </section>
+
         <section class="section shell" aria-labelledby="submission-history-title">
           <div class="section-heading compact"><div><p class="eyebrow">History</p><h2 id="submission-history-title">Version ledger</h2></div></div>
           <div class="table-wrap" id="submission-table-wrap" hidden>
@@ -446,6 +457,24 @@
 
       <section class="view" id="attention" aria-labelledby="attention-title" hidden>
         <div class="page-intro shell"><div><p class="eyebrow">Agent system D</p><h1 id="attention-title">Attention controller</h1><p>Protect irreversible obligations before spending effort on adaptation.</p></div></div>
+        <section class="section shell" aria-labelledby="phase-model-title">
+          <div class="section-heading"><div><p class="eyebrow">Phase model</p><h2 id="phase-model-title">Play the farm like a match</h2></div><p class="section-note">One clock, four distinct decision modes.</p></div>
+          <ol class="phase-timeline">
+            <li data-phase="early"><span>Days 00–11</span><div><strong>Early · opening</strong><p>Establish cash and wheat, run a bounded melon opener, and probe the opponent’s visible commitment before changing course.</p></div><em>DEVELOP</em></li>
+            <li data-phase="middle"><span>Days 12–21</span><div><strong>Middle · contest</strong><p>Build the recurring-crop and livestock engine. Scale labor, collect fertilizer, and switch crops only on strong evidence.</p></div><em>ADAPT</em></li>
+            <li data-phase="late"><span>Days 22–27</span><div><strong>Late A · optimize</strong><p>Stop long-payback expansion while preserving feed, care, harvests, and existing production. Improve what can still score.</p></div><em>CONVERT</em></li>
+            <li data-phase="execute"><span>Days 28–29</span><div><strong>Late B · execute</strong><p>Keep enough wheat and hands for the remaining chores, then route output to the shed and sell the true surplus.</p></div><em>CLOSE</em></li>
+          </ol>
+        </section>
+        <section class="section shell" aria-labelledby="phase-tests-title">
+          <div class="section-heading compact"><div><p class="eyebrow">Experiment board</p><h2 id="phase-tests-title">Test one phase at a time</h2></div></div>
+          <div class="phase-tests">
+            <article><span>Opening A · Control</span><strong>10 melons + 5 wheat</strong><p>Measure day-12 bank, planted capacity, and market crowding.</p></article>
+            <article><span>Opening B · Counter</span><strong>Exit shared melons early</strong><p>Trigger only after a visible rival commitment; compare stranded seeds and margin.</p></article>
+            <article><span>Middle</span><strong>Labor + fertilizer engine</strong><p>Measure missed chores, fertilizer collected, surviving animals, and day-22 bank.</p></article>
+            <article><span>Close</span><strong>Reserve, then sell</strong><p>Measure day-27 lead retention, terminal inventory, animal survival, and final margin.</p></article>
+          </div>
+        </section>
         <section class="section shell" aria-labelledby="attention-order-title">
           <div class="section-heading"><div><p class="eyebrow">Priority stack</p><h2 id="attention-order-title">What gets attention first</h2></div><p class="section-note">Lower number wins when tasks compete.</p></div>
           <ol class="decision-tree attention-tree">
@@ -476,7 +505,7 @@
         <section class="section shell" aria-labelledby="first-plan-title">
           <div class="section-heading"><div><p class="eyebrow">Learning plan</p><h2 id="first-plan-title">Submit early, diagnose carefully</h2></div></div>
           <ol class="system-flow submit-flow">
-            <li><span>01</span><div><strong>Freeze v0.2.1</strong><p>Keep the three attention modules readable, bounded, and protected by a safe fallback action.</p></div><em>one known policy</em></li>
+            <li><span>01</span><div><strong>Freeze v0.2.1 as control</strong><p>Keep the accepted artifact unchanged so every candidate can play both seats against the exact ladder baseline.</p></div><em>known opponent</em></li>
             <li><span>02</span><div><strong>Pass local gates</strong><p>Complete self-play, starter matches, both seats, varied seeds, and the late-game liquidation test.</p></div><em>zero runtime failures</em></li>
             <li><span>03</span><div><strong>Enter the ladder</strong><p>Kaggle first validates the bot against a copy of itself, then matches it with similarly rated submissions.</p></div><em>public evidence</em></li>
             <li><span>04</span><div><strong>Wait for signal</strong><p>Record rating, rank, and episode count at consistent checkpoints instead of reacting to every move.</p></div><em>50 · 100 · 250 episodes</em></li>
@@ -494,11 +523,11 @@
           </div>
         </section>
         <section class="section shell" aria-labelledby="submission-gate-title">
-          <div class="section-heading"><div><p class="eyebrow">Release gate</p><h2 id="submission-gate-title">v0.2 readiness</h2></div><strong class="progress-label" id="submission-progress">0 / 6 ready</strong></div>
+          <div class="section-heading"><div><p class="eyebrow">Release gate</p><h2 id="submission-gate-title">v0.3 candidate readiness</h2></div><strong class="progress-label" id="submission-progress">0 / 6 ready</strong></div>
           <div class="candidate-evidence" aria-label="Validated candidate evidence">
-            <div><span>Kaggle validation</span><strong>Complete</strong><small>single-file v0.2.1 accepted</small></div>
-            <div><span>Initial ladder</span><strong>600.0</strong><small>#2,862 before matched play</small></div>
-            <div><span>Starter benchmark</span><strong>20 / 20 ahead</strong><small>both seats · 10 seeds</small></div>
+            <div><span>Replay diagnoses</span><strong>4 archived</strong><small>1 win · 3 losses</small></div>
+            <div><span>Frozen challenge</span><strong>19 / 20 wins</strong><small>vs exact v0.2.1 artifact</small></div>
+            <div><span>Average margin</span><strong>+5,024</strong><small>both seats · 10 seeds</small></div>
             <div><span>Runtime failures</span><strong>0</strong><small>across 20 episodes</small></div>
           </div>
           <div class="progress-track" aria-hidden="true"><span id="submission-progress-bar"></span></div>
@@ -527,7 +556,7 @@
               <div><strong>Daily limit</strong><span>Up to five agent submissions per team</span></div>
             </div>
           </div>
-          <p class="source-note"><strong>Frozen local opponent:</strong> <code>artifacts/kaggriculture-v0.2.1.tar.gz</code>. Build with <code>npm run submission:build</code>; validate the exact archive with <code>npm run submission:validate</code>.</p>
+          <p class="source-note"><strong>Frozen local opponent:</strong> <code>artifacts/kaggriculture-v0.2.1.tar.gz</code>. Candidate build: <code>artifacts/kaggriculture-v0.3.0.tar.gz</code>. Build and validate with the submission scripts.</p>
           <p class="source-note"><strong>Packaging lesson:</strong> v0.2.0 failed before play because <code>agents</code> collided with a Kaggle-installed module. v0.2.1 packages one self-contained <code>main.py</code> and passed validation.</p>
           <p class="source-note">Submission and ranking behavior: <a href="https://www.kaggle.com/competitions/kaggriculture/overview" target="_blank" rel="noreferrer">official Kaggriculture evaluation section ↗</a>.</p>
         </section>

@@ -393,15 +393,23 @@
       version: "v0.2.1",
       date: "2026-08-15",
       status: "active",
-      episodes: 1,
-      rating: 600,
-      rank: 2862,
+      episodes: 4,
+      rating: 418,
+      rank: 3729,
       change: "Single-file artifact; same three-attention policy",
-      notes: "Validation complete. Initial 600.0 rating is the ladder starting point; wait for matched episodes before judging strategy.",
+      notes: "Reviewed ladder snapshot: 1 win, 3 losses. Repeated gaps were fixed labor, weak response to shared markets, and a day-27 liquidation bug.",
     },
   ];
   let submissions = readStore(KEYS.submissions, firstLadderEntries);
   if (!Array.isArray(submissions)) submissions = [];
+  submissions = submissions.map((item) => {
+    const isInitialSeed = item.id === "submission-v0-2-1"
+      && item.rating === 600
+      && item.rank === 2862
+      && item.episodes === 1;
+    return isInitialSeed ? { ...firstLadderEntries[1] } : item;
+  });
+  writeStore(KEYS.submissions, submissions);
   const submissionDialog = $("#submission-dialog");
   const submissionForm = $("#submission-form");
 

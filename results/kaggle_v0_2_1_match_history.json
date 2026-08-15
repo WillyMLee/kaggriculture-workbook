@@ -1,0 +1,53 @@
+{
+  "version": "v0.2.1",
+  "reviewed_at": "2026-08-15",
+  "ladder_snapshot": {
+    "rating": 418.0,
+    "rank": 3729,
+    "completed_matches": 4,
+    "record": "1-3"
+  },
+  "matches": [
+    {
+      "episode_id": 93429256,
+      "seed": 241504588,
+      "opponent": "Kinshuk Aggarwal",
+      "seat": 1,
+      "result": "loss",
+      "our_bank": 24881,
+      "opponent_bank": 77264,
+      "first_irreversible_signal": "The day-16 lead disappeared by day 19 as the rival's larger livestock, strawberry, and fertilizer engine came online.",
+      "diagnosis": "Our fixed six-hand labor plan and small four-cow engine did not scale against a diversified production engine."
+    },
+    {
+      "episode_id": 93427489,
+      "opponent": "Hawksartelier",
+      "seat": 0,
+      "result": "loss",
+      "our_bank": 14591,
+      "opponent_bank": 55935,
+      "first_irreversible_signal": "The opponent committed to 21 melons by day 8, but our fixed melon opener continued into the same crowded market.",
+      "diagnosis": "Opponent attention classified the expansion but did not alter the opening, so we accepted avoidable price competition."
+    },
+    {
+      "episode_id": 93428379,
+      "opponent": "Sundareswaran Rajaguru",
+      "seat": 1,
+      "result": "win",
+      "our_bank": 23318,
+      "opponent_bank": 19963,
+      "first_irreversible_signal": "The crop-only rival left livestock value uncontested; our mixed engine moved ahead on day 27.",
+      "diagnosis": "The baseline works when diversification is uncontested and the opponent does not compound a second production system."
+    },
+    {
+      "episode_id": 93430151,
+      "opponent": "Sisu16",
+      "seat": 1,
+      "result": "loss",
+      "our_bank": 26036,
+      "opponent_bank": 27953,
+      "first_irreversible_signal": "We led after day 27, then sold feed, stopped hiring, and lost all four cows before the final bank comparison.",
+      "diagnosis": "The liquidation gate confused operating inventory with sale inventory. This is the highest-confidence execution bug."
+    }
+  ]
+}
