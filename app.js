@@ -1,0 +1,601 @@
+(function () {
+  "use strict";
+
+  const KEYS = {
+    checklist: "kaggriculture-fieldbook-checklist-v1",
+    experiments: "kaggriculture-fieldbook-experiments-v1",
+    roadmap: "kaggriculture-fieldbook-roadmap-v1",
+    balancedNotes: "kaggriculture-balanced-notes-v1",
+  };
+
+  const $ = (selector, root = document) => root.querySelector(selector);
+  const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
+  const escapeHtml = (value) => String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+
+  function readStore(key, fallback) {
+    try {
+      const raw = localStorage.getItem(key);
+      return raw ? JSON.parse(raw) : fallback;
+    } catch {
+      return fallback;
+    }
+  }
+
+  function writeStore(key, value) {
+    try {
+      localStorage.setItem(key, JSON.stringify(value));
+    } catch {
+      // The workbook still works for the current page session if storage is unavailable.
+    }
+  }
+
+  function makeId(prefix) {
+    return `${prefix}-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+  }
+
+  // Navigation
+  const viewIds = ["brief", "leaders", "mechanics", "balanced", "expansion", "livestock", "experiments", "roadmap"];
+
+  function showView(viewId, updateHash = true) {
+    const safeId = viewIds.includes(viewId) ? viewId : "brief";
+    $$(".view").forEach((view) => {
+      const active = view.id === safeId;
+      view.hidden = !active;
+      view.classList.toggle("is-active", active);
+    });
+    $$("[data-view-target]").forEach((button) => {
+      const active = button.dataset.viewTarget === safeId;
+      button.classList.toggle("is-active", active);
+      button.setAttribute("aria-current", active ? "page" : "false");
+    });
+    if (updateHash) history.replaceState(null, "", `#${safeId}`);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  $$("[data-view-target]").forEach((button) => {
+    button.addEventListener("click", () => showView(button.dataset.viewTarget));
+  });
+  $$("[data-view-jump]").forEach((button) => {
+    button.addEventListener("click", () => showView(button.dataset.viewJump));
+  });
+  window.addEventListener("hashchange", () => showView(location.hash.slice(1), false));
+  showView(location.hash.slice(1), false);
+
+  // Balanced Tempo notebook
+  const notebookTabs = $$('[data-notebook-tab]');
+  const notebookPanels = $$('[data-notebook-panel]');
+  notebookTabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      const activeId = tab.dataset.notebookTab;
+      notebookTabs.forEach((item) => {
+        const active = item === tab;
+        item.classList.toggle("is-active", active);
+        item.setAttribute("aria-selected", String(active));
+      });
+      notebookPanels.forEach((panel) => {
+        panel.hidden = panel.dataset.notebookPanel !== activeId;
+      });
+    });
+  });
+
+  const balancedNotes = $("#balanced-working-notes");
+  if (balancedNotes) {
+    balancedNotes.value = readStore(KEYS.balancedNotes, "");
+    balancedNotes.addEventListener("input", () => {
+      writeStore(KEYS.balancedNotes, balancedNotes.value);
+      $("#balanced-notes-status").textContent = "Saved in this browser";
+    });
+    $$('[data-challenge-prompt]').forEach((button) => {
+      button.addEventListener("click", () => {
+        balancedNotes.value = button.dataset.challengePrompt;
+        writeStore(KEYS.balancedNotes, balancedNotes.value);
+        balancedNotes.focus();
+      });
+    });
+  }
+
+  // Best-run daily replay
+  const replay = window.BALANCED_BEST_RUN;
+  const replayBoard = $("#replay-board");
+  if (replay && replayBoard) {
+    let replayIndex = 0;
+    let replayTimer = null;
+    const replayRange = $("#replay-range");
+    const replayPlay = $("#replay-play");
+
+    function formatSigned(value) {
+      if (value === 0) return "0";
+      return `${value > 0 ? "+" : "−"}${Math.abs(value).toLocaleString()}`;
+    }
+
+    function setCondition(id, progress, value, text, state = "active") {
+      const item = $(`#condition-${id}`);
+      const track = item.querySelector(".condition-track");
+      $(`#condition-${id}-bar`).style.width = `${Math.max(0, Math.min(100, progress))}%`;
+      $(`#condition-${id}-text`).textContent = text;
+      track.setAttribute("aria-valuenow", String(Math.round(value)));
+      item.classList.toggle("is-met", state === "met");
+      item.classList.toggle("is-inactive", state === "inactive");
+    }
+
+    function stopReplay() {
+      if (replayTimer) window.clearInterval(replayTimer);
+      replayTimer = null;
+      replayPlay.textContent = replayIndex === replay.days.length - 1 ? "Replay" : "Play fast";
+    }
+
+    function renderReplay(index) {
+      replayIndex = Math.max(0, Math.min(replay.days.length - 1, Number(index)));
+      const day = replay.days[replayIndex];
+      const workersByCell = new Map();
+      day.workers.forEach((worker) => {
+        const key = worker.y * 10 + worker.x;
+        workersByCell.set(key, [...(workersByCell.get(key) || []), worker]);
+      });
+
+      replayBoard.innerHTML = day.cells.map((code, cellIndex) => {
+        const workers = workersByCell.get(cellIndex) || [];
+        const workerDots = workers.map((worker) => `<i class="replay-worker ${worker.kind}" aria-hidden="true"></i>`).join("");
+        return `<span class="replay-cell cell-${escapeHtml(code)}">${workerDots}</span>`;
+      }).join("");
+      replayBoard.setAttribute("aria-label", `Farm state on day ${day.day}. ${day.phase}. Bank ${day.bank.toLocaleString()} coins.`);
+      $("#replay-phase").textContent = day.phase;
+      $("#replay-day").textContent = String(day.day).padStart(2, "0");
+      $("#replay-bank").textContent = day.bank.toLocaleString();
+      $("#replay-delta").textContent = formatSigned(day.bank_delta);
+      $("#replay-margin").textContent = formatSigned(day.margin);
+      $("#replay-shed").textContent = day.shed_units.toLocaleString();
+      const scoreTotal = day.bank + day.opponent_bank;
+      const scoreShare = scoreTotal > 0 ? (day.bank / scoreTotal) * 100 : 50;
+      const leadText = day.margin === 0
+        ? "tied"
+        : `${day.margin > 0 ? "ahead" : "behind"} by ${Math.abs(day.margin).toLocaleString()}`;
+      $("#win-current-status").textContent = `Day ${String(day.day).padStart(2, "0")} · ${leadText}`;
+      setCondition("score", scoreShare, scoreShare, `${scoreShare.toFixed(1)}% · ${leadText}`, day.margin > 0 ? "met" : "active");
+
+      const cows = Number(day.assets.cow || 0);
+      const strawberries = Number(day.assets.strawberry || 0);
+      setCondition("cows", (cows / 4) * 100, cows, `${cows} / 4`, cows >= 4 ? "met" : "active");
+      setCondition("strawberries", (strawberries / 15) * 100, strawberries, `${strawberries} / 15`, strawberries >= 15 ? "met" : "active");
+
+      const exitDue = day.day >= 27;
+      const exitProgress = exitDue ? 100 - Math.min(100, day.shed_units) : 0;
+      const exitText = exitDue ? `${day.shed_units} unit${day.shed_units === 1 ? "" : "s"} remain` : "Not due until day 27";
+      setCondition("exit", exitProgress, exitProgress, exitText, exitDue ? (day.shed_units === 0 ? "met" : "active") : "inactive");
+      $("#replay-reason-title").textContent = day.reasoning.title;
+      $("#replay-reason-text").textContent = day.reasoning.text;
+      const notableOps = Object.entries(day.actions.unit_ops)
+        .filter(([operation]) => !["PASS", "NORTH", "SOUTH", "EAST", "WEST"].includes(operation))
+        .slice(0, 5)
+        .map(([operation, count]) => `${operation} ${count}`);
+      $("#replay-actions").textContent = notableOps.length ? notableOps.join(" · ") : "Movement and positioning";
+      $("#replay-change").textContent = day.change;
+      replayRange.value = String(replayIndex);
+      $$('[data-replay-select]').forEach((button) => {
+        const active = Number(button.dataset.replaySelect) === replayIndex;
+        button.classList.toggle("is-active", active);
+        button.setAttribute("aria-current", active ? "true" : "false");
+      });
+    }
+
+    $("#replay-day-body").innerHTML = replay.days.map((day) => `
+      <tr>
+        <td><button type="button" class="replay-day-select" data-replay-select="${day.day}">${String(day.day).padStart(2, "0")}</button></td>
+        <td>${escapeHtml(day.phase)}</td>
+        <td>${day.bank.toLocaleString()}</td>
+        <td>${formatSigned(day.bank_delta)}</td>
+        <td>${escapeHtml(day.change)}</td>
+        <td>${escapeHtml(day.reasoning.title)}</td>
+      </tr>`).join("");
+
+    $$('[data-replay-select]').forEach((button) => {
+      button.addEventListener("click", () => {
+        stopReplay();
+        renderReplay(button.dataset.replaySelect);
+      });
+    });
+    replayRange.addEventListener("input", () => {
+      stopReplay();
+      renderReplay(replayRange.value);
+    });
+    $("#replay-previous").addEventListener("click", () => {
+      stopReplay();
+      renderReplay(replayIndex - 1);
+    });
+    $("#replay-next").addEventListener("click", () => {
+      stopReplay();
+      renderReplay(replayIndex + 1);
+    });
+    replayPlay.addEventListener("click", () => {
+      if (replayTimer) {
+        stopReplay();
+        return;
+      }
+      if (replayIndex === replay.days.length - 1) renderReplay(0);
+      replayPlay.textContent = "Pause";
+      replayTimer = window.setInterval(() => {
+        if (replayIndex >= replay.days.length - 1) {
+          stopReplay();
+          return;
+        }
+        renderReplay(replayIndex + 1);
+      }, 350);
+    });
+    notebookTabs.filter((tab) => tab.dataset.notebookTab !== "replay").forEach((tab) => tab.addEventListener("click", stopReplay));
+    renderReplay(0);
+  }
+
+  // Deadline countdown
+  const deadline = new Date("2026-09-30T23:59:00Z");
+  const diff = deadline.getTime() - Date.now();
+  const deadlineDays = Math.max(0, Math.ceil(diff / 86400000));
+  $("#deadline-days").textContent = String(deadlineDays);
+
+  // Readiness checklist
+  const checklistState = readStore(KEYS.checklist, {});
+  const checklistInputs = $$("[data-check]");
+  checklistInputs.forEach((input) => {
+    input.checked = Boolean(checklistState[input.dataset.check]);
+    input.addEventListener("change", () => {
+      checklistState[input.dataset.check] = input.checked;
+      writeStore(KEYS.checklist, checklistState);
+      renderChecklistProgress();
+    });
+  });
+
+  function renderChecklistProgress() {
+    const completed = checklistInputs.filter((input) => input.checked).length;
+    $("#checklist-progress").textContent = `${completed} / ${checklistInputs.length} ready`;
+    $("#checklist-progress-bar").style.width = `${(completed / checklistInputs.length) * 100}%`;
+  }
+  renderChecklistProgress();
+
+  // Farm explainer
+  const farmModes = {
+    routing: {
+      kicker: "Routing lens",
+      title: "Cut empty movement",
+      text: "Cluster work by place and deadline.",
+      bullets: ["Route through the shed", "Reserve care loops", "Replan at harvest"],
+      legend: [["Worker route", "#c49450"], ["Shed access", "#8d6240"]],
+    },
+    crops: {
+      kicker: "Crop lens",
+      title: "Stagger crop clocks",
+      text: "Flatten watering and harvest spikes.",
+      bullets: ["Offset planting", "Collect fertilizer value", "Stop late planting"],
+      legend: [["Active crop", "#c49450"], ["Shed access", "#8d6240"]],
+    },
+    animals: {
+      kicker: "Animal lens",
+      title: "Protect the feed loop",
+      text: "Animals convert wheat into recurring yield.",
+      bullets: ["Hold wheat reserve", "Harvest before full", "Collect useful fertilizer"],
+      legend: [["Animal structure", "#b88342"], ["Shed access", "#8d6240"]],
+    },
+    expansion: {
+      kicker: "Expansion lens",
+      title: "Buy only with payback",
+      text: "Land needs labor and time to earn.",
+      bullets: ["Count remaining turns", "Pair land with labor", "Passable is not usable"],
+      legend: [["Unlocked", "#4a4130"], ["Locked quadrant", "rgba(231,225,213,.12)"]],
+    },
+  };
+
+  const routeCells = new Set([44, 43, 42, 32, 22, 23, 24, 25, 26, 36, 46, 56, 55, 54]);
+  const cropCells = new Set([11, 12, 13, 21, 22, 23, 31, 32, 33, 16, 17, 26, 27]);
+  const animalCells = new Set([61, 62, 71, 72, 66, 67, 76, 77]);
+  const shedCells = new Set([44, 45, 54, 55]);
+
+  function renderFarm(mode) {
+    const board = $("#farm-board");
+    board.innerHTML = "";
+    for (let i = 0; i < 100; i += 1) {
+      const cell = document.createElement("span");
+      cell.className = "farm-cell";
+      if (shedCells.has(i)) cell.classList.add("shed");
+      if (mode === "routing" && routeCells.has(i) && !shedCells.has(i)) cell.classList.add("route");
+      if (mode === "crops" && cropCells.has(i)) cell.classList.add("crop");
+      if (mode === "animals" && animalCells.has(i)) cell.classList.add("animal");
+      if (mode === "expansion" && (i % 10 >= 5 || Math.floor(i / 10) >= 5) && !shedCells.has(i)) cell.classList.add("locked");
+      board.appendChild(cell);
+    }
+
+    const data = farmModes[mode];
+    $("#farm-insight").innerHTML = `
+      <p class="eyebrow">${data.kicker}</p>
+      <h3>${data.title}</h3>
+      <p>${data.text}</p>
+      <ul>${data.bullets.map((item) => `<li>${item}</li>`).join("")}</ul>`;
+    $("#board-legend").innerHTML = data.legend.map(([label, color]) => `
+      <span class="legend-item"><span class="legend-swatch" style="background:${color}"></span>${label}</span>`).join("");
+  }
+
+  $("#farm-focus").addEventListener("change", (event) => renderFarm(event.target.value));
+  renderFarm("routing");
+
+  // Production reference
+  const production = [
+    { type: "crop", asset: "Wheat", buy: "10 seed", price: "25", first: "2 days", cadence: "One harvest; max at day 4", care: "Water daily" },
+    { type: "crop", asset: "Carrot", buy: "20 seed", price: "35", first: "2 days", cadence: "One harvest; max at day 3", care: "Water daily" },
+    { type: "crop", asset: "Tomato", buy: "50 seed", price: "60", first: "8 days", cadence: "Daily ×4, then decays", care: "Water daily" },
+    { type: "crop", asset: "Strawberry", buy: "100 seed", price: "120", first: "10 days", cadence: "Every 2 days ×4", care: "Water daily" },
+    { type: "crop", asset: "Melon", buy: "80 seed", price: "250", first: "10 days", cadence: "One harvest", care: "Water daily" },
+    { type: "animal", asset: "Goose → egg", buy: "300 animal", price: "50", first: "4 days", cadence: "Daily, indefinite", care: "Feed wheat daily" },
+    { type: "animal", asset: "Cow → milk", buy: "400 animal", price: "160", first: "8 days", cadence: "Every 2 days", care: "Feed wheat daily" },
+    { type: "animal", asset: "Sheep → wool", buy: "500 animal", price: "200", first: "6 days", cadence: "Every 3 days", care: "Feed wheat daily" },
+  ];
+
+  function renderProduction(filter = "all") {
+    const rows = filter === "all" ? production : production.filter((item) => item.type === filter);
+    $("#production-body").innerHTML = rows.map((item) => `
+      <tr>
+        <td><span class="asset-name"><span class="asset-dot ${item.type}"></span>${item.asset}</span></td>
+        <td>${item.buy}</td><td>${item.price} coins</td><td>${item.first}</td><td>${item.cadence}</td><td>${item.care}</td>
+      </tr>`).join("");
+  }
+  $$('[data-production-filter]').forEach((button) => {
+    button.addEventListener("click", () => {
+      $$('[data-production-filter]').forEach((item) => item.classList.toggle("is-active", item === button));
+      renderProduction(button.dataset.productionFilter);
+    });
+  });
+  renderProduction();
+
+  // Experiments
+  let experiments = readStore(KEYS.experiments, []);
+  if (!Array.isArray(experiments)) experiments = [];
+
+  const experimentDialog = $("#experiment-dialog");
+  const experimentForm = $("#experiment-form");
+
+  function openExperimentDialog() {
+    $("#experiment-form-error").textContent = "";
+    experimentDialog.showModal();
+    setTimeout(() => experimentForm.elements.version.focus(), 0);
+  }
+  $("#open-experiment-form").addEventListener("click", openExperimentDialog);
+  $$('[data-open-experiment]').forEach((button) => button.addEventListener("click", openExperimentDialog));
+  const approachHypotheses = {
+    balanced: "Balanced tempo: melon cash loop into cattle and strawberries, then early liquidation",
+    expansion: "Expansion rush: unlock three quadrants before day 11 and fill with staggered strawberries",
+    livestock: "Livestock compound: sheep-heavy pasture network with protected wheat reserve",
+  };
+  $$('[data-approach-test]').forEach((button) => {
+    button.addEventListener("click", () => {
+      const approach = button.dataset.approachTest;
+      showView("experiments");
+      openExperimentDialog();
+      experimentForm.elements.hypothesis.value = approachHypotheses[approach] || "";
+      experimentForm.elements.opponent.value = "starter";
+    });
+  });
+  $("#close-experiment-dialog").addEventListener("click", () => experimentDialog.close());
+  $("#cancel-experiment").addEventListener("click", () => experimentDialog.close());
+
+  function winRate(item) {
+    return item.games > 0 ? ((item.wins + item.ties * 0.5) / item.games) * 100 : 0;
+  }
+
+  experimentForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const data = new FormData(experimentForm);
+    const games = Number(data.get("games"));
+    const wins = Number(data.get("wins"));
+    const losses = Number(data.get("losses"));
+    const ties = Number(data.get("ties"));
+    if (wins + losses + ties !== games) {
+      $("#experiment-form-error").textContent = "Wins + losses + ties must equal the number of games.";
+      return;
+    }
+    experiments.push({
+      id: makeId("exp"),
+      createdAt: new Date().toISOString(),
+      version: String(data.get("version")).trim(),
+      opponent: String(data.get("opponent")).trim(),
+      hypothesis: String(data.get("hypothesis")).trim(),
+      games, wins, losses, ties,
+      bank: data.get("bank") === "" ? null : Number(data.get("bank")),
+      result: String(data.get("result")),
+      notes: String(data.get("notes")).trim(),
+    });
+    writeStore(KEYS.experiments, experiments);
+    experimentForm.reset();
+    experimentForm.elements.games.value = 20;
+    experimentForm.elements.wins.value = 0;
+    experimentForm.elements.losses.value = 0;
+    experimentForm.elements.ties.value = 0;
+    experimentDialog.close();
+    renderExperiments();
+    renderRoadmap();
+  });
+
+  $("#experiment-sort").addEventListener("change", renderExperiments);
+
+  function renderExperiments() {
+    const sort = $("#experiment-sort").value;
+    const sorted = [...experiments].sort((a, b) => {
+      if (sort === "winrate") return winRate(b) - winRate(a);
+      if (sort === "games") return b.games - a.games;
+      return new Date(b.createdAt) - new Date(a.createdAt);
+    });
+
+    const totalGames = experiments.reduce((sum, item) => sum + item.games, 0);
+    const best = experiments.length ? [...experiments].sort((a, b) => winRate(b) - winRate(a))[0] : null;
+    const latest = experiments.length ? [...experiments].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))[0] : null;
+    $("#stat-experiments").textContent = String(experiments.length);
+    $("#stat-games").textContent = totalGames.toLocaleString();
+    $("#stat-win-rate").textContent = best ? `${winRate(best).toFixed(1)}%` : "—";
+    $("#stat-best-version").textContent = best ? `from ${best.version}` : "no data yet";
+    $("#stat-bank").textContent = latest?.bank != null ? Math.round(latest.bank).toLocaleString() : "—";
+
+    $("#experiment-list").innerHTML = sorted.map((item) => `
+      <article class="experiment-entry">
+        <span class="version-chip">${escapeHtml(item.version)}</span>
+        <div class="entry-main">
+          <h3>${escapeHtml(item.hypothesis)}</h3>
+          <p>vs. ${escapeHtml(item.opponent)} · ${item.wins}W / ${item.losses}L / ${item.ties}T${item.notes ? ` · ${escapeHtml(item.notes)}` : ""}</p>
+          <span class="result-badge ${escapeHtml(item.result)}">${escapeHtml(item.result)}</span>
+        </div>
+        <div class="entry-rate"><strong>${winRate(item).toFixed(1)}%</strong><span>score rate · ${item.games} games</span></div>
+        <div class="entry-bank"><strong>${item.bank == null ? "—" : Math.round(item.bank).toLocaleString()}</strong><span>avg bank</span></div>
+        <button class="delete-button" type="button" aria-label="Delete ${escapeHtml(item.version)}" data-delete-experiment="${item.id}">×</button>
+      </article>`).join("");
+
+    const empty = experiments.length === 0;
+    $("#experiment-empty").hidden = !empty;
+    $("#experiment-list").hidden = empty;
+    $$('[data-delete-experiment]').forEach((button) => {
+      button.addEventListener("click", () => {
+        experiments = experiments.filter((item) => item.id !== button.dataset.deleteExperiment);
+        writeStore(KEYS.experiments, experiments);
+        renderExperiments();
+      });
+    });
+    renderExperimentChart();
+  }
+
+  function renderExperimentChart() {
+    const chart = $("#experiment-chart");
+    const empty = $("#experiment-chart-empty");
+    if (!experiments.length) {
+      chart.hidden = true;
+      empty.hidden = false;
+      return;
+    }
+    empty.hidden = true;
+    chart.hidden = false;
+    const ordered = [...experiments].sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+    const w = 960, h = 310, left = 52, right = 25, top = 34, bottom = 52;
+    const plotW = w - left - right, plotH = h - top - bottom;
+    const x = (index) => left + (ordered.length === 1 ? plotW / 2 : (index / (ordered.length - 1)) * plotW);
+    const y = (value) => top + plotH - (value / 100) * plotH;
+    const points = ordered.map((item, index) => ({ x: x(index), y: y(winRate(item)), value: winRate(item), label: item.version }));
+    const path = points.map((point, index) => `${index ? "L" : "M"}${point.x.toFixed(1)},${point.y.toFixed(1)}`).join(" ");
+    const area = `${path} L${points.at(-1).x.toFixed(1)},${(top + plotH).toFixed(1)} L${points[0].x.toFixed(1)},${(top + plotH).toFixed(1)} Z`;
+    const grid = [0, 25, 50, 75, 100].map((value) => `
+      <line class="chart-gridline" x1="${left}" y1="${y(value)}" x2="${w-right}" y2="${y(value)}" />
+      <text class="chart-label" x="${left-10}" y="${y(value)+4}" text-anchor="end">${value}%</text>`).join("");
+    const marks = points.map((point, index) => `
+      <circle class="chart-point" cx="${point.x}" cy="${point.y}" r="5"><title>${escapeHtml(point.label)}: ${point.value.toFixed(1)}%</title></circle>
+      <text class="chart-value" x="${point.x}" y="${Math.max(18, point.y-13)}" text-anchor="middle">${point.value.toFixed(0)}%</text>
+      <text class="chart-label" x="${point.x}" y="${h-22}" text-anchor="middle">${escapeHtml(point.label.slice(0, 12))}</text>`).join("");
+    chart.innerHTML = `
+      <svg viewBox="0 0 ${w} ${h}" role="img" aria-label="Win rate across ${ordered.length} recorded agent versions">
+        <defs><linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c49450" stop-opacity=".35"/><stop offset="1" stop-color="#c49450" stop-opacity="0"/></linearGradient></defs>
+        ${grid}<path class="chart-area" d="${area}"/><path class="chart-path" d="${path}"/>${marks}
+      </svg>`;
+  }
+
+  $("#export-experiments").addEventListener("click", () => {
+    const payload = JSON.stringify({ exportedAt: new Date().toISOString(), competition: "kaggriculture", experiments }, null, 2);
+    const url = URL.createObjectURL(new Blob([payload], { type: "application/json" }));
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `kaggriculture-experiments-${new Date().toISOString().slice(0, 10)}.json`;
+    link.click();
+    URL.revokeObjectURL(url);
+  });
+
+  // Roadmap
+  const starterRoadmap = [
+    { id: "paired-harness", title: "Paired-seed baseline", description: "Compare agents on identical games.", impact: 5, confidence: 5, effort: 2, status: "planned" },
+    { id: "liquidation", title: "Late-game liquidation", description: "Sell everything before turn 720.", impact: 5, confidence: 4, effort: 2, status: "planned" },
+    { id: "survival", title: "Care deadline scheduler", description: "Never miss water or feed twice.", impact: 5, confidence: 4, effort: 3, status: "planned" },
+    { id: "routing", title: "Worker assignment", description: "Prevent duplicate and wasted actions.", impact: 4, confidence: 3, effort: 4, status: "planned" },
+    { id: "market", title: "Market-aware selling", description: "Stage sales around price and demand.", impact: 5, confidence: 2, effort: 4, status: "planned" },
+  ];
+  let roadmap = readStore(KEYS.roadmap, starterRoadmap);
+  if (!Array.isArray(roadmap)) roadmap = [...starterRoadmap];
+  roadmap = roadmap.map((item) => {
+    const starter = starterRoadmap.find((candidate) => candidate.id === item.id);
+    return starter ? { ...starter, status: item.status || starter.status } : item;
+  });
+  writeStore(KEYS.roadmap, roadmap);
+
+  const roadmapDialog = $("#roadmap-dialog");
+  const roadmapForm = $("#roadmap-form");
+  $("#add-roadmap-item").addEventListener("click", () => roadmapDialog.showModal());
+  $("#close-roadmap-dialog").addEventListener("click", () => roadmapDialog.close());
+  $("#cancel-roadmap").addEventListener("click", () => roadmapDialog.close());
+  roadmapForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const data = new FormData(roadmapForm);
+    roadmap.push({
+      id: makeId("idea"),
+      title: String(data.get("title")).trim(),
+      description: String(data.get("description")).trim(),
+      impact: Number(data.get("impact")),
+      confidence: Number(data.get("confidence")),
+      effort: Number(data.get("effort")),
+      status: "planned",
+    });
+    writeStore(KEYS.roadmap, roadmap);
+    roadmapForm.reset();
+    roadmapForm.elements.impact.value = 3;
+    roadmapForm.elements.confidence.value = 3;
+    roadmapForm.elements.effort.value = 2;
+    roadmapDialog.close();
+    renderRoadmap();
+  });
+
+  function priority(item) {
+    return (item.impact * item.confidence) / Math.max(1, item.effort);
+  }
+
+  function renderRoadmap() {
+    const sorted = [...roadmap].sort((a, b) => {
+      if (a.status === "done" && b.status !== "done") return 1;
+      if (a.status !== "done" && b.status === "done") return -1;
+      return priority(b) - priority(a);
+    });
+    $("#roadmap-list").innerHTML = sorted.map((item) => `
+      <article class="roadmap-item" data-status="${escapeHtml(item.status)}">
+        <div class="roadmap-score"><strong>${priority(item).toFixed(1)}</strong><small>priority</small></div>
+        <div class="roadmap-copy"><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.description)}</p></div>
+        <div class="score-trio"><span>Impact<strong>${item.impact}</strong></span><span>Conf.<strong>${item.confidence}</strong></span><span>Effort<strong>${item.effort}</strong></span></div>
+        <select aria-label="Status for ${escapeHtml(item.title)}" data-roadmap-status="${item.id}">
+          <option value="planned" ${item.status === "planned" ? "selected" : ""}>Planned</option>
+          <option value="testing" ${item.status === "testing" ? "selected" : ""}>Testing</option>
+          <option value="done" ${item.status === "done" ? "selected" : ""}>Done</option>
+          <option value="parked" ${item.status === "parked" ? "selected" : ""}>Parked</option>
+        </select>
+        <button class="delete-button" type="button" aria-label="Delete ${escapeHtml(item.title)}" data-delete-roadmap="${item.id}">×</button>
+      </article>`).join("");
+
+    $$('[data-roadmap-status]').forEach((select) => {
+      select.addEventListener("change", () => {
+        const item = roadmap.find((candidate) => candidate.id === select.dataset.roadmapStatus);
+        if (item) item.status = select.value;
+        writeStore(KEYS.roadmap, roadmap);
+        renderRoadmap();
+      });
+    });
+    $$('[data-delete-roadmap]').forEach((button) => {
+      button.addEventListener("click", () => {
+        roadmap = roadmap.filter((item) => item.id !== button.dataset.deleteRoadmap);
+        writeStore(KEYS.roadmap, roadmap);
+        renderRoadmap();
+      });
+    });
+
+    const candidate = sorted.find((item) => item.status === "testing") || sorted.find((item) => item.status === "planned");
+    if (candidate) {
+      $("#next-bet-title").textContent = candidate.title;
+      $("#next-bet-description").textContent = candidate.description;
+      $("#next-bet-score").textContent = priority(candidate).toFixed(1);
+    } else {
+      $("#next-bet-title").textContent = "Backlog cleared";
+      $("#next-bet-description").textContent = "Add the next failure-driven hypothesis when your replays reveal it.";
+      $("#next-bet-score").textContent = "✓";
+    }
+  }
+
+  renderExperiments();
+  renderRoadmap();
+})();

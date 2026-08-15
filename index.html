@@ -1,0 +1,644 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="An interactive Kaggriculture competition brief, experiment log, and improvement roadmap."
+    />
+    <title>Kaggriculture Fieldbook</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+
+    <header class="site-header">
+      <a class="brand" href="#brief" aria-label="Kaggriculture Fieldbook home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 44 44" role="img">
+            <path d="M22 37V18" />
+            <path d="M22 26c-7 0-11-4-11-11 7 0 11 4 11 11Z" />
+            <path d="M22 20c0-7 4-11 11-11 0 7-4 11-11 11Z" />
+          </svg>
+        </span>
+        <span>
+          <strong>Fieldbook</strong>
+          <small>Kaggriculture agent lab</small>
+        </span>
+      </a>
+
+      <nav class="main-nav" aria-label="Workbook sections">
+        <div class="nav-group">
+          <span class="nav-label">Workspace</span>
+          <button class="nav-link is-active" data-view-target="brief" type="button"><span>01</span>Overview</button>
+          <button class="nav-link" data-view-target="leaders" type="button"><span>02</span>Top agents</button>
+          <button class="nav-link" data-view-target="mechanics" type="button"><span>03</span>Mechanics</button>
+        </div>
+        <div class="nav-group">
+          <span class="nav-label">Approaches</span>
+          <button class="nav-link" data-view-target="balanced" type="button"><span>A</span>Balanced tempo</button>
+          <button class="nav-link" data-view-target="expansion" type="button"><span>B</span>Expansion rush</button>
+          <button class="nav-link" data-view-target="livestock" type="button"><span>C</span>Livestock compound</button>
+        </div>
+        <div class="nav-group">
+          <span class="nav-label">Build</span>
+          <button class="nav-link" data-view-target="experiments" type="button"><span>04</span>Experiments</button>
+          <button class="nav-link" data-view-target="roadmap" type="button"><span>05</span>Roadmap</button>
+        </div>
+      </nav>
+
+      <a class="header-link" href="https://www.kaggle.com/competitions/kaggriculture" target="_blank" rel="noreferrer">
+        Kaggle page <span aria-hidden="true">↗</span>
+      </a>
+    </header>
+
+    <main id="main-content">
+      <section class="view is-active" id="brief" aria-labelledby="brief-title">
+        <div class="hero shell">
+          <div class="hero-copy">
+            <p class="eyebrow">Kaggriculture</p>
+            <h1 id="brief-title">Build the winning farm.</h1>
+            <p class="hero-lede">Finish 720 turns with more coins in the bank.</p>
+            <div class="hero-actions">
+              <button class="button button-primary" data-view-jump="experiments" type="button">Log an experiment</button>
+              <button class="button button-secondary" data-view-jump="mechanics" type="button">Study the game</button>
+            </div>
+          </div>
+
+          <aside class="deadline-card" aria-label="Competition deadlines">
+            <div class="deadline-topline">
+              <span class="status-dot" aria-hidden="true"></span>
+              <span>Competition open</span>
+            </div>
+            <p class="countdown-number" id="deadline-days">—</p>
+            <p class="countdown-label">days to final submission</p>
+            <div class="deadline-row">
+              <span>Join + team merge</span>
+              <strong>Sep 23</strong>
+            </div>
+            <div class="deadline-row">
+              <span>Final submission</span>
+              <strong>Sep 30</strong>
+            </div>
+            <small>11:59 PM UTC</small>
+          </aside>
+        </div>
+
+        <div class="stat-strip shell" aria-label="Core competition facts">
+          <div><strong>30</strong><span>in-game days</span></div>
+          <div><strong>24</strong><span>turns per day</span></div>
+          <div><strong>3,000</strong><span>starting coins</span></div>
+          <div><strong>10 × 10</strong><span>farm grid</span></div>
+        </div>
+
+        <section class="section shell" aria-labelledby="win-title">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Essentials</p>
+              <h2 id="win-title">Winning rules</h2>
+            </div>
+            <span class="updated-note">Verified Aug 14, 2026</span>
+          </div>
+
+          <div class="principle-grid">
+            <article class="principle-card principle-card-featured">
+              <span class="card-number">01</span>
+              <h3>Bank coins</h3>
+              <p>Unsold inventory is worth zero.</p>
+              <div class="mini-rule"><span>Rating</span><strong>win / loss / tie</strong></div>
+            </article>
+            <article class="principle-card">
+              <span class="card-number">02</span>
+              <h3>Win consistently</h3>
+              <p>Coin margin does not change rating.</p>
+              <div class="mini-rule"><span>Final</span><strong>Bradley–Terry</strong></div>
+            </article>
+            <article class="principle-card">
+              <span class="card-number">03</span>
+              <h3>Protect the latest two</h3>
+              <p>Only your newest two agents stay active.</p>
+              <div class="mini-rule"><span>Limit</span><strong>5 per day · 100 MiB</strong></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="section shell" aria-labelledby="checklist-title">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Setup</p>
+              <h2 id="checklist-title">Ready to run</h2>
+            </div>
+            <strong class="progress-label" id="checklist-progress">0 / 6 ready</strong>
+          </div>
+          <div class="progress-track" aria-hidden="true"><span id="checklist-progress-bar"></span></div>
+          <div class="checklist" id="readiness-checklist">
+            <label><input type="checkbox" data-check="joined" /><span><strong>Join competition</strong><small>Before Sep 23</small></span></label>
+            <label><input type="checkbox" data-check="environment" /><span><strong>Install the environment</strong><small><code>pip install -U kaggle-environments</code></small></span></label>
+            <label><input type="checkbox" data-check="starter" /><span><strong>Run starter</strong><small>720 turns · no errors</small></span></label>
+            <label><input type="checkbox" data-check="baseline" /><span><strong>Freeze baseline</strong><small>Version the code</small></span></label>
+            <label><input type="checkbox" data-check="submission" /><span><strong>Submit <code>main.py</code></strong><small>Pass self-play</small></span></label>
+            <label><input type="checkbox" data-check="replay" /><span><strong>Review replay</strong><small>Tag one failure</small></span></label>
+          </div>
+        </section>
+      </section>
+
+      <section class="view" id="leaders" aria-labelledby="leaders-title" hidden>
+        <div class="page-intro shell">
+          <div>
+            <p class="eyebrow">Live snapshot · Aug 14</p>
+            <h1 id="leaders-title">Top agents</h1>
+            <p>One public replay sampled per agent. Observed behavior—not private implementation.</p>
+          </div>
+          <a class="button button-secondary" href="https://www.kaggle.com/competitions/kaggriculture/leaderboard" target="_blank" rel="noreferrer">Live leaderboard ↗</a>
+        </div>
+
+        <section class="section shell leader-stack" aria-label="Top three agent analyses">
+          <article class="leader-entry">
+            <div class="leader-rank"><span>01</span><strong>3267.4</strong><small>rating</small></div>
+            <div class="leader-body">
+              <div class="leader-title"><h2>カワシギ</h2><span>Balanced tempo</span></div>
+              <ol class="vertical-flow compact-flow">
+                <li><span>D11</span><p>12 melons · 8 cows · 4 sheep</p></li>
+                <li><span>D21</span><p>13 strawberries · staged third quadrant</p></li>
+                <li><span>End</span><p>102,222 bank · near-empty inventory</p></li>
+              </ol>
+              <p class="analysis-note">Pattern: balanced production, staged expansion, disciplined exit.</p>
+            </div>
+          </article>
+
+          <article class="leader-entry">
+            <div class="leader-rank"><span>02</span><strong>3127.6</strong><small>rating</small></div>
+            <div class="leader-body">
+              <div class="leader-title"><h2>researchstudio.site</h2><span>Expansion rush</span></div>
+              <ol class="vertical-flow compact-flow">
+                <li><span>D11</span><p>3 quadrants · 36 sprouts · 8 cows</p></li>
+                <li><span>D21</span><p>20 strawberries · 10 cows</p></li>
+                <li><span>End</span><p>126,350 bank · inventory cleared</p></li>
+              </ol>
+              <p class="analysis-note">Pattern: early land, dense crops, aggressive capital deployment.</p>
+            </div>
+          </article>
+
+          <article class="leader-entry">
+            <div class="leader-rank"><span>03</span><strong>3108.8</strong><small>rating</small></div>
+            <div class="leader-body">
+              <div class="leader-title"><h2>Ueddy</h2><span>Livestock compound</span></div>
+              <ol class="vertical-flow compact-flow">
+                <li><span>D11</span><p>12 melons · 6 cows · 6 sheep</p></li>
+                <li><span>D21</span><p>4 quadrants · 18 pastures · 12 sheep</p></li>
+                <li><span>End</span><p>80,832 bank · decisive sampled win</p></li>
+              </ol>
+              <p class="analysis-note">Pattern: full-grid expansion, sheep-heavy compounding, wheat support.</p>
+            </div>
+          </article>
+        </section>
+      </section>
+
+      <section class="view approach-view" id="balanced" aria-labelledby="balanced-title" hidden>
+        <div class="page-intro shell">
+          <div><p class="eyebrow">Approach A · v0</p><h1 id="balanced-title">Balanced tempo</h1><p>First local benchmark complete.</p></div>
+          <button class="button button-primary" type="button" data-approach-test="balanced">Log next run</button>
+        </div>
+        <section class="section shell balanced-notebook" aria-label="Balanced Tempo experiment notebook">
+          <div class="notebook-tabs" role="tablist" aria-label="Experiment notebook">
+            <button class="notebook-tab is-active" id="balanced-tab-plan" role="tab" aria-selected="true" aria-controls="balanced-panel-plan" data-notebook-tab="plan" type="button">Plan</button>
+            <button class="notebook-tab" id="balanced-tab-runs" role="tab" aria-selected="false" aria-controls="balanced-panel-runs" data-notebook-tab="runs" type="button">Runs <span>20</span></button>
+            <button class="notebook-tab" id="balanced-tab-replay" role="tab" aria-selected="false" aria-controls="balanced-panel-replay" data-notebook-tab="replay" type="button">Best run <span>30d</span></button>
+            <button class="notebook-tab" id="balanced-tab-findings" role="tab" aria-selected="false" aria-controls="balanced-panel-findings" data-notebook-tab="findings" type="button">Findings</button>
+            <button class="notebook-tab" id="balanced-tab-challenges" role="tab" aria-selected="false" aria-controls="balanced-panel-challenges" data-notebook-tab="challenges" type="button">Challenges <span>3</span></button>
+          </div>
+
+          <div class="notebook-panel" id="balanced-panel-plan" role="tabpanel" aria-labelledby="balanced-tab-plan" data-notebook-panel="plan">
+            <div class="approach-layout">
+              <ol class="vertical-flow approach-flow">
+                <li><span>D00–12</span><div><h3>Melon cash loop</h3><p>Ten melons, five wheat plots, six temporary hands.</p></div></li>
+                <li><span>D11–13</span><div><h3>Stage the compound</h3><p>Build four pastures and unlock the second quadrant.</p></div></li>
+                <li><span>D13–26</span><div><h3>Cattle + strawberries</h3><p>Feed and care for cattle while recurring crops mature.</p></div></li>
+                <li><span>D27–29</span><div><h3>Intended exit · not implemented</h3><p>v0 still hires and buys seeds; a hard liquidation gate is the next change.</p></div></li>
+              </ol>
+              <aside class="approach-brief"><div><span>Opponent</span><strong>Official starter</strong></div><div><span>Protocol</span><strong>10 seeds · both seats</strong></div><div><span>Environment</span><strong>720 turns · local official plugin</strong></div></aside>
+            </div>
+          </div>
+
+          <div class="notebook-panel" id="balanced-panel-runs" role="tabpanel" aria-labelledby="balanced-tab-runs" data-notebook-panel="runs" hidden>
+            <div class="run-summary" aria-label="Experiment summary">
+              <div><span>Record <button class="info-tip" type="button" aria-label="Record means wins, losses, and ties across all tested matches." data-tip="Wins · losses · ties across every tested match.">(i)</button></span><strong>20–0–0</strong><small>wins · losses · ties</small></div>
+              <div><span>Average rank <button class="info-tip" type="button" aria-label="Average rank is mean finishing position. First is 1 and second is 2." data-tip="Mean finishing place. In this two-player game, 1 is best and 2 is worst.">(i)</button></span><strong>1.00 / 2</strong><small>lower is better</small></div>
+              <div><span>Average bank <button class="info-tip" type="button" aria-label="Average bank is mean final banked coins and is the game score." data-tip="Mean final banked coins. Unsold inventory is not included in score.">(i)</button></span><strong>31,337</strong></div>
+              <div><span>Average margin <button class="info-tip" type="button" aria-label="Average margin is our final bank minus the opponent final bank." data-tip="Our final bank minus the opponent’s. Positive means we finished ahead.">(i)</button></span><strong>+27,851</strong><small>coins ahead at finish</small></div>
+              <div><span>Bank range <button class="info-tip" type="button" aria-label="Bank range is the lowest to highest final bank across runs." data-tip="Lowest to highest final bank. A tighter range means more consistent play.">(i)</button></span><strong>22,823–37,175</strong></div>
+              <div><span>Crashes <button class="info-tip" type="button" aria-label="Crashes are matches ended by an exception timeout or invalid runtime state." data-tip="Matches ended by an exception, timeout, or invalid runtime state.">(i)</button></span><strong>0</strong></div>
+            </div>
+            <div class="table-wrap compact-table-wrap">
+              <table class="production-table run-table">
+                <thead><tr><th>Seat</th><th>Games</th><th>Average bank</th><th>Average margin</th></tr></thead>
+                <tbody><tr><td>First</td><td>10</td><td>31,622</td><td>+28,134</td></tr><tr><td>Second</td><td>10</td><td>31,052</td><td>+27,569</td></tr></tbody>
+              </table>
+            </div>
+            <p class="notebook-caption">Benchmark: Balanced Tempo v0 versus Kaggle's starter agent. Seed and seat balanced; saved in <code>results/balanced_tempo_v0.json</code>.</p>
+          </div>
+
+          <div class="notebook-panel" id="balanced-panel-replay" role="tabpanel" aria-labelledby="balanced-tab-replay" data-notebook-panel="replay" hidden>
+            <div class="replay-heading">
+              <div><p class="eyebrow">Best run · seed 3 · second seat</p><h2>30-day timeloop</h2></div>
+              <div class="replay-controls" aria-label="Replay controls">
+                <button type="button" id="replay-previous" aria-label="Previous day">←</button>
+                <button type="button" id="replay-play">Play fast</button>
+                <button type="button" id="replay-next" aria-label="Next day">→</button>
+              </div>
+            </div>
+            <section class="win-conditions" aria-labelledby="win-conditions-title">
+              <div class="win-rule">
+                <div><span>Official win rule <button class="info-tip" type="button" aria-label="A win occurs when our final bank is greater than the opponent final bank after turn 720." data-tip="A win is recorded only if our bank is larger when turn 720 ends. Equal banks are a tie.">(i)</button></span><h3 id="win-conditions-title">Finish turn 720 with more banked coins than the opponent.</h3></div>
+                <strong id="win-current-status">Day 00 · behind by 830</strong>
+              </div>
+              <p class="condition-note">Only bank lead determines the winner. The other conditions are our strategy checkpoints.</p>
+              <div class="condition-grid">
+                <div class="condition-item" id="condition-score">
+                  <div><span>Banked score share <button class="info-tip" type="button" aria-label="Our share of both players current banked coins. More than 50 percent means we are ahead." data-tip="Our share of both banks. Cross 50% to be ahead on the official score.">(i)</button></span><strong id="condition-score-text">41.8%</strong></div>
+                  <div class="condition-track has-threshold" role="progressbar" aria-label="Banked score share" aria-valuemin="0" aria-valuemax="100" aria-valuenow="42"><i id="condition-score-bar"></i></div>
+                </div>
+                <div class="condition-item" id="condition-cows">
+                  <div><span>Cattle engine <button class="info-tip" type="button" aria-label="Our strategy target is four placed cows producing recurring milk." data-tip="Internal checkpoint: place 4 cows to establish recurring milk output.">(i)</button></span><strong id="condition-cows-text">0 / 4</strong></div>
+                  <div class="condition-track" role="progressbar" aria-label="Cattle target" aria-valuemin="0" aria-valuemax="4" aria-valuenow="0"><i id="condition-cows-bar"></i></div>
+                </div>
+                <div class="condition-item" id="condition-strawberries">
+                  <div><span>Strawberry field <button class="info-tip" type="button" aria-label="Our strategy target is fifteen strawberry plots after the transition." data-tip="Internal checkpoint: reach the planned 15 recurring strawberry plots.">(i)</button></span><strong id="condition-strawberries-text">0 / 15</strong></div>
+                  <div class="condition-track" role="progressbar" aria-label="Strawberry target" aria-valuemin="0" aria-valuemax="15" aria-valuenow="0"><i id="condition-strawberries-bar"></i></div>
+                </div>
+                <div class="condition-item is-inactive" id="condition-exit">
+                  <div><span>Clean exit <button class="info-tip" type="button" aria-label="Our terminal checkpoint is to sell all shed inventory before the match ends." data-tip="Internal checkpoint: empty the shed before turn 720 because unsold goods score zero.">(i)</button></span><strong id="condition-exit-text">Not due</strong></div>
+                  <div class="condition-track" role="progressbar" aria-label="Clean exit readiness" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="condition-exit-bar"></i></div>
+                </div>
+              </div>
+            </section>
+            <div class="replay-layout">
+              <div>
+                <div class="replay-board" id="replay-board" role="img" aria-label="Farm state on day 0"></div>
+                <div class="replay-legend" aria-label="Farm legend"><span><i class="replay-key melon"></i>Melon</span><span><i class="replay-key strawberry"></i>Strawberry</span><span><i class="replay-key wheat"></i>Wheat</span><span><i class="replay-key cow"></i>Cow</span><span><i class="replay-worker-key"></i>Worker</span></div>
+              </div>
+              <aside class="replay-readout" aria-live="polite">
+                <div class="replay-day"><span id="replay-phase">Cash foundation</span><strong>Day <b id="replay-day">00</b></strong></div>
+                <div class="replay-stats"><div><span>Bank</span><strong id="replay-bank">2,130</strong></div><div><span>Day change</span><strong id="replay-delta">−870</strong></div><div><span>Margin</span><strong id="replay-margin">−870</strong></div><div><span>Shed</span><strong id="replay-shed">0</strong></div></div>
+                <div class="replay-reason"><span>Rule that fired</span><h3 id="replay-reason-title">Fund the first harvest</h3><p id="replay-reason-text"></p></div>
+                <p class="replay-actions" id="replay-actions"></p>
+                <p class="replay-change" id="replay-change"></p>
+              </aside>
+            </div>
+            <label class="replay-scrubber" for="replay-range"><span>Day 00</span><input id="replay-range" type="range" min="0" max="29" value="0" /><span>Day 29</span></label>
+            <div class="section-heading compact replay-log-heading"><div><p class="eyebrow">Daily trace</p><h2>What changed and why</h2></div></div>
+            <div class="table-wrap replay-table-wrap">
+              <table class="production-table replay-table">
+                <thead><tr><th>Day</th><th>Phase</th><th>Bank</th><th>Change</th><th>What happened</th><th>Why</th></tr></thead>
+                <tbody id="replay-day-body"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="notebook-panel" id="balanced-panel-findings" role="tabpanel" aria-labelledby="balanced-tab-findings" data-notebook-panel="findings" hidden>
+            <ol class="vertical-flow findings-flow">
+              <li><span>Signal 01</span><div><h3>The phase mix works against the starter</h3><p>Every run won, with a +27,851 average margin.</p></div></li>
+              <li><span>Signal 02</span><div><h3>Seat order is not driving the result</h3><p>Average bank differed by only 570 coins between first and second seat.</p></div></li>
+              <li><span>Signal 03</span><div><h3>Execution is still inconsistent</h3><p>Final bank varied by 14,352 coins across seeds.</p></div></li>
+              <li><span>Signal 04</span><div><h3>The target build is often incomplete</h3><p>Three runs ended with three cows; only eight reached ten strawberry plots.</p></div></li>
+            </ol>
+          </div>
+
+          <div class="notebook-panel" id="balanced-panel-challenges" role="tabpanel" aria-labelledby="balanced-tab-challenges" data-notebook-panel="challenges" hidden>
+            <div class="challenge-list">
+              <button class="challenge-row" type="button" data-challenge-prompt="How can we reserve workers for cow placement so every run reaches four cows by day 14?">
+                <span>01</span><strong>Placement contention</strong><p>3 of 20 runs finished one cow short.</p><em>Discuss →</em>
+              </button>
+              <button class="challenge-row" type="button" data-challenge-prompt="How should the scheduler separate watering, feeding, and planting priorities so more runs reach the strawberry target?">
+                <span>02</span><strong>Task collisions</strong><p>Only 8 of 20 runs reached ten strawberry plots.</p><em>Discuss →</em>
+              </button>
+              <button class="challenge-row" type="button" data-challenge-prompt="What explicit liquidation rules should fire on days 27 through 29 to prevent unsold inventory at the finish?">
+                <span>03</span><strong>Loose liquidation</strong><p>One run ended with 50 units still in the shed.</p><em>Discuss →</em>
+              </button>
+            </div>
+            <div class="working-notes">
+              <label for="balanced-working-notes">Working notes</label>
+              <textarea id="balanced-working-notes" rows="4" placeholder="Select a challenge or add your own observation…"></textarea>
+              <span id="balanced-notes-status" aria-live="polite">Saved in this browser</span>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <section class="view approach-view" id="expansion" aria-labelledby="expansion-title" hidden>
+        <div class="page-intro shell">
+          <div><p class="eyebrow">Approach B</p><h1 id="expansion-title">Expansion rush</h1><p>Trade early liquidity for productive surface area.</p></div>
+          <button class="button button-primary" type="button" data-approach-test="expansion">Test approach</button>
+        </div>
+        <section class="section shell approach-layout">
+          <ol class="vertical-flow approach-flow">
+            <li><span>01 · Buffer</span><div><h3>Fund the rush</h3><p>Preserve cash for land and seeds.</p></div></li>
+            <li><span>02 · Unlock</span><div><h3>Buy three quadrants</h3><p>Expand before day 11.</p></div></li>
+            <li><span>03 · Fill</span><div><h3>Dense strawberry cycle</h3><p>Convert surface area into peak production.</p></div></li>
+            <li><span>04 · Convert</span><div><h3>Stop reinvestment</h3><p>Harvest and sell before turn 720.</p></div></li>
+          </ol>
+          <aside class="approach-brief"><div><span>Strength</span><strong>High production ceiling</strong></div><div><span>Risk</span><strong>Action overload</strong></div><div><span>Measure</span><strong>Payback day</strong></div></aside>
+        </section>
+      </section>
+
+      <section class="view approach-view" id="livestock" aria-labelledby="livestock-title" hidden>
+        <div class="page-intro shell">
+          <div><p class="eyebrow">Approach C</p><h1 id="livestock-title">Livestock compound</h1><p>Build recurring yield around feed reliability.</p></div>
+          <button class="button button-primary" type="button" data-approach-test="livestock">Test approach</button>
+        </div>
+        <section class="section shell approach-layout">
+          <ol class="vertical-flow approach-flow">
+            <li><span>01 · Feed</span><div><h3>Secure wheat</h3><p>Hold a daily safety reserve.</p></div></li>
+            <li><span>02 · Build</span><div><h3>Pasture network</h3><p>Expand only with labor capacity.</p></div></li>
+            <li><span>03 · Compound</span><div><h3>Sheep + cattle</h3><p>Collect products and fertilizer on route.</p></div></li>
+            <li><span>04 · Clear</span><div><h3>Final collection</h3><p>Empty shed and inventories.</p></div></li>
+          </ol>
+          <aside class="approach-brief"><div><span>Strength</span><strong>Recurring output</strong></div><div><span>Risk</span><strong>Feed and routing failure</strong></div><div><span>Measure</span><strong>Yield per care action</strong></div></aside>
+        </section>
+      </section>
+
+      <section class="view" id="mechanics" aria-labelledby="mechanics-title" hidden>
+        <div class="page-intro shell">
+          <div>
+            <p class="eyebrow">Reference</p>
+            <h1 id="mechanics-title">Game mechanics</h1>
+          </div>
+          <div class="source-links">
+            <a href="https://www.kaggle.com/competitions/kaggriculture/overview" target="_blank" rel="noreferrer">Official overview ↗</a>
+            <a href="https://www.kaggle.com/competitions/kaggriculture/rules" target="_blank" rel="noreferrer">Official rules ↗</a>
+          </div>
+        </div>
+
+        <section class="section shell optimization-section" aria-labelledby="optimization-title">
+          <div class="section-heading"><div><p class="eyebrow">Objective</p><h2 id="optimization-title">What we are optimizing</h2></div></div>
+          <div class="objective-line"><span>Primary target</span><strong>Maximize bank at turn 720</strong><p>Unsold crops, animals, and shed inventory do not count as score.</p></div>
+          <div class="objective-measures">
+            <div><span>Return</span><strong>Final bank</strong><p>Did the strategy create value?</p></div>
+            <div><span>Reliability</span><strong>Rank + range</strong><p>Does it work across seeds and seats?</p></div>
+            <div><span>Execution</span><strong>0 crashes · 0 inventory</strong><p>Did the plan convert cleanly?</p></div>
+          </div>
+        </section>
+
+        <section class="section shell" aria-labelledby="fixed-title">
+          <div class="section-heading"><div><p class="eyebrow">Environment</p><h2 id="fixed-title">Fixed variables</h2></div><p class="section-note">The agent observes these rules; it cannot change them.</p></div>
+          <div class="fixed-grid">
+            <div><span>Match</span><strong>2 players · 720 turns</strong><p>30 days with 24 turns each.</p></div>
+            <div><span>Starting state</span><strong>3,000 coins · 1 quadrant</strong><p>Northwest 5 × 5 begins unlocked.</p></div>
+            <div><span>Board</span><strong>10 × 10 tiles</strong><p>Three more quadrants cost 1,000 / 2,000 / 4,000.</p></div>
+            <div><span>Storage</span><strong>100 shed items</strong><p>Overflow at day-end is discarded.</p></div>
+            <div><span>Market limit</span><strong>10 orders per turn</strong><p>Both players affect shared prices.</p></div>
+            <div><span>Basic needs</span><strong>2 missed days</strong><p>Unwatered plants become weeds; unfed animals escape.</p></div>
+            <div><span>Labor cost</span><strong>1, 1, 2, 3, 5…</strong><p>Daily hires follow Fibonacci pricing and reset each day.</p></div>
+            <div><span>World noise</span><strong>0.5% weed chance</strong><p>Shops unlock every 3 days and consume stock every 4 turns.</p></div>
+          </div>
+        </section>
+
+        <section class="section shell" aria-labelledby="decision-title">
+          <div class="section-heading"><div><p class="eyebrow">Policy</p><h2 id="decision-title">Current decision tree</h2></div><p class="section-note">Lower number wins when tasks compete.</p></div>
+          <ol class="decision-tree">
+            <li><span>01</span><div><strong>Is value ready?</strong><p>Harvest crops or animal output before it decays or caps.</p></div><em>HARVEST</em></li>
+            <li><span>02</span><div><strong>Is daily survival work due?</strong><p>Water plants, collect feed, and feed cattle.</p></div><em>WATER · PICKUP · FEED</em></li>
+            <li><span>03</span><div><strong>Can an animal earn a bonus?</strong><p>Care after feeding to increase the next production event.</p></div><em>CARE</em></li>
+            <li><span>04</span><div><strong>Has the cattle phase started?</strong><p>Build four pastures and place purchased cows.</p></div><em>BUILD · PLACE</em></li>
+            <li><span>05</span><div><strong>Is a planned crop tile empty?</strong><p>Plant wheat plus melons before day 13; strawberries after.</p></div><em>PLANT</em></li>
+            <li><span>06</span><div><strong>No local task?</strong><p>Move toward the next target; after hour 20, return carried output to the shed.</p></div><em>MOVE · DROP · PASS</em></li>
+          </ol>
+          <div class="policy-gates">
+            <h3>Market and phase gates</h3>
+            <div><span>Always</span><p>Sell completed output already in the shed.</p></div>
+            <div><span>Hour 00</span><p>Hire six temporary hands for the day.</p></div>
+            <div><span>Days 00–12</span><p>Target 10 melons + 5 wheat plots.</p></div>
+            <div><span>Day 11+</span><p>Target 4 cows and keep at least 8 wheat feed in reserve.</p></div>
+            <div><span>Day 13+</span><p>Target 15 strawberries; buy the first expansion when bank ≥ 2,200.</p></div>
+            <div><span>Days 27–29</span><p>No gate yet. The agent continues reinvesting—this is the known exit defect.</p></div>
+          </div>
+          <div class="control-boundaries">
+            <div><span>Agent chooses</span><p>Portfolio, worker count, routing, crop timing, land purchases, market orders, and when to stop reinvesting.</p></div>
+            <div><span>Agent observes</span><p>Both farms, shared prices, town demand, current day/hour, its private seeds, shed, and carried inventory.</p></div>
+            <div><span>Agent cannot control</span><p>Episode seed, opponent actions, shop unlock sequence, weed rolls, rule constants, and the 720-turn deadline.</p></div>
+          </div>
+        </section>
+
+        <section class="section shell mechanics-grid" aria-labelledby="farm-map-title">
+          <div class="farm-panel">
+            <div class="section-heading compact">
+              <div>
+                <p class="eyebrow">Board</p>
+                <h2 id="farm-map-title">10 × 10 farm</h2>
+              </div>
+              <label class="select-label">Focus
+                <select id="farm-focus">
+                  <option value="routing">Routing</option>
+                  <option value="crops">Crops</option>
+                  <option value="animals">Animals</option>
+                  <option value="expansion">Expansion</option>
+                </select>
+              </label>
+            </div>
+            <div class="farm-board-wrap">
+              <div class="farm-board" id="farm-board" aria-label="Illustrative 10 by 10 farm board"></div>
+              <div class="board-legend" id="board-legend"></div>
+            </div>
+          </div>
+          <aside class="insight-panel" id="farm-insight" aria-live="polite"></aside>
+        </section>
+
+        <section class="section shell" aria-labelledby="production-title">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Economy</p>
+              <h2 id="production-title">Production</h2>
+            </div>
+            <div class="segmented-control" role="group" aria-label="Filter production types">
+              <button type="button" class="is-active" data-production-filter="all">All</button>
+              <button type="button" data-production-filter="crop">Crops</button>
+              <button type="button" data-production-filter="animal">Animals</button>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table class="production-table">
+              <thead><tr><th>Asset</th><th>Buy-in</th><th>Base price</th><th>First yield</th><th>Cadence / life</th><th>Daily obligation</th></tr></thead>
+              <tbody id="production-body"></tbody>
+            </table>
+          </div>
+          <p class="table-note">Prices move with supply and town demand.</p>
+        </section>
+
+        <section class="section shell" aria-labelledby="rules-title">
+          <div class="section-heading compact"><div><p class="eyebrow">Invariants</p><h2 id="rules-title">Never miss</h2></div></div>
+          <div class="invariant-strip">
+            <div><strong>2 days</strong><span>missed watering or feed loses the asset</span></div>
+            <div><strong>100 items</strong><span>shed capacity</span></div>
+            <div><strong>Turn 720</strong><span>everything must be sold</span></div>
+          </div>
+        </section>
+
+        <section class="section shell" aria-labelledby="contract-title">
+          <div class="section-heading">
+            <div><p class="eyebrow">Submission</p><h2 id="contract-title">Bot contract</h2></div>
+          </div>
+          <div class="contract-grid">
+            <pre aria-label="Minimal agent return shape"><code>def agent(obs):
+    return {
+        "farmer": ["PASS"],
+        "hands": [],
+        "market": []
+    }</code></pre>
+            <div class="contract-list">
+              <div><strong>Entry point</strong><span><code>main.py</code> at archive root with <code>agent(obs)</code></span></div>
+              <div><strong>Runtime</strong><span>1.6 vCPU · 6.5 GiB RAM · 8 GiB disk</span></div>
+              <div><strong>Network</strong><span>No ingress or egress during evaluation</span></div>
+              <div><strong>Validation</strong><span>First match is your agent versus itself</span></div>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <section class="view" id="experiments" aria-labelledby="experiments-title" hidden>
+        <div class="page-intro shell">
+          <div>
+            <p class="eyebrow">Evidence</p>
+            <h1 id="experiments-title">Experiment log</h1>
+            <p>One change. Enough games. Clear decision.</p>
+          </div>
+          <div class="page-actions">
+            <button class="button button-secondary" id="export-experiments" type="button">Export JSON</button>
+            <button class="button button-primary" id="open-experiment-form" type="button">New experiment</button>
+          </div>
+        </div>
+
+        <section class="section shell experiment-stats" aria-label="Experiment summary">
+          <article><span>Experiments</span><strong id="stat-experiments">0</strong><small>recorded versions</small></article>
+          <article><span>Games</span><strong id="stat-games">0</strong><small>total evidence</small></article>
+          <article><span>Best win rate</span><strong id="stat-win-rate">—</strong><small id="stat-best-version">no data yet</small></article>
+          <article><span>Latest bank</span><strong id="stat-bank">—</strong><small>average final coins</small></article>
+        </section>
+
+        <section class="section shell chart-panel" aria-labelledby="trend-title">
+          <div class="section-heading compact">
+            <div><p class="eyebrow">Trend</p><h2 id="trend-title">Win rate</h2></div>
+          </div>
+          <div class="chart-empty" id="experiment-chart-empty">
+            <svg viewBox="0 0 240 110" aria-hidden="true"><path d="M15 90 63 65 108 73 155 39 225 18" /><circle cx="15" cy="90" r="4" /><circle cx="63" cy="65" r="4" /><circle cx="108" cy="73" r="4" /><circle cx="155" cy="39" r="4" /><circle cx="225" cy="18" r="4" /></svg>
+            <p>Log a matchup to start.</p>
+          </div>
+          <div class="experiment-chart" id="experiment-chart" hidden></div>
+        </section>
+
+        <section class="section shell" aria-labelledby="log-title">
+          <div class="section-heading compact">
+            <div><p class="eyebrow">History</p><h2 id="log-title">Runs</h2></div>
+            <label class="select-label">Sort
+              <select id="experiment-sort">
+                <option value="newest">Newest</option>
+                <option value="winrate">Best win rate</option>
+                <option value="games">Most games</option>
+              </select>
+            </label>
+          </div>
+          <div id="experiment-list" class="experiment-list"></div>
+          <div id="experiment-empty" class="empty-state">
+            <div class="empty-icon" aria-hidden="true">↗</div>
+            <h3>No experiments yet</h3>
+            <p>Start with a baseline.</p>
+            <button class="button button-primary" data-open-experiment type="button">Log baseline</button>
+          </div>
+        </section>
+
+        <dialog id="experiment-dialog" aria-labelledby="experiment-dialog-title">
+          <form id="experiment-form" method="dialog">
+            <div class="dialog-header">
+              <div><p class="eyebrow">New evidence</p><h2 id="experiment-dialog-title">Log an experiment</h2></div>
+              <button class="icon-button" type="button" id="close-experiment-dialog" aria-label="Close dialog">×</button>
+            </div>
+            <div class="form-grid">
+              <label>Version<input required name="version" placeholder="v0.1.0" maxlength="30" /></label>
+              <label>Opponent<input required name="opponent" placeholder="starter" maxlength="60" /></label>
+              <label class="full-field">Single change / hypothesis<input required name="hypothesis" placeholder="Reserve late-game turns for liquidation" maxlength="160" /></label>
+              <label>Games<input required name="games" type="number" min="1" max="100000" value="20" /></label>
+              <label>Wins<input required name="wins" type="number" min="0" max="100000" value="0" /></label>
+              <label>Losses<input required name="losses" type="number" min="0" max="100000" value="0" /></label>
+              <label>Ties<input required name="ties" type="number" min="0" max="100000" value="0" /></label>
+              <label>Average final bank<input name="bank" type="number" min="0" step="1" placeholder="Optional" /></label>
+              <label>Result
+                <select name="result">
+                  <option value="keep">Keep</option>
+                  <option value="iterate">Iterate</option>
+                  <option value="revert">Revert</option>
+                </select>
+              </label>
+              <label class="full-field">Notes<textarea name="notes" rows="3" maxlength="500" placeholder="Failure modes, replay IDs, surprising behavior…"></textarea></label>
+            </div>
+            <p class="form-error" id="experiment-form-error" role="alert"></p>
+            <div class="dialog-actions">
+              <button class="button button-secondary" id="cancel-experiment" type="button">Cancel</button>
+              <button class="button button-primary" type="submit">Save experiment</button>
+            </div>
+          </form>
+        </dialog>
+      </section>
+
+      <section class="view" id="roadmap" aria-labelledby="roadmap-title" hidden>
+        <div class="page-intro shell">
+          <div>
+            <p class="eyebrow">Priorities</p>
+            <h1 id="roadmap-title">Next move</h1>
+            <p>Impact × confidence ÷ effort.</p>
+          </div>
+          <button class="button button-primary" id="add-roadmap-item" type="button">Add idea</button>
+        </div>
+
+        <section class="section shell next-bet" aria-labelledby="next-bet-title">
+          <div>
+            <p class="eyebrow">Top priority</p>
+            <h2 id="next-bet-title">Start with a reliable baseline</h2>
+            <p id="next-bet-description">Log at least one experiment so the roadmap can connect ideas to evidence.</p>
+          </div>
+          <div class="priority-orbit" aria-hidden="true"><span id="next-bet-score">—</span><small>priority</small></div>
+        </section>
+
+        <section class="section shell roadmap-section" aria-labelledby="ideas-title">
+          <div class="section-heading compact">
+            <div><p class="eyebrow">Backlog</p><h2 id="ideas-title">Ideas</h2></div>
+          </div>
+          <div class="roadmap-list" id="roadmap-list"></div>
+        </section>
+
+        <dialog id="roadmap-dialog" aria-labelledby="roadmap-dialog-title">
+          <form id="roadmap-form" method="dialog">
+            <div class="dialog-header">
+              <div><p class="eyebrow">New hypothesis</p><h2 id="roadmap-dialog-title">Add an improvement idea</h2></div>
+              <button class="icon-button" type="button" id="close-roadmap-dialog" aria-label="Close dialog">×</button>
+            </div>
+            <div class="form-grid">
+              <label class="full-field">Idea<input required name="title" maxlength="100" placeholder="Late-game liquidation mode" /></label>
+              <label class="full-field">Why it might help<textarea required name="description" rows="3" maxlength="300" placeholder="What failure does this address?"></textarea></label>
+              <label>Impact (1–5)<input required name="impact" type="number" min="1" max="5" value="3" /></label>
+              <label>Confidence (1–5)<input required name="confidence" type="number" min="1" max="5" value="3" /></label>
+              <label>Effort (1–5)<input required name="effort" type="number" min="1" max="5" value="2" /></label>
+            </div>
+            <div class="dialog-actions">
+              <button class="button button-secondary" id="cancel-roadmap" type="button">Cancel</button>
+              <button class="button button-primary" type="submit">Add to roadmap</button>
+            </div>
+          </form>
+        </dialog>
+      </section>
+    </main>
+
+    <footer class="site-footer shell">
+      <div><strong>Kaggriculture Fieldbook</strong></div>
+      <div class="footer-links">
+        <a href="https://www.kaggle.com/competitions/kaggriculture" target="_blank" rel="noreferrer">Competition</a>
+        <a href="https://github.com/Kaggle/kaggle-environments" target="_blank" rel="noreferrer">Environment</a>
+      </div>
+    </footer>
+
+    <script src="results/balanced_tempo_best_run.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

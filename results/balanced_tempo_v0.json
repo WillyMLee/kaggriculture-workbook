@@ -1,0 +1,547 @@
+{
+  "experiment": "balanced-tempo-v0-vs-starter",
+  "created_at": "2026-08-15T13:58:05.736236+00:00",
+  "environment_source": "Kaggle/kaggle-environments master, kaggriculture plugin",
+  "configuration": {
+    "seeds": 10,
+    "seat_orders": 2,
+    "episode_steps": 720
+  },
+  "summary": {
+    "games": 20,
+    "wins": 20,
+    "losses": 0,
+    "ties": 0,
+    "win_rate": 1.0,
+    "average_rank": 1,
+    "average_bank": 31337.15,
+    "bank_range": [
+      22823.0,
+      37175.0
+    ],
+    "average_margin": 27851.25,
+    "crashes": 0
+  },
+  "games": [
+    {
+      "seed": 0,
+      "seat": 0,
+      "result": "win",
+      "balanced_bank": 36609.0,
+      "starter_bank": 3500.0,
+      "margin": 33109.0,
+      "balanced": {
+        "bank": 36609.0,
+        "shed_units": 1,
+        "cows": 4,
+        "strawberries": 10,
+        "quadrants": 2
+      },
+      "starter": {
+        "bank": 3500.0,
+        "shed_units": 0,
+        "cows": 0,
+        "strawberries": 0,
+        "quadrants": 1
+      },
+      "statuses": [
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "seed": 0,
+      "seat": 1,
+      "result": "win",
+      "balanced_bank": 30056.0,
+      "starter_bank": 3498.0,
+      "margin": 26558.0,
+      "balanced": {
+        "bank": 30056.0,
+        "shed_units": 21,
+        "cows": 3,
+        "strawberries": 9,
+        "quadrants": 2
+      },
+      "starter": {
+        "bank": 3498.0,
+        "shed_units": 0,
+        "cows": 0,
+        "strawberries": 0,
+        "quadrants": 1
+      },
+      "statuses": [
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "seed": 1,
+      "seat": 0,
+      "result": "win",
+      "balanced_bank": 32596.0,
+      "starter_bank": 3492.0,
+      "margin": 29104.0,
+      "balanced": {
+        "bank": 32596.0,
+        "shed_units": 8,
+        "cows": 4,
+        "strawberries": 9,
+        "quadrants": 2
+      },
+      "starter": {
+        "bank": 3492.0,
+        "shed_units": 0,
+        "cows": 0,
+        "strawberries": 0,
+        "quadrants": 1
+      },
+      "statuses": [
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "seed": 1,
+      "seat": 1,
+      "result": "win",
+      "balanced_bank": 30226.0,
+      "starter_bank": 3492.0,
+      "margin": 26734.0,
+      "balanced": {
+        "bank": 30226.0,
+        "shed_units": 28,
+        "cows": 4,
+        "strawberries": 8,
+        "quadrants": 2
+      },
+      "starter": {
+        "bank": 3492.0,
+        "shed_units": 0,
+        "cows": 0,
+        "strawberries": 0,
+        "quadrants": 1
+      },
+      "statuses": [
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "seed": 2,
+      "seat": 0,
+      "result": "win",
+      "balanced_bank": 33140.0,
+      "starter_bank": 3472.0,
+      "margin": 29668.0,
+      "balanced": {
+        "bank": 33140.0,
+        "shed_units": 15,
+        "cows": 4,
+        "strawberries": 10,
+        "quadrants": 2
+      },
+      "starter": {
+        "bank": 3472.0,
+        "shed_units": 0,
+        "cows": 0,
+        "strawberries": 0,
+        "quadrants": 1
+      },
+      "statuses": [
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "seed": 2,
+      "seat": 1,
+      "result": "win",
+      "balanced_bank": 31284.0,
+      "starter_bank": 3465.0,
+      "margin": 27819.0,
+      "balanced": {
+        "bank": 31284.0,
+        "shed_units": 14,
+        "cows": 4,
+        "strawberries": 10,
+        "quadrants": 2
+      },
+      "starter": {
+        "bank": 3465.0,
+        "shed_units": 0,
+        "cows": 0,
+        "strawberries": 0,
+        "quadrants": 1
+      },
+      "statuses": [
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "seed": 3,
+      "seat": 0,
+      "result": "win",
+      "balanced_bank": 32367.0,
+      "starter_bank": 3486.0,
+      "margin": 28881.0,
+      "balanced": {
+        "bank": 32367.0,
+        "shed_units": 10,
+        "cows": 4,
+        "strawberries": 9,
+        "quadrants": 2
+      },
+      "starter": {
+        "bank": 3486.0,
+        "shed_units": 0,
+        "cows": 0,
+        "strawberries": 0,
+        "quadrants": 1
+      },
+      "statuses": [
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "seed": 3,
+      "seat": 1,
+      "result": "win",
+      "balanced_bank": 37175.0,
+      "starter_bank": 3486.0,
+      "margin": 33689.0,
+      "balanced": {
+        "bank": 37175.0,
+        "shed_units": 8,
+        "cows": 4,
+        "strawberries": 9,
+        "quadrants": 2
+      },
+      "starter": {
+        "bank": 3486.0,
+        "shed_units": 0,
+        "cows": 0,
+        "strawberries": 0,
+        "quadrants": 1
+      },
+      "statuses": [
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "seed": 4,
+      "seat": 0,
+      "result": "win",
+      "balanced_bank": 29389.0,
+      "starter_bank": 3516.0,
+      "margin": 25873.0,
+      "balanced": {
+        "bank": 29389.0,
+        "shed_units": 10,
+        "cows": 4,
+        "strawberries": 9,
+        "quadrants": 2
+      },
+      "starter": {
+        "bank": 3516.0,
+        "shed_units": 0,
+        "cows": 0,
+        "strawberries": 0,
+        "quadrants": 1
+      },
+      "statuses": [
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "seed": 4,
+      "seat": 1,
+      "result": "win",
+      "balanced_bank": 29022.0,
+      "starter_bank": 3516.0,
+      "margin": 25506.0,
+      "balanced": {
+        "bank": 29022.0,
+        "shed_units": 21,
+        "cows": 4,
+        "strawberries": 7,
+        "quadrants": 2
+      },
+      "starter": {
+        "bank": 3516.0,
+        "shed_units": 0,
+        "cows": 0,
+        "strawberries": 0,
+        "quadrants": 1
+      },
+      "statuses": [
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "seed": 5,
+      "seat": 0,
+      "result": "win",
+      "balanced_bank": 32584.0,
+      "starter_bank": 3494.0,
+      "margin": 29090.0,
+      "balanced": {
+        "bank": 32584.0,
+        "shed_units": 28,
+        "cows": 4,
+        "strawberries": 8,
+        "quadrants": 2
+      },
+      "starter": {
+        "bank": 3494.0,
+        "shed_units": 0,
+        "cows": 0,
+        "strawberries": 0,
+        "quadrants": 1
+      },
+      "statuses": [
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "seed": 5,
+      "seat": 1,
+      "result": "win",
+      "balanced_bank": 33198.0,
+      "starter_bank": 3494.0,
+      "margin": 29704.0,
+      "balanced": {
+        "bank": 33198.0,
+        "shed_units": 50,
+        "cows": 3,
+        "strawberries": 7,
+        "quadrants": 2
+      },
+      "starter": {
+        "bank": 3494.0,
+        "shed_units": 0,
+        "cows": 0,
+        "strawberries": 0,
+        "quadrants": 1
+      },
+      "statuses": [
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "seed": 6,
+      "seat": 0,
+      "result": "win",
+      "balanced_bank": 30473.0,
+      "starter_bank": 3465.0,
+      "margin": 27008.0,
+      "balanced": {
+        "bank": 30473.0,
+        "shed_units": 14,
+        "cows": 4,
+        "strawberries": 10,
+        "quadrants": 2
+      },
+      "starter": {
+        "bank": 3465.0,
+        "shed_units": 0,
+        "cows": 0,
+        "strawberries": 0,
+        "quadrants": 1
+      },
+      "statuses": [
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "seed": 6,
+      "seat": 1,
+      "result": "win",
+      "balanced_bank": 30473.0,
+      "starter_bank": 3465.0,
+      "margin": 27008.0,
+      "balanced": {
+        "bank": 30473.0,
+        "shed_units": 14,
+        "cows": 4,
+        "strawberries": 10,
+        "quadrants": 2
+      },
+      "starter": {
+        "bank": 3465.0,
+        "shed_units": 0,
+        "cows": 0,
+        "strawberries": 0,
+        "quadrants": 1
+      },
+      "statuses": [
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "seed": 7,
+      "seat": 0,
+      "result": "win",
+      "balanced_bank": 23425.0,
+      "starter_bank": 3488.0,
+      "margin": 19937.0,
+      "balanced": {
+        "bank": 23425.0,
+        "shed_units": 20,
+        "cows": 3,
+        "strawberries": 9,
+        "quadrants": 2
+      },
+      "starter": {
+        "bank": 3488.0,
+        "shed_units": 0,
+        "cows": 0,
+        "strawberries": 0,
+        "quadrants": 1
+      },
+      "statuses": [
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "seed": 7,
+      "seat": 1,
+      "result": "win",
+      "balanced_bank": 22823.0,
+      "starter_bank": 3455.0,
+      "margin": 19368.0,
+      "balanced": {
+        "bank": 22823.0,
+        "shed_units": 10,
+        "cows": 4,
+        "strawberries": 9,
+        "quadrants": 2
+      },
+      "starter": {
+        "bank": 3455.0,
+        "shed_units": 0,
+        "cows": 0,
+        "strawberries": 0,
+        "quadrants": 1
+      },
+      "statuses": [
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "seed": 8,
+      "seat": 0,
+      "result": "win",
+      "balanced_bank": 34482.0,
+      "starter_bank": 3461.0,
+      "margin": 31021.0,
+      "balanced": {
+        "bank": 34482.0,
+        "shed_units": 14,
+        "cows": 4,
+        "strawberries": 10,
+        "quadrants": 2
+      },
+      "starter": {
+        "bank": 3461.0,
+        "shed_units": 0,
+        "cows": 0,
+        "strawberries": 0,
+        "quadrants": 1
+      },
+      "statuses": [
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "seed": 8,
+      "seat": 1,
+      "result": "win",
+      "balanced_bank": 34482.0,
+      "starter_bank": 3461.0,
+      "margin": 31021.0,
+      "balanced": {
+        "bank": 34482.0,
+        "shed_units": 14,
+        "cows": 4,
+        "strawberries": 10,
+        "quadrants": 2
+      },
+      "starter": {
+        "bank": 3461.0,
+        "shed_units": 0,
+        "cows": 0,
+        "strawberries": 0,
+        "quadrants": 1
+      },
+      "statuses": [
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "seed": 9,
+      "seat": 0,
+      "result": "win",
+      "balanced_bank": 31157.0,
+      "starter_bank": 3508.0,
+      "margin": 27649.0,
+      "balanced": {
+        "bank": 31157.0,
+        "shed_units": 11,
+        "cows": 4,
+        "strawberries": 8,
+        "quadrants": 2
+      },
+      "starter": {
+        "bank": 3508.0,
+        "shed_units": 0,
+        "cows": 0,
+        "strawberries": 0,
+        "quadrants": 1
+      },
+      "statuses": [
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "seed": 9,
+      "seat": 1,
+      "result": "win",
+      "balanced_bank": 31782.0,
+      "starter_bank": 3504.0,
+      "margin": 28278.0,
+      "balanced": {
+        "bank": 31782.0,
+        "shed_units": 14,
+        "cows": 4,
+        "strawberries": 10,
+        "quadrants": 2
+      },
+      "starter": {
+        "bank": 3504.0,
+        "shed_units": 0,
+        "cows": 0,
+        "strawberries": 0,
+        "quadrants": 1
+      },
+      "statuses": [
+        "DONE",
+        "DONE"
+      ]
+    }
+  ]
+}

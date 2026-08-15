@@ -1,0 +1,13 @@
+{
+  "name": "kaggriculture-workbook",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A visual fieldbook for Kaggle's Kaggriculture competition.",
+  "scripts": {
+    "build": "node scripts/build-site.mjs",
+    "deploy": "npm run build && wrangler pages deploy dist --project-name kaggriculture-workbook --branch main"
+  },
+  "devDependencies": {
+    "wrangler": "^4.123.0"
+  }
+}
