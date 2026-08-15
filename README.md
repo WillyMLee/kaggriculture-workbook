@@ -77,7 +77,9 @@ npm run submission:build
 npm run submission:validate
 ```
 
-The generated `artifacts/kaggriculture-v0.2.0.tar.gz` becomes the frozen first-opponent artifact for future head-to-head experiments.
+The generated `artifacts/kaggriculture-v0.2.1.tar.gz` contains one self-contained `main.py` and becomes the frozen first-opponent artifact for future head-to-head experiments.
+
+Kaggle accepted v0.2.1 after v0.2.0 exposed a runtime package-name collision with the generic module name `agents`. The accepted artifact began at rating 600.0 and rank 2,862 before matched ladder play.
 
 Compare a future architecture with that artifact in both seats:
 

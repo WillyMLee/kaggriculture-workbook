@@ -218,7 +218,7 @@ def _operations_attention(obs, farm, private, opponent_signal, horizon):
     return tasks
 
 
-def agent(obs):
+def _policy(obs):
     farms = obs.get("farms", [])
     player = int(obs.get("player", 0))
     private = obs.get("private", {}) or {}
@@ -299,6 +299,14 @@ def agent(obs):
         "hands": actions[1:],
         "market": _market_plan(obs, farm, private, opponent_signal, horizon),
     }
+
+
+def agent(obs):
+    """Kaggle entry point with a valid no-op fallback for unexpected states."""
+    try:
+        return _policy(obs)
+    except Exception:
+        return {"farmer": ["PASS"], "hands": [], "market": []}
 
 
 balanced_tempo_agent = agent

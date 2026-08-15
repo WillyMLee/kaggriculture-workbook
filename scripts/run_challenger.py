@@ -25,7 +25,7 @@ def load_callable(reference: str):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("challenger", help="Python reference such as agents.experimental:agent")
-    parser.add_argument("--baseline", type=Path, default=PROJECT_ROOT / "artifacts" / "kaggriculture-v0.2.0.tar.gz")
+    parser.add_argument("--baseline", type=Path, default=PROJECT_ROOT / "artifacts" / "kaggriculture-v0.2.1.tar.gz")
     parser.add_argument("--seeds", type=int, default=10)
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()

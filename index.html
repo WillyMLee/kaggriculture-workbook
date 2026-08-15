@@ -476,7 +476,7 @@
         <section class="section shell" aria-labelledby="first-plan-title">
           <div class="section-heading"><div><p class="eyebrow">Learning plan</p><h2 id="first-plan-title">Submit early, diagnose carefully</h2></div></div>
           <ol class="system-flow submit-flow">
-            <li><span>01</span><div><strong>Freeze v0.2</strong><p>Keep the three attention modules readable, bounded, and protected by a safe fallback action.</p></div><em>one known policy</em></li>
+            <li><span>01</span><div><strong>Freeze v0.2.1</strong><p>Keep the three attention modules readable, bounded, and protected by a safe fallback action.</p></div><em>one known policy</em></li>
             <li><span>02</span><div><strong>Pass local gates</strong><p>Complete self-play, starter matches, both seats, varied seeds, and the late-game liquidation test.</p></div><em>zero runtime failures</em></li>
             <li><span>03</span><div><strong>Enter the ladder</strong><p>Kaggle first validates the bot against a copy of itself, then matches it with similarly rated submissions.</p></div><em>public evidence</em></li>
             <li><span>04</span><div><strong>Wait for signal</strong><p>Record rating, rank, and episode count at consistent checkpoints instead of reacting to every move.</p></div><em>50 · 100 · 250 episodes</em></li>
@@ -496,10 +496,10 @@
         <section class="section shell" aria-labelledby="submission-gate-title">
           <div class="section-heading"><div><p class="eyebrow">Release gate</p><h2 id="submission-gate-title">v0.2 readiness</h2></div><strong class="progress-label" id="submission-progress">0 / 6 ready</strong></div>
           <div class="candidate-evidence" aria-label="Validated candidate evidence">
-            <div><span>Self-play</span><strong>3 / 3 seeds</strong><small>both bots reached DONE</small></div>
+            <div><span>Kaggle validation</span><strong>Complete</strong><small>single-file v0.2.1 accepted</small></div>
+            <div><span>Initial ladder</span><strong>600.0</strong><small>#2,862 before matched play</small></div>
             <div><span>Starter benchmark</span><strong>20 / 20 ahead</strong><small>both seats · 10 seeds</small></div>
             <div><span>Runtime failures</span><strong>0</strong><small>across 20 episodes</small></div>
-            <div><span>Terminal shed</span><strong>0–1 items</strong><small>17 / 20 ended empty</small></div>
           </div>
           <div class="progress-track" aria-hidden="true"><span id="submission-progress-bar"></span></div>
           <div class="checklist submission-checklist">
@@ -527,7 +527,8 @@
               <div><strong>Daily limit</strong><span>Up to five agent submissions per team</span></div>
             </div>
           </div>
-          <p class="source-note"><strong>Frozen local opponent:</strong> <code>artifacts/kaggriculture-v0.2.0.tar.gz</code>. Build with <code>npm run submission:build</code>; validate the exact archive with <code>npm run submission:validate</code>.</p>
+          <p class="source-note"><strong>Frozen local opponent:</strong> <code>artifacts/kaggriculture-v0.2.1.tar.gz</code>. Build with <code>npm run submission:build</code>; validate the exact archive with <code>npm run submission:validate</code>.</p>
+          <p class="source-note"><strong>Packaging lesson:</strong> v0.2.0 failed before play because <code>agents</code> collided with a Kaggle-installed module. v0.2.1 packages one self-contained <code>main.py</code> and passed validation.</p>
           <p class="source-note">Submission and ranking behavior: <a href="https://www.kaggle.com/competitions/kaggriculture/overview" target="_blank" rel="noreferrer">official Kaggriculture evaluation section ↗</a>.</p>
         </section>
       </section>

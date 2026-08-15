@@ -11,16 +11,12 @@ from pathlib import Path
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-SUBMISSION_FILES = (
-    Path("main.py"),
-    Path("agents/__init__.py"),
-    Path("agents/balanced_tempo.py"),
-)
+SUBMISSION_FILES = ((Path("agents/balanced_tempo.py"), "main.py"),)
 
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--version", default="v0.2.0")
+    parser.add_argument("--version", default="v0.2.1")
     args = parser.parse_args()
 
     artifact_dir = PROJECT_ROOT / "artifacts"
@@ -28,8 +24,8 @@ def main():
     artifact = artifact_dir / f"kaggriculture-{args.version}.tar.gz"
 
     with tarfile.open(artifact, "w:gz") as bundle:
-        for relative in SUBMISSION_FILES:
-            bundle.add(PROJECT_ROOT / relative, arcname=relative.as_posix())
+        for source, archive_name in SUBMISSION_FILES:
+            bundle.add(PROJECT_ROOT / source, arcname=archive_name)
 
     checksum = hashlib.sha256(artifact.read_bytes()).hexdigest()
     manifest = {
@@ -37,10 +33,14 @@ def main():
         "created_at": datetime.now(timezone.utc).isoformat(),
         "artifact": artifact.name,
         "sha256": checksum,
-        "files": [path.as_posix() for path in SUBMISSION_FILES],
+        "files": [
+            {"source": source.as_posix(), "archive": archive_name}
+            for source, archive_name in SUBMISSION_FILES
+        ],
         "entry_point": "main.py:agent",
     }
-    manifest_path = PROJECT_ROOT / "results" / "submission_v0_2_manifest.json"
+    version_slug = args.version.replace(".", "_")
+    manifest_path = PROJECT_ROOT / "results" / f"submission_{version_slug}_manifest.json"
     manifest_path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(manifest, indent=2))
 

@@ -4,7 +4,7 @@
   const KEYS = {
     checklist: "kaggriculture-fieldbook-checklist-v1",
     experiments: "kaggriculture-fieldbook-experiments-v1",
-    submissions: "kaggriculture-fieldbook-submissions-v1",
+    submissions: "kaggriculture-fieldbook-submissions-v2",
     submissionGate: "kaggriculture-submission-gate-v2",
     roadmap: "kaggriculture-fieldbook-roadmap-v1",
     balancedNotes: "kaggriculture-balanced-notes-v1",
@@ -376,7 +376,31 @@
   renderProduction();
 
   // Kaggle submission tracker
-  let submissions = readStore(KEYS.submissions, []);
+  const firstLadderEntries = [
+    {
+      id: "submission-v0-2-0",
+      version: "v0.2.0",
+      date: "2026-08-15",
+      status: "error",
+      episodes: 0,
+      rating: null,
+      rank: null,
+      change: "First multi-file Kaggle upload",
+      notes: "Validation failed before play: the generic agents package name collided with Kaggle's installed module.",
+    },
+    {
+      id: "submission-v0-2-1",
+      version: "v0.2.1",
+      date: "2026-08-15",
+      status: "active",
+      episodes: 1,
+      rating: 600,
+      rank: 2862,
+      change: "Single-file artifact; same three-attention policy",
+      notes: "Validation complete. Initial 600.0 rating is the ladder starting point; wait for matched episodes before judging strategy.",
+    },
+  ];
+  let submissions = readStore(KEYS.submissions, firstLadderEntries);
   if (!Array.isArray(submissions)) submissions = [];
   const submissionDialog = $("#submission-dialog");
   const submissionForm = $("#submission-form");
