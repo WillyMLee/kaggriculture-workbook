@@ -8,6 +8,8 @@ import json
 import statistics
 import sys
 import tempfile
+import time
+import hashlib
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -47,21 +49,38 @@ def suspicious_fallback_turns(steps, seat):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("challenger", help="Python reference such as agents.experimental:agent")
+    parser.add_argument("challenger", nargs="?", default="agents.balanced_tempo:agent", help="Python reference such as agents.experimental:agent")
+    parser.add_argument("--challenger-artifact", type=Path, help="Exact tar.gz challenger artifact; overrides the Python reference")
     parser.add_argument("--baseline", type=Path, default=PROJECT_ROOT / "artifacts" / "kaggriculture-v0.2.1.tar.gz")
     parser.add_argument("--seeds", type=int, default=10)
+    parser.add_argument("--seed-start", type=int, default=0)
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()
 
-    challenger = load_callable(args.challenger)
     kaggle, _ = load_environment()
     games = []
     with tempfile.TemporaryDirectory(prefix="kaggriculture-baseline-") as temp_dir:
-        baseline = load_artifact_agent(args.baseline.resolve(), Path(temp_dir))
-        for seed in range(args.seeds):
+        temp_root = Path(temp_dir)
+        baseline = load_artifact_agent(args.baseline.resolve(), temp_root / "baseline")
+        load_started = time.perf_counter()
+        challenger = (
+            load_artifact_agent(args.challenger_artifact.resolve(), temp_root / "challenger")
+            if args.challenger_artifact
+            else load_callable(args.challenger)
+        )
+        challenger_load_ms = round((time.perf_counter() - load_started) * 1000, 3)
+        for seed in range(args.seed_start, args.seed_start + args.seeds):
             for seat in (0, 1):
+                action_times_ms = []
+
+                def timed_challenger(obs):
+                    started = time.perf_counter()
+                    action = challenger(obs)
+                    action_times_ms.append((time.perf_counter() - started) * 1000)
+                    return action
+
                 agents = [baseline, baseline]
-                agents[seat] = challenger
+                agents[seat] = timed_challenger
                 env = kaggle.make(ENV_NAME, configuration={"seed": seed}, debug=False)
                 env.run(agents)
                 final = env.steps[-1]
@@ -76,18 +95,36 @@ def main():
                     "margin": margin,
                     "statuses": [state["status"] for state in final],
                     "suspicious_fallback_turns": suspicious_fallback_turns(env.steps, seat),
+                    "max_action_ms": round(max(action_times_ms, default=0), 3),
+                    "average_action_ms": round(statistics.mean(action_times_ms), 3) if action_times_ms else 0,
                 })
 
+    margins = [game["margin"] for game in games]
     summary = {
         "episodes": len(games),
         "wins": sum(game["result"] == "win" for game in games),
         "losses": sum(game["result"] == "loss" for game in games),
         "ties": sum(game["result"] == "tie" for game in games),
-        "average_margin": round(statistics.mean(game["margin"] for game in games), 2),
+        "average_margin": round(statistics.mean(margins), 2),
+        "minimum_margin": round(min(margins), 2),
         "runtime_failures": sum(any(status != "DONE" for status in game["statuses"]) for game in games),
         "suspicious_fallback_turns": sum(game["suspicious_fallback_turns"] for game in games),
+        "maximum_action_ms": max(game["max_action_ms"] for game in games),
     }
-    payload = {"baseline": args.baseline.name, "challenger": args.challenger, "summary": summary, "games": games}
+    challenger_label = args.challenger_artifact.name if args.challenger_artifact else args.challenger
+    artifact = args.challenger_artifact.resolve() if args.challenger_artifact else None
+    payload = {
+        "baseline": args.baseline.name,
+        "challenger": challenger_label,
+        "configuration": {"seed_start": args.seed_start, "seeds": args.seeds, "seat_orders": 2},
+        "artifact": {
+            "bytes": artifact.stat().st_size,
+            "sha256": hashlib.sha256(artifact.read_bytes()).hexdigest(),
+            "load_ms": challenger_load_ms,
+        } if artifact else None,
+        "summary": summary,
+        "games": games,
+    }
     if args.output:
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")

@@ -89,6 +89,15 @@ Compare a future architecture with that artifact in both seats:
 
 The corrected phase candidate and weighted-strategy v0.4 candidate each won 20 of 20 local games against the exact v0.2.1 artifact, averaging a +13,439.25 bank margin. This is only the fixed-opponent gate; broader strategy-family evaluation remains required before another Kaggle submission.
 
+Run exact-artifact packaging and held-out matchup QA with:
+
+```powershell
+.\.venv\Scripts\python.exe scripts\qa_submission_artifact.py artifacts\kaggriculture-v0.4.0.tar.gz --output results\qa_v0_4_packaging.json
+.\.venv\Scripts\python.exe scripts\run_challenger.py --challenger-artifact artifacts\kaggriculture-v0.4.0.tar.gz --seed-start 10 --seeds 50 --output results\qa_v0_4_vs_submitted_v0_2_1_heldout.json
+```
+
+That held-out suite produced 100 wins in 100 games, a +11,853.13 average margin, a +1,380 minimum margin, zero runtime failures, zero suspicious fallbacks, and a 49.889 ms maximum local action time. The 4,854-byte archive is far below the competition's 100 MiB limit and contains only root-level `main.py`.
+
 ## Sources
 
 Competition facts were checked against the live Kaggle pages on August 14, 2026:

@@ -390,6 +390,17 @@
           </ol>
           <p class="source-note">Trace evidence: <code>results/phase_tempo_v0_3_seed5_loss_trace.json</code> and <code>results/weighted_strategy_v0_4_seed5_regression_trace.json</code>.</p>
         </section>
+        <section class="section shell" aria-labelledby="heldout-qa-title">
+          <div class="section-heading"><div><p class="eyebrow">Final local QA</p><h2 id="heldout-qa-title">Ready against the submitted control</h2></div><strong class="qa-verdict">CONDITIONAL PASS</strong></div>
+          <div class="candidate-evidence">
+            <div><span>Held-out matchup</span><strong>100 / 100 wins</strong><small>seeds 10–59 · both seats</small></div>
+            <div><span>Worst margin</span><strong>+1,380</strong><small>average +11,853</small></div>
+            <div><span>Execution</span><strong>0 fallbacks</strong><small>0 runtime failures · max 49.9 ms</small></div>
+            <div><span>Artifact</span><strong>4,854 bytes</strong><small>root main.py · 100 MiB limit</small></div>
+          </div>
+          <p class="source-note"><strong>Readiness boundary:</strong> v0.4 is ready if the requirement is reliable superiority to submitted v0.2.1. It is not yet evidence of superiority to unfamiliar ladder architectures.</p>
+          <p class="source-note">Evidence: <code>results/qa_v0_4_vs_submitted_v0_2_1_heldout.json</code> and <code>results/qa_v0_4_packaging.json</code>. No Kaggle submission was made.</p>
+        </section>
         <section class="section shell" aria-labelledby="agent-promotion-title">
           <div class="section-heading compact"><div><p class="eyebrow">Promotion rule</p><h2 id="agent-promotion-title">A candidate earns the next test</h2></div></div>
           <ol class="system-flow">
@@ -598,8 +609,8 @@
           <div class="section-heading"><div><p class="eyebrow">Release gate</p><h2 id="submission-gate-title">v0.3 candidate readiness</h2></div><strong class="progress-label" id="submission-progress">0 / 6 ready</strong></div>
           <div class="candidate-evidence" aria-label="Validated candidate evidence">
             <div><span>Replay diagnoses</span><strong>4 archived</strong><small>1 win · 3 losses</small></div>
-            <div><span>Frozen challenge</span><strong>20 / 20 wins</strong><small>v0.4 vs exact v0.2.1</small></div>
-            <div><span>Average margin</span><strong>+13,439</strong><small>both seats · 10 seeds</small></div>
+            <div><span>Held-out challenge</span><strong>100 / 100 wins</strong><small>exact v0.4 vs exact v0.2.1</small></div>
+            <div><span>Average margin</span><strong>+11,853</strong><small>worst win +1,380</small></div>
             <div><span>Runtime failures</span><strong>0</strong><small>across 20 episodes</small></div>
           </div>
           <div class="progress-track" aria-hidden="true"><span id="submission-progress-bar"></span></div>

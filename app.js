@@ -549,13 +549,18 @@
       version: "v0.4.0",
       date: "2026-08-15",
       status: "candidate",
-      evidence: "Local 20–0 · six strategy probes",
+      evidence: "Held-out 100–0 · worst margin +1,380",
       model: "Weighted strategy beliefs plus dynamic operations, opponent, and horizon attention.",
-      limitation: "Strategy probabilities are hand-weighted and need calibration against diverse opponents.",
+      limitation: "Ready against submitted v0.2.1; still one opponent family, so broader ladder generalization is unproven.",
     },
   ];
   let agentArchive = readStore(KEYS.agentArchive, seededAgents);
   if (!Array.isArray(agentArchive)) agentArchive = [...seededAgents];
+  agentArchive = agentArchive.map((item) => {
+    const seeded = seededAgents.find((candidate) => candidate.id === item.id);
+    return seeded ? { ...item, evidence: seeded.evidence, limitation: seeded.limitation } : item;
+  });
+  writeStore(KEYS.agentArchive, agentArchive);
   const agentDialog = $("#agent-dialog");
   const agentForm = $("#agent-form");
 

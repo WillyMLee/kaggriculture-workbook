@@ -765,6 +765,7 @@ main { margin-left: var(--rail-width); }
 .agent-lineage .agent-version strong { font-size: 1rem; font-weight: 400; }
 .agent-lineage .agent-version small { color: var(--ink-soft); font-size: .62rem; }
 .agent-lineage .delete-button { align-self: start; }
+.qa-verdict { padding: 7px 10px; border: 1px solid rgba(136,166,115,.5); color: var(--leaf); font-size: .64rem; font-weight: 400; letter-spacing: .08em; }
 .submission-table { min-width: 940px; }
 .submission-table td { vertical-align: top; font-size: .7rem; }
 .submission-table td:first-child strong, .submission-table td:first-child small { display: block; }
