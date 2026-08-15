@@ -59,9 +59,9 @@ Run it with:
 
 The project-local runtime loads the official Kaggriculture environment plugin from `.vendor/kaggle-environments` while remaining compatible with Python 3.9.
 
-## Phase Tempo candidate
+## Dense Predictor candidate
 
-`main.py` is the local entry point for Phase Tempo v0.4. The policy separates early, middle, late optimization, and final execution; keeps survival labor active through the close; and uses softmax strategy beliefs plus normalized operations, opponent, and horizon attention. Unexpected states still fall back to a valid `PASS` action, while the evaluator separately flags suspicious fallbacks.
+`main.py` is the local entry point for Dense Predictor v0.5.1. It extends the v0.4 phase policy with ten opponent archetypes, visible town-demand and crop ROI forecasts, a constrained mixed-crop portfolio, shed-capacity lookahead, livestock placement priority, and planned-cell weed recovery. Unexpected states still fall back to a valid `PASS` action, while the evaluator separately flags suspicious fallbacks.
 
 Validate the exact entry point through self-play and benchmark it against the starter:
 
@@ -77,7 +77,7 @@ npm run submission:build
 npm run submission:validate
 ```
 
-The generated `artifacts/kaggriculture-v0.4.0.tar.gz` contains one self-contained `main.py`. It is a local-only candidate. The accepted `artifacts/kaggriculture-v0.2.1.tar.gz` remains the frozen first-opponent artifact.
+The generated `artifacts/kaggriculture-v0.5.1.tar.gz` contains one self-contained `main.py`. It is a local-only candidate. The accepted v0.2.1 and frozen v0.4.0 artifacts remain exact controls.
 
 Kaggle accepted v0.2.1 after v0.2.0 exposed a runtime package-name collision with the generic module name `agents`. Four reviewed matches produced a 1–3 record and exposed fixed labor, market-crowding, and terminal liquidation failures. The compact archive is `results/kaggle_v0_2_1_match_history.json`.
 
@@ -97,6 +97,8 @@ Run exact-artifact packaging and held-out matchup QA with:
 ```
 
 That held-out suite produced 100 wins in 100 games, a +11,853.13 average margin, a +1,380 minimum margin, zero runtime failures, zero suspicious fallbacks, and a 49.889 ms maximum local action time. The 4,854-byte archive is far below the competition's 100 MiB limit and contains only root-level `main.py`.
+
+Dense Predictor v0.5.1 is intentionally not promoted yet. Its exact 6,557-byte artifact won 20 of 20 held-out games against submitted v0.2.1 (+10,619 average, +6,012 minimum), then won 19 of 20 against frozen v0.4 (+4,300 average) with one repeatable seed 5, seat 0 loss of 2,719. It recorded zero runtime failures, zero suspicious fallbacks, and a 64.183 ms maximum local action time. The failed case remains the next optimization target.
 
 ## Sources
 

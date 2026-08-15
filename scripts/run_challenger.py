@@ -47,6 +47,53 @@ def suspicious_fallback_turns(steps, seat):
     return count
 
 
+def daily_trace(steps, seat):
+    """Compact day-boundary evidence for locating the first strategic divergence."""
+    trace = []
+    for step in steps:
+        state = step[seat]
+        obs = state.get("observation") or {}
+        if int(obs.get("hour", -1)) != 0:
+            continue
+        farms = obs.get("farms") or []
+        if len(farms) < 2:
+            continue
+        ours = farms[seat]
+        theirs = farms[1 - seat]
+
+        def crop_counts(farm):
+            counts = {}
+            for row in farm.get("tiles", []):
+                for tile in row:
+                    if isinstance(tile, dict) and tile.get("crop"):
+                        crop = tile["crop"]
+                        counts[crop] = counts.get(crop, 0) + 1
+            return counts
+
+        def animal_counts(farm):
+            counts = {}
+            for row in farm.get("tiles", []):
+                for tile in row:
+                    if isinstance(tile, dict) and tile.get("animal"):
+                        animal = tile["animal"]
+                        counts[animal] = counts.get(animal, 0) + 1
+            return counts
+
+        trace.append({
+            "day": int(obs.get("day", 0)),
+            "bank": float(ours.get("money", 0)),
+            "opponent_bank": float(theirs.get("money", 0)),
+            "crops": crop_counts(ours),
+            "opponent_crops": crop_counts(theirs),
+            "animals": animal_counts(ours),
+            "opponent_animals": animal_counts(theirs),
+            "shed": (obs.get("private") or {}).get("shed", {}),
+            "prices": (obs.get("market") or {}).get("prices", {}),
+            "shops": (obs.get("town") or {}).get("unlocked_shops", []),
+        })
+    return trace
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("challenger", nargs="?", default="agents.balanced_tempo:agent", help="Python reference such as agents.experimental:agent")
@@ -55,6 +102,7 @@ def main():
     parser.add_argument("--seeds", type=int, default=10)
     parser.add_argument("--seed-start", type=int, default=0)
     parser.add_argument("--output", type=Path)
+    parser.add_argument("--daily-trace", action="store_true")
     args = parser.parse_args()
 
     kaggle, _ = load_environment()
@@ -86,7 +134,7 @@ def main():
                 final = env.steps[-1]
                 banks = [float(state["reward"]) for state in final]
                 margin = banks[seat] - banks[1 - seat]
-                games.append({
+                game = {
                     "seed": seed,
                     "seat": seat,
                     "result": "win" if margin > 0 else ("loss" if margin < 0 else "tie"),
@@ -97,7 +145,10 @@ def main():
                     "suspicious_fallback_turns": suspicious_fallback_turns(env.steps, seat),
                     "max_action_ms": round(max(action_times_ms, default=0), 3),
                     "average_action_ms": round(statistics.mean(action_times_ms), 3) if action_times_ms else 0,
-                })
+                }
+                if args.daily_trace:
+                    game["daily_trace"] = daily_trace(env.steps, seat)
+                games.append(game)
 
     margins = [game["margin"] for game in games]
     summary = {

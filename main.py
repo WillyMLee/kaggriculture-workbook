@@ -1,4 +1,4 @@
-"""Local entry point for the weighted-strategy v0.4 candidate."""
+"""Local entry point for the Dense Predictor v0.5 candidate."""
 
 from agents.balanced_tempo import agent as _balanced_tempo_agent
 

@@ -390,6 +390,17 @@
           </ol>
           <p class="source-note">Trace evidence: <code>results/phase_tempo_v0_3_seed5_loss_trace.json</code> and <code>results/weighted_strategy_v0_4_seed5_regression_trace.json</code>.</p>
         </section>
+        <section class="section shell" aria-labelledby="dense-qa-title">
+          <div class="section-heading"><div><p class="eyebrow">Dense predictor QA</p><h2 id="dense-qa-title">v0.5.1 is stronger, not promoted</h2></div><strong class="qa-verdict" data-state="hold">HOLD</strong></div>
+          <div class="candidate-evidence">
+            <div><span>Against v0.4</span><strong>19 / 20 wins</strong><small>average +4,300 | worst -2,719</small></div>
+            <div><span>Submitted control</span><strong>20 / 20 wins</strong><small>held-out seeds 10-19 | both seats</small></div>
+            <div><span>Execution</span><strong>0 fallbacks</strong><small>0 runtime failures | max 64.2 ms</small></div>
+            <div><span>Artifact</span><strong>6,557 bytes</strong><small>23,928-byte source | root main.py</small></div>
+          </div>
+          <p class="source-note"><strong>What improved:</strong> town-demand and crop ROI forecasts, ten opponent archetypes, mixed recurring-crop allocation, shed-capacity lookahead, higher-priority livestock placement, and planned-cell weed recovery.</p>
+          <p class="source-note"><strong>Promotion boundary:</strong> the repeated seed 5, seat 0 loss means v0.5.1 does not replace v0.4 yet. Evidence: <code>results/dense_predictor_v0_5_1_vs_v0_4.json</code>, <code>results/dense_predictor_v0_5_1_vs_submitted_v0_2_1_heldout.json</code>, and <code>results/qa_v0_5_1_packaging.json</code>.</p>
+        </section>
         <section class="section shell" aria-labelledby="heldout-qa-title">
           <div class="section-heading"><div><p class="eyebrow">Final local QA</p><h2 id="heldout-qa-title">Ready against the submitted control</h2></div><strong class="qa-verdict">CONDITIONAL PASS</strong></div>
           <div class="candidate-evidence">
@@ -606,12 +617,12 @@
           </div>
         </section>
         <section class="section shell" aria-labelledby="submission-gate-title">
-          <div class="section-heading"><div><p class="eyebrow">Release gate</p><h2 id="submission-gate-title">v0.3 candidate readiness</h2></div><strong class="progress-label" id="submission-progress">0 / 6 ready</strong></div>
+          <div class="section-heading"><div><p class="eyebrow">Release gate</p><h2 id="submission-gate-title">v0.5.1 candidate readiness</h2></div><strong class="progress-label" id="submission-progress">0 / 6 ready</strong></div>
           <div class="candidate-evidence" aria-label="Validated candidate evidence">
             <div><span>Replay diagnoses</span><strong>4 archived</strong><small>1 win · 3 losses</small></div>
-            <div><span>Held-out challenge</span><strong>100 / 100 wins</strong><small>exact v0.4 vs exact v0.2.1</small></div>
-            <div><span>Average margin</span><strong>+11,853</strong><small>worst win +1,380</small></div>
-            <div><span>Runtime failures</span><strong>0</strong><small>across 20 episodes</small></div>
+            <div><span>Predecessor challenge</span><strong>19 / 20 wins</strong><small>exact v0.5.1 vs exact v0.4</small></div>
+            <div><span>Average margin</span><strong>+4,300</strong><small>one loss at -2,719</small></div>
+            <div><span>Runtime failures</span><strong>0</strong><small>max local action 64.2 ms</small></div>
           </div>
           <div class="progress-track" aria-hidden="true"><span id="submission-progress-bar"></span></div>
           <div class="checklist submission-checklist">
@@ -639,7 +650,7 @@
               <div><strong>Daily limit</strong><span>Up to five agent submissions per team</span></div>
             </div>
           </div>
-          <p class="source-note"><strong>Frozen local opponent:</strong> <code>artifacts/kaggriculture-v0.2.1.tar.gz</code>. Current local-only candidate: <code>artifacts/kaggriculture-v0.4.0.tar.gz</code>. No Kaggle submission has been made.</p>
+          <p class="source-note"><strong>Frozen controls:</strong> submitted <code>artifacts/kaggriculture-v0.2.1.tar.gz</code> and predecessor <code>artifacts/kaggriculture-v0.4.0.tar.gz</code>. Current local-only candidate: <code>artifacts/kaggriculture-v0.5.1.tar.gz</code>. No Kaggle submission has been made.</p>
           <p class="source-note"><strong>Packaging lesson:</strong> v0.2.0 failed before play because <code>agents</code> collided with a Kaggle-installed module. v0.2.1 packages one self-contained <code>main.py</code> and passed validation.</p>
           <p class="source-note">Submission and ranking behavior: <a href="https://www.kaggle.com/competitions/kaggriculture/overview" target="_blank" rel="noreferrer">official Kaggriculture evaluation section ↗</a>.</p>
         </section>

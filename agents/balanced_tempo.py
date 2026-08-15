@@ -1,4 +1,4 @@
-"""Phase Tempo v0.4: phase control with probabilistic strategy attention."""
+"""Dense Predictor v0.5: market-aware portfolio prediction and routed operations."""
 
 from __future__ import annotations
 
@@ -6,10 +6,22 @@ import math
 
 
 CROPS = {
-    "WHEAT": {"max_yield_day": 4, "ongoing": False},
-    "TOMATO": {"max_yield_day": 11, "ongoing": True},
-    "STRAWBERRY": {"max_yield_day": 10, "ongoing": True},
-    "MELON": {"max_yield_day": 12, "ongoing": False},
+    "WHEAT": {"seed": 10, "first_yield_day": 2, "max_yield_day": 4, "interval": 0, "max_yield": 6, "ongoing": False},
+    "CARROT": {"seed": 20, "first_yield_day": 2, "max_yield_day": 3, "interval": 0, "max_yield": 4, "ongoing": False},
+    "TOMATO": {"seed": 50, "first_yield_day": 8, "max_yield_day": 8, "interval": 1, "max_yield": 4, "ongoing": True},
+    "STRAWBERRY": {"seed": 100, "first_yield_day": 10, "max_yield_day": 10, "interval": 2, "max_yield": 4, "ongoing": True},
+    "MELON": {"seed": 80, "first_yield_day": 10, "max_yield_day": 12, "interval": 0, "max_yield": 6, "ongoing": False},
+}
+BASE_PRICES = {"WHEAT": 25, "CARROT": 35, "TOMATO": 60, "STRAWBERRY": 120, "MELON": 250}
+SHOP_PRODUCTS = {
+    "BAKERY": ("EGG", "WHEAT"),
+    "PIZZA_SHOP": ("MILK", "TOMATO", "WHEAT"),
+    "BRUNCH_SPOT": ("EGG", "WHEAT", "STRAWBERRY"),
+    "YARN_STORE": ("WOOL", "WOOL"),
+    "ICE_CREAM_SHOP": ("STRAWBERRY", "MILK", "WHEAT"),
+    "PET_CAFE": ("CARROT", "CARROT"),
+    "SMOOTHIE_SHOP": ("STRAWBERRY", "MILK"),
+    "FARMERS_MARKET": ("WHEAT", "CARROT", "TOMATO", "STRAWBERRY"),
 }
 PRODUCTS = ("CARROT", "TOMATO", "STRAWBERRY", "MELON", "EGG", "MILK", "WOOL", "FERTILIZER")
 SELLABLE_PRODUCTS = ("WHEAT",) + PRODUCTS
@@ -69,7 +81,11 @@ def _strategy_belief(farm, day):
         )
         for crop in ("TOMATO", "STRAWBERRY", "MELON")
     }
-    animals = _count_tiles(farm, lambda tile: isinstance(tile, dict) and "animal" in tile)
+    animal_counts = {
+        animal: _count_tiles(farm, lambda tile, animal=animal: isinstance(tile, dict) and tile.get("animal") == animal)
+        for animal in ("GOOSE", "COW", "SHEEP")
+    }
+    animals = sum(animal_counts.values())
     quadrants = len(farm.get("unlocked_quadrants", []))
     hands = len(farm.get("hands", []))
     crop_total = sum(crops.values())
@@ -77,11 +93,66 @@ def _strategy_belief(farm, day):
         "melon-rush": -1.0 + 0.34 * crops["MELON"] + (0.45 if day <= 12 else -0.35),
         "strawberry-recurring": -1.0 + 0.42 * crops["STRAWBERRY"],
         "tomato-recurring": -1.0 + 0.42 * crops["TOMATO"],
-        "livestock-compound": -1.0 + 0.72 * animals,
+        "livestock-compound": -1.0 + 1.02 * animals,
+        "goose-volume": -1.2 + 0.92 * animal_counts["GOOSE"],
+        "cow-milk": -1.2 + 0.92 * animal_counts["COW"],
+        "sheep-premium": -1.2 + 0.92 * animal_counts["SHEEP"],
+        "labor-swarm": -1.1 + 0.13 * hands,
         "land-expansion": -1.0 + 1.35 * max(0, quadrants - 1) + 0.04 * hands,
         "mixed": 0.1 + 0.05 * crop_total + 0.18 * min(animals, 2),
     }
     return _softmax(scores, temperature=0.85)
+
+
+def _demand_forecast(obs, horizon_days=6):
+    """Estimate visible town draw and translate price momentum into crop value."""
+    shops = (obs.get("town") or {}).get("unlocked_shops", [])
+    market = obs.get("market") or {}
+    prices = market.get("prices") or {}
+    demand = {item: float(horizon_days) for item in SELLABLE_PRODUCTS}
+    for shop in shops:
+        for item in SHOP_PRODUCTS.get(shop, ()):
+            demand[item] = demand.get(item, 0.0) + 6.0 * horizon_days
+    return {
+        item: {
+            "visible_demand": demand.get(item, 0.0),
+            "price": float(prices.get(item, BASE_PRICES.get(item, 1))),
+            "momentum": float(prices.get(item, BASE_PRICES.get(item, 1))) / max(1.0, BASE_PRICES.get(item, 1)),
+        }
+        for item in SELLABLE_PRODUCTS
+    }
+
+
+def _portfolio_model(obs, farm, opponent, phase):
+    """Score every crop by time-to-cash, visible demand, price, and crowding."""
+    day = int(obs.get("day", 0))
+    remaining = max(0, 29 - day)
+    forecast = _demand_forecast(obs, horizon_days=min(8, remaining + 1))
+    opponent_crops = {
+        crop: _count_tiles(opponent, lambda tile, crop=crop: isinstance(tile, dict) and tile.get("crop") == crop)
+        for crop in CROPS
+    }
+    scores = {}
+    for crop, data in CROPS.items():
+        if remaining < data["first_yield_day"]:
+            scores[crop] = -1e6
+            continue
+        if data["ongoing"]:
+            production_days = remaining - data["first_yield_day"]
+            units = min(data["max_yield"], 1 + production_days // data["interval"])
+            water_days = data["first_yield_day"] + max(0, production_days)
+        else:
+            units = data["max_yield"]
+            water_days = data["max_yield_day"]
+        signal = forecast[crop]
+        revenue = units * signal["price"]
+        labor = 1.0 + water_days + (units if data["ongoing"] else 1.0)
+        demand_boost = 1.0 + min(0.45, signal["visible_demand"] / 180.0)
+        crowding = 1.0 + 0.035 * opponent_crops[crop]
+        scores[crop] = ((revenue - data["seed"]) / labor) * demand_boost * signal["momentum"] / crowding
+    recurring = max(("TOMATO", "STRAWBERRY"), key=lambda crop: (scores[crop], crop))
+    cash = max(("CARROT", "MELON"), key=lambda crop: (scores[crop], crop))
+    return {"scores": scores, "recurring_crop": recurring, "cash_crop": cash, "forecast": forecast}
 
 
 def _attention_weights(obs, player, strategy_probabilities):
@@ -118,6 +189,9 @@ def _opponent_attention(obs, player):
             "archetype": "unknown",
             "confidence": 0.0,
             "recurring_crop": "STRAWBERRY",
+            "recurring_targets": {"STRAWBERRY": 8, "TOMATO": 7},
+            "cash_crop": "MELON",
+            "crop_scores": {},
             "probabilities": {},
             "attention_weights": {"operations": 1.0, "opponent": 0.0, "horizon": 0.0},
         }
@@ -125,21 +199,40 @@ def _opponent_attention(obs, player):
     opponent = opponents[0]
     probabilities = _strategy_belief(opponent, int(obs.get("day", 0)))
     attention = _attention_weights(obs, player, probabilities)
+    own_farm = obs.get("farms", [])[player]
+    phase = _phase_attention(obs)
+    portfolio = _portfolio_model(obs, own_farm, opponent, phase)
+    own_crop_counts = {
+        crop: _count_tiles(own_farm, lambda tile, crop=crop: isinstance(tile, dict) and tile.get("crop") == crop)
+        for crop in ("CARROT", "MELON", "TOMATO", "STRAWBERRY")
+    }
     archetype, confidence = max(probabilities.items(), key=lambda item: item[1])
 
     # Recurring crops are a portfolio decision. Switch only when the weighted
     # probability of strawberry crowding materially exceeds tomato crowding.
     strawberry_risk = probabilities["strawberry-recurring"] + 0.25 * probabilities["mixed"]
     tomato_risk = probabilities["tomato-recurring"] + 0.18 * probabilities["mixed"]
-    recurring_crop = (
+    defensive_recurring = (
         "TOMATO"
         if strawberry_risk - tomato_risk >= 0.16 and attention["opponent"] >= 0.12
         else "STRAWBERRY"
     )
+    recurring_crop = portfolio["recurring_crop"] if attention["opponent"] < 0.32 else defensive_recurring
+    if own_crop_counts["TOMATO"] + own_crop_counts["STRAWBERRY"]:
+        recurring_crop = max(("TOMATO", "STRAWBERRY"), key=lambda crop: (own_crop_counts[crop], crop))
+    cash_crop = portfolio["cash_crop"]
+    if own_crop_counts["CARROT"] + own_crop_counts["MELON"]:
+        cash_crop = max(("CARROT", "MELON"), key=lambda crop: (own_crop_counts[crop], crop))
     return {
         "archetype": archetype,
         "confidence": round(confidence, 4),
         "recurring_crop": recurring_crop,
+        "recurring_targets": {
+            recurring_crop: 8,
+            ("TOMATO" if recurring_crop == "STRAWBERRY" else "STRAWBERRY"): 7,
+        },
+        "cash_crop": cash_crop,
+        "crop_scores": {key: round(value, 2) for key, value in portfolio["scores"].items()},
         "probabilities": {key: round(value, 4) for key, value in probabilities.items()},
         "attention_weights": {key: round(value, 4) for key, value in attention.items()},
     }
@@ -180,6 +273,32 @@ def _market_plan(obs, farm, private, opponent_signal, phase):
 
     animals = _count_tiles(farm, lambda tile: isinstance(tile, dict) and tile.get("animal") == "COW")
 
+    # Shed overflow discards end-of-day output. Forecast harvest already visible
+    # on mature crops and clear low-value wheat before it displaces melon or
+    # recurring output. Keep a small feed reserve; more wheat can be bought once
+    # animals are placed and the high-value harvest has cleared.
+    incoming_harvest = 0
+    for row in farm.get("tiles", []):
+        for tile in row:
+            if not isinstance(tile, dict) or int(tile.get("yield_units", 0)) <= 0:
+                continue
+            if tile.get("kind") == "PLANT":
+                crop = tile.get("crop")
+                age = day - int(tile.get("planted_day", day))
+                if CROPS.get(crop, {}).get("ongoing") or age >= CROPS.get(crop, {}).get("max_yield_day", 99):
+                    incoming_harvest += int(tile.get("yield_units", 0))
+            elif "animal" in tile:
+                incoming_harvest += int(tile.get("yield_units", 0))
+    shed_load = sum(int(value) for value in shed.values())
+    capacity_pressure = max(0, shed_load + incoming_harvest + 4 - 100)
+    feed_floor = max(4, animals * 2)
+    pressure_wheat_sale = min(
+        max(0, int(shed.get("WHEAT", 0)) - feed_floor),
+        capacity_pressure,
+    )
+    if pressure_wheat_sale:
+        orders.append(["SELL", "WHEAT", pressure_wheat_sale])
+
     # Labor is operating capacity, not an investment. Keep it through the last
     # day so feeding and harvesting are not abandoned during liquidation.
     if hour == 0:
@@ -200,7 +319,7 @@ def _market_plan(obs, farm, private, opponent_signal, phase):
             and not tile.get("fed_today", False),
         )
         feed_reserve = animals * future_feed_days + unfed_today
-        wheat_to_sell = max(0, int(shed.get("WHEAT", 0)) - feed_reserve)
+        wheat_to_sell = max(0, int(shed.get("WHEAT", 0)) - feed_reserve - pressure_wheat_sale)
         if wheat_to_sell:
             orders.append(["SELL", "WHEAT", wheat_to_sell])
 
@@ -210,9 +329,9 @@ def _market_plan(obs, farm, private, opponent_signal, phase):
     }
     desired = {"WHEAT": 5} if day <= 25 else {}
     if phase["phase"] == "early":
-        desired["MELON"] = 10
+        desired[opponent_signal.get("cash_crop", "MELON")] = 10
     elif phase["allow_recurring"]:
-        desired[opponent_signal["recurring_crop"]] = 15
+        desired.update(opponent_signal.get("recurring_targets", {opponent_signal["recurring_crop"]: 15}))
 
     for crop, target in desired.items():
         shortfall = max(0, target - planted.get(crop, 0) - int(seeds.get(crop, 0)))
@@ -268,20 +387,31 @@ def _operations_attention(obs, farm, private, opponent_signal, phase):
 
     if 12 <= day <= 20 and phase["allow_animals"]:
         for position in PASTURE_CELLS:
-            if _tile(farm, position) is None:
+            planned_tile = _tile(farm, position)
+            if planned_tile is None:
                 tasks.append((5, position, ["BUILD_PASTURE"]))
+            elif isinstance(planned_tile, dict) and planned_tile.get("kind") == "WEED":
+                tasks.append((4, position, ["DIG"]))
 
     crop_cells = []
     if phase["late_mode"] != "execute":
         crop_cells = [(position, "WHEAT") for position in WHEAT_CELLS] if day <= 25 else []
-        crop_cells += [(position, "MELON") for position in MELON_CELLS] if phase["phase"] == "early" else [
-            (position, opponent_signal["recurring_crop"]) for position in RECURRING_CELLS
-        ] if phase["allow_recurring"] else []
+        crop_cells += [(position, opponent_signal.get("cash_crop", "MELON")) for position in MELON_CELLS] if phase["phase"] == "early" else []
+        if phase["allow_recurring"]:
+            targets = opponent_signal.get("recurring_targets", {opponent_signal["recurring_crop"]: 15})
+            primary = opponent_signal["recurring_crop"]
+            secondary = "TOMATO" if primary == "STRAWBERRY" else "STRAWBERRY"
+            crop_cells += [
+                (position, primary if index < int(targets.get(primary, 8)) else secondary)
+                for index, position in enumerate(RECURRING_CELLS)
+            ]
     seeds = private.get("seeds", {})
     for position, crop in crop_cells:
         tile = _tile(farm, position)
         if tile is None and seeds.get(crop, 0) > 0:
             tasks.append((6, position, ["PLANT", crop]))
+        elif isinstance(tile, dict) and tile.get("kind") == "WEED":
+            tasks.append((5, position, ["DIG"]))
 
     # One worker can carry several feed units or one cow from the shed.
     animal_tiles = [
@@ -301,7 +431,7 @@ def _operations_attention(obs, farm, private, opponent_signal, phase):
             tasks.append((1, position, ["PICKUP", "WHEAT", min(len(animal_tiles), shed["WHEAT"])]))
     if day <= 20 and empty_pastures and shed.get("COW", 0) > 0:
         for position in SHED_ACCESS:
-            tasks.append((2, position, ["PICKUP", "COW", 1]))
+            tasks.append((0, position, ["PICKUP", "COW", 1]))
 
     return tasks
 
@@ -372,6 +502,8 @@ def _policy(obs):
                 available.discard(index)
 
     # Assign remaining work greedily, preferring deadlines before travel distance.
+    # Preserve the stable v0.4 dispatcher while the predictive layer is
+    # evaluated independently. Routing is a separate promotion lever.
     used_tasks = set()
     for index in sorted(available):
         position = positions[index]

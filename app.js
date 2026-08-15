@@ -548,17 +548,26 @@
       id: "agent-v0-4-0",
       version: "v0.4.0",
       date: "2026-08-15",
-      status: "candidate",
+      status: "frozen",
       evidence: "Held-out 100–0 · worst margin +1,380",
       model: "Weighted strategy beliefs plus dynamic operations, opponent, and horizon attention.",
       limitation: "Ready against submitted v0.2.1; still one opponent family, so broader ladder generalization is unproven.",
+    },
+    {
+      id: "agent-v0-5-1",
+      version: "v0.5.1",
+      date: "2026-08-15",
+      status: "candidate",
+      evidence: "v0.4: 19-1 | v0.2.1: 20-0",
+      model: "Dense opponent archetypes, town-demand and crop ROI forecasts, mixed portfolio, capacity lookahead, and obstruction recovery.",
+      limitation: "Hold: seed 5 seat 0 still loses to v0.4 by 2,719; requires 20 / 20 before promotion.",
     },
   ];
   let agentArchive = readStore(KEYS.agentArchive, seededAgents);
   if (!Array.isArray(agentArchive)) agentArchive = [...seededAgents];
   agentArchive = agentArchive.map((item) => {
     const seeded = seededAgents.find((candidate) => candidate.id === item.id);
-    return seeded ? { ...item, evidence: seeded.evidence, limitation: seeded.limitation } : item;
+    return seeded ? { ...item, ...seeded } : item;
   });
   writeStore(KEYS.agentArchive, agentArchive);
   const agentDialog = $("#agent-dialog");

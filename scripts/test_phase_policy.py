@@ -9,10 +9,12 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
 
 from agents.balanced_tempo import (
+    _demand_forecast,
     _market_plan,
     _operations_attention,
     _opponent_attention,
     _phase_attention,
+    _portfolio_model,
     _strategy_belief,
     agent,
 )
@@ -160,6 +162,50 @@ def test_strategy_archetype_probes():
         assert max(probabilities, key=probabilities.get) == expected
 
 
+def test_dense_predictor_uses_town_demand_and_diversifies():
+    ours = make_farm()
+    opponent = make_farm()
+    obs = {
+        "day": 12,
+        "player": 0,
+        "farms": [ours, opponent],
+        "market": {"prices": {"WHEAT": 25, "CARROT": 35, "TOMATO": 60, "STRAWBERRY": 120, "MELON": 250}},
+        "town": {"unlocked_shops": ["SMOOTHIE_SHOP", "ICE_CREAM_SHOP"]},
+    }
+    forecast = _demand_forecast(obs)
+    assert forecast["STRAWBERRY"]["visible_demand"] > forecast["TOMATO"]["visible_demand"]
+    portfolio = _portfolio_model(obs, ours, opponent, _phase_attention(obs))
+    assert portfolio["recurring_crop"] in ("TOMATO", "STRAWBERRY")
+    signal = _opponent_attention(obs, 0)
+    assert sum(signal["recurring_targets"].values()) == 15
+    assert set(signal["recurring_targets"]) == {"TOMATO", "STRAWBERRY"}
+
+
+def test_dense_predictor_protects_shed_capacity():
+    farm = make_farm()
+    for x in range(10):
+        farm["tiles"][0][x] = {
+            "kind": "PLANT",
+            "crop": "MELON",
+            "planted_day": 0,
+            "watered_today": True,
+            "yield_units": 6,
+        }
+    private = {"shed": {"WHEAT": 40}, "seeds": {}, "inventories": [{}]}
+    signal = {"cash_crop": "MELON", "recurring_crop": "STRAWBERRY", "recurring_targets": {"STRAWBERRY": 8, "TOMATO": 7}}
+    orders = _market_plan({"day": 12, "hour": 0}, farm, private, signal, _phase_attention({"day": 12}))
+    assert any(order[:2] == ["SELL", "WHEAT"] for order in orders)
+
+
+def test_dense_predictor_clears_planned_weeds():
+    farm = make_farm()
+    farm["tiles"][4][0] = {"kind": "WEED"}
+    private = {"shed": {}, "seeds": {}}
+    signal = {"cash_crop": "MELON", "recurring_crop": "STRAWBERRY", "recurring_targets": {"STRAWBERRY": 8, "TOMATO": 7}}
+    tasks = _operations_attention({"day": 15}, farm, private, signal, _phase_attention({"day": 15}))
+    assert any(target == (0, 4) and action == ["DIG"] for _, target, action in tasks)
+
+
 if __name__ == "__main__":
     test_phase_boundaries()
     test_closeout_keeps_labor_and_feed()
@@ -167,4 +213,7 @@ if __name__ == "__main__":
     test_execute_phase_does_not_fall_back_to_no_op()
     test_strategy_softmax_is_normalized_and_differentiates_crops()
     test_strategy_archetype_probes()
-    print("phase policy regressions: 6 passed")
+    test_dense_predictor_uses_town_demand_and_diversifies()
+    test_dense_predictor_protects_shed_capacity()
+    test_dense_predictor_clears_planned_weeds()
+    print("phase policy regressions: 9 passed")
