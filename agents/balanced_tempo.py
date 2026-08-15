@@ -1,6 +1,8 @@
-"""Phase Tempo v0.3: a chess-like, phase-aware Kaggriculture policy."""
+"""Phase Tempo v0.4: phase control with probabilistic strategy attention."""
 
 from __future__ import annotations
+
+import math
 
 
 CROPS = {
@@ -49,32 +51,98 @@ def _count_tiles(farm, predicate):
     return sum(1 for row in farm["tiles"] for tile in row if predicate(tile))
 
 
-def _opponent_attention(obs, player):
-    """Classify only strong, visible commitments and choose one bounded response."""
-    opponents = [farm for index, farm in enumerate(obs.get("farms", [])) if index != player]
-    if not opponents:
-        return {"archetype": "unknown", "confidence": 0, "recurring_crop": "STRAWBERRY"}
+def _softmax(scores, temperature=1.0):
+    """Turn comparable strategy or attention scores into stable probabilities."""
+    scale = max(float(temperature), 0.05)
+    peak = max(scores.values())
+    weights = {key: math.exp((value - peak) / scale) for key, value in scores.items()}
+    total = sum(weights.values()) or 1.0
+    return {key: weight / total for key, weight in weights.items()}
 
-    opponent = opponents[0]
-    crop_counts = {
+
+def _strategy_belief(farm, day):
+    """Score visible commitments without pretending hidden intent is certain."""
+    crops = {
         crop: _count_tiles(
-            opponent,
+            farm,
             lambda tile, crop=crop: isinstance(tile, dict) and tile.get("crop") == crop,
         )
         for crop in ("TOMATO", "STRAWBERRY", "MELON")
     }
-    animals = _count_tiles(opponent, lambda tile: isinstance(tile, dict) and "animal" in tile)
-    quadrants = len(opponent.get("unlocked_quadrants", []))
+    animals = _count_tiles(farm, lambda tile: isinstance(tile, dict) and "animal" in tile)
+    quadrants = len(farm.get("unlocked_quadrants", []))
+    hands = len(farm.get("hands", []))
+    crop_total = sum(crops.values())
+    scores = {
+        "melon-rush": -1.0 + 0.34 * crops["MELON"] + (0.45 if day <= 12 else -0.35),
+        "strawberry-recurring": -1.0 + 0.42 * crops["STRAWBERRY"],
+        "tomato-recurring": -1.0 + 0.42 * crops["TOMATO"],
+        "livestock-compound": -1.0 + 0.72 * animals,
+        "land-expansion": -1.0 + 1.35 * max(0, quadrants - 1) + 0.04 * hands,
+        "mixed": 0.1 + 0.05 * crop_total + 0.18 * min(animals, 2),
+    }
+    return _softmax(scores, temperature=0.85)
 
-    # Strawberry prices punish shared oversupply sharply. Differentiate only after
-    # the rival has visibly committed at least six tiles, avoiding noisy counters.
-    if crop_counts["STRAWBERRY"] >= 6:
-        return {"archetype": "strawberry-heavy", "confidence": 2, "recurring_crop": "TOMATO"}
-    if animals >= 3:
-        return {"archetype": "livestock-heavy", "confidence": 2, "recurring_crop": "STRAWBERRY"}
-    if quadrants >= 2 or crop_counts["MELON"] >= 6:
-        return {"archetype": "expansion-heavy", "confidence": 2, "recurring_crop": "STRAWBERRY"}
-    return {"archetype": "unclear", "confidence": 0, "recurring_crop": "STRAWBERRY"}
+
+def _attention_weights(obs, player, strategy_probabilities):
+    """Allocate attention among operations, opponent inference, and horizon."""
+    day = int(obs.get("day", 0))
+    farm = obs.get("farms", [])[player]
+    urgent_work = _count_tiles(
+        farm,
+        lambda tile: isinstance(tile, dict)
+        and (
+            (tile.get("kind") == "PLANT" and not tile.get("watered_today", False))
+            or ("animal" in tile and not tile.get("fed_today", False))
+            or int(tile.get("yield_units", 0)) > 0
+        ),
+    )
+    probabilities = list(strategy_probabilities.values())
+    entropy = -sum(value * math.log(max(value, 1e-12)) for value in probabilities)
+    certainty = 1.0 - entropy / math.log(len(probabilities))
+    opponent_window = 0.65 if day <= 11 else (1.0 if day <= 21 else 0.35)
+    progress = day / 29.0
+    scores = {
+        "operations": 0.8 + 2.8 * min(1.0, urgent_work / 8.0),
+        "opponent": 0.35 + 2.4 * certainty * opponent_window,
+        "horizon": -0.3 + 3.2 * progress * progress + (1.4 if day >= 28 else 0.0),
+    }
+    return _softmax(scores, temperature=0.9)
+
+
+def _opponent_attention(obs, player):
+    """Maintain a probabilistic strategy belief and choose one bounded response."""
+    opponents = [farm for index, farm in enumerate(obs.get("farms", [])) if index != player]
+    if not opponents:
+        return {
+            "archetype": "unknown",
+            "confidence": 0.0,
+            "recurring_crop": "STRAWBERRY",
+            "probabilities": {},
+            "attention_weights": {"operations": 1.0, "opponent": 0.0, "horizon": 0.0},
+        }
+
+    opponent = opponents[0]
+    probabilities = _strategy_belief(opponent, int(obs.get("day", 0)))
+    attention = _attention_weights(obs, player, probabilities)
+    archetype, confidence = max(probabilities.items(), key=lambda item: item[1])
+
+    # Recurring crops are a portfolio decision. Switch only when the weighted
+    # probability of strawberry crowding materially exceeds tomato crowding.
+    strawberry_risk = probabilities["strawberry-recurring"] + 0.25 * probabilities["mixed"]
+    tomato_risk = probabilities["tomato-recurring"] + 0.18 * probabilities["mixed"]
+    recurring_crop = (
+        "TOMATO"
+        if strawberry_risk - tomato_risk >= 0.16 and attention["opponent"] >= 0.12
+        else "STRAWBERRY"
+    )
+    return {
+        "archetype": archetype,
+        "confidence": round(confidence, 4),
+        "recurring_crop": recurring_crop,
+        "probabilities": {key: round(value, 4) for key, value in probabilities.items()},
+        "attention_weights": {key: round(value, 4) for key, value in attention.items()},
+    }
 
 
 def _phase_attention(obs):
@@ -241,6 +309,8 @@ def _operations_attention(obs, farm, private, opponent_signal, phase):
 def _policy(obs):
     farms = obs.get("farms", [])
     player = int(obs.get("player", 0))
+    day = int(obs.get("day", 0))
+    hour = int(obs.get("hour", 0))
     private = obs.get("private", {}) or {}
     if not farms or player >= len(farms):
         return {"farmer": ["PASS"], "hands": [], "market": []}

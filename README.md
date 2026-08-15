@@ -61,7 +61,7 @@ The project-local runtime loads the official Kaggriculture environment plugin fr
 
 ## Phase Tempo candidate
 
-`main.py` is the safe Kaggle entry point for Phase Tempo v0.3. The policy separates early, middle, late optimization, and final execution; keeps survival labor active through the close; reserves feed before selling wheat; and collects livestock fertilizer. Unexpected states still fall back to a valid `PASS` action.
+`main.py` is the local entry point for Phase Tempo v0.4. The policy separates early, middle, late optimization, and final execution; keeps survival labor active through the close; and uses softmax strategy beliefs plus normalized operations, opponent, and horizon attention. Unexpected states still fall back to a valid `PASS` action, while the evaluator separately flags suspicious fallbacks.
 
 Validate the exact entry point through self-play and benchmark it against the starter:
 
@@ -77,7 +77,7 @@ npm run submission:build
 npm run submission:validate
 ```
 
-The generated `artifacts/kaggriculture-v0.3.0.tar.gz` contains one self-contained `main.py`. The accepted `artifacts/kaggriculture-v0.2.1.tar.gz` remains the frozen first-opponent artifact.
+The generated `artifacts/kaggriculture-v0.4.0.tar.gz` contains one self-contained `main.py`. It is a local-only candidate. The accepted `artifacts/kaggriculture-v0.2.1.tar.gz` remains the frozen first-opponent artifact.
 
 Kaggle accepted v0.2.1 after v0.2.0 exposed a runtime package-name collision with the generic module name `agents`. Four reviewed matches produced a 1–3 record and exposed fixed labor, market-crowding, and terminal liquidation failures. The compact archive is `results/kaggle_v0_2_1_match_history.json`.
 
@@ -87,7 +87,7 @@ Compare a future architecture with that artifact in both seats:
 .\.venv\Scripts\python.exe scripts\run_challenger.py agents.balanced_tempo:agent --seeds 10 --output results\phase_tempo_v0_3_vs_v0_2_1.json
 ```
 
-The v0.3 candidate won 19 of 20 local games against the exact v0.2.1 artifact, averaged a +5,024.25 bank margin, and recorded zero runtime failures.
+The corrected phase candidate and weighted-strategy v0.4 candidate each won 20 of 20 local games against the exact v0.2.1 artifact, averaging a +13,439.25 bank margin. This is only the fixed-opponent gate; broader strategy-family evaluation remains required before another Kaggle submission.
 
 ## Sources
 

@@ -1,4 +1,4 @@
-"""Kaggle submission entry point for the phase-aware v0.3 candidate."""
+"""Local entry point for the weighted-strategy v0.4 candidate."""
 
 from agents.balanced_tempo import agent as _balanced_tempo_agent
 

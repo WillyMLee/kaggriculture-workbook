@@ -44,6 +44,7 @@
           <button class="nav-link" data-view-target="balanced" type="button"><span>B</span>Strategy library</button>
           <button class="nav-link" data-view-target="simulator" type="button"><span>C</span>Lookahead simulator</button>
           <button class="nav-link" data-view-target="attention" type="button"><span>D</span>Attention controller</button>
+          <button class="nav-link" data-view-target="past-agents" type="button"><span>E</span>Past agents</button>
         </div>
         <div class="nav-group">
           <span class="nav-label">Submit</span>
@@ -369,6 +370,51 @@
         </section>
       </section>
 
+      <section class="view" id="past-agents" aria-labelledby="past-agents-title" hidden>
+        <div class="page-intro shell">
+          <div><p class="eyebrow">Agent lineage</p><h1 id="past-agents-title">Past agents</h1><p>Keep every policy as evidence—what it knew, where it failed, and what replaced it.</p></div>
+          <button class="button button-primary" id="open-agent-form" type="button">Log agent</button>
+        </div>
+        <section class="section shell" aria-labelledby="agent-lineage-title">
+          <div class="section-heading"><div><p class="eyebrow">Version archive</p><h2 id="agent-lineage-title">Frozen checkpoints</h2></div><p class="section-note">Kaggle and local evidence stay visibly separate.</p></div>
+          <div class="agent-lineage" id="agent-lineage"></div>
+          <div class="empty-state" id="agent-lineage-empty" hidden><h3>No agents archived</h3><p>Log a version before changing its policy.</p></div>
+        </section>
+        <section class="section shell" aria-labelledby="seed-five-title">
+          <div class="section-heading"><div><p class="eyebrow">Regression 05</p><h2 id="seed-five-title">Why v0.3.0 lost the twentieth game</h2></div><p class="section-note">Seed 5 · seat 1 · final margin −2,128</p></div>
+          <ol class="system-flow">
+            <li><span>D26</span><div><strong>The policy was ahead</strong><p>Our bank led by 1,751 coins; the phase strategy itself remained competitive.</p></div><em>28,239 vs 26,488</em></li>
+            <li><span>D27</span><div><strong>The opponent liquidated first</strong><p>The frozen bot sold wheat and milk while our shed accumulated output.</p></div><em>margin −1,175</em></li>
+            <li><span>D28–29</span><div><strong>The safety fallback hid an exception</strong><p>Undefined closeout variables returned PASS for every remaining recorded action, yet Kaggle still marked the episode DONE.</p></div><em>47 empty turns</em></li>
+            <li><span>FIX</span><div><strong>Define the closeout state and grade fallback</strong><p>v0.3.1 sold the surplus, kept operating, and won the same seed by 7,945 coins.</p></div><em>20 / 20 fixed gate</em></li>
+          </ol>
+          <p class="source-note">Trace evidence: <code>results/phase_tempo_v0_3_seed5_loss_trace.json</code> and <code>results/weighted_strategy_v0_4_seed5_regression_trace.json</code>.</p>
+        </section>
+        <section class="section shell" aria-labelledby="agent-promotion-title">
+          <div class="section-heading compact"><div><p class="eyebrow">Promotion rule</p><h2 id="agent-promotion-title">A candidate earns the next test</h2></div></div>
+          <ol class="system-flow">
+            <li><span>01</span><div><strong>Freeze the predecessor</strong><p>Preserve the exact artifact, checksum, trace set, and known failure.</p></div><em>CONTROL</em></li>
+            <li><span>02</span><div><strong>Pass regressions</strong><p>Known failure seeds, both seats, strategy probes, and non-fallback execution must all pass.</p></div><em>CORRECTNESS</em></li>
+            <li><span>03</span><div><strong>Win the fixed suite</strong><p>Require 20 / 20 against v0.2.1 before widening the opponent library.</p></div><em>LOCAL GATE</em></li>
+            <li><span>04</span><div><strong>Generalize before Kaggle</strong><p>Play held-out seeds and multiple strategy families so one familiar opponent does not become the objective.</p></div><em>ROBUSTNESS</em></li>
+          </ol>
+        </section>
+        <dialog id="agent-dialog" aria-labelledby="agent-dialog-title">
+          <form id="agent-form" method="dialog">
+            <div class="dialog-header"><div><p class="eyebrow">Version checkpoint</p><h2 id="agent-dialog-title">Log an agent</h2></div><button class="icon-button" id="close-agent-dialog" type="button" aria-label="Close dialog">×</button></div>
+            <div class="form-grid">
+              <label>Version<input required name="version" placeholder="v0.4.0" maxlength="30" /></label>
+              <label>Status<select name="status"><option value="candidate">Candidate</option><option value="frozen">Frozen</option><option value="retired">Retired</option><option value="submitted">Submitted</option></select></label>
+              <label>Evidence<input required name="evidence" placeholder="20 / 20 local" maxlength="80" /></label>
+              <label>Date<input required name="date" type="date" /></label>
+              <label class="full-field">Core model<input required name="model" maxlength="160" placeholder="Phase gates + weighted strategy belief" /></label>
+              <label class="full-field">Known limitation<textarea required name="limitation" rows="3" maxlength="500" placeholder="What should the next version learn or fix?"></textarea></label>
+            </div>
+            <div class="dialog-actions"><button class="button button-secondary" id="cancel-agent" type="button">Cancel</button><button class="button button-primary" type="submit">Save agent</button></div>
+          </form>
+        </dialog>
+      </section>
+
       <section class="view" id="tensions" aria-labelledby="tensions-title" hidden>
         <div class="page-intro shell">
           <div><p class="eyebrow">Competitive dynamics</p><h1 id="tensions-title">Natural market tensions</h1><p>Two farms, one shared price system, and a town that keeps consuming.</p></div>
@@ -430,6 +476,23 @@
             <div><span>Output</span><p>Archetype probabilities, predicted constraint, confidence, and response budget.</p></div>
           </div>
         </section>
+        <section class="section shell" aria-labelledby="softmax-title">
+          <div class="section-heading"><div><p class="eyebrow">Probabilistic strategy tree</p><h2 id="softmax-title">Keep several opponent plans alive</h2></div><p class="section-note">Softmax converts weighted evidence into revisable beliefs.</p></div>
+          <ol class="softmax-flow">
+            <li><span>FEATURES</span><div><strong>Visible commitments</strong><p>Crop counts, animals, unlocked land, labor, match day, and bank trajectory.</p></div><em>x</em></li>
+            <li><span>LOGITS</span><div><strong>Weighted strategy scores</strong><p>Each strategy receives evidence for and against it; no single threshold owns the decision.</p></div><em>z = Wx + b</em></li>
+            <li><span>SOFTMAX</span><div><strong>Belief distribution</strong><p>Melon rush, recurring strawberry, recurring tomato, livestock compound, land expansion, and mixed play sum to 100%.</p></div><em>P(strategy)</em></li>
+            <li><span>UTILITY</span><div><strong>Expected counter value</strong><p>Score each response across every strategy, weighted by belief and reduced by switching cost and execution risk.</p></div><em>Σ P(s)U(a,s)</em></li>
+            <li><span>UPDATE</span><div><strong>Observe and recalibrate</strong><p>Compare the predicted commitment with the next farm state, then revise weights without erasing alternatives.</p></div><em>Pₜ₊₁</em></li>
+          </ol>
+          <div class="belief-example" aria-label="Illustrative strategy belief distribution">
+            <div><span>Tomato recurring</span><i style="--belief:.42"></i><strong>42%</strong></div>
+            <div><span>Livestock compound</span><i style="--belief:.39"></i><strong>39%</strong></div>
+            <div><span>Mixed</span><i style="--belief:.11"></i><strong>11%</strong></div>
+            <div><span>Other strategies</span><i style="--belief:.08"></i><strong>8%</strong></div>
+          </div>
+          <p class="source-note">Observed on day 13 of the repaired seed-5 regression. Candidate code computes beliefs from public farm state; calibration still requires a broader opponent library.</p>
+        </section>
       </section>
 
       <section class="view" id="simulator" aria-labelledby="simulator-title" hidden>
@@ -474,6 +537,15 @@
             <article><span>Middle</span><strong>Labor + fertilizer engine</strong><p>Measure missed chores, fertilizer collected, surviving animals, and day-22 bank.</p></article>
             <article><span>Close</span><strong>Reserve, then sell</strong><p>Measure day-27 lead retention, terminal inventory, animal survival, and final margin.</p></article>
           </div>
+        </section>
+        <section class="section shell" aria-labelledby="attention-weight-title">
+          <div class="section-heading"><div><p class="eyebrow">Weighted thinking model</p><h2 id="attention-weight-title">Attention changes with the position</h2></div><p class="section-note">Weights are normalized each turn; hard safety obligations remain protected.</p></div>
+          <div class="attention-model">
+            <article><span>Operations</span><strong>Urgent work</strong><p>Unwatered crops, unfed animals, ready harvests, carried resources, and route congestion increase this weight.</p><small>dominant when delay destroys value</small></article>
+            <article><span>Opponent</span><strong>Useful certainty</strong><p>Belief concentration matters most during reversible opening and middle-game decisions.</p><small>certainty × response window</small></article>
+            <article><span>Horizon</span><strong>Payback pressure</strong><p>The weight rises nonlinearly with elapsed days and sharply during final execution.</p><small>time remaining × terminal risk</small></article>
+          </div>
+          <div class="attention-equation"><span>Decision score</span><strong>hard obligations + Σ attention<sub>m</sub> × expected value<sub>m</sub> − switching cost − failure risk</strong></div>
         </section>
         <section class="section shell" aria-labelledby="attention-order-title">
           <div class="section-heading"><div><p class="eyebrow">Priority stack</p><h2 id="attention-order-title">What gets attention first</h2></div><p class="section-note">Lower number wins when tasks compete.</p></div>
@@ -526,8 +598,8 @@
           <div class="section-heading"><div><p class="eyebrow">Release gate</p><h2 id="submission-gate-title">v0.3 candidate readiness</h2></div><strong class="progress-label" id="submission-progress">0 / 6 ready</strong></div>
           <div class="candidate-evidence" aria-label="Validated candidate evidence">
             <div><span>Replay diagnoses</span><strong>4 archived</strong><small>1 win · 3 losses</small></div>
-            <div><span>Frozen challenge</span><strong>19 / 20 wins</strong><small>vs exact v0.2.1 artifact</small></div>
-            <div><span>Average margin</span><strong>+5,024</strong><small>both seats · 10 seeds</small></div>
+            <div><span>Frozen challenge</span><strong>20 / 20 wins</strong><small>v0.4 vs exact v0.2.1</small></div>
+            <div><span>Average margin</span><strong>+13,439</strong><small>both seats · 10 seeds</small></div>
             <div><span>Runtime failures</span><strong>0</strong><small>across 20 episodes</small></div>
           </div>
           <div class="progress-track" aria-hidden="true"><span id="submission-progress-bar"></span></div>
@@ -556,7 +628,7 @@
               <div><strong>Daily limit</strong><span>Up to five agent submissions per team</span></div>
             </div>
           </div>
-          <p class="source-note"><strong>Frozen local opponent:</strong> <code>artifacts/kaggriculture-v0.2.1.tar.gz</code>. Candidate build: <code>artifacts/kaggriculture-v0.3.0.tar.gz</code>. Build and validate with the submission scripts.</p>
+          <p class="source-note"><strong>Frozen local opponent:</strong> <code>artifacts/kaggriculture-v0.2.1.tar.gz</code>. Current local-only candidate: <code>artifacts/kaggriculture-v0.4.0.tar.gz</code>. No Kaggle submission has been made.</p>
           <p class="source-note"><strong>Packaging lesson:</strong> v0.2.0 failed before play because <code>agents</code> collided with a Kaggle-installed module. v0.2.1 packages one self-contained <code>main.py</code> and passed validation.</p>
           <p class="source-note">Submission and ranking behavior: <a href="https://www.kaggle.com/competitions/kaggriculture/overview" target="_blank" rel="noreferrer">official Kaggriculture evaluation section ↗</a>.</p>
         </section>

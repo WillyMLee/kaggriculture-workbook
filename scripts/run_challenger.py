@@ -22,6 +22,29 @@ def load_callable(reference: str):
     return getattr(importlib.import_module(module_name), attribute)
 
 
+def suspicious_fallback_turns(steps, seat):
+    """Flag safe no-op fallbacks that Kaggle still reports as a completed game."""
+    count = 0
+    for step in steps[1:]:
+        state = step[seat]
+        obs = state.get("observation") or {}
+        farms = obs.get("farms") or []
+        if seat >= len(farms):
+            continue
+        expected_hands = len(farms[seat].get("hands", []))
+        action = state.get("action") or {}
+        private = obs.get("private") or {}
+        shed_has_value = any(int(value) > 0 for value in (private.get("shed") or {}).values())
+        empty_action = (
+            action.get("farmer") == ["PASS"]
+            and action.get("hands") == []
+            and action.get("market") == []
+        )
+        if empty_action and (expected_hands > 0 or (int(obs.get("day", 0)) >= 28 and shed_has_value)):
+            count += 1
+    return count
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("challenger", help="Python reference such as agents.experimental:agent")
@@ -52,6 +75,7 @@ def main():
                     "baseline_bank": banks[1 - seat],
                     "margin": margin,
                     "statuses": [state["status"] for state in final],
+                    "suspicious_fallback_turns": suspicious_fallback_turns(env.steps, seat),
                 })
 
     summary = {
@@ -61,6 +85,7 @@ def main():
         "ties": sum(game["result"] == "tie" for game in games),
         "average_margin": round(statistics.mean(game["margin"] for game in games), 2),
         "runtime_failures": sum(any(status != "DONE" for status in game["statuses"]) for game in games),
+        "suspicious_fallback_turns": sum(game["suspicious_fallback_turns"] for game in games),
     }
     payload = {"baseline": args.baseline.name, "challenger": args.challenger, "summary": summary, "games": games}
     if args.output:

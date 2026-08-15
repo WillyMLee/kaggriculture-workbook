@@ -741,6 +741,30 @@ main { margin-left: var(--rail-width); }
 .phase-tests { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); border-top: 1px solid var(--line); }
 .phase-tests article { display: grid; align-content: start; gap: 9px; min-height: 145px; padding: 20px 18px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 .phase-tests article:nth-child(even) { border-right: 0; }
+.softmax-flow { margin: 0; padding: 0; border-top: 1px solid var(--line); list-style: none; }
+.softmax-flow li { display: grid; grid-template-columns: 92px minmax(0,1fr) 130px; gap: 22px; align-items: baseline; padding: 18px 0; border-bottom: 1px solid var(--line); }
+.softmax-flow li > span, .belief-example span, .attention-model span, .attention-equation span, .agent-lineage span { color: var(--leaf); font-size: .64rem; letter-spacing: .07em; text-transform: uppercase; }
+.softmax-flow p, .attention-model p, .agent-lineage p { margin: 5px 0 0; color: var(--ink-soft); font-size: .74rem; }
+.softmax-flow em { color: var(--ink-soft); font-size: .66rem; font-style: normal; text-align: right; }
+.belief-example { display: grid; gap: 10px; padding: 28px 0 6px; }
+.belief-example div { display: grid; grid-template-columns: 190px minmax(0,1fr) 44px; gap: 14px; align-items: center; }
+.belief-example i { height: 3px; background: linear-gradient(90deg,var(--leaf) calc(var(--belief) * 100%),var(--line) 0); }
+.belief-example strong { font-size: .72rem; text-align: right; }
+.attention-model { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); border-top: 1px solid var(--line); }
+.attention-model article { display: grid; align-content: start; gap: 8px; min-height: 170px; padding: 20px 18px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.attention-model article:last-child { border-right: 0; }
+.attention-model strong { font-size: .86rem; }
+.attention-model small { margin-top: auto; color: var(--ink-soft); font-size: .62rem; text-transform: uppercase; }
+.attention-equation { display: grid; grid-template-columns: 150px 1fr; gap: 22px; align-items: baseline; padding: 22px 0; border-bottom: 1px solid var(--line); }
+.attention-equation strong { font-size: .78rem; font-weight: 300; }
+.agent-lineage { border-top: 1px solid var(--line); }
+.agent-lineage article { position: relative; display: grid; grid-template-columns: 130px 1.2fr .8fr 1.2fr 24px; gap: 22px; align-items: start; padding: 20px 0; border-bottom: 1px solid var(--line); }
+.agent-lineage article[data-status="candidate"] { background: linear-gradient(90deg,transparent,rgba(196,148,80,.06)); }
+.agent-lineage article[data-status="retired"] { opacity: .72; }
+.agent-lineage .agent-version { display: grid; gap: 5px; }
+.agent-lineage .agent-version strong { font-size: 1rem; font-weight: 400; }
+.agent-lineage .agent-version small { color: var(--ink-soft); font-size: .62rem; }
+.agent-lineage .delete-button { align-self: start; }
 .submission-table { min-width: 940px; }
 .submission-table td { vertical-align: top; font-size: .7rem; }
 .submission-table td:first-child strong, .submission-table td:first-child small { display: block; }
@@ -777,6 +801,8 @@ main { margin-left: var(--rail-width); }
   .objective-fronts, .submission-analysis { grid-template-columns: 1fr; }
   .objective-fronts div, .submission-analysis article { border-right: 0; border-bottom: 1px solid var(--line); }
   .signal-grid, .mechanism-grid, .strategy-switchboard, .submission-stats, .candidate-evidence { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .agent-lineage article { grid-template-columns: 110px 1fr 1fr; }
+  .agent-lineage article > div:nth-of-type(4) { grid-column: 2 / 4; }
   .candidate-evidence div:nth-child(even) { border-right: 0; }
   .signal-grid article:nth-child(even), .mechanism-grid article:nth-child(even), .strategy-switchboard article:nth-child(even) { border-right: 0; }
   .signal-grid article:nth-child(odd), .mechanism-grid article:nth-child(odd), .strategy-switchboard article:nth-child(odd) { border-right: 1px solid var(--line); }
@@ -815,7 +841,7 @@ main { margin-left: var(--rail-width); }
   .replay-layout { gap: 28px; }
   .replay-table-wrap { max-height: 430px; }
   .objective-line { grid-template-columns: 1fr; gap: 8px; }
-  .objective-measures, .fixed-grid, .policy-gates, .control-boundaries, .tension-grid, .attention-budget, .source-strip, .signal-grid, .mechanism-grid, .strategy-switchboard, .submission-stats, .candidate-evidence, .match-ledger, .phase-tests { grid-template-columns: 1fr; }
+  .objective-measures, .fixed-grid, .policy-gates, .control-boundaries, .tension-grid, .attention-budget, .source-strip, .signal-grid, .mechanism-grid, .strategy-switchboard, .submission-stats, .candidate-evidence, .match-ledger, .phase-tests, .attention-model { grid-template-columns: 1fr; }
   .objective-measures div, .fixed-grid div, .fixed-grid div:nth-child(4n), .fixed-grid div:nth-child(2n), .control-boundaries div { min-height: 0; border-right: 0; }
   .tension-grid article, .tension-grid article:nth-child(even), .attention-budget article, .attention-budget article:nth-child(even), .signal-grid article, .signal-grid article:nth-child(odd), .signal-grid article:nth-child(even), .mechanism-grid article, .mechanism-grid article:nth-child(odd), .mechanism-grid article:nth-child(even), .strategy-switchboard article, .strategy-switchboard article:nth-child(odd), .strategy-switchboard article:nth-child(even) { min-height: 0; border-right: 0; }
   .source-strip a:first-child, .source-strip a:last-child { padding-inline: 0; border-left: 0; }
@@ -831,6 +857,13 @@ main { margin-left: var(--rail-width); }
   .match-ledger article, .match-ledger article:nth-child(even), .phase-tests article, .phase-tests article:nth-child(even) { min-height: 0; border-right: 0; }
   .phase-timeline li { grid-template-columns: 86px 1fr; gap: 8px 12px; }
   .phase-timeline em { grid-column: 2; text-align: left; }
+  .softmax-flow li { grid-template-columns: 72px 1fr; gap: 8px 12px; }
+  .softmax-flow em { grid-column: 2; text-align: left; }
+  .belief-example div { grid-template-columns: 130px minmax(0,1fr) 38px; }
+  .attention-model article { min-height: 0; border-right: 0; }
+  .attention-equation { grid-template-columns: 1fr; gap: 8px; }
+  .agent-lineage article { grid-template-columns: 1fr; gap: 12px; }
+  .agent-lineage article > div:nth-of-type(4) { grid-column: 1; }
   .section-note { max-width: none; text-align: left; }
   .findings-flow li { grid-template-columns: 1fr; }
   .challenge-row { grid-template-columns: 28px 1fr; gap: 7px 12px; }

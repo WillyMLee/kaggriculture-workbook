@@ -1,0 +1,2418 @@
+{
+  "seed": 5,
+  "challenger_seat": 1,
+  "challenger": "agents.balanced_tempo:agent",
+  "baseline": "kaggriculture-v0.2.1.tar.gz",
+  "final_rewards": [
+    30885.0,
+    28757.0
+  ],
+  "statuses": [
+    "DONE",
+    "DONE"
+  ],
+  "days": [
+    {
+      "day": 0,
+      "margin": 0,
+      "opponent_belief": {
+        "archetype": "expansion-heavy",
+        "confidence": 2,
+        "recurring_crop": "STRAWBERRY"
+      },
+      "ours": {
+        "bank": 2130,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "melon": 10,
+          "wheat": 5
+        },
+        "shed": {},
+        "seeds": {},
+        "actions": {
+          "unit_ops": {
+            "PASS": 47,
+            "WEST": 32,
+            "NORTH": 29,
+            "EAST": 16,
+            "PLANT": 15,
+            "WATER": 15,
+            "SOUTH": 8
+          },
+          "market_ops": {
+            "HIRE": 6,
+            "BUY_SEED": 2
+          },
+          "market_units": {
+            "BUY_SEED:MELON": 10,
+            "BUY_SEED:WHEAT": 5
+          }
+        }
+      },
+      "opponent": {
+        "bank": 2130,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "melon": 10,
+          "wheat": 5
+        },
+        "shed": {},
+        "seeds": {},
+        "actions": {
+          "unit_ops": {
+            "PASS": 47,
+            "WEST": 32,
+            "NORTH": 29,
+            "EAST": 16,
+            "PLANT": 15,
+            "WATER": 15,
+            "SOUTH": 8
+          },
+          "market_ops": {
+            "HIRE": 6,
+            "BUY_SEED": 2
+          },
+          "market_units": {
+            "BUY_SEED:MELON": 10,
+            "BUY_SEED:WHEAT": 5
+          }
+        }
+      }
+    },
+    {
+      "day": 1,
+      "margin": 0,
+      "opponent_belief": {
+        "archetype": "expansion-heavy",
+        "confidence": 2,
+        "recurring_crop": "STRAWBERRY"
+      },
+      "ours": {
+        "bank": 2110,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "melon": 10,
+          "wheat": 5
+        },
+        "shed": {},
+        "seeds": {},
+        "actions": {
+          "unit_ops": {
+            "PASS": 95,
+            "NORTH": 27,
+            "WEST": 25,
+            "WATER": 15
+          },
+          "market_ops": {
+            "HIRE": 6
+          },
+          "market_units": {}
+        }
+      },
+      "opponent": {
+        "bank": 2110,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "melon": 10,
+          "wheat": 5
+        },
+        "shed": {},
+        "seeds": {},
+        "actions": {
+          "unit_ops": {
+            "PASS": 95,
+            "NORTH": 27,
+            "WEST": 25,
+            "WATER": 15
+          },
+          "market_ops": {
+            "HIRE": 6
+          },
+          "market_units": {}
+        }
+      }
+    },
+    {
+      "day": 2,
+      "margin": 0,
+      "opponent_belief": {
+        "archetype": "expansion-heavy",
+        "confidence": 2,
+        "recurring_crop": "STRAWBERRY"
+      },
+      "ours": {
+        "bank": 2090,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "melon": 10,
+          "wheat": 5
+        },
+        "shed": {},
+        "seeds": {},
+        "actions": {
+          "unit_ops": {
+            "PASS": 95,
+            "NORTH": 27,
+            "WEST": 25,
+            "WATER": 15
+          },
+          "market_ops": {
+            "HIRE": 6
+          },
+          "market_units": {}
+        }
+      },
+      "opponent": {
+        "bank": 2090,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "melon": 10,
+          "weed": 1,
+          "wheat": 5
+        },
+        "shed": {},
+        "seeds": {},
+        "actions": {
+          "unit_ops": {
+            "PASS": 95,
+            "NORTH": 27,
+            "WEST": 25,
+            "WATER": 15
+          },
+          "market_ops": {
+            "HIRE": 6
+          },
+          "market_units": {}
+        }
+      }
+    },
+    {
+      "day": 3,
+      "margin": 0,
+      "opponent_belief": {
+        "archetype": "expansion-heavy",
+        "confidence": 2,
+        "recurring_crop": "STRAWBERRY"
+      },
+      "ours": {
+        "bank": 2070,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "melon": 10,
+          "wheat": 5
+        },
+        "shed": {},
+        "seeds": {},
+        "actions": {
+          "unit_ops": {
+            "PASS": 95,
+            "NORTH": 27,
+            "WEST": 25,
+            "WATER": 15
+          },
+          "market_ops": {
+            "HIRE": 6
+          },
+          "market_units": {}
+        }
+      },
+      "opponent": {
+        "bank": 2070,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "melon": 10,
+          "weed": 1,
+          "wheat": 5
+        },
+        "shed": {},
+        "seeds": {},
+        "actions": {
+          "unit_ops": {
+            "PASS": 95,
+            "NORTH": 27,
+            "WEST": 25,
+            "WATER": 15
+          },
+          "market_ops": {
+            "HIRE": 6
+          },
+          "market_units": {}
+        }
+      }
+    },
+    {
+      "day": 4,
+      "margin": 0,
+      "opponent_belief": {
+        "archetype": "expansion-heavy",
+        "confidence": 2,
+        "recurring_crop": "STRAWBERRY"
+      },
+      "ours": {
+        "bank": 2000,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "melon": 10,
+          "wheat": 5
+        },
+        "shed": {
+          "WHEAT": 16
+        },
+        "seeds": {},
+        "actions": {
+          "unit_ops": {
+            "PASS": 37,
+            "WEST": 36,
+            "NORTH": 28,
+            "EAST": 23,
+            "WATER": 16,
+            "SOUTH": 12,
+            "HARVEST": 5,
+            "PLANT": 5
+          },
+          "market_ops": {
+            "HIRE": 6,
+            "BUY_SEED": 4
+          },
+          "market_units": {
+            "BUY_SEED:WHEAT": 5
+          }
+        }
+      },
+      "opponent": {
+        "bank": 2000,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "melon": 10,
+          "weed": 1,
+          "wheat": 5
+        },
+        "shed": {
+          "WHEAT": 16
+        },
+        "seeds": {},
+        "actions": {
+          "unit_ops": {
+            "PASS": 37,
+            "WEST": 36,
+            "NORTH": 28,
+            "EAST": 23,
+            "WATER": 16,
+            "SOUTH": 12,
+            "HARVEST": 5,
+            "PLANT": 5
+          },
+          "market_ops": {
+            "HIRE": 6,
+            "BUY_SEED": 4
+          },
+          "market_units": {
+            "BUY_SEED:WHEAT": 5
+          }
+        }
+      }
+    },
+    {
+      "day": 5,
+      "margin": 0,
+      "opponent_belief": {
+        "archetype": "expansion-heavy",
+        "confidence": 2,
+        "recurring_crop": "STRAWBERRY"
+      },
+      "ours": {
+        "bank": 1980,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "melon": 10,
+          "wheat": 5
+        },
+        "shed": {
+          "WHEAT": 16
+        },
+        "seeds": {},
+        "actions": {
+          "unit_ops": {
+            "PASS": 95,
+            "NORTH": 27,
+            "WEST": 25,
+            "WATER": 15
+          },
+          "market_ops": {
+            "HIRE": 6
+          },
+          "market_units": {}
+        }
+      },
+      "opponent": {
+        "bank": 1980,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "melon": 10,
+          "weed": 1,
+          "wheat": 5
+        },
+        "shed": {
+          "WHEAT": 16
+        },
+        "seeds": {},
+        "actions": {
+          "unit_ops": {
+            "PASS": 95,
+            "NORTH": 27,
+            "WEST": 25,
+            "WATER": 15
+          },
+          "market_ops": {
+            "HIRE": 6
+          },
+          "market_units": {}
+        }
+      }
+    },
+    {
+      "day": 6,
+      "margin": 0,
+      "opponent_belief": {
+        "archetype": "expansion-heavy",
+        "confidence": 2,
+        "recurring_crop": "STRAWBERRY"
+      },
+      "ours": {
+        "bank": 1960,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "melon": 10,
+          "wheat": 5
+        },
+        "shed": {
+          "WHEAT": 16
+        },
+        "seeds": {},
+        "actions": {
+          "unit_ops": {
+            "PASS": 95,
+            "NORTH": 27,
+            "WEST": 25,
+            "WATER": 15
+          },
+          "market_ops": {
+            "HIRE": 6
+          },
+          "market_units": {}
+        }
+      },
+      "opponent": {
+        "bank": 1960,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "melon": 10,
+          "weed": 1,
+          "wheat": 5
+        },
+        "shed": {
+          "WHEAT": 16
+        },
+        "seeds": {},
+        "actions": {
+          "unit_ops": {
+            "PASS": 95,
+            "NORTH": 27,
+            "WEST": 25,
+            "WATER": 15
+          },
+          "market_ops": {
+            "HIRE": 6
+          },
+          "market_units": {}
+        }
+      }
+    },
+    {
+      "day": 7,
+      "margin": 0,
+      "opponent_belief": {
+        "archetype": "expansion-heavy",
+        "confidence": 2,
+        "recurring_crop": "STRAWBERRY"
+      },
+      "ours": {
+        "bank": 1940,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "melon": 10,
+          "wheat": 5
+        },
+        "shed": {
+          "WHEAT": 16
+        },
+        "seeds": {},
+        "actions": {
+          "unit_ops": {
+            "PASS": 95,
+            "NORTH": 27,
+            "WEST": 25,
+            "WATER": 15
+          },
+          "market_ops": {
+            "HIRE": 6
+          },
+          "market_units": {}
+        }
+      },
+      "opponent": {
+        "bank": 1940,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "melon": 10,
+          "weed": 1,
+          "wheat": 5
+        },
+        "shed": {
+          "WHEAT": 16
+        },
+        "seeds": {},
+        "actions": {
+          "unit_ops": {
+            "PASS": 95,
+            "NORTH": 27,
+            "WEST": 25,
+            "WATER": 15
+          },
+          "market_ops": {
+            "HIRE": 6
+          },
+          "market_units": {}
+        }
+      }
+    },
+    {
+      "day": 8,
+      "margin": 0,
+      "opponent_belief": {
+        "archetype": "expansion-heavy",
+        "confidence": 2,
+        "recurring_crop": "STRAWBERRY"
+      },
+      "ours": {
+        "bank": 1870,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "melon": 10,
+          "wheat": 5
+        },
+        "shed": {
+          "WHEAT": 32
+        },
+        "seeds": {},
+        "actions": {
+          "unit_ops": {
+            "PASS": 37,
+            "WEST": 36,
+            "NORTH": 28,
+            "EAST": 23,
+            "WATER": 16,
+            "SOUTH": 12,
+            "HARVEST": 5,
+            "PLANT": 5
+          },
+          "market_ops": {
+            "HIRE": 6,
+            "BUY_SEED": 4
+          },
+          "market_units": {
+            "BUY_SEED:WHEAT": 5
+          }
+        }
+      },
+      "opponent": {
+        "bank": 1870,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "melon": 10,
+          "weed": 1,
+          "wheat": 5
+        },
+        "shed": {
+          "WHEAT": 32
+        },
+        "seeds": {},
+        "actions": {
+          "unit_ops": {
+            "PASS": 37,
+            "WEST": 36,
+            "NORTH": 28,
+            "EAST": 23,
+            "WATER": 16,
+            "SOUTH": 12,
+            "HARVEST": 5,
+            "PLANT": 5
+          },
+          "market_ops": {
+            "HIRE": 6,
+            "BUY_SEED": 4
+          },
+          "market_units": {
+            "BUY_SEED:WHEAT": 5
+          }
+        }
+      }
+    },
+    {
+      "day": 9,
+      "margin": 0,
+      "opponent_belief": {
+        "archetype": "expansion-heavy",
+        "confidence": 2,
+        "recurring_crop": "STRAWBERRY"
+      },
+      "ours": {
+        "bank": 1850,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "melon": 10,
+          "wheat": 5
+        },
+        "shed": {
+          "WHEAT": 32
+        },
+        "seeds": {},
+        "actions": {
+          "unit_ops": {
+            "PASS": 95,
+            "NORTH": 27,
+            "WEST": 25,
+            "WATER": 15
+          },
+          "market_ops": {
+            "HIRE": 6
+          },
+          "market_units": {}
+        }
+      },
+      "opponent": {
+        "bank": 1850,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "melon": 10,
+          "weed": 1,
+          "wheat": 5
+        },
+        "shed": {
+          "WHEAT": 32
+        },
+        "seeds": {},
+        "actions": {
+          "unit_ops": {
+            "PASS": 95,
+            "NORTH": 27,
+            "WEST": 25,
+            "WATER": 15
+          },
+          "market_ops": {
+            "HIRE": 6
+          },
+          "market_units": {}
+        }
+      }
+    },
+    {
+      "day": 10,
+      "margin": 0,
+      "opponent_belief": {
+        "archetype": "expansion-heavy",
+        "confidence": 2,
+        "recurring_crop": "STRAWBERRY"
+      },
+      "ours": {
+        "bank": 1830,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "melon": 10,
+          "wheat": 5
+        },
+        "shed": {
+          "WHEAT": 32
+        },
+        "seeds": {},
+        "actions": {
+          "unit_ops": {
+            "PASS": 95,
+            "NORTH": 27,
+            "WEST": 25,
+            "WATER": 15
+          },
+          "market_ops": {
+            "HIRE": 6
+          },
+          "market_units": {}
+        }
+      },
+      "opponent": {
+        "bank": 1830,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "melon": 10,
+          "weed": 1,
+          "wheat": 5
+        },
+        "shed": {
+          "WHEAT": 32
+        },
+        "seeds": {},
+        "actions": {
+          "unit_ops": {
+            "PASS": 95,
+            "NORTH": 27,
+            "WEST": 25,
+            "WATER": 15
+          },
+          "market_ops": {
+            "HIRE": 6
+          },
+          "market_units": {}
+        }
+      }
+    },
+    {
+      "day": 11,
+      "margin": 1600,
+      "opponent_belief": {
+        "archetype": "expansion-heavy",
+        "confidence": 2,
+        "recurring_crop": "STRAWBERRY"
+      },
+      "ours": {
+        "bank": 1810,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "melon": 10,
+          "wheat": 5
+        },
+        "shed": {
+          "WHEAT": 32
+        },
+        "seeds": {},
+        "actions": {
+          "unit_ops": {
+            "PASS": 95,
+            "NORTH": 27,
+            "WEST": 25,
+            "WATER": 15
+          },
+          "market_ops": {
+            "HIRE": 6
+          },
+          "market_units": {}
+        }
+      },
+      "opponent": {
+        "bank": 210,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "cow": 2,
+          "melon": 10,
+          "pasture": 1,
+          "weed": 1,
+          "wheat": 5
+        },
+        "shed": {
+          "WHEAT": 32,
+          "COW": 2
+        },
+        "seeds": {},
+        "actions": {
+          "unit_ops": {
+            "WEST": 38,
+            "NORTH": 27,
+            "SOUTH": 27,
+            "EAST": 26,
+            "PASS": 16,
+            "WATER": 15,
+            "PICKUP": 7,
+            "BUILD_PASTURE": 3,
+            "PLACE": 3
+          },
+          "market_ops": {
+            "HIRE": 6,
+            "BUY_ANIMAL": 1
+          },
+          "market_units": {
+            "BUY_ANIMAL:COW": 4
+          }
+        }
+      }
+    },
+    {
+      "day": 12,
+      "margin": 4823,
+      "opponent_belief": {
+        "archetype": "unclear",
+        "confidence": 0,
+        "recurring_crop": "STRAWBERRY"
+      },
+      "ours": {
+        "bank": 4823,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "pasture": 4,
+          "strawberry": 8,
+          "weed": 5,
+          "wheat": 2
+        },
+        "shed": {
+          "WHEAT": 47,
+          "MELON": 36,
+          "COW": 4
+        },
+        "seeds": {
+          "WHEAT": 2,
+          "STRAWBERRY": 4
+        },
+        "actions": {
+          "unit_ops": {
+            "WEST": 46,
+            "NORTH": 45,
+            "EAST": 35,
+            "SOUTH": 31,
+            "HARVEST": 15,
+            "WATER": 14,
+            "PLANT": 14,
+            "BUILD_PASTURE": 4,
+            "DROP": 4
+          },
+          "market_ops": {
+            "BUY_ANIMAL": 23,
+            "HIRE": 8,
+            "BUY_SEED": 5,
+            "SELL": 2
+          },
+          "market_units": {
+            "BUY_ANIMAL:COW": 92,
+            "SELL:MELON": 24,
+            "BUY_SEED:STRAWBERRY": 15,
+            "BUY_SEED:WHEAT": 5
+          }
+        }
+      },
+      "opponent": {
+        "bank": 0,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "cow": 2,
+          "pasture": 2,
+          "weed": 1
+        },
+        "shed": {
+          "WHEAT": 42,
+          "MELON": 56,
+          "COW": 2
+        },
+        "seeds": {
+          "WHEAT": 3,
+          "MELON": 2
+        },
+        "actions": {
+          "unit_ops": {
+            "WEST": 38,
+            "NORTH": 35,
+            "SOUTH": 31,
+            "EAST": 31,
+            "HARVEST": 15,
+            "WATER": 4,
+            "FEED": 3,
+            "CARE": 2,
+            "PICKUP": 2,
+            "BUILD_PASTURE": 1
+          },
+          "market_ops": {
+            "BUY_SEED": 35,
+            "HIRE": 6
+          },
+          "market_units": {
+            "BUY_SEED:MELON": 99,
+            "BUY_SEED:WHEAT": 33
+          }
+        }
+      }
+    },
+    {
+      "day": 13,
+      "margin": -385,
+      "opponent_belief": {
+        "archetype": "livestock-heavy",
+        "confidence": 2,
+        "recurring_crop": "STRAWBERRY"
+      },
+      "ours": {
+        "bank": 10851,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "cow": 3,
+          "pasture": 1,
+          "strawberry": 11,
+          "weed": 5,
+          "wheat": 3
+        },
+        "shed": {
+          "WHEAT": 47,
+          "COW": 1
+        },
+        "seeds": {
+          "WHEAT": 2,
+          "STRAWBERRY": 4
+        },
+        "actions": {
+          "unit_ops": {
+            "WEST": 58,
+            "EAST": 45,
+            "NORTH": 39,
+            "SOUTH": 35,
+            "WATER": 14,
+            "PLANT": 4,
+            "PICKUP": 4,
+            "PASS": 3,
+            "PLACE": 3,
+            "FEED": 3
+          },
+          "market_ops": {
+            "HIRE": 8,
+            "BUY_SEED": 2,
+            "SELL": 1
+          },
+          "market_units": {
+            "SELL:MELON": 36,
+            "BUY_SEED:STRAWBERRY": 3,
+            "BUY_SEED:WHEAT": 1
+          }
+        }
+      },
+      "opponent": {
+        "bank": 11236,
+        "hands": 0,
+        "quadrants": 2,
+        "assets": {
+          "cow": 4,
+          "tomato": 7,
+          "weed": 5,
+          "wheat": 4
+        },
+        "shed": {
+          "WHEAT": 38
+        },
+        "seeds": {
+          "WHEAT": 1,
+          "TOMATO": 5,
+          "MELON": 2
+        },
+        "actions": {
+          "unit_ops": {
+            "WEST": 51,
+            "EAST": 30,
+            "NORTH": 27,
+            "PLANT": 14,
+            "WATER": 11,
+            "PICKUP": 8,
+            "FEED": 8,
+            "SOUTH": 6,
+            "CARE": 4,
+            "PLACE": 3
+          },
+          "market_ops": {
+            "HIRE": 6,
+            "BUY_SEED": 2,
+            "SELL": 1,
+            "BUY_LAND": 1
+          },
+          "market_units": {
+            "SELL:MELON": 56,
+            "BUY_SEED:TOMATO": 15,
+            "BUY_SEED:WHEAT": 2
+          }
+        }
+      }
+    },
+    {
+      "day": 14,
+      "margin": -269,
+      "opponent_belief": {
+        "archetype": "livestock-heavy",
+        "confidence": 2,
+        "recurring_crop": "STRAWBERRY"
+      },
+      "ours": {
+        "bank": 10797,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "cow": 3,
+          "pasture": 1,
+          "strawberry": 11,
+          "weed": 6,
+          "wheat": 3
+        },
+        "shed": {
+          "WHEAT": 44,
+          "FERTILIZER": 2,
+          "COW": 1
+        },
+        "seeds": {
+          "WHEAT": 1,
+          "STRAWBERRY": 4
+        },
+        "actions": {
+          "unit_ops": {
+            "WEST": 60,
+            "EAST": 41,
+            "NORTH": 31,
+            "PICKUP": 22,
+            "SOUTH": 22,
+            "WATER": 14,
+            "PASS": 9,
+            "FEED": 3,
+            "CARE": 3,
+            "COLLECT_FERTILIZER": 2,
+            "PLANT": 1
+          },
+          "market_ops": {
+            "HIRE": 8
+          },
+          "market_units": {}
+        }
+      },
+      "opponent": {
+        "bank": 11066,
+        "hands": 0,
+        "quadrants": 2,
+        "assets": {
+          "cow": 4,
+          "tomato": 7,
+          "weed": 9,
+          "wheat": 4
+        },
+        "shed": {
+          "WHEAT": 34
+        },
+        "seeds": {
+          "TOMATO": 5,
+          "MELON": 2
+        },
+        "actions": {
+          "unit_ops": {
+            "WEST": 43,
+            "EAST": 33,
+            "NORTH": 32,
+            "FEED": 14,
+            "SOUTH": 13,
+            "WATER": 11,
+            "PICKUP": 7,
+            "PLANT": 4,
+            "CARE": 3,
+            "PASS": 2
+          },
+          "market_ops": {
+            "HIRE": 6,
+            "BUY_SEED": 1
+          },
+          "market_units": {
+            "BUY_SEED:TOMATO": 3
+          }
+        }
+      }
+    },
+    {
+      "day": 15,
+      "margin": 47,
+      "opponent_belief": {
+        "archetype": "livestock-heavy",
+        "confidence": 2,
+        "recurring_crop": "STRAWBERRY"
+      },
+      "ours": {
+        "bank": 10933,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "cow": 3,
+          "pasture": 1,
+          "strawberry": 11,
+          "weed": 6,
+          "wheat": 3
+        },
+        "shed": {
+          "WHEAT": 41,
+          "FERTILIZER": 1,
+          "COW": 1
+        },
+        "seeds": {
+          "WHEAT": 2,
+          "STRAWBERRY": 4
+        },
+        "actions": {
+          "unit_ops": {
+            "WEST": 60,
+            "EAST": 41,
+            "NORTH": 30,
+            "SOUTH": 23,
+            "PICKUP": 22,
+            "WATER": 14,
+            "PASS": 12,
+            "FEED": 3,
+            "CARE": 2,
+            "COLLECT_FERTILIZER": 1
+          },
+          "market_ops": {
+            "HIRE": 8,
+            "SELL": 1,
+            "BUY_SEED": 1
+          },
+          "market_units": {
+            "SELL:FERTILIZER": 2,
+            "BUY_SEED:WHEAT": 1
+          }
+        }
+      },
+      "opponent": {
+        "bank": 10886,
+        "hands": 0,
+        "quadrants": 2,
+        "assets": {
+          "cow": 4,
+          "tomato": 7,
+          "weed": 9,
+          "wheat": 4
+        },
+        "shed": {
+          "WHEAT": 30
+        },
+        "seeds": {
+          "WHEAT": 1,
+          "TOMATO": 8,
+          "MELON": 2
+        },
+        "actions": {
+          "unit_ops": {
+            "WEST": 41,
+            "EAST": 25,
+            "PASS": 24,
+            "NORTH": 23,
+            "FEED": 14,
+            "SOUTH": 13,
+            "WATER": 11,
+            "PICKUP": 7,
+            "CARE": 4
+          },
+          "market_ops": {
+            "HIRE": 6,
+            "BUY_SEED": 2
+          },
+          "market_units": {
+            "BUY_SEED:TOMATO": 3,
+            "BUY_SEED:WHEAT": 1
+          }
+        }
+      }
+    },
+    {
+      "day": 16,
+      "margin": 93,
+      "opponent_belief": {
+        "archetype": "livestock-heavy",
+        "confidence": 2,
+        "recurring_crop": "STRAWBERRY"
+      },
+      "ours": {
+        "bank": 10959,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "cow": 3,
+          "pasture": 1,
+          "strawberry": 11,
+          "weed": 7,
+          "wheat": 2
+        },
+        "shed": {
+          "WHEAT": 44,
+          "FERTILIZER": 3,
+          "COW": 1
+        },
+        "seeds": {
+          "WHEAT": 2,
+          "STRAWBERRY": 4
+        },
+        "actions": {
+          "unit_ops": {
+            "WEST": 66,
+            "EAST": 38,
+            "NORTH": 33,
+            "SOUTH": 20,
+            "PICKUP": 16,
+            "WATER": 13,
+            "PASS": 10,
+            "FEED": 3,
+            "COLLECT_FERTILIZER": 3,
+            "HARVEST": 2,
+            "CARE": 2,
+            "PLANT": 2
+          },
+          "market_ops": {
+            "HIRE": 8,
+            "BUY_SEED": 2,
+            "SELL": 1
+          },
+          "market_units": {
+            "BUY_SEED:WHEAT": 2,
+            "SELL:FERTILIZER": 1
+          }
+        }
+      },
+      "opponent": {
+        "bank": 10866,
+        "hands": 0,
+        "quadrants": 2,
+        "assets": {
+          "cow": 4,
+          "tomato": 7,
+          "weed": 9,
+          "wheat": 4
+        },
+        "shed": {
+          "WHEAT": 26
+        },
+        "seeds": {
+          "WHEAT": 1,
+          "TOMATO": 8,
+          "MELON": 2
+        },
+        "actions": {
+          "unit_ops": {
+            "WEST": 41,
+            "EAST": 25,
+            "PASS": 24,
+            "NORTH": 23,
+            "FEED": 14,
+            "SOUTH": 13,
+            "WATER": 11,
+            "PICKUP": 7,
+            "CARE": 4
+          },
+          "market_ops": {
+            "HIRE": 6
+          },
+          "market_units": {}
+        }
+      }
+    },
+    {
+      "day": 17,
+      "margin": 574,
+      "opponent_belief": {
+        "archetype": "livestock-heavy",
+        "confidence": 2,
+        "recurring_crop": "STRAWBERRY"
+      },
+      "ours": {
+        "bank": 11380,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "cow": 3,
+          "pasture": 1,
+          "strawberry": 11,
+          "weed": 7,
+          "wheat": 2
+        },
+        "shed": {
+          "WHEAT": 44,
+          "COW": 1
+        },
+        "seeds": {
+          "WHEAT": 3,
+          "STRAWBERRY": 4
+        },
+        "actions": {
+          "unit_ops": {
+            "WEST": 50,
+            "EAST": 41,
+            "NORTH": 29,
+            "PASS": 24,
+            "SOUTH": 22,
+            "PICKUP": 18,
+            "WATER": 13,
+            "FEED": 3,
+            "CARE": 3,
+            "COLLECT_FERTILIZER": 2,
+            "HARVEST": 1,
+            "PLANT": 1,
+            "DROP": 1
+          },
+          "market_ops": {
+            "HIRE": 8,
+            "SELL": 2,
+            "BUY_SEED": 2
+          },
+          "market_units": {
+            "SELL:FERTILIZER": 5,
+            "BUY_SEED:WHEAT": 2
+          }
+        }
+      },
+      "opponent": {
+        "bank": 10806,
+        "hands": 0,
+        "quadrants": 2,
+        "assets": {
+          "cow": 4,
+          "tomato": 7,
+          "weed": 9,
+          "wheat": 4
+        },
+        "shed": {
+          "WHEAT": 34
+        },
+        "seeds": {
+          "WHEAT": 1,
+          "TOMATO": 8,
+          "MELON": 2
+        },
+        "actions": {
+          "unit_ops": {
+            "WEST": 43,
+            "NORTH": 30,
+            "EAST": 24,
+            "SOUTH": 23,
+            "WATER": 11,
+            "FEED": 10,
+            "PASS": 8,
+            "HARVEST": 4,
+            "PLANT": 4,
+            "PICKUP": 3,
+            "CARE": 2
+          },
+          "market_ops": {
+            "HIRE": 6,
+            "BUY_SEED": 4
+          },
+          "market_units": {
+            "BUY_SEED:WHEAT": 4
+          }
+        }
+      }
+    },
+    {
+      "day": 18,
+      "margin": 540,
+      "opponent_belief": {
+        "archetype": "livestock-heavy",
+        "confidence": 2,
+        "recurring_crop": "STRAWBERRY"
+      },
+      "ours": {
+        "bank": 11326,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "cow": 3,
+          "pasture": 1,
+          "strawberry": 11,
+          "weed": 7,
+          "wheat": 2
+        },
+        "shed": {
+          "WHEAT": 41,
+          "FERTILIZER": 2,
+          "COW": 1
+        },
+        "seeds": {
+          "WHEAT": 3,
+          "STRAWBERRY": 4
+        },
+        "actions": {
+          "unit_ops": {
+            "WEST": 60,
+            "EAST": 39,
+            "NORTH": 27,
+            "SOUTH": 23,
+            "PICKUP": 21,
+            "PASS": 17,
+            "WATER": 13,
+            "FEED": 3,
+            "CARE": 3,
+            "COLLECT_FERTILIZER": 2
+          },
+          "market_ops": {
+            "HIRE": 8
+          },
+          "market_units": {}
+        }
+      },
+      "opponent": {
+        "bank": 10786,
+        "hands": 0,
+        "quadrants": 2,
+        "assets": {
+          "cow": 4,
+          "tomato": 7,
+          "weed": 9,
+          "wheat": 4
+        },
+        "shed": {
+          "WHEAT": 30
+        },
+        "seeds": {
+          "WHEAT": 1,
+          "TOMATO": 8,
+          "MELON": 2
+        },
+        "actions": {
+          "unit_ops": {
+            "WEST": 41,
+            "EAST": 25,
+            "PASS": 24,
+            "NORTH": 23,
+            "FEED": 14,
+            "SOUTH": 13,
+            "WATER": 11,
+            "PICKUP": 7,
+            "CARE": 4
+          },
+          "market_ops": {
+            "HIRE": 6
+          },
+          "market_units": {}
+        }
+      }
+    },
+    {
+      "day": 19,
+      "margin": 702,
+      "opponent_belief": {
+        "archetype": "livestock-heavy",
+        "confidence": 2,
+        "recurring_crop": "STRAWBERRY"
+      },
+      "ours": {
+        "bank": 11468,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "cow": 3,
+          "pasture": 1,
+          "strawberry": 11,
+          "weed": 7,
+          "wheat": 2
+        },
+        "shed": {
+          "WHEAT": 38,
+          "FERTILIZER": 2,
+          "COW": 1
+        },
+        "seeds": {
+          "WHEAT": 3,
+          "STRAWBERRY": 4
+        },
+        "actions": {
+          "unit_ops": {
+            "WEST": 60,
+            "EAST": 39,
+            "NORTH": 27,
+            "SOUTH": 23,
+            "PICKUP": 21,
+            "PASS": 17,
+            "WATER": 13,
+            "FEED": 3,
+            "CARE": 3,
+            "COLLECT_FERTILIZER": 2
+          },
+          "market_ops": {
+            "HIRE": 8,
+            "SELL": 1
+          },
+          "market_units": {
+            "SELL:FERTILIZER": 2
+          }
+        }
+      },
+      "opponent": {
+        "bank": 10766,
+        "hands": 0,
+        "quadrants": 2,
+        "assets": {
+          "cow": 4,
+          "tomato": 7,
+          "weed": 9,
+          "wheat": 4
+        },
+        "shed": {
+          "WHEAT": 26,
+          "MILK": 12
+        },
+        "seeds": {
+          "WHEAT": 1,
+          "TOMATO": 8,
+          "MELON": 2
+        },
+        "actions": {
+          "unit_ops": {
+            "PASS": 51,
+            "WEST": 29,
+            "EAST": 21,
+            "NORTH": 16,
+            "FEED": 15,
+            "WATER": 11,
+            "SOUTH": 7,
+            "PICKUP": 5,
+            "CARE": 4,
+            "HARVEST": 2,
+            "DROP": 1
+          },
+          "market_ops": {
+            "HIRE": 6
+          },
+          "market_units": {}
+        }
+      }
+    },
+    {
+      "day": 20,
+      "margin": -2543,
+      "opponent_belief": {
+        "archetype": "livestock-heavy",
+        "confidence": 2,
+        "recurring_crop": "STRAWBERRY"
+      },
+      "ours": {
+        "bank": 11600,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "cow": 3,
+          "pasture": 1,
+          "strawberry": 11,
+          "weed": 7,
+          "wheat": 1
+        },
+        "shed": {
+          "WHEAT": 38,
+          "FERTILIZER": 2,
+          "COW": 1
+        },
+        "seeds": {
+          "WHEAT": 4,
+          "STRAWBERRY": 4
+        },
+        "actions": {
+          "unit_ops": {
+            "WEST": 58,
+            "EAST": 34,
+            "NORTH": 29,
+            "PASS": 25,
+            "SOUTH": 22,
+            "PICKUP": 19,
+            "WATER": 12,
+            "FEED": 3,
+            "CARE": 3,
+            "COLLECT_FERTILIZER": 2,
+            "HARVEST": 1
+          },
+          "market_ops": {
+            "HIRE": 8,
+            "SELL": 1,
+            "BUY_SEED": 1
+          },
+          "market_units": {
+            "SELL:FERTILIZER": 2,
+            "BUY_SEED:WHEAT": 1
+          }
+        }
+      },
+      "opponent": {
+        "bank": 14143,
+        "hands": 0,
+        "quadrants": 2,
+        "assets": {
+          "cow": 4,
+          "tomato": 7,
+          "weed": 9,
+          "wheat": 4
+        },
+        "shed": {
+          "WHEAT": 22
+        },
+        "seeds": {
+          "WHEAT": 1,
+          "TOMATO": 8,
+          "MELON": 2
+        },
+        "actions": {
+          "unit_ops": {
+            "WEST": 41,
+            "PASS": 32,
+            "NORTH": 23,
+            "EAST": 17,
+            "FEED": 14,
+            "SOUTH": 13,
+            "WATER": 11,
+            "PICKUP": 7,
+            "CARE": 4
+          },
+          "market_ops": {
+            "HIRE": 6,
+            "SELL": 1
+          },
+          "market_units": {
+            "SELL:MILK": 12
+          }
+        }
+      }
+    },
+    {
+      "day": 21,
+      "margin": -2747,
+      "opponent_belief": {
+        "archetype": "livestock-heavy",
+        "confidence": 2,
+        "recurring_crop": "STRAWBERRY"
+      },
+      "ours": {
+        "bank": 11731,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "cow": 3,
+          "pasture": 1,
+          "strawberry": 11,
+          "weed": 7,
+          "wheat": 1
+        },
+        "shed": {
+          "WHEAT": 39,
+          "MILK": 18,
+          "FERTILIZER": 2,
+          "COW": 1
+        },
+        "seeds": {
+          "WHEAT": 4,
+          "STRAWBERRY": 4
+        },
+        "actions": {
+          "unit_ops": {
+            "WEST": 43,
+            "PASS": 41,
+            "NORTH": 33,
+            "EAST": 29,
+            "SOUTH": 24,
+            "WATER": 13,
+            "PICKUP": 12,
+            "HARVEST": 4,
+            "FEED": 3,
+            "CARE": 3,
+            "COLLECT_FERTILIZER": 2,
+            "PLANT": 1
+          },
+          "market_ops": {
+            "HIRE": 8,
+            "SELL": 1,
+            "BUY_SEED": 1
+          },
+          "market_units": {
+            "SELL:FERTILIZER": 2,
+            "BUY_SEED:WHEAT": 1
+          }
+        }
+      },
+      "opponent": {
+        "bank": 14478,
+        "hands": 0,
+        "quadrants": 2,
+        "assets": {
+          "cow": 4,
+          "tomato": 7,
+          "weed": 11,
+          "wheat": 1
+        },
+        "shed": {
+          "WHEAT": 30,
+          "TOMATO": 2,
+          "MILK": 18
+        },
+        "seeds": {
+          "WHEAT": 2,
+          "TOMATO": 8,
+          "MELON": 2
+        },
+        "actions": {
+          "unit_ops": {
+            "WEST": 42,
+            "NORTH": 31,
+            "EAST": 27,
+            "SOUTH": 22,
+            "HARVEST": 15,
+            "WATER": 8,
+            "PASS": 5,
+            "FEED": 4,
+            "CARE": 3,
+            "PLANT": 3,
+            "DROP": 2
+          },
+          "market_ops": {
+            "HIRE": 6,
+            "BUY_SEED": 2,
+            "SELL": 1
+          },
+          "market_units": {
+            "SELL:TOMATO": 5,
+            "BUY_SEED:WHEAT": 4
+          }
+        }
+      }
+    },
+    {
+      "day": 22,
+      "margin": -1940,
+      "opponent_belief": {
+        "archetype": "livestock-heavy",
+        "confidence": 2,
+        "recurring_crop": "STRAWBERRY"
+      },
+      "ours": {
+        "bank": 18367,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "cow": 3,
+          "pasture": 1,
+          "strawberry": 11,
+          "weed": 8,
+          "wheat": 1
+        },
+        "shed": {
+          "WHEAT": 36,
+          "STRAWBERRY": 2,
+          "COW": 1
+        },
+        "seeds": {
+          "WHEAT": 3,
+          "STRAWBERRY": 4
+        },
+        "actions": {
+          "unit_ops": {
+            "WEST": 45,
+            "NORTH": 37,
+            "EAST": 35,
+            "PASS": 31,
+            "SOUTH": 29,
+            "WATER": 12,
+            "HARVEST": 8,
+            "FEED": 3,
+            "DROP": 3,
+            "CARE": 2,
+            "PICKUP": 1,
+            "COLLECT_FERTILIZER": 1,
+            "PLANT": 1
+          },
+          "market_ops": {
+            "HIRE": 8,
+            "SELL": 5
+          },
+          "market_units": {
+            "SELL:MILK": 18,
+            "SELL:STRAWBERRY": 6,
+            "SELL:FERTILIZER": 3
+          }
+        }
+      },
+      "opponent": {
+        "bank": 20307,
+        "hands": 0,
+        "quadrants": 2,
+        "assets": {
+          "cow": 4,
+          "tomato": 7,
+          "weed": 11,
+          "wheat": 2
+        },
+        "shed": {
+          "WHEAT": 26
+        },
+        "seeds": {
+          "WHEAT": 3,
+          "TOMATO": 8,
+          "MELON": 2
+        },
+        "actions": {
+          "unit_ops": {
+            "PASS": 39,
+            "WEST": 35,
+            "NORTH": 21,
+            "EAST": 21,
+            "SOUTH": 18,
+            "WATER": 9,
+            "HARVEST": 7,
+            "FEED": 4,
+            "CARE": 3,
+            "DROP": 3,
+            "PICKUP": 1,
+            "PLANT": 1
+          },
+          "market_ops": {
+            "HIRE": 6,
+            "SELL": 4,
+            "BUY_SEED": 1
+          },
+          "market_units": {
+            "SELL:MILK": 18,
+            "SELL:TOMATO": 9,
+            "BUY_SEED:WHEAT": 2
+          }
+        }
+      }
+    },
+    {
+      "day": 23,
+      "margin": -2021,
+      "opponent_belief": {
+        "archetype": "livestock-heavy",
+        "confidence": 2,
+        "recurring_crop": "STRAWBERRY"
+      },
+      "ours": {
+        "bank": 18748,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "cow": 3,
+          "pasture": 1,
+          "strawberry": 11,
+          "weed": 8,
+          "wheat": 1
+        },
+        "shed": {
+          "WHEAT": 33,
+          "STRAWBERRY": 3,
+          "MILK": 9,
+          "FERTILIZER": 3,
+          "COW": 1
+        },
+        "seeds": {
+          "WHEAT": 4,
+          "STRAWBERRY": 4
+        },
+        "actions": {
+          "unit_ops": {
+            "PASS": 54,
+            "WEST": 47,
+            "EAST": 26,
+            "NORTH": 24,
+            "PICKUP": 22,
+            "WATER": 11,
+            "SOUTH": 10,
+            "HARVEST": 6,
+            "FEED": 3,
+            "COLLECT_FERTILIZER": 3,
+            "CARE": 2
+          },
+          "market_ops": {
+            "HIRE": 8,
+            "SELL": 1,
+            "BUY_SEED": 1
+          },
+          "market_units": {
+            "SELL:STRAWBERRY": 2,
+            "BUY_SEED:WHEAT": 1
+          }
+        }
+      },
+      "opponent": {
+        "bank": 20769,
+        "hands": 0,
+        "quadrants": 2,
+        "assets": {
+          "cow": 4,
+          "tomato": 7,
+          "weed": 11,
+          "wheat": 2
+        },
+        "shed": {
+          "WHEAT": 25,
+          "TOMATO": 1,
+          "MILK": 11
+        },
+        "seeds": {
+          "WHEAT": 3,
+          "TOMATO": 8,
+          "MELON": 2
+        },
+        "actions": {
+          "unit_ops": {
+            "WEST": 43,
+            "EAST": 36,
+            "NORTH": 26,
+            "SOUTH": 26,
+            "HARVEST": 11,
+            "WATER": 8,
+            "PICKUP": 6,
+            "FEED": 4,
+            "DROP": 2
+          },
+          "market_ops": {
+            "HIRE": 6,
+            "SELL": 1
+          },
+          "market_units": {
+            "SELL:TOMATO": 6
+          }
+        }
+      }
+    },
+    {
+      "day": 24,
+      "margin": -954,
+      "opponent_belief": {
+        "archetype": "livestock-heavy",
+        "confidence": 2,
+        "recurring_crop": "STRAWBERRY"
+      },
+      "ours": {
+        "bank": 23576,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "cow": 3,
+          "pasture": 1,
+          "strawberry": 11,
+          "weed": 8,
+          "wheat": 1
+        },
+        "shed": {
+          "WHEAT": 30,
+          "STRAWBERRY": 2,
+          "FERTILIZER": 1,
+          "COW": 1
+        },
+        "seeds": {
+          "WHEAT": 4,
+          "STRAWBERRY": 4
+        },
+        "actions": {
+          "unit_ops": {
+            "WEST": 44,
+            "PASS": 40,
+            "NORTH": 33,
+            "EAST": 32,
+            "SOUTH": 28,
+            "WATER": 12,
+            "HARVEST": 8,
+            "FEED": 3,
+            "CARE": 3,
+            "DROP": 3,
+            "PICKUP": 1,
+            "COLLECT_FERTILIZER": 1
+          },
+          "market_ops": {
+            "HIRE": 8,
+            "SELL": 5
+          },
+          "market_units": {
+            "SELL:STRAWBERRY": 9,
+            "SELL:MILK": 9,
+            "SELL:FERTILIZER": 3
+          }
+        }
+      },
+      "opponent": {
+        "bank": 24530,
+        "hands": 0,
+        "quadrants": 2,
+        "assets": {
+          "cow": 4,
+          "tomato": 7,
+          "weed": 11,
+          "wheat": 2
+        },
+        "shed": {
+          "WHEAT": 21
+        },
+        "seeds": {
+          "WHEAT": 3,
+          "TOMATO": 8,
+          "MELON": 2
+        },
+        "actions": {
+          "unit_ops": {
+            "PASS": 51,
+            "WEST": 28,
+            "NORTH": 21,
+            "SOUTH": 19,
+            "EAST": 15,
+            "WATER": 9,
+            "HARVEST": 7,
+            "FEED": 4,
+            "CARE": 4,
+            "DROP": 3,
+            "PICKUP": 1
+          },
+          "market_ops": {
+            "HIRE": 6,
+            "SELL": 3
+          },
+          "market_units": {
+            "SELL:MILK": 11,
+            "SELL:TOMATO": 8
+          }
+        }
+      }
+    },
+    {
+      "day": 25,
+      "margin": -433,
+      "opponent_belief": {
+        "archetype": "livestock-heavy",
+        "confidence": 2,
+        "recurring_crop": "STRAWBERRY"
+      },
+      "ours": {
+        "bank": 24067,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "cow": 3,
+          "pasture": 1,
+          "strawberry": 11,
+          "weed": 8,
+          "wheat": 1
+        },
+        "shed": {
+          "WHEAT": 30,
+          "STRAWBERRY": 3,
+          "MILK": 7,
+          "FERTILIZER": 1,
+          "COW": 1
+        },
+        "seeds": {
+          "WHEAT": 4,
+          "STRAWBERRY": 4
+        },
+        "actions": {
+          "unit_ops": {
+            "WEST": 56,
+            "NORTH": 35,
+            "EAST": 30,
+            "PASS": 30,
+            "SOUTH": 27,
+            "WATER": 12,
+            "HARVEST": 7,
+            "PICKUP": 3,
+            "FEED": 3,
+            "CARE": 3,
+            "COLLECT_FERTILIZER": 1,
+            "PLANT": 1
+          },
+          "market_ops": {
+            "HIRE": 8,
+            "SELL": 2,
+            "BUY_SEED": 1
+          },
+          "market_units": {
+            "SELL:STRAWBERRY": 2,
+            "SELL:FERTILIZER": 1,
+            "BUY_SEED:WHEAT": 1
+          }
+        }
+      },
+      "opponent": {
+        "bank": 24500,
+        "hands": 0,
+        "quadrants": 2,
+        "assets": {
+          "cow": 4,
+          "weed": 18,
+          "wheat": 2
+        },
+        "shed": {
+          "WHEAT": 21,
+          "MILK": 7
+        },
+        "seeds": {
+          "WHEAT": 3,
+          "TOMATO": 8,
+          "MELON": 2
+        },
+        "actions": {
+          "unit_ops": {
+            "PASS": 73,
+            "WEST": 38,
+            "EAST": 15,
+            "FEED": 9,
+            "NORTH": 8,
+            "HARVEST": 5,
+            "PICKUP": 4,
+            "CARE": 4,
+            "WATER": 3,
+            "SOUTH": 2,
+            "PLANT": 1
+          },
+          "market_ops": {
+            "HIRE": 6,
+            "BUY_SEED": 1
+          },
+          "market_units": {
+            "BUY_SEED:WHEAT": 1
+          }
+        }
+      }
+    },
+    {
+      "day": 26,
+      "margin": 1751,
+      "opponent_belief": {
+        "archetype": "livestock-heavy",
+        "confidence": 2,
+        "recurring_crop": "STRAWBERRY"
+      },
+      "ours": {
+        "bank": 28239,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "cow": 3,
+          "pasture": 1,
+          "strawberry": 11,
+          "weed": 8,
+          "wheat": 1
+        },
+        "shed": {
+          "WHEAT": 27,
+          "STRAWBERRY": 2,
+          "FERTILIZER": 1,
+          "COW": 1
+        },
+        "seeds": {
+          "WHEAT": 4,
+          "STRAWBERRY": 4
+        },
+        "actions": {
+          "unit_ops": {
+            "WEST": 44,
+            "PASS": 40,
+            "NORTH": 33,
+            "EAST": 32,
+            "SOUTH": 28,
+            "WATER": 12,
+            "HARVEST": 8,
+            "FEED": 3,
+            "CARE": 3,
+            "DROP": 3,
+            "PICKUP": 1,
+            "COLLECT_FERTILIZER": 1
+          },
+          "market_ops": {
+            "HIRE": 8,
+            "SELL": 5
+          },
+          "market_units": {
+            "SELL:STRAWBERRY": 9,
+            "SELL:MILK": 7,
+            "SELL:FERTILIZER": 1
+          }
+        }
+      },
+      "opponent": {
+        "bank": 26488,
+        "hands": 0,
+        "quadrants": 2,
+        "assets": {
+          "cow": 4,
+          "weed": 18,
+          "wheat": 1
+        },
+        "shed": {
+          "WHEAT": 20
+        },
+        "seeds": {
+          "WHEAT": 3,
+          "TOMATO": 8,
+          "MELON": 2
+        },
+        "actions": {
+          "unit_ops": {
+            "PASS": 79,
+            "WEST": 32,
+            "FEED": 16,
+            "EAST": 11,
+            "NORTH": 7,
+            "PICKUP": 6,
+            "SOUTH": 5,
+            "CARE": 4,
+            "HARVEST": 1,
+            "WATER": 1
+          },
+          "market_ops": {
+            "HIRE": 6,
+            "SELL": 1
+          },
+          "market_units": {
+            "SELL:MILK": 7
+          }
+        }
+      }
+    },
+    {
+      "day": 27,
+      "margin": -1175,
+      "opponent_belief": {
+        "archetype": "livestock-heavy",
+        "confidence": 2,
+        "recurring_crop": "STRAWBERRY"
+      },
+      "ours": {
+        "bank": 28757,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "cow": 3,
+          "pasture": 1,
+          "strawberry": 11,
+          "weed": 8,
+          "wheat": 1
+        },
+        "shed": {
+          "WHEAT": 24,
+          "STRAWBERRY": 3,
+          "MILK": 9,
+          "FERTILIZER": 3,
+          "COW": 1
+        },
+        "seeds": {
+          "WHEAT": 4,
+          "STRAWBERRY": 4
+        },
+        "actions": {
+          "unit_ops": {
+            "WEST": 50,
+            "EAST": 35,
+            "PASS": 33,
+            "NORTH": 31,
+            "PICKUP": 18,
+            "SOUTH": 16,
+            "WATER": 10,
+            "HARVEST": 6,
+            "FEED": 3,
+            "COLLECT_FERTILIZER": 3,
+            "CARE": 3
+          },
+          "market_ops": {
+            "HIRE": 8,
+            "SELL": 2
+          },
+          "market_units": {
+            "SELL:STRAWBERRY": 2,
+            "SELL:FERTILIZER": 1
+          }
+        }
+      },
+      "opponent": {
+        "bank": 29932,
+        "hands": 0,
+        "quadrants": 2,
+        "assets": {
+          "cow": 4,
+          "weed": 18,
+          "wheat": 1
+        },
+        "shed": {
+          "MILK": 3
+        },
+        "seeds": {
+          "WHEAT": 3,
+          "TOMATO": 8,
+          "MELON": 2
+        },
+        "actions": {
+          "unit_ops": {
+            "WEST": 10,
+            "EAST": 7,
+            "HARVEST": 4,
+            "DROP": 3
+          },
+          "market_ops": {
+            "SELL": 4
+          },
+          "market_units": {
+            "SELL:WHEAT": 20,
+            "SELL:MILK": 9
+          }
+        }
+      }
+    },
+    {
+      "day": 28,
+      "margin": -2040,
+      "opponent_belief": {
+        "archetype": "expansion-heavy",
+        "confidence": 2,
+        "recurring_crop": "STRAWBERRY"
+      },
+      "ours": {
+        "bank": 28757,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "cow": 3,
+          "pasture": 1,
+          "strawberry": 9,
+          "weed": 10,
+          "wheat": 1
+        },
+        "shed": {
+          "WHEAT": 24,
+          "STRAWBERRY": 3,
+          "MILK": 9,
+          "FERTILIZER": 3,
+          "COW": 1
+        },
+        "seeds": {
+          "WHEAT": 4,
+          "STRAWBERRY": 4
+        },
+        "actions": {
+          "unit_ops": {
+            "PASS": 24
+          },
+          "market_ops": {},
+          "market_units": {}
+        }
+      },
+      "opponent": {
+        "bank": 30797,
+        "hands": 0,
+        "quadrants": 2,
+        "assets": {
+          "pasture": 4,
+          "weed": 18,
+          "wheat": 1
+        },
+        "shed": {},
+        "seeds": {
+          "WHEAT": 3,
+          "TOMATO": 8,
+          "MELON": 2
+        },
+        "actions": {
+          "unit_ops": {
+            "FEED": 15,
+            "WEST": 4,
+            "NORTH": 2,
+            "SOUTH": 2,
+            "WATER": 1
+          },
+          "market_ops": {
+            "SELL": 1
+          },
+          "market_units": {
+            "SELL:MILK": 3
+          }
+        }
+      }
+    },
+    {
+      "day": 29,
+      "margin": -2128,
+      "opponent_belief": {
+        "archetype": "expansion-heavy",
+        "confidence": 2,
+        "recurring_crop": "STRAWBERRY"
+      },
+      "ours": {
+        "bank": 28757,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "cow": 3,
+          "pasture": 1,
+          "strawberry": 3,
+          "weed": 16,
+          "wheat": 1
+        },
+        "shed": {
+          "WHEAT": 24,
+          "STRAWBERRY": 3,
+          "MILK": 9,
+          "FERTILIZER": 3,
+          "COW": 1
+        },
+        "seeds": {
+          "WHEAT": 4,
+          "STRAWBERRY": 4
+        },
+        "actions": {
+          "unit_ops": {
+            "PASS": 23
+          },
+          "market_ops": {},
+          "market_units": {}
+        }
+      },
+      "opponent": {
+        "bank": 30885,
+        "hands": 0,
+        "quadrants": 2,
+        "assets": {
+          "pasture": 4,
+          "weed": 18
+        },
+        "shed": {},
+        "seeds": {
+          "WHEAT": 3,
+          "TOMATO": 8,
+          "MELON": 2
+        },
+        "actions": {
+          "unit_ops": {
+            "PASS": 9,
+            "WEST": 4,
+            "EAST": 4,
+            "NORTH": 2,
+            "SOUTH": 2,
+            "HARVEST": 1,
+            "DROP": 1
+          },
+          "market_ops": {
+            "SELL": 1
+          },
+          "market_units": {
+            "SELL:WHEAT": 2
+          }
+        }
+      }
+    }
+  ]
+}

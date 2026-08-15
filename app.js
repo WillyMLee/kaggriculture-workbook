@@ -8,6 +8,7 @@
     submissionGate: "kaggriculture-submission-gate-v2",
     roadmap: "kaggriculture-fieldbook-roadmap-v1",
     balancedNotes: "kaggriculture-balanced-notes-v1",
+    agentArchive: "kaggriculture-agent-archive-v1",
   };
 
   const $ = (selector, root = document) => root.querySelector(selector);
@@ -41,7 +42,7 @@
   }
 
   // Navigation
-  const viewIds = ["brief", "mechanics", "tensions", "opponent", "balanced", "simulator", "attention", "submission", "submissions", "experiments", "roadmap"];
+  const viewIds = ["brief", "mechanics", "tensions", "opponent", "balanced", "simulator", "attention", "past-agents", "submission", "submissions", "experiments", "roadmap"];
 
   function showView(viewId, updateHash = true) {
     const safeId = viewIds.includes(viewId) ? viewId : "brief";
@@ -514,6 +515,96 @@
     renderSubmissionAnalysis(sorted);
   }
 
+  // Frozen agent lineage
+  const seededAgents = [
+    {
+      id: "agent-v0-2-1",
+      version: "v0.2.1",
+      date: "2026-08-15",
+      status: "submitted",
+      evidence: "Kaggle 1–3 · rating 418",
+      model: "Fixed three-attention baseline; accepted single-file artifact.",
+      limitation: "Fixed labor and crop responses; liquidation sold feed and stopped operating.",
+    },
+    {
+      id: "agent-v0-3-0",
+      version: "v0.3.0",
+      date: "2026-08-15",
+      status: "retired",
+      evidence: "Local 19–1 · invalidated",
+      model: "Phase gates, fertilizer collection, feed reserve, and target reservation.",
+      limitation: "Days 28–29 silently fell back to PASS because closeout variables were undefined.",
+    },
+    {
+      id: "agent-v0-3-1",
+      version: "v0.3.1",
+      date: "2026-08-15",
+      status: "frozen",
+      evidence: "Local 20–0 · +13,439 avg",
+      model: "v0.3 phase policy with verified non-fallback final execution.",
+      limitation: "Only tested against one frozen strategy family; not ready for Kaggle.",
+    },
+    {
+      id: "agent-v0-4-0",
+      version: "v0.4.0",
+      date: "2026-08-15",
+      status: "candidate",
+      evidence: "Local 20–0 · six strategy probes",
+      model: "Weighted strategy beliefs plus dynamic operations, opponent, and horizon attention.",
+      limitation: "Strategy probabilities are hand-weighted and need calibration against diverse opponents.",
+    },
+  ];
+  let agentArchive = readStore(KEYS.agentArchive, seededAgents);
+  if (!Array.isArray(agentArchive)) agentArchive = [...seededAgents];
+  const agentDialog = $("#agent-dialog");
+  const agentForm = $("#agent-form");
+
+  function openAgentDialog() {
+    agentForm.elements.date.value = new Date().toISOString().slice(0, 10);
+    agentDialog.showModal();
+    setTimeout(() => agentForm.elements.version.focus(), 0);
+  }
+
+  $("#open-agent-form").addEventListener("click", openAgentDialog);
+  $("#close-agent-dialog").addEventListener("click", () => agentDialog.close());
+  $("#cancel-agent").addEventListener("click", () => agentDialog.close());
+  agentForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const data = new FormData(agentForm);
+    agentArchive.push({
+      id: makeId("agent"),
+      version: String(data.get("version")).trim(),
+      date: String(data.get("date")),
+      status: String(data.get("status")),
+      evidence: String(data.get("evidence")).trim(),
+      model: String(data.get("model")).trim(),
+      limitation: String(data.get("limitation")).trim(),
+    });
+    writeStore(KEYS.agentArchive, agentArchive);
+    agentForm.reset();
+    agentDialog.close();
+    renderAgentArchive();
+  });
+
+  function renderAgentArchive() {
+    $("#agent-lineage").innerHTML = [...agentArchive].reverse().map((item) => `
+      <article data-status="${escapeHtml(item.status)}">
+        <div class="agent-version"><span>${escapeHtml(item.status)}</span><strong>${escapeHtml(item.version)}</strong><small>${escapeHtml(item.date)}</small></div>
+        <div><span>Core model</span><p>${escapeHtml(item.model)}</p></div>
+        <div><span>Evidence</span><p>${escapeHtml(item.evidence)}</p></div>
+        <div><span>Known limitation</span><p>${escapeHtml(item.limitation)}</p></div>
+        <button class="delete-button" type="button" aria-label="Delete ${escapeHtml(item.version)}" data-delete-agent="${escapeHtml(item.id)}">×</button>
+      </article>`).join("");
+    $("#agent-lineage-empty").hidden = agentArchive.length > 0;
+    $$('[data-delete-agent]').forEach((button) => {
+      button.addEventListener("click", () => {
+        agentArchive = agentArchive.filter((item) => item.id !== button.dataset.deleteAgent);
+        writeStore(KEYS.agentArchive, agentArchive);
+        renderAgentArchive();
+      });
+    });
+  }
+
   // Experiments
   let experiments = readStore(KEYS.experiments, []);
   if (!Array.isArray(experiments)) experiments = [];
@@ -766,6 +857,7 @@
   }
 
   renderSubmissions();
+  renderAgentArchive();
   renderExperiments();
   renderRoadmap();
 })();
