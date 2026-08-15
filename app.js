@@ -263,6 +263,7 @@
     fallback: true,
     selfplay: true,
     coverage: true,
+    version: true,
   });
   const submissionGateInputs = $$('[data-submit-check]');
   submissionGateInputs.forEach((input) => {
