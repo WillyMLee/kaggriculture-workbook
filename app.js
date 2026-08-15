@@ -147,7 +147,7 @@
       $("#replay-phase").textContent = day.phase;
       $("#replay-day").textContent = String(day.day).padStart(2, "0");
       $("#replay-bank").textContent = day.bank.toLocaleString();
-      $("#replay-delta").textContent = formatSigned(day.bank_delta);
+      $("#replay-opponent").textContent = day.opponent_bank.toLocaleString();
       $("#replay-margin").textContent = formatSigned(day.margin);
       $("#replay-shed").textContent = day.shed_units.toLocaleString();
       const scoreTotal = day.bank + day.opponent_bank;
@@ -156,7 +156,7 @@
         ? "tied"
         : `${day.margin > 0 ? "ahead" : "behind"} by ${Math.abs(day.margin).toLocaleString()}`;
       $("#win-current-status").textContent = `Day ${String(day.day).padStart(2, "0")} · ${leadText}`;
-      setCondition("score", scoreShare, scoreShare, `${scoreShare.toFixed(1)}% · ${leadText}`, day.margin > 0 ? "met" : "active");
+      setCondition("score", scoreShare, scoreShare, `${day.bank.toLocaleString()} vs ${day.opponent_bank.toLocaleString()} · ${leadText}`, day.margin > 0 ? "met" : "active");
 
       const cows = Number(day.assets.cow || 0);
       const strawberries = Number(day.assets.strawberry || 0);
@@ -390,7 +390,7 @@
     const losses = Number(data.get("losses"));
     const ties = Number(data.get("ties"));
     if (wins + losses + ties !== games) {
-      $("#experiment-form-error").textContent = "Wins + losses + ties must equal the number of games.";
+      $("#experiment-form-error").textContent = "Wins + losses + ties must equal the number of episodes.";
       return;
     }
     experiments.push({
@@ -442,7 +442,7 @@
           <p>vs. ${escapeHtml(item.opponent)} · ${item.wins}W / ${item.losses}L / ${item.ties}T${item.notes ? ` · ${escapeHtml(item.notes)}` : ""}</p>
           <span class="result-badge ${escapeHtml(item.result)}">${escapeHtml(item.result)}</span>
         </div>
-        <div class="entry-rate"><strong>${winRate(item).toFixed(1)}%</strong><span>score rate · ${item.games} games</span></div>
+        <div class="entry-rate"><strong>${winRate(item).toFixed(1)}%</strong><span>outcome rate · ${item.games} episodes</span></div>
         <div class="entry-bank"><strong>${item.bank == null ? "—" : Math.round(item.bank).toLocaleString()}</strong><span>avg bank</span></div>
         <button class="delete-button" type="button" aria-label="Delete ${escapeHtml(item.version)}" data-delete-experiment="${item.id}">×</button>
       </article>`).join("");
@@ -486,7 +486,7 @@
       <text class="chart-value" x="${point.x}" y="${Math.max(18, point.y-13)}" text-anchor="middle">${point.value.toFixed(0)}%</text>
       <text class="chart-label" x="${point.x}" y="${h-22}" text-anchor="middle">${escapeHtml(point.label.slice(0, 12))}</text>`).join("");
     chart.innerHTML = `
-      <svg viewBox="0 0 ${w} ${h}" role="img" aria-label="Win rate across ${ordered.length} recorded agent versions">
+      <svg viewBox="0 0 ${w} ${h}" role="img" aria-label="Outcome rate across ${ordered.length} recorded agent versions">
         <defs><linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c49450" stop-opacity=".35"/><stop offset="1" stop-color="#c49450" stop-opacity="0"/></linearGradient></defs>
         ${grid}<path class="chart-area" d="${area}"/><path class="chart-path" d="${path}"/>${marks}
       </svg>`;
@@ -504,7 +504,7 @@
 
   // Roadmap
   const starterRoadmap = [
-    { id: "paired-harness", title: "Paired-seed baseline", description: "Compare agents on identical games.", impact: 5, confidence: 5, effort: 2, status: "planned" },
+    { id: "paired-harness", title: "Paired-seed baseline", description: "Compare agents across matched episodes.", impact: 5, confidence: 5, effort: 2, status: "planned" },
     { id: "liquidation", title: "Late-game liquidation", description: "Sell everything before turn 720.", impact: 5, confidence: 4, effort: 2, status: "planned" },
     { id: "survival", title: "Care deadline scheduler", description: "Never miss water or feed twice.", impact: 5, confidence: 4, effort: 3, status: "planned" },
     { id: "routing", title: "Worker assignment", description: "Prevent duplicate and wasted actions.", impact: 4, confidence: 3, effort: 4, status: "planned" },

@@ -99,29 +99,29 @@
           <div class="section-heading">
             <div>
               <p class="eyebrow">Essentials</p>
-              <h2 id="win-title">Winning rules</h2>
+              <h2 id="win-title">How scoring works</h2>
             </div>
-            <span class="updated-note">Verified Aug 14, 2026</span>
+            <span class="updated-note">Verified Aug 15, 2026</span>
           </div>
 
           <div class="principle-grid">
             <article class="principle-card principle-card-featured">
               <span class="card-number">01</span>
-              <h3>Bank coins</h3>
-              <p>Unsold inventory is worth zero.</p>
-              <div class="mini-rule"><span>Rating</span><strong>win / loss / tie</strong></div>
+              <h3>One bot, two-player match</h3>
+              <p>You manage one farm. Every scored episode pairs your bot with another bot managing a separate farm.</p>
+              <div class="mini-rule"><span>Episode</span><strong>your bot vs opponent bot</strong></div>
             </article>
             <article class="principle-card">
               <span class="card-number">02</span>
-              <h3>Win consistently</h3>
-              <p>Coin margin does not change rating.</p>
-              <div class="mini-rule"><span>Final</span><strong>Bradley–Terry</strong></div>
+              <h3>Compare bank at turn 720</h3>
+              <p>Higher bank wins. Equal bank ties. Lower bank loses. Unsold inventory is worth zero.</p>
+              <div class="mini-rule"><span>Outcome</span><strong>final bank comparison</strong></div>
             </article>
             <article class="principle-card">
               <span class="card-number">03</span>
-              <h3>Protect the latest two</h3>
-              <p>Only your newest two agents stay active.</p>
-              <div class="mini-rule"><span>Limit</span><strong>5 per day · 100 MiB</strong></div>
+              <h3>Outcomes build rating</h3>
+              <p>Kaggle adjusts skill rating across many episodes. The size of the coin lead does not affect that rating.</p>
+              <div class="mini-rule"><span>Leaderboard</span><strong>skill rating</strong></div>
             </article>
           </div>
         </section>
@@ -226,20 +226,18 @@
 
           <div class="notebook-panel" id="balanced-panel-runs" role="tabpanel" aria-labelledby="balanced-tab-runs" data-notebook-panel="runs" hidden>
             <div class="run-summary" aria-label="Experiment summary">
-              <div><span>Record <button class="info-tip" type="button" aria-label="Record means wins, losses, and ties across all tested matches." data-tip="Wins · losses · ties across every tested match.">(i)</button></span><strong>20–0–0</strong><small>wins · losses · ties</small></div>
-              <div><span>Average rank <button class="info-tip" type="button" aria-label="Average rank is mean finishing position. First is 1 and second is 2." data-tip="Mean finishing place. In this two-player game, 1 is best and 2 is worst.">(i)</button></span><strong>1.00 / 2</strong><small>lower is better</small></div>
-              <div><span>Average bank <button class="info-tip" type="button" aria-label="Average bank is mean final banked coins and is the game score." data-tip="Mean final banked coins. Unsold inventory is not included in score.">(i)</button></span><strong>31,337</strong></div>
-              <div><span>Average margin <button class="info-tip" type="button" aria-label="Average margin is our final bank minus the opponent final bank." data-tip="Our final bank minus the opponent’s. Positive means we finished ahead.">(i)</button></span><strong>+27,851</strong><small>coins ahead at finish</small></div>
-              <div><span>Bank range <button class="info-tip" type="button" aria-label="Bank range is the lowest to highest final bank across runs." data-tip="Lowest to highest final bank. A tighter range means more consistent play.">(i)</button></span><strong>22,823–37,175</strong></div>
-              <div><span>Crashes <button class="info-tip" type="button" aria-label="Crashes are matches ended by an exception timeout or invalid runtime state." data-tip="Matches ended by an exception, timeout, or invalid runtime state.">(i)</button></span><strong>0</strong></div>
+              <div><span>Episodes <button class="info-tip" type="button" aria-label="An episode is one 720-turn head-to-head match between two bots." data-tip="One complete 720-turn match: our bot controls one farm and the opponent controls the other.">(i)</button></span><strong>20</strong><small>10 seeds · both seats</small></div>
+              <div><span>Finished ahead <button class="info-tip" type="button" aria-label="How often our final bank was larger than the starter bot's final bank." data-tip="Episodes where our bank was larger at turn 720. This benchmark finished ahead in all 20.">(i)</button></span><strong>20 / 20</strong><small>against the starter bot</small></div>
+              <div><span>Average final bank <button class="info-tip" type="button" aria-label="Mean coins in our bank at the end of each episode." data-tip="Our mean bank at turn 720. Useful for diagnosing the economy, but Kaggle rating uses the match outcome.">(i)</button></span><strong>31,337</strong></div>
+              <div><span>Runtime failures <button class="info-tip" type="button" aria-label="Episodes stopped by an exception timeout or invalid action." data-tip="Episodes that failed because of an exception, timeout, or invalid action. These cannot produce a normal result.">(i)</button></span><strong>0</strong></div>
             </div>
             <div class="table-wrap compact-table-wrap">
               <table class="production-table run-table">
-                <thead><tr><th>Seat</th><th>Games</th><th>Average bank</th><th>Average margin</th></tr></thead>
-                <tbody><tr><td>First</td><td>10</td><td>31,622</td><td>+28,134</td></tr><tr><td>Second</td><td>10</td><td>31,052</td><td>+27,569</td></tr></tbody>
+                <thead><tr><th>Seat</th><th>Episodes</th><th>Finished ahead</th><th>Average final bank</th></tr></thead>
+                <tbody><tr><td>First</td><td>10</td><td>10 / 10</td><td>31,622</td></tr><tr><td>Second</td><td>10</td><td>10 / 10</td><td>31,052</td></tr></tbody>
               </table>
             </div>
-            <p class="notebook-caption">Benchmark: Balanced Tempo v0 versus Kaggle's starter agent. Seed and seat balanced; saved in <code>results/balanced_tempo_v0.json</code>.</p>
+            <p class="notebook-caption">Local benchmark: Balanced Tempo v0 versus Kaggle's starter bot. This is matchup evidence, not a Kaggle leaderboard rating.</p>
           </div>
 
           <div class="notebook-panel" id="balanced-panel-replay" role="tabpanel" aria-labelledby="balanced-tab-replay" data-notebook-panel="replay" hidden>
@@ -253,14 +251,14 @@
             </div>
             <section class="win-conditions" aria-labelledby="win-conditions-title">
               <div class="win-rule">
-                <div><span>Official win rule <button class="info-tip" type="button" aria-label="A win occurs when our final bank is greater than the opponent final bank after turn 720." data-tip="A win is recorded only if our bank is larger when turn 720 ends. Equal banks are a tie.">(i)</button></span><h3 id="win-conditions-title">Finish turn 720 with more banked coins than the opponent.</h3></div>
+                <div><span>Episode outcome rule <button class="info-tip" type="button" aria-label="Every episode contains our bot and an opponent bot. Their final banks are compared after turn 720." data-tip="Two bots play each episode on separate farms. Higher final bank wins; exactly equal banks tie.">(i)</button></span><h3 id="win-conditions-title">Our bot must finish turn 720 with more banked coins than the opponent bot.</h3></div>
                 <strong id="win-current-status">Day 00 · behind by 830</strong>
               </div>
-              <p class="condition-note">Only bank lead determines the winner. The other conditions are our strategy checkpoints.</p>
+              <p class="condition-note">A tie is only possible when both bots finish with exactly the same bank. Cattle, strawberries, and clean exit are internal strategy checkpoints—not official win conditions.</p>
               <div class="condition-grid">
                 <div class="condition-item" id="condition-score">
-                  <div><span>Banked score share <button class="info-tip" type="button" aria-label="Our share of both players current banked coins. More than 50 percent means we are ahead." data-tip="Our share of both banks. Cross 50% to be ahead on the official score.">(i)</button></span><strong id="condition-score-text">41.8%</strong></div>
-                  <div class="condition-track has-threshold" role="progressbar" aria-label="Banked score share" aria-valuemin="0" aria-valuemax="100" aria-valuenow="42"><i id="condition-score-bar"></i></div>
+                  <div><span>Current bank comparison <button class="info-tip" type="button" aria-label="Our bank compared directly with the opponent bot's bank on this day." data-tip="The bar visualizes our share of the two bank balances. Only the final comparison at turn 720 determines the episode outcome.">(i)</button></span><strong id="condition-score-text">2,130 vs 2,960</strong></div>
+                  <div class="condition-track has-threshold" role="progressbar" aria-label="Our share of the two current bank balances" aria-valuemin="0" aria-valuemax="100" aria-valuenow="42"><i id="condition-score-bar"></i></div>
                 </div>
                 <div class="condition-item" id="condition-cows">
                   <div><span>Cattle engine <button class="info-tip" type="button" aria-label="Our strategy target is four placed cows producing recurring milk." data-tip="Internal checkpoint: place 4 cows to establish recurring milk output.">(i)</button></span><strong id="condition-cows-text">0 / 4</strong></div>
@@ -283,7 +281,7 @@
               </div>
               <aside class="replay-readout" aria-live="polite">
                 <div class="replay-day"><span id="replay-phase">Cash foundation</span><strong>Day <b id="replay-day">00</b></strong></div>
-                <div class="replay-stats"><div><span>Bank</span><strong id="replay-bank">2,130</strong></div><div><span>Day change</span><strong id="replay-delta">−870</strong></div><div><span>Margin</span><strong id="replay-margin">−870</strong></div><div><span>Shed</span><strong id="replay-shed">0</strong></div></div>
+                <div class="replay-stats"><div><span>Our bank</span><strong id="replay-bank">2,130</strong></div><div><span>Opponent bank</span><strong id="replay-opponent">2,960</strong></div><div><span>Current lead</span><strong id="replay-margin">−830</strong></div><div><span>Shed</span><strong id="replay-shed">0</strong></div></div>
                 <div class="replay-reason"><span>Rule that fired</span><h3 id="replay-reason-title">Fund the first harvest</h3><p id="replay-reason-text"></p></div>
                 <p class="replay-actions" id="replay-actions"></p>
                 <p class="replay-change" id="replay-change"></p>
@@ -301,7 +299,7 @@
 
           <div class="notebook-panel" id="balanced-panel-findings" role="tabpanel" aria-labelledby="balanced-tab-findings" data-notebook-panel="findings" hidden>
             <ol class="vertical-flow findings-flow">
-              <li><span>Signal 01</span><div><h3>The phase mix works against the starter</h3><p>Every run won, with a +27,851 average margin.</p></div></li>
+              <li><span>Signal 01</span><div><h3>The phase mix works against the starter</h3><p>Balanced Tempo finished ahead in all 20 head-to-head episodes.</p></div></li>
               <li><span>Signal 02</span><div><h3>Seat order is not driving the result</h3><p>Average bank differed by only 570 coins between first and second seat.</p></div></li>
               <li><span>Signal 03</span><div><h3>Execution is still inconsistent</h3><p>Final bank varied by 14,352 coins across seeds.</p></div></li>
               <li><span>Signal 04</span><div><h3>The target build is often incomplete</h3><p>Three runs ended with three cows; only eight reached ten strawberry plots.</p></div></li>
@@ -375,11 +373,11 @@
 
         <section class="section shell optimization-section" aria-labelledby="optimization-title">
           <div class="section-heading"><div><p class="eyebrow">Objective</p><h2 id="optimization-title">What we are optimizing</h2></div></div>
-          <div class="objective-line"><span>Primary target</span><strong>Maximize bank at turn 720</strong><p>Unsold crops, animals, and shed inventory do not count as score.</p></div>
+          <div class="objective-line"><span>Official target</span><strong>Finish with more bank than the opponent bot</strong><p>Every episode is head-to-head. Unsold crops, animals, and shed inventory do not count.</p></div>
           <div class="objective-measures">
-            <div><span>Return</span><strong>Final bank</strong><p>Did the strategy create value?</p></div>
-            <div><span>Reliability</span><strong>Rank + range</strong><p>Does it work across seeds and seats?</p></div>
-            <div><span>Execution</span><strong>0 crashes · 0 inventory</strong><p>Did the plan convert cleanly?</p></div>
+            <div><span>Official</span><strong>Skill rating</strong><p>Built from head-to-head episode outcomes.</p></div>
+            <div><span>Diagnostic</span><strong>Final bank</strong><p>Shows whether the farm economy is improving.</p></div>
+            <div><span>Reliability</span><strong>Runtime failures</strong><p>Errors, timeouts, and invalid actions.</p></div>
           </div>
         </section>
 
@@ -503,7 +501,7 @@
           <div>
             <p class="eyebrow">Evidence</p>
             <h1 id="experiments-title">Experiment log</h1>
-            <p>One change. Enough games. Clear decision.</p>
+            <p>One change. Enough head-to-head episodes. Clear decision.</p>
           </div>
           <div class="page-actions">
             <button class="button button-secondary" id="export-experiments" type="button">Export JSON</button>
@@ -513,14 +511,14 @@
 
         <section class="section shell experiment-stats" aria-label="Experiment summary">
           <article><span>Experiments</span><strong id="stat-experiments">0</strong><small>recorded versions</small></article>
-          <article><span>Games</span><strong id="stat-games">0</strong><small>total evidence</small></article>
-          <article><span>Best win rate</span><strong id="stat-win-rate">—</strong><small id="stat-best-version">no data yet</small></article>
+          <article><span>Episodes</span><strong id="stat-games">0</strong><small>head-to-head tests</small></article>
+          <article><span>Best outcome rate <button class="info-tip" type="button" aria-label="Diagnostic rate where a win counts as one, a tie as half, and a loss as zero." data-tip="Local diagnostic only: (wins + 0.5 × ties) ÷ episodes. Kaggle's leaderboard uses skill rating instead.">(i)</button></span><strong id="stat-win-rate">—</strong><small id="stat-best-version">no data yet</small></article>
           <article><span>Latest bank</span><strong id="stat-bank">—</strong><small>average final coins</small></article>
         </section>
 
         <section class="section shell chart-panel" aria-labelledby="trend-title">
           <div class="section-heading compact">
-            <div><p class="eyebrow">Trend</p><h2 id="trend-title">Win rate</h2></div>
+            <div><p class="eyebrow">Trend</p><h2 id="trend-title">Outcome rate</h2></div>
           </div>
           <div class="chart-empty" id="experiment-chart-empty">
             <svg viewBox="0 0 240 110" aria-hidden="true"><path d="M15 90 63 65 108 73 155 39 225 18" /><circle cx="15" cy="90" r="4" /><circle cx="63" cy="65" r="4" /><circle cx="108" cy="73" r="4" /><circle cx="155" cy="39" r="4" /><circle cx="225" cy="18" r="4" /></svg>
@@ -535,8 +533,8 @@
             <label class="select-label">Sort
               <select id="experiment-sort">
                 <option value="newest">Newest</option>
-                <option value="winrate">Best win rate</option>
-                <option value="games">Most games</option>
+                <option value="winrate">Best outcome rate</option>
+                <option value="games">Most episodes</option>
               </select>
             </label>
           </div>
@@ -559,10 +557,10 @@
               <label>Version<input required name="version" placeholder="v0.1.0" maxlength="30" /></label>
               <label>Opponent<input required name="opponent" placeholder="starter" maxlength="60" /></label>
               <label class="full-field">Single change / hypothesis<input required name="hypothesis" placeholder="Reserve late-game turns for liquidation" maxlength="160" /></label>
-              <label>Games<input required name="games" type="number" min="1" max="100000" value="20" /></label>
+              <label>Episodes<input required name="games" type="number" min="1" max="100000" value="20" /></label>
               <label>Wins<input required name="wins" type="number" min="0" max="100000" value="0" /></label>
               <label>Losses<input required name="losses" type="number" min="0" max="100000" value="0" /></label>
-              <label>Ties<input required name="ties" type="number" min="0" max="100000" value="0" /></label>
+              <label>Ties <button class="info-tip" type="button" aria-label="A tie means both bots ended an episode with exactly the same bank." data-tip="Only record a tie when both final bank balances are exactly equal after turn 720.">(i)</button><input required name="ties" type="number" min="0" max="100000" value="0" /></label>
               <label>Average final bank<input name="bank" type="number" min="0" step="1" placeholder="Optional" /></label>
               <label>Result
                 <select name="result">

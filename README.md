@@ -36,7 +36,7 @@ Then open <http://localhost:4173>.
 - A verified competition brief and deadline summary
 - A visual game-mechanics reference
 - A persistent baseline-readiness checklist
-- An experiment log with win-rate chart and JSON export
+- An experiment log with a clearly labeled head-to-head outcome chart and JSON export
 - A scored improvement roadmap
 
 Checklist, experiment, and roadmap data are stored in the browser's local storage. The experiment export creates a portable JSON backup.
