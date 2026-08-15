@@ -9,6 +9,7 @@ CROPS = {
     "MELON": {"max_yield_day": 12, "ongoing": False},
 }
 PRODUCTS = ("CARROT", "TOMATO", "STRAWBERRY", "MELON", "EGG", "MILK", "WOOL", "FERTILIZER")
+SELLABLE_PRODUCTS = ("WHEAT",) + PRODUCTS
 SHED_ACCESS = ((4, 4), (5, 4), (4, 5), (5, 5))
 PASTURE_CELLS = ((0, 4), (1, 4), (2, 4), (3, 4))
 MELON_CELLS = ((0, 0), (1, 0), (2, 0), (3, 0), (4, 0), (0, 1), (1, 1), (2, 1), (3, 1), (4, 1))
@@ -54,10 +55,14 @@ def _market_plan(obs, farm, private):
     inventories = private.get("inventories", [])
     orders = []
 
-    # Convert completed output into score continuously; wheat is operating inventory.
-    for item in PRODUCTS:
+    # Convert completed output into score continuously; wheat is operating inventory until the exit phase.
+    for item in SELLABLE_PRODUCTS if day >= 27 else PRODUCTS:
         if shed.get(item, 0) > 0:
             orders.append(["SELL", item, shed[item]])
+
+    # Hard terminal gate: stop all investment and turn reachable inventory into bank.
+    if day >= 27:
+        return orders[:10]
 
     if hour == 0:
         for _ in range(6):
@@ -127,15 +132,17 @@ def _tasks(obs, farm, private):
                 if int(tile.get("yield_units", 0)) > 0:
                     tasks.append((0, position, ["HARVEST"]))
 
-    if day >= 11:
+    if 11 <= day < 27:
         for position in PASTURE_CELLS:
             if _tile(farm, position) is None:
                 tasks.append((4, position, ["BUILD_PASTURE"]))
 
-    crop_cells = [(position, "WHEAT") for position in WHEAT_CELLS]
-    crop_cells += [(position, "MELON") for position in MELON_CELLS] if day <= 12 else [
-        (position, "STRAWBERRY") for position in STRAWBERRY_CELLS
-    ]
+    crop_cells = []
+    if day < 27:
+        crop_cells = [(position, "WHEAT") for position in WHEAT_CELLS]
+        crop_cells += [(position, "MELON") for position in MELON_CELLS] if day <= 12 else [
+            (position, "STRAWBERRY") for position in STRAWBERRY_CELLS
+        ]
     seeds = private.get("seeds", {})
     for position, crop in crop_cells:
         tile = _tile(farm, position)
@@ -158,7 +165,7 @@ def _tasks(obs, farm, private):
     if animal_tiles and shed.get("WHEAT", 0) > 0:
         for position in SHED_ACCESS:
             tasks.append((1, position, ["PICKUP", "WHEAT", min(len(animal_tiles), shed["WHEAT"])]))
-    if empty_pastures and shed.get("COW", 0) > 0:
+    if day < 27 and empty_pastures and shed.get("COW", 0) > 0:
         for position in SHED_ACCESS:
             tasks.append((2, position, ["PICKUP", "COW", 1]))
 

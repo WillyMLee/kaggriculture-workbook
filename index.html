@@ -34,20 +34,23 @@
       <nav class="main-nav" aria-label="Workbook sections">
         <div class="nav-group">
           <span class="nav-label">Workspace</span>
-          <button class="nav-link is-active" data-view-target="brief" type="button"><span>01</span>Overview</button>
-          <button class="nav-link" data-view-target="leaders" type="button"><span>02</span>Top agents</button>
-          <button class="nav-link" data-view-target="mechanics" type="button"><span>03</span>Mechanics</button>
+          <button class="nav-link is-active" data-view-target="brief" type="button"><span>01</span>Objective</button>
+          <button class="nav-link" data-view-target="mechanics" type="button"><span>02</span>Game mechanics</button>
+          <button class="nav-link" data-view-target="tensions" type="button"><span>03</span>Market tensions</button>
         </div>
         <div class="nav-group">
-          <span class="nav-label">Approaches</span>
-          <button class="nav-link" data-view-target="balanced" type="button"><span>A</span>Balanced tempo</button>
-          <button class="nav-link" data-view-target="expansion" type="button"><span>B</span>Expansion rush</button>
-          <button class="nav-link" data-view-target="livestock" type="button"><span>C</span>Livestock compound</button>
+          <span class="nav-label">Agent systems</span>
+          <button class="nav-link" data-view-target="opponent" type="button"><span>A</span>Opponent model</button>
+          <button class="nav-link" data-view-target="balanced" type="button"><span>B</span>Strategy library</button>
+          <button class="nav-link" data-view-target="simulator" type="button"><span>C</span>Lookahead simulator</button>
+          <button class="nav-link" data-view-target="attention" type="button"><span>D</span>Attention controller</button>
         </div>
         <div class="nav-group">
-          <span class="nav-label">Build</span>
-          <button class="nav-link" data-view-target="experiments" type="button"><span>04</span>Experiments</button>
-          <button class="nav-link" data-view-target="roadmap" type="button"><span>05</span>Roadmap</button>
+          <span class="nav-label">Submit</span>
+          <button class="nav-link" data-view-target="submission" type="button"><span>04</span>First submission</button>
+          <button class="nav-link" data-view-target="submissions" type="button"><span>05</span>Ranks + analysis</button>
+          <button class="nav-link" data-view-target="experiments" type="button"><span>06</span>Local experiments</button>
+          <button class="nav-link" data-view-target="roadmap" type="button"><span>07</span>Roadmap</button>
         </div>
       </nav>
 
@@ -61,10 +64,10 @@
         <div class="hero shell">
           <div class="hero-copy">
             <p class="eyebrow">Kaggriculture</p>
-            <h1 id="brief-title">Build the winning farm.</h1>
-            <p class="hero-lede">Finish 720 turns with more coins in the bank.</p>
+            <h1 id="brief-title">Out-earn the opposing bot.</h1>
+            <p class="hero-lede">Run one farm inside a shared, reactive economy.</p>
             <div class="hero-actions">
-              <button class="button button-primary" data-view-jump="experiments" type="button">Log an experiment</button>
+              <button class="button button-primary" data-view-jump="submission" type="button">Prepare submission</button>
               <button class="button button-secondary" data-view-jump="mechanics" type="button">Study the game</button>
             </div>
           </div>
@@ -124,6 +127,11 @@
               <div class="mini-rule"><span>Leaderboard</span><strong>skill rating</strong></div>
             </article>
           </div>
+          <div class="objective-fronts" aria-label="Competitive fronts">
+            <div><span>01 · Operate</span><strong>Build a productive farm</strong><p>Schedule labor, care, harvests, expansion, and liquidation.</p></div>
+            <div><span>02 · Compete</span><strong>Read the shared economy</strong><p>Both bots and the town change supply, demand, and market prices.</p></div>
+            <div><span>03 · Adapt</span><strong>Infer the opponent</strong><p>Use visible commitments to choose a better response before turn 720.</p></div>
+          </div>
         </section>
 
         <section class="section shell" aria-labelledby="checklist-title">
@@ -146,66 +154,83 @@
         </section>
       </section>
 
-      <section class="view" id="leaders" aria-labelledby="leaders-title" hidden>
+      <section class="view" id="submissions" aria-labelledby="submissions-title" hidden>
         <div class="page-intro shell">
           <div>
-            <p class="eyebrow">Live snapshot · Aug 14</p>
-            <h1 id="leaders-title">Top agents</h1>
-            <p>One public replay sampled per agent. Observed behavior—not private implementation.</p>
+            <p class="eyebrow">Kaggle evidence</p>
+            <h1 id="submissions-title">Submission ranks + analysis</h1>
+            <p>Track ratings over time without confusing ladder movement with local farm quality.</p>
           </div>
-          <a class="button button-secondary" href="https://www.kaggle.com/competitions/kaggriculture/leaderboard" target="_blank" rel="noreferrer">Live leaderboard ↗</a>
+          <div class="page-actions">
+            <a class="button button-secondary" href="https://www.kaggle.com/competitions/kaggriculture/leaderboard" target="_blank" rel="noreferrer">Live leaderboard ↗</a>
+            <button class="button button-primary" id="open-submission-form" type="button">Log submission</button>
+          </div>
         </div>
 
-        <section class="section shell leader-stack" aria-label="Top three agent analyses">
-          <article class="leader-entry">
-            <div class="leader-rank"><span>01</span><strong>3267.4</strong><small>rating</small></div>
-            <div class="leader-body">
-              <div class="leader-title"><h2>カワシギ</h2><span>Balanced tempo</span></div>
-              <ol class="vertical-flow compact-flow">
-                <li><span>D11</span><p>12 melons · 8 cows · 4 sheep</p></li>
-                <li><span>D21</span><p>13 strawberries · staged third quadrant</p></li>
-                <li><span>End</span><p>102,222 bank · near-empty inventory</p></li>
-              </ol>
-              <p class="analysis-note">Pattern: balanced production, staged expansion, disciplined exit.</p>
-            </div>
-          </article>
-
-          <article class="leader-entry">
-            <div class="leader-rank"><span>02</span><strong>3127.6</strong><small>rating</small></div>
-            <div class="leader-body">
-              <div class="leader-title"><h2>researchstudio.site</h2><span>Expansion rush</span></div>
-              <ol class="vertical-flow compact-flow">
-                <li><span>D11</span><p>3 quadrants · 36 sprouts · 8 cows</p></li>
-                <li><span>D21</span><p>20 strawberries · 10 cows</p></li>
-                <li><span>End</span><p>126,350 bank · inventory cleared</p></li>
-              </ol>
-              <p class="analysis-note">Pattern: early land, dense crops, aggressive capital deployment.</p>
-            </div>
-          </article>
-
-          <article class="leader-entry">
-            <div class="leader-rank"><span>03</span><strong>3108.8</strong><small>rating</small></div>
-            <div class="leader-body">
-              <div class="leader-title"><h2>Ueddy</h2><span>Livestock compound</span></div>
-              <ol class="vertical-flow compact-flow">
-                <li><span>D11</span><p>12 melons · 6 cows · 6 sheep</p></li>
-                <li><span>D21</span><p>4 quadrants · 18 pastures · 12 sheep</p></li>
-                <li><span>End</span><p>80,832 bank · decisive sampled win</p></li>
-              </ol>
-              <p class="analysis-note">Pattern: full-grid expansion, sheep-heavy compounding, wheat support.</p>
-            </div>
-          </article>
+        <section class="section shell submission-stats" aria-label="Submission summary">
+          <article><span>Submissions</span><strong id="submission-count">0</strong><small>logged versions</small></article>
+          <article><span>Best rating</span><strong id="submission-best-rating">—</strong><small id="submission-best-version">no data yet</small></article>
+          <article><span>Best rank</span><strong id="submission-best-rank">—</strong><small>lower is better</small></article>
+          <article><span>Episodes observed</span><strong id="submission-episodes">0</strong><small>sample size matters</small></article>
         </section>
+
+        <section class="section shell" aria-labelledby="submission-analysis-title">
+          <div class="section-heading compact"><div><p class="eyebrow">Interpretation</p><h2 id="submission-analysis-title">What the ladder is telling us</h2></div></div>
+          <div class="submission-analysis" id="submission-analysis">
+            <article><span>Signal</span><strong>No ladder data yet</strong><p>Submit the interpretable baseline, then log its first rating and rank.</p></article>
+            <article><span>Confidence</span><strong>Unknown</strong><p>Early ratings move quickly; wait for more episodes before making a large rewrite.</p></article>
+            <article><span>Next read</span><strong>Loss replays</strong><p>Classify the opponent opening and identify the first irreversible mistake.</p></article>
+          </div>
+        </section>
+
+        <section class="section shell" aria-labelledby="submission-history-title">
+          <div class="section-heading compact"><div><p class="eyebrow">History</p><h2 id="submission-history-title">Version ledger</h2></div></div>
+          <div class="table-wrap" id="submission-table-wrap" hidden>
+            <table class="production-table submission-table">
+              <thead><tr><th>Version</th><th>Date</th><th>Status</th><th>Rating</th><th>Rank</th><th>Episodes</th><th>Notes</th><th></th></tr></thead>
+              <tbody id="submission-body"></tbody>
+            </table>
+          </div>
+          <div class="empty-state" id="submission-empty">
+            <div class="empty-icon" aria-hidden="true">↗</div>
+            <h3>No Kaggle submissions logged</h3>
+            <p>The first entry becomes the baseline for rating and rank movement.</p>
+            <button class="button button-primary" type="button" data-open-submission>Log first submission</button>
+          </div>
+        </section>
+
+        <dialog id="submission-dialog" aria-labelledby="submission-dialog-title">
+          <form id="submission-form" method="dialog">
+            <div class="dialog-header">
+              <div><p class="eyebrow">Ladder snapshot</p><h2 id="submission-dialog-title">Log a submission</h2></div>
+              <button class="icon-button" type="button" id="close-submission-dialog" aria-label="Close dialog">×</button>
+            </div>
+            <div class="form-grid">
+              <label>Version<input required name="version" placeholder="v0.1.0" maxlength="30" /></label>
+              <label>Date<input required name="date" type="date" /></label>
+              <label>Status<select name="status"><option value="validating">Validating</option><option value="active">Active</option><option value="retired">Retired</option><option value="error">Error</option></select></label>
+              <label>Episodes observed<input name="episodes" type="number" min="0" value="0" /></label>
+              <label>Rating<input name="rating" type="number" step="0.1" placeholder="Optional" /></label>
+              <label>Rank<input name="rank" type="number" min="1" step="1" placeholder="Optional" /></label>
+              <label class="full-field">Change from prior version<input required name="change" maxlength="160" placeholder="First public baseline" /></label>
+              <label class="full-field">Loss pattern / notes<textarea name="notes" rows="3" maxlength="500" placeholder="Opponent opener, first divergence, terminal inventory…"></textarea></label>
+            </div>
+            <div class="dialog-actions">
+              <button class="button button-secondary" id="cancel-submission" type="button">Cancel</button>
+              <button class="button button-primary" type="submit">Save snapshot</button>
+            </div>
+          </form>
+        </dialog>
       </section>
 
       <section class="view approach-view" id="balanced" aria-labelledby="balanced-title" hidden>
         <div class="page-intro shell">
-          <div><p class="eyebrow">Approach A · v0</p><h1 id="balanced-title">Balanced tempo</h1><p>First local benchmark complete.</p></div>
-          <button class="button button-primary" type="button" data-approach-test="balanced">Log next run</button>
+          <div><p class="eyebrow">Agent system B</p><h1 id="balanced-title">Strategy library</h1><p>Start from a stable policy, then switch only when evidence justifies it.</p></div>
+          <button class="button button-primary" type="button" data-policy-test="balanced">Log policy test</button>
         </div>
-        <section class="section shell balanced-notebook" aria-label="Balanced Tempo experiment notebook">
+        <section class="section shell balanced-notebook" aria-label="Strategy library experiment notebook">
           <div class="notebook-tabs" role="tablist" aria-label="Experiment notebook">
-            <button class="notebook-tab is-active" id="balanced-tab-plan" role="tab" aria-selected="true" aria-controls="balanced-panel-plan" data-notebook-tab="plan" type="button">Plan</button>
+            <button class="notebook-tab is-active" id="balanced-tab-plan" role="tab" aria-selected="true" aria-controls="balanced-panel-plan" data-notebook-tab="plan" type="button">Library</button>
             <button class="notebook-tab" id="balanced-tab-runs" role="tab" aria-selected="false" aria-controls="balanced-panel-runs" data-notebook-tab="runs" type="button">Runs <span>20</span></button>
             <button class="notebook-tab" id="balanced-tab-replay" role="tab" aria-selected="false" aria-controls="balanced-panel-replay" data-notebook-tab="replay" type="button">Best run <span>30d</span></button>
             <button class="notebook-tab" id="balanced-tab-findings" role="tab" aria-selected="false" aria-controls="balanced-panel-findings" data-notebook-tab="findings" type="button">Findings</button>
@@ -213,6 +238,12 @@
           </div>
 
           <div class="notebook-panel" id="balanced-panel-plan" role="tabpanel" aria-labelledby="balanced-tab-plan" data-notebook-panel="plan">
+            <div class="strategy-switchboard">
+              <article data-state="active"><span>Default</span><strong>Balanced Tempo</strong><p>Stable mixed engine while the opponent model has low confidence.</p><small>Switch cost: none</small></article>
+              <article><span>Counter</span><strong>Differentiate supply</strong><p>Move away from a product the opponent is visibly scaling before the glut arrives.</p><small>Trigger: strong portfolio signal</small></article>
+              <article><span>Counter</span><strong>Liquidity pressure</strong><p>Preserve cash and shorten payback when the opponent commits heavily to long-horizon growth.</p><small>Trigger: land + structure spend</small></article>
+              <article><span>Terminal</span><strong>Hard conversion</strong><p>Stop reinvestment, collect reachable output, and sell before the deadline.</p><small>Trigger: payback exceeds time left</small></article>
+            </div>
             <div class="approach-layout">
               <ol class="vertical-flow approach-flow">
                 <li><span>D00–12</span><div><h3>Melon cash loop</h3><p>Ten melons, five wheat plots, six temporary hands.</p></div></li>
@@ -327,35 +358,167 @@
         </section>
       </section>
 
-      <section class="view approach-view" id="expansion" aria-labelledby="expansion-title" hidden>
+      <section class="view" id="tensions" aria-labelledby="tensions-title" hidden>
         <div class="page-intro shell">
-          <div><p class="eyebrow">Approach B</p><h1 id="expansion-title">Expansion rush</h1><p>Trade early liquidity for productive surface area.</p></div>
-          <button class="button button-primary" type="button" data-approach-test="expansion">Test approach</button>
+          <div><p class="eyebrow">Competitive dynamics</p><h1 id="tensions-title">Natural market tensions</h1><p>Two farms, one shared price system, and a town that keeps consuming.</p></div>
+          <div class="source-links"><a href="https://www.kaggle.com/competitions/kaggriculture/overview" target="_blank" rel="noreferrer">Official mechanics ↗</a></div>
         </div>
-        <section class="section shell approach-layout">
-          <ol class="vertical-flow approach-flow">
-            <li><span>01 · Buffer</span><div><h3>Fund the rush</h3><p>Preserve cash for land and seeds.</p></div></li>
-            <li><span>02 · Unlock</span><div><h3>Buy three quadrants</h3><p>Expand before day 11.</p></div></li>
-            <li><span>03 · Fill</span><div><h3>Dense strawberry cycle</h3><p>Convert surface area into peak production.</p></div></li>
-            <li><span>04 · Convert</span><div><h3>Stop reinvestment</h3><p>Harvest and sell before turn 720.</p></div></li>
-          </ol>
-          <aside class="approach-brief"><div><span>Strength</span><strong>High production ceiling</strong></div><div><span>Risk</span><strong>Action overload</strong></div><div><span>Measure</span><strong>Payback day</strong></div></aside>
+
+        <section class="section shell" aria-labelledby="congregation-title">
+          <div class="section-heading"><div><p class="eyebrow">Convergence</p><h2 id="congregation-title">The profitable center attracts both bots</h2></div></div>
+          <div class="hotelling-note">
+            <div class="hotelling-line" aria-label="Two competitors moving toward the same profitable market center"><span>BOT A</span><i></i><strong>high-demand strategy</strong><i></i><span>BOT B</span></div>
+            <p>Hotelling’s beach model is a useful analogy: competitors often converge on the same attractive location. Here the “location” is a crop, livestock mix, timing window, or market resource. If both bots find the same center, supply rises and the price response can erase the original edge.</p>
+            <small>Analogy, not a theorem for this game. Hotelling’s original minimum-differentiation result depends on its assumptions and was later challenged.</small>
+          </div>
+          <div class="source-strip">
+            <a href="https://doi.org/10.2307/2224214" target="_blank" rel="noreferrer"><span>1929</span>Hotelling · Stability in Competition ↗</a>
+            <a href="https://doi.org/10.2307/1911955" target="_blank" rel="noreferrer"><span>1979</span>d’Aspremont et al. · model critique ↗</a>
+          </div>
+        </section>
+
+        <section class="section shell" aria-labelledby="tension-map-title">
+          <div class="section-heading compact"><div><p class="eyebrow">Pressure map</p><h2 id="tension-map-title">Where advantage can move</h2></div></div>
+          <div class="tension-grid">
+            <article><span>Shared supply</span><h3>Converge or differentiate?</h3><p>Copying the strongest portfolio may work until both bots flood the same product and depress its price.</p><strong>Watch: opponent assets · inventory curve</strong></article>
+            <article><span>Town demand</span><h3>Sell now or wait?</h3><p>Town shops and the town center remove products from the market, rebuilding scarcity between player sales.</p><strong>Watch: shop unlocks · price recovery</strong></article>
+            <article><span>Capital</span><h3>Grow or preserve cash?</h3><p>Land, animals, seeds, and hands raise future output while reducing the bank that currently decides the match.</p><strong>Watch: payback day · bank lead</strong></article>
+            <article><span>Labor</span><h3>Produce or respond?</h3><p>Every care, harvest, movement, and placement consumes scarce execution capacity.</p><strong>Watch: overdue work · route length</strong></article>
+            <article><span>Information</span><h3>Exploit or learn?</h3><p>A rigid plan is efficient against a familiar bot; an adaptive plan can react when the opponent commits elsewhere.</p><strong>Watch: archetype confidence · switching cost</strong></article>
+            <article><span>Terminal value</span><h3>Reinvest or liquidate?</h3><p>Late assets only matter if they pay back and their output reaches the bank before turn 720.</p><strong>Watch: turns remaining · unsold units</strong></article>
+          </div>
+          <p class="source-note">Game-specific claims are grounded in the <a href="https://github.com/Kaggle/kaggle-environments/blob/master/kaggle_environments/envs/kaggriculture/README.md" target="_blank" rel="noreferrer">official Kaggriculture environment reference ↗</a>.</p>
         </section>
       </section>
 
-      <section class="view approach-view" id="livestock" aria-labelledby="livestock-title" hidden>
+      <section class="view" id="opponent" aria-labelledby="opponent-title" hidden>
         <div class="page-intro shell">
-          <div><p class="eyebrow">Approach C</p><h1 id="livestock-title">Livestock compound</h1><p>Build recurring yield around feed reliability.</p></div>
-          <button class="button button-primary" type="button" data-approach-test="livestock">Test approach</button>
+          <div><p class="eyebrow">Agent system A</p><h1 id="opponent-title">Opponent model</h1><p>Turn visible commitments into a small, revisable hypothesis.</p></div>
         </div>
-        <section class="section shell approach-layout">
-          <ol class="vertical-flow approach-flow">
-            <li><span>01 · Feed</span><div><h3>Secure wheat</h3><p>Hold a daily safety reserve.</p></div></li>
-            <li><span>02 · Build</span><div><h3>Pasture network</h3><p>Expand only with labor capacity.</p></div></li>
-            <li><span>03 · Compound</span><div><h3>Sheep + cattle</h3><p>Collect products and fertilizer on route.</p></div></li>
-            <li><span>04 · Clear</span><div><h3>Final collection</h3><p>Empty shed and inventories.</p></div></li>
+        <section class="section shell" aria-labelledby="opponent-loop-title">
+          <div class="section-heading"><div><p class="eyebrow">Inference loop</p><h2 id="opponent-loop-title">Observe → classify → respond → update</h2></div><p class="section-note">Never let a weak guess override farm survival.</p></div>
+          <ol class="system-flow">
+            <li><span>01</span><div><strong>Observe commitments</strong><p>Land unlocked, structures built, crop ages, animal mix, visible workers, bank, and shared price movement.</p></div><em>raw signals</em></li>
+            <li><span>02</span><div><strong>Score candidate archetypes</strong><p>Expansion rush, livestock compound, recurring crops, short-cycle cash, or mixed/unknown.</p></div><em>probability + confidence</em></li>
+            <li><span>03</span><div><strong>Estimate their next constraint</strong><p>Cash shortage, feed demand, care load, harvest wave, storage pressure, or liquidation deadline.</p></div><em>forecast</em></li>
+            <li><span>04</span><div><strong>Select a bounded response</strong><p>Differentiate the portfolio, preserve liquidity, accelerate a sale, or stay on the baseline when evidence is weak.</p></div><em>policy modifier</em></li>
+            <li><span>05</span><div><strong>Update after evidence</strong><p>Decay stale beliefs and compare predicted farm changes with what actually appeared.</p></div><em>calibration</em></li>
           </ol>
-          <aside class="approach-brief"><div><span>Strength</span><strong>Recurring output</strong></div><div><span>Risk</span><strong>Feed and routing failure</strong></div><div><span>Measure</span><strong>Yield per care action</strong></div></aside>
+        </section>
+        <section class="section shell" aria-labelledby="signal-window-title">
+          <div class="section-heading compact"><div><p class="eyebrow">Reading windows</p><h2 id="signal-window-title">What becomes legible when</h2></div></div>
+          <div class="signal-grid">
+            <article><span>D00–04</span><strong>Opening intent</strong><p>First seeds, worker count, and early spending reveal tempo but not the full portfolio.</p></article>
+            <article><span>D05–12</span><strong>Capital commitment</strong><p>Land and structures make the strategy more expensive to reverse.</p></article>
+            <article><span>D13–24</span><strong>Production engine</strong><p>Yield cadence, feed load, and price impact expose the bot’s operating model.</p></article>
+            <article><span>D25–29</span><strong>Exit discipline</strong><p>New purchases, unsold output, and bank conversion reveal terminal mistakes.</p></article>
+          </div>
+          <div class="control-boundaries">
+            <div><span>Visible</span><p>Opponent farm state and the shared market.</p></div>
+            <div><span>Hidden</span><p>Opponent shed, private inventory, source code, and future actions.</p></div>
+            <div><span>Output</span><p>Archetype probabilities, predicted constraint, confidence, and response budget.</p></div>
+          </div>
+        </section>
+      </section>
+
+      <section class="view" id="simulator" aria-labelledby="simulator-title" hidden>
+        <div class="page-intro shell"><div><p class="eyebrow">Agent system C</p><h1 id="simulator-title">Lookahead simulator</h1><p>Chess-like response planning with stochastic branches and partial information.</p></div></div>
+        <section class="section shell" aria-labelledby="simulation-loop-title">
+          <div class="section-heading"><div><p class="eyebrow">Rolling horizon</p><h2 id="simulation-loop-title">Re-plan every turn; look ahead a few days</h2></div><p class="section-note">Long enough to see payback, short enough to remain responsive.</p></div>
+          <ol class="system-flow simulation-flow">
+            <li><span>STATE</span><div><strong>Compress the board</strong><p>Bank, assets, care deadlines, shed, routes, prices, town demand, opponent hypothesis, and turns remaining.</p></div><em>sₜ</em></li>
+            <li><span>OPTIONS</span><div><strong>Generate feasible plans</strong><p>Baseline continuation plus a small set of meaningful deviations: expand, diversify, accelerate, defend, or liquidate.</p></div><em>3–8 plans</em></li>
+            <li><span>BRANCH</span><div><strong>Sample uncertainty</strong><p>Opponent response, weed rolls, future shop unlocks, price movement, and execution slippage.</p></div><em>many futures</em></li>
+            <li><span>SCORE</span><div><strong>Estimate finish outcomes</strong><p>Prioritize probability of finishing ahead; use expected bank and failure risk as diagnostics.</p></div><em>P(bank₇₂₀ &gt; opponent)</em></li>
+            <li><span>ACT</span><div><strong>Execute one safe step</strong><p>Take the first action from the best robust plan, observe the new state, and simulate again.</p></div><em>receding horizon</em></li>
+          </ol>
+        </section>
+        <section class="section shell" aria-labelledby="sim-readiness-title">
+          <div class="section-heading compact"><div><p class="eyebrow">Build order</p><h2 id="sim-readiness-title">Simulator maturity</h2></div></div>
+          <div class="mechanism-grid">
+            <article data-state="ready"><span>01 · Ready</span><strong>Deterministic environment replay</strong><p>Re-run known seeds and reproduce bank, farm, and market transitions.</p></article>
+            <article data-state="next"><span>02 · Next</span><strong>Opponent policy library</strong><p>Starter, expansion, livestock, recurring-crop, and mixed response models.</p></article>
+            <article data-state="planned"><span>03 · Planned</span><strong>Stochastic rollouts</strong><p>Sample weeds, shops, and uncertain opponent choices.</p></article>
+            <article data-state="planned"><span>04 · Planned</span><strong>Calibration</strong><p>Compare predicted win probability with held-out episodes and ladder results.</p></article>
+          </div>
+        </section>
+      </section>
+
+      <section class="view" id="attention" aria-labelledby="attention-title" hidden>
+        <div class="page-intro shell"><div><p class="eyebrow">Agent system D</p><h1 id="attention-title">Attention controller</h1><p>Protect irreversible obligations before spending effort on adaptation.</p></div></div>
+        <section class="section shell" aria-labelledby="attention-order-title">
+          <div class="section-heading"><div><p class="eyebrow">Priority stack</p><h2 id="attention-order-title">What gets attention first</h2></div><p class="section-note">Lower number wins when tasks compete.</p></div>
+          <ol class="decision-tree attention-tree">
+            <li><span>01</span><div><strong>Prevent irreversible loss</strong><p>Water/feed deadlines, overflow, invalid actions, and products about to decay or cap.</p></div><em>SURVIVAL</em></li>
+            <li><span>02</span><div><strong>Protect the terminal bank</strong><p>As turn 720 approaches, stop purchases that cannot repay and liquidate all reachable value.</p></div><em>EXIT</em></li>
+            <li><span>03</span><div><strong>Capture time-sensitive value</strong><p>Harvest windows, temporary scarcity, shop-driven demand, and care bonuses.</p></div><em>OPPORTUNITY</em></li>
+            <li><span>04</span><div><strong>Read the opponent</strong><p>Update the archetype only when visible evidence materially changes the likely response.</p></div><em>INFERENCE</em></li>
+            <li><span>05</span><div><strong>Run lookahead</strong><p>Compare the baseline with bounded counter-strategies and choose the robust branch.</p></div><em>SIMULATE</em></li>
+            <li><span>06</span><div><strong>Compound the farm</strong><p>Plant, build, hire, expand, and route workers using the remaining action budget.</p></div><em>GROWTH</em></li>
+          </ol>
+        </section>
+        <section class="section shell" aria-labelledby="attention-budget-title">
+          <div class="section-heading compact"><div><p class="eyebrow">Guardrails</p><h2 id="attention-budget-title">Adaptation without thrashing</h2></div></div>
+          <div class="attention-budget">
+            <article><span>Confidence gate</span><strong>Do not counter a guess</strong><p>Stay on the baseline until multiple signals support the same opponent model.</p></article>
+            <article><span>Switching-cost gate</span><strong>Count stranded capital</strong><p>A response is only useful if the gain exceeds the cost of abandoning the current plan.</p></article>
+            <article><span>Action-budget gate</span><strong>Observation is computation</strong><p>Opponent analysis must not steal in-game actions from mandatory farm work.</p></article>
+            <article><span>Exploration gate</span><strong>One bounded probe</strong><p>Use small reversible deviations to learn; avoid large speculative commitments.</p></article>
+          </div>
+        </section>
+      </section>
+
+      <section class="view" id="submission" aria-labelledby="submission-title" hidden>
+        <div class="page-intro shell">
+          <div><p class="eyebrow">First ladder entry</p><h1 id="submission-title">Ship an interpretable baseline</h1><p>The first submission is a measuring instrument, not the final strategy.</p></div>
+          <a class="button button-secondary" href="https://www.kaggle.com/competitions/kaggriculture/rules" target="_blank" rel="noreferrer">Official rules ↗</a>
+        </div>
+        <section class="section shell" aria-labelledby="first-plan-title">
+          <div class="section-heading"><div><p class="eyebrow">Learning plan</p><h2 id="first-plan-title">Submit early, diagnose carefully</h2></div></div>
+          <ol class="system-flow submit-flow">
+            <li><span>01</span><div><strong>Freeze v0.1</strong><p>Keep Balanced Tempo readable, deterministic where possible, and protected by a safe fallback action.</p></div><em>one known policy</em></li>
+            <li><span>02</span><div><strong>Pass local gates</strong><p>Complete self-play, starter matches, both seats, varied seeds, and the late-game liquidation test.</p></div><em>zero runtime failures</em></li>
+            <li><span>03</span><div><strong>Enter the ladder</strong><p>Kaggle first validates the bot against a copy of itself, then matches it with similarly rated submissions.</p></div><em>public evidence</em></li>
+            <li><span>04</span><div><strong>Wait for signal</strong><p>Record rating, rank, and episode count at consistent checkpoints instead of reacting to every move.</p></div><em>50 · 100 · 250 episodes</em></li>
+            <li><span>05</span><div><strong>Classify losses</strong><p>Tag opponent archetype, first strategic divergence, execution failure, and terminal inventory.</p></div><em>failure taxonomy</em></li>
+            <li><span>06</span><div><strong>Change one mechanism</strong><p>Improve opponent modeling, lookahead, attention, or a strategy rule—then submit a new version.</p></div><em>causal iteration</em></li>
+          </ol>
+        </section>
+        <section class="section shell" aria-labelledby="submission-gate-title">
+          <div class="section-heading"><div><p class="eyebrow">Release gate</p><h2 id="submission-gate-title">v0.1 readiness</h2></div><strong class="progress-label" id="submission-progress">0 / 6 ready</strong></div>
+          <div class="candidate-evidence" aria-label="Validated candidate evidence">
+            <div><span>Self-play</span><strong>3 / 3 seeds</strong><small>both bots reached DONE</small></div>
+            <div><span>Starter benchmark</span><strong>20 / 20 ahead</strong><small>both seats · 10 seeds</small></div>
+            <div><span>Runtime failures</span><strong>0</strong><small>across 20 episodes</small></div>
+            <div><span>Terminal shed</span><strong>0–4 items</strong><small>15 / 20 ended empty</small></div>
+          </div>
+          <div class="progress-track" aria-hidden="true"><span id="submission-progress-bar"></span></div>
+          <div class="checklist submission-checklist">
+            <label><input type="checkbox" data-submit-check="contract" /><span><strong>Contract</strong><small><code>agent(obs)</code> always returns a valid action object</small></span></label>
+            <label><input type="checkbox" data-submit-check="fallback" /><span><strong>Safe fallback</strong><small>Exceptions degrade to <code>PASS</code>, not a crash</small></span></label>
+            <label><input type="checkbox" data-submit-check="selfplay" /><span><strong>Self-play</strong><small>720 turns without error, timeout, or invalid action</small></span></label>
+            <label><input type="checkbox" data-submit-check="coverage" /><span><strong>Seed + seat coverage</strong><small>Both seats across at least 10 seeds</small></span></label>
+            <label><input type="checkbox" data-submit-check="liquidation" /><span><strong>Liquidation gate</strong><small>No late reinvestment; reachable inventory is sold</small></span></label>
+            <label><input type="checkbox" data-submit-check="version" /><span><strong>Frozen artifact</strong><small>Version, hash, benchmark, and notes saved</small></span></label>
+          </div>
+        </section>
+        <section class="section shell" aria-labelledby="contract-title">
+          <div class="section-heading"><div><p class="eyebrow">Submission</p><h2 id="contract-title">Bot contract</h2></div></div>
+          <div class="contract-grid">
+            <pre aria-label="Minimal agent return shape"><code>def agent(obs):
+    return {
+        "farmer": ["PASS"],
+        "hands": [],
+        "market": []
+    }</code></pre>
+            <div class="contract-list">
+              <div><strong>Entry point</strong><span><code>main.py</code> at archive root with <code>agent(obs)</code></span></div>
+              <div><strong>Validation</strong><span>The first episode runs your agent against a copy of itself</span></div>
+              <div><strong>Tracking</strong><span>Only the latest two submissions remain active for final evaluation</span></div>
+              <div><strong>Daily limit</strong><span>Up to five agent submissions per team</span></div>
+            </div>
+          </div>
+          <p class="source-note">Submission and ranking behavior: <a href="https://www.kaggle.com/competitions/kaggriculture/overview" target="_blank" rel="noreferrer">official Kaggriculture evaluation section ↗</a>.</p>
         </section>
       </section>
 
@@ -371,16 +534,6 @@
           </div>
         </div>
 
-        <section class="section shell optimization-section" aria-labelledby="optimization-title">
-          <div class="section-heading"><div><p class="eyebrow">Objective</p><h2 id="optimization-title">What we are optimizing</h2></div></div>
-          <div class="objective-line"><span>Official target</span><strong>Finish with more bank than the opponent bot</strong><p>Every episode is head-to-head. Unsold crops, animals, and shed inventory do not count.</p></div>
-          <div class="objective-measures">
-            <div><span>Official</span><strong>Skill rating</strong><p>Built from head-to-head episode outcomes.</p></div>
-            <div><span>Diagnostic</span><strong>Final bank</strong><p>Shows whether the farm economy is improving.</p></div>
-            <div><span>Reliability</span><strong>Runtime failures</strong><p>Errors, timeouts, and invalid actions.</p></div>
-          </div>
-        </section>
-
         <section class="section shell" aria-labelledby="fixed-title">
           <div class="section-heading"><div><p class="eyebrow">Environment</p><h2 id="fixed-title">Fixed variables</h2></div><p class="section-note">The agent observes these rules; it cannot change them.</p></div>
           <div class="fixed-grid">
@@ -392,32 +545,6 @@
             <div><span>Basic needs</span><strong>2 missed days</strong><p>Unwatered plants become weeds; unfed animals escape.</p></div>
             <div><span>Labor cost</span><strong>1, 1, 2, 3, 5…</strong><p>Daily hires follow Fibonacci pricing and reset each day.</p></div>
             <div><span>World noise</span><strong>0.5% weed chance</strong><p>Shops unlock every 3 days and consume stock every 4 turns.</p></div>
-          </div>
-        </section>
-
-        <section class="section shell" aria-labelledby="decision-title">
-          <div class="section-heading"><div><p class="eyebrow">Policy</p><h2 id="decision-title">Current decision tree</h2></div><p class="section-note">Lower number wins when tasks compete.</p></div>
-          <ol class="decision-tree">
-            <li><span>01</span><div><strong>Is value ready?</strong><p>Harvest crops or animal output before it decays or caps.</p></div><em>HARVEST</em></li>
-            <li><span>02</span><div><strong>Is daily survival work due?</strong><p>Water plants, collect feed, and feed cattle.</p></div><em>WATER · PICKUP · FEED</em></li>
-            <li><span>03</span><div><strong>Can an animal earn a bonus?</strong><p>Care after feeding to increase the next production event.</p></div><em>CARE</em></li>
-            <li><span>04</span><div><strong>Has the cattle phase started?</strong><p>Build four pastures and place purchased cows.</p></div><em>BUILD · PLACE</em></li>
-            <li><span>05</span><div><strong>Is a planned crop tile empty?</strong><p>Plant wheat plus melons before day 13; strawberries after.</p></div><em>PLANT</em></li>
-            <li><span>06</span><div><strong>No local task?</strong><p>Move toward the next target; after hour 20, return carried output to the shed.</p></div><em>MOVE · DROP · PASS</em></li>
-          </ol>
-          <div class="policy-gates">
-            <h3>Market and phase gates</h3>
-            <div><span>Always</span><p>Sell completed output already in the shed.</p></div>
-            <div><span>Hour 00</span><p>Hire six temporary hands for the day.</p></div>
-            <div><span>Days 00–12</span><p>Target 10 melons + 5 wheat plots.</p></div>
-            <div><span>Day 11+</span><p>Target 4 cows and keep at least 8 wheat feed in reserve.</p></div>
-            <div><span>Day 13+</span><p>Target 15 strawberries; buy the first expansion when bank ≥ 2,200.</p></div>
-            <div><span>Days 27–29</span><p>No gate yet. The agent continues reinvesting—this is the known exit defect.</p></div>
-          </div>
-          <div class="control-boundaries">
-            <div><span>Agent chooses</span><p>Portfolio, worker count, routing, crop timing, land purchases, market orders, and when to stop reinvesting.</p></div>
-            <div><span>Agent observes</span><p>Both farms, shared prices, town demand, current day/hour, its private seeds, shed, and carried inventory.</p></div>
-            <div><span>Agent cannot control</span><p>Episode seed, opponent actions, shop unlock sequence, weed rolls, rule constants, and the 720-turn deadline.</p></div>
           </div>
         </section>
 
@@ -475,25 +602,6 @@
           </div>
         </section>
 
-        <section class="section shell" aria-labelledby="contract-title">
-          <div class="section-heading">
-            <div><p class="eyebrow">Submission</p><h2 id="contract-title">Bot contract</h2></div>
-          </div>
-          <div class="contract-grid">
-            <pre aria-label="Minimal agent return shape"><code>def agent(obs):
-    return {
-        "farmer": ["PASS"],
-        "hands": [],
-        "market": []
-    }</code></pre>
-            <div class="contract-list">
-              <div><strong>Entry point</strong><span><code>main.py</code> at archive root with <code>agent(obs)</code></span></div>
-              <div><strong>Runtime</strong><span>1.6 vCPU · 6.5 GiB RAM · 8 GiB disk</span></div>
-              <div><strong>Network</strong><span>No ingress or egress during evaluation</span></div>
-              <div><strong>Validation</strong><span>First match is your agent versus itself</span></div>
-            </div>
-          </div>
-        </section>
       </section>
 
       <section class="view" id="experiments" aria-labelledby="experiments-title" hidden>

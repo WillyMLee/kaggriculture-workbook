@@ -4,6 +4,8 @@
   const KEYS = {
     checklist: "kaggriculture-fieldbook-checklist-v1",
     experiments: "kaggriculture-fieldbook-experiments-v1",
+    submissions: "kaggriculture-fieldbook-submissions-v1",
+    submissionGate: "kaggriculture-submission-gate-v1",
     roadmap: "kaggriculture-fieldbook-roadmap-v1",
     balancedNotes: "kaggriculture-balanced-notes-v1",
   };
@@ -39,7 +41,7 @@
   }
 
   // Navigation
-  const viewIds = ["brief", "leaders", "mechanics", "balanced", "expansion", "livestock", "experiments", "roadmap"];
+  const viewIds = ["brief", "mechanics", "tensions", "opponent", "balanced", "simulator", "attention", "submission", "submissions", "experiments", "roadmap"];
 
   function showView(viewId, updateHash = true) {
     const safeId = viewIds.includes(viewId) ? viewId : "brief";
@@ -255,6 +257,30 @@
   }
   renderChecklistProgress();
 
+  // First-submission release gate
+  const submissionGateState = readStore(KEYS.submissionGate, {
+    contract: true,
+    fallback: true,
+    selfplay: true,
+    coverage: true,
+  });
+  const submissionGateInputs = $$('[data-submit-check]');
+  submissionGateInputs.forEach((input) => {
+    input.checked = Boolean(submissionGateState[input.dataset.submitCheck]);
+    input.addEventListener("change", () => {
+      submissionGateState[input.dataset.submitCheck] = input.checked;
+      writeStore(KEYS.submissionGate, submissionGateState);
+      renderSubmissionGate();
+    });
+  });
+
+  function renderSubmissionGate() {
+    const completed = submissionGateInputs.filter((input) => input.checked).length;
+    $("#submission-progress").textContent = `${completed} / ${submissionGateInputs.length} ready`;
+    $("#submission-progress-bar").style.width = `${(completed / submissionGateInputs.length) * 100}%`;
+  }
+  renderSubmissionGate();
+
   // Farm explainer
   const farmModes = {
     routing: {
@@ -347,6 +373,113 @@
   });
   renderProduction();
 
+  // Kaggle submission tracker
+  let submissions = readStore(KEYS.submissions, []);
+  if (!Array.isArray(submissions)) submissions = [];
+  const submissionDialog = $("#submission-dialog");
+  const submissionForm = $("#submission-form");
+
+  function openSubmissionDialog() {
+    submissionForm.elements.date.value = new Date().toISOString().slice(0, 10);
+    submissionDialog.showModal();
+    setTimeout(() => submissionForm.elements.version.focus(), 0);
+  }
+
+  $("#open-submission-form").addEventListener("click", openSubmissionDialog);
+  $$('[data-open-submission]').forEach((button) => button.addEventListener("click", openSubmissionDialog));
+  $("#close-submission-dialog").addEventListener("click", () => submissionDialog.close());
+  $("#cancel-submission").addEventListener("click", () => submissionDialog.close());
+
+  submissionForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const data = new FormData(submissionForm);
+    submissions.push({
+      id: makeId("submission"),
+      version: String(data.get("version")).trim(),
+      date: String(data.get("date")),
+      status: String(data.get("status")),
+      episodes: Number(data.get("episodes") || 0),
+      rating: data.get("rating") === "" ? null : Number(data.get("rating")),
+      rank: data.get("rank") === "" ? null : Number(data.get("rank")),
+      change: String(data.get("change")).trim(),
+      notes: String(data.get("notes")).trim(),
+    });
+    writeStore(KEYS.submissions, submissions);
+    submissionForm.reset();
+    submissionDialog.close();
+    renderSubmissions();
+  });
+
+  function renderSubmissionAnalysis(sorted) {
+    const analysis = $("#submission-analysis");
+    if (!sorted.length) {
+      analysis.innerHTML = `
+        <article><span>Signal</span><strong>No ladder data yet</strong><p>Submit the interpretable baseline, then log its first rating and rank.</p></article>
+        <article><span>Confidence</span><strong>Unknown</strong><p>Early ratings move quickly; wait for more episodes before making a large rewrite.</p></article>
+        <article><span>Next read</span><strong>Loss replays</strong><p>Classify the opponent opening and identify the first irreversible mistake.</p></article>`;
+      return;
+    }
+    const latest = sorted.at(-1);
+    const previous = sorted.length > 1 ? sorted.at(-2) : null;
+    let signalTitle = "Baseline established";
+    let signalText = "Use this version as the comparison point for the next single-mechanism change.";
+    if (latest.status === "error") {
+      signalTitle = "Validation failure";
+      signalText = "Fix the runtime or action contract before interpreting strategy quality.";
+    } else if (latest.rating != null && previous?.rating != null) {
+      const delta = latest.rating - previous.rating;
+      signalTitle = `${delta >= 0 ? "+" : ""}${delta.toFixed(1)} rating`;
+      signalText = delta >= 0
+        ? "The latest version is moving upward; inspect whether the improvement holds across more episodes."
+        : "The latest version is moving downward; classify losses before choosing which mechanism to change.";
+    }
+    const confidenceTitle = latest.episodes < 50 ? "Low sample" : latest.episodes < 200 ? "Developing" : "Useful signal";
+    const confidenceText = latest.episodes < 50
+      ? "Treat early ladder movement as noisy and avoid a broad rewrite."
+      : latest.episodes < 200
+        ? "Look for repeated opponent archetypes and recurring failure modes."
+        : "The sample is large enough to prioritize stable patterns over isolated replays.";
+    analysis.innerHTML = `
+      <article><span>Signal</span><strong>${escapeHtml(signalTitle)}</strong><p>${escapeHtml(signalText)}</p></article>
+      <article><span>Confidence</span><strong>${escapeHtml(confidenceTitle)}</strong><p>${escapeHtml(confidenceText)}</p></article>
+      <article><span>Next read</span><strong>First divergence</strong><p>Find the earliest turn where the losing replay stopped matching the intended plan.</p></article>`;
+  }
+
+  function renderSubmissions() {
+    const sorted = [...submissions].sort((a, b) => new Date(a.date) - new Date(b.date));
+    const ratings = submissions.filter((item) => item.rating != null);
+    const ranks = submissions.filter((item) => item.rank != null);
+    const bestRating = ratings.length ? [...ratings].sort((a, b) => b.rating - a.rating)[0] : null;
+    const bestRank = ranks.length ? Math.min(...ranks.map((item) => item.rank)) : null;
+    $("#submission-count").textContent = String(submissions.length);
+    $("#submission-best-rating").textContent = bestRating ? bestRating.rating.toFixed(1) : "—";
+    $("#submission-best-version").textContent = bestRating ? `from ${bestRating.version}` : "no data yet";
+    $("#submission-best-rank").textContent = bestRank == null ? "—" : `#${bestRank.toLocaleString()}`;
+    $("#submission-episodes").textContent = submissions.reduce((sum, item) => sum + item.episodes, 0).toLocaleString();
+    $("#submission-body").innerHTML = [...sorted].reverse().map((item) => `
+      <tr>
+        <td><strong>${escapeHtml(item.version)}</strong><small>${escapeHtml(item.change)}</small></td>
+        <td>${escapeHtml(item.date)}</td>
+        <td><span class="submission-status ${escapeHtml(item.status)}">${escapeHtml(item.status)}</span></td>
+        <td>${item.rating == null ? "—" : item.rating.toFixed(1)}</td>
+        <td>${item.rank == null ? "—" : `#${item.rank.toLocaleString()}`}</td>
+        <td>${item.episodes.toLocaleString()}</td>
+        <td>${escapeHtml(item.notes || "—")}</td>
+        <td><button class="delete-button" type="button" aria-label="Delete ${escapeHtml(item.version)}" data-delete-submission="${item.id}">×</button></td>
+      </tr>`).join("");
+    const empty = submissions.length === 0;
+    $("#submission-empty").hidden = !empty;
+    $("#submission-table-wrap").hidden = empty;
+    $$('[data-delete-submission]').forEach((button) => {
+      button.addEventListener("click", () => {
+        submissions = submissions.filter((item) => item.id !== button.dataset.deleteSubmission);
+        writeStore(KEYS.submissions, submissions);
+        renderSubmissions();
+      });
+    });
+    renderSubmissionAnalysis(sorted);
+  }
+
   // Experiments
   let experiments = readStore(KEYS.experiments, []);
   if (!Array.isArray(experiments)) experiments = [];
@@ -361,17 +494,15 @@
   }
   $("#open-experiment-form").addEventListener("click", openExperimentDialog);
   $$('[data-open-experiment]').forEach((button) => button.addEventListener("click", openExperimentDialog));
-  const approachHypotheses = {
+  const policyHypotheses = {
     balanced: "Balanced tempo: melon cash loop into cattle and strawberries, then early liquidation",
-    expansion: "Expansion rush: unlock three quadrants before day 11 and fill with staggered strawberries",
-    livestock: "Livestock compound: sheep-heavy pasture network with protected wheat reserve",
   };
-  $$('[data-approach-test]').forEach((button) => {
+  $$('[data-policy-test]').forEach((button) => {
     button.addEventListener("click", () => {
-      const approach = button.dataset.approachTest;
+      const policy = button.dataset.policyTest;
       showView("experiments");
       openExperimentDialog();
-      experimentForm.elements.hypothesis.value = approachHypotheses[approach] || "";
+      experimentForm.elements.hypothesis.value = policyHypotheses[policy] || "";
       experimentForm.elements.opponent.value = "starter";
     });
   });
@@ -504,17 +635,21 @@
 
   // Roadmap
   const starterRoadmap = [
-    { id: "paired-harness", title: "Paired-seed baseline", description: "Compare agents across matched episodes.", impact: 5, confidence: 5, effort: 2, status: "planned" },
+    { id: "first-submission", title: "Ship interpretable v0.1", description: "Freeze the artifact, pass self-play, and enter the ladder.", impact: 5, confidence: 5, effort: 2, status: "testing" },
     { id: "liquidation", title: "Late-game liquidation", description: "Sell everything before turn 720.", impact: 5, confidence: 4, effort: 2, status: "planned" },
-    { id: "survival", title: "Care deadline scheduler", description: "Never miss water or feed twice.", impact: 5, confidence: 4, effort: 3, status: "planned" },
-    { id: "routing", title: "Worker assignment", description: "Prevent duplicate and wasted actions.", impact: 4, confidence: 3, effort: 4, status: "planned" },
-    { id: "market", title: "Market-aware selling", description: "Stage sales around price and demand.", impact: 5, confidence: 2, effort: 4, status: "planned" },
+    { id: "opponent-model", title: "Opponent archetype classifier", description: "Infer commitments from visible farms and market signals.", impact: 5, confidence: 3, effort: 3, status: "planned" },
+    { id: "lookahead", title: "Short-horizon simulator", description: "Compare baseline and counter-strategy branches over the next few days.", impact: 5, confidence: 2, effort: 5, status: "planned" },
+    { id: "attention", title: "Attention controller", description: "Protect survival and exit work before adaptive responses.", impact: 5, confidence: 4, effort: 3, status: "planned" },
+    { id: "loss-tags", title: "Loss replay taxonomy", description: "Tag opener, first divergence, execution failure, and terminal inventory.", impact: 4, confidence: 5, effort: 2, status: "planned" },
   ];
   let roadmap = readStore(KEYS.roadmap, starterRoadmap);
   if (!Array.isArray(roadmap)) roadmap = [...starterRoadmap];
   roadmap = roadmap.map((item) => {
     const starter = starterRoadmap.find((candidate) => candidate.id === item.id);
     return starter ? { ...starter, status: item.status || starter.status } : item;
+  });
+  starterRoadmap.forEach((starter) => {
+    if (!roadmap.some((item) => item.id === starter.id)) roadmap.push({ ...starter });
   });
   writeStore(KEYS.roadmap, roadmap);
 
@@ -596,6 +731,7 @@
     }
   }
 
+  renderSubmissions();
   renderExperiments();
   renderRoadmap();
 })();

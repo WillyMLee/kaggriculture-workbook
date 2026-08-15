@@ -35,8 +35,11 @@ Then open <http://localhost:4173>.
 
 - A verified competition brief and deadline summary
 - A visual game-mechanics reference
+- A cited market-tensions page connecting shared prices to competitive convergence
+- Opponent-model, strategy-library, lookahead-simulator, and attention-controller workspaces
 - A persistent baseline-readiness checklist
 - An experiment log with a clearly labeled head-to-head outcome chart and JSON export
+- A persistent Kaggle submission, rating, rank, and episode tracker
 - A scored improvement roadmap
 
 Checklist, experiment, and roadmap data are stored in the browser's local storage. The experiment export creates a portable JSON backup.
@@ -55,6 +58,17 @@ Run it with:
 ```
 
 The project-local runtime loads the official Kaggriculture environment plugin from `.vendor/kaggle-environments` while remaining compatible with Python 3.9.
+
+## First submission candidate
+
+`main.py` is the safe Kaggle entry point for Balanced Tempo v0.1. The policy now stops new investment on day 27, sells wheat with other reachable inventory, and falls back to a valid `PASS` action if an unexpected state raises an exception.
+
+Validate the exact entry point through self-play and benchmark it against the starter:
+
+```powershell
+.\.venv\Scripts\python.exe scripts\validate_submission.py --seeds 3
+.\.venv\Scripts\python.exe scripts\run_balanced_experiment.py --seeds 10 --output results\balanced_tempo_v0_1.json
+```
 
 ## Sources
 
