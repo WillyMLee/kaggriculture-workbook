@@ -1,0 +1,67 @@
+{
+  "objective": "Preserve the proven lean engine while activating higher-density reasoning only when its expected terminal-value gain exceeds its service and switching costs.",
+  "v0_7_series_lessons": {
+    "v0.7.0": "Opponent memory and productive-threat telemetry improved diagnosis, but adaptation alone did not create superiority.",
+    "v0.7.1-i5": "Dynamic reserves, sticky routes, reverse closeout, and bounded purchases form the promoted lean control.",
+    "v0.7.2": "Frontier expansion demonstrated a higher-cap mechanism but lost broadly when land, livestock, and labor density were activated universally."
+  },
+  "v0_8_design": {
+    "always_on_core": [
+      "v0.7.1-i5 operations and closeout",
+      "own-farm and town attention",
+      "compact opponent memory",
+      "daily replay telemetry"
+    ],
+    "macro_branches": [
+      "lean",
+      "selective_expansion",
+      "frontier"
+    ],
+    "branch_costs": [
+      "land",
+      "labor",
+      "travel",
+      "feed and care",
+      "switching",
+      "stranded inventory",
+      "uncertainty"
+    ],
+    "controls": [
+      "daily decision cadence",
+      "hysteresis before switching",
+      "deployment-progress bailout",
+      "service-capacity gate",
+      "remaining-horizon payback gate"
+    ]
+  },
+  "density_activation": [
+    {
+      "tier": 0,
+      "mode": "always_on",
+      "modules": ["lean operations", "reverse closeout", "dynamic reserves", "telemetry"]
+    },
+    {
+      "tier": 1,
+      "mode": "daily",
+      "modules": ["three-branch terminal-value comparison", "shallow decision tree"]
+    },
+    {
+      "tier": 2,
+      "mode": "event_driven",
+      "modules": ["short opponent projection", "town scenario simulation", "portfolio counterfactual"]
+    },
+    {
+      "tier": 3,
+      "mode": "v0.9_deferred",
+      "modules": ["compact forest votes", "crop-livestock specialists", "short stochastic rollouts"]
+    }
+  ],
+  "training_plan": "Run identical seeds through lean, selective-expansion, and frontier policies; label the best risk-adjusted terminal outcome; fit shallow splits offline; compile thresholds and leaf values into the submission agent.",
+  "promotion_gates": [
+    "Preserve the full v0.7.1-i5 predecessor gate.",
+    "No opponent persona family may remain below a 50 percent win rate.",
+    "Positive aggregate margin on held-out seeds and both seats.",
+    "At least one reproducible 60,000-plus terminal-bank trajectory.",
+    "Zero runtime failures or suspicious fallbacks; every action below 700 ms."
+  ]
+}
