@@ -9,7 +9,10 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
 
 from agents.balanced_tempo import (
+    _animal_portfolio_model,
+    _assign_tasks,
     _demand_forecast,
+    _fertilizer_targets,
     _market_plan,
     _operations_attention,
     _opponent_attention,
@@ -262,6 +265,61 @@ def test_reverse_terminal_plan_times_scarce_market_sales():
     assert not _reverse_terminal_plan(obs, farm, private)["hold_items"]
 
 
+def test_marginal_economics_prices_livestock_and_fertilizer():
+    farm = make_farm()
+    opponent = make_farm()
+    obs = {
+        "day": 12,
+        "market": {"prices": {"WHEAT": 25, "EGG": 50, "MILK": 220, "WOOL": 200, "FERTILIZER": 100}},
+        "town": {"unlocked_shops": ["SMOOTHIE_SHOP"]},
+    }
+    model = _animal_portfolio_model(obs, farm, opponent, _strategy_belief(opponent, 12))
+    assert model["animal"] == "COW"
+    assert model["details"]["COW"]["net"] > model["details"]["GOOSE"]["net"]
+    farm["tiles"][0][0] = {
+        "kind": "PLANT",
+        "crop": "TOMATO",
+        "planted_day": 12,
+        "watered_today": False,
+        "fertilized_until_day": -1,
+        "yield_units": 0,
+    }
+    obs.update({"day": 20, "market": {"prices": {"TOMATO": 60, "FERTILIZER": 100}}})
+    assert any(target[1] == (0, 0) for target in _fertilizer_targets(obs, farm))
+
+
+def test_expected_utility_counters_concentrated_recurring_supply():
+    farm = make_farm()
+    opponent = make_farm()
+    for x in range(10):
+        opponent["tiles"][0][x] = {
+            "kind": "PLANT",
+            "crop": "STRAWBERRY",
+            "watered_today": True,
+            "yield_units": 0,
+        }
+    signal = _opponent_attention({
+        "day": 12,
+        "player": 0,
+        "farms": [farm, opponent],
+        "market": {"prices": {}},
+        "town": {"unlocked_shops": []},
+    }, 0)
+    assert signal["recurring_crop"] == "TOMATO"
+    assert signal["probabilities"]["strawberry-recurring"] > 0.8
+    assert set(signal["strategy_utilities"]) == {"cash-engine", "recurring-engine", "livestock-engine"}
+
+
+def test_deadline_router_assigns_workers_globally():
+    positions = [(0, 0), (9, 9)]
+    tasks = [(0, (9, 8), ["HARVEST"]), (0, (0, 1), ["HARVEST"])]
+    assignment = dict(_assign_tasks(positions, {0, 1}, tasks, 20))
+    assert assignment == {0: 1, 1: 0}
+    crowded = [(priority % 7, (priority % 10, (priority // 10) % 10), ["WATER"]) for priority in range(2000)]
+    bounded = _assign_tasks([(index, 0) for index in range(9)], set(range(9)), crowded, 12)
+    assert len(bounded) == 9
+
+
 if __name__ == "__main__":
     test_phase_boundaries()
     test_closeout_keeps_labor_and_feed()
@@ -274,4 +332,7 @@ if __name__ == "__main__":
     test_dense_predictor_clears_planned_weeds()
     test_reverse_terminal_plan_removes_stranded_work()
     test_reverse_terminal_plan_times_scarce_market_sales()
-    print("phase policy regressions: 11 passed")
+    test_marginal_economics_prices_livestock_and_fertilizer()
+    test_expected_utility_counters_concentrated_recurring_supply()
+    test_deadline_router_assigns_workers_globally()
+    print("phase policy regressions: 14 passed")

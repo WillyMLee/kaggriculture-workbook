@@ -566,10 +566,19 @@
       id: "agent-v0-6-0",
       version: "v0.6.0",
       date: "2026-08-15",
-      status: "candidate",
+      status: "retired",
       evidence: "v0.5.1: 12-8 | average +324",
       model: "Reverse terminal-state planner with payoff reachability, feed and care cutoffs, travel slack, capacity checks, and demand-timed liquidation.",
-      limitation: "Aggregate improvement only; eight losses and a -2,999 worst margin fail the 20 / 20 promotion rule.",
+      limitation: "Aggregate improvement only; eight losses and a -2,999 worst margin failed the 20 / 20 promotion rule.",
+    },
+    {
+      id: "agent-v0-6-1",
+      version: "v0.6.1",
+      date: "2026-08-15",
+      status: "candidate",
+      evidence: "v0.5 class: 60-0 | worst +8,748",
+      model: "Marginal crop/livestock economics, expected-utility strategy grouping, profitable fertilizer use, and bounded global worker routing.",
+      limitation: "Promoted local candidate; unfamiliar Kaggle ladder architectures remain the next generalization test.",
     },
   ];
   let agentArchive = readStore(KEYS.agentArchive, seededAgents);
@@ -577,6 +586,9 @@
   agentArchive = agentArchive.map((item) => {
     const seeded = seededAgents.find((candidate) => candidate.id === item.id);
     return seeded ? { ...item, ...seeded } : item;
+  });
+  seededAgents.forEach((seeded) => {
+    if (!agentArchive.some((item) => item.id === seeded.id)) agentArchive.push(seeded);
   });
   writeStore(KEYS.agentArchive, agentArchive);
   const agentDialog = $("#agent-dialog");

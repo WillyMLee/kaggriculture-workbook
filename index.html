@@ -391,16 +391,16 @@
           <p class="source-note">Trace evidence: <code>results/phase_tempo_v0_3_seed5_loss_trace.json</code> and <code>results/weighted_strategy_v0_4_seed5_regression_trace.json</code>.</p>
         </section>
         <section class="section shell" aria-labelledby="reverse-qa-title">
-          <div class="section-heading"><div><p class="eyebrow">Reverse horizon QA</p><h2 id="reverse-qa-title">v0.6 improves the aggregate, not reliability</h2></div><strong class="qa-verdict" data-state="hold">HOLD</strong></div>
+          <div class="section-heading"><div><p class="eyebrow">Reverse horizon QA</p><h2 id="reverse-qa-title">v0.6.1 clears the v0.5-class gate</h2></div><strong class="qa-verdict">PROMOTED</strong></div>
           <div class="candidate-evidence">
-            <div><span>Head-to-head</span><strong>12 / 20 wins</strong><small>seeds 0-9 | both seats vs v0.5.1</small></div>
-            <div><span>Margin</span><strong>+324 average</strong><small>worst game -2,999</small></div>
-            <div><span>Execution</span><strong>0 fallbacks</strong><small>0 runtime failures | max 30.3 ms</small></div>
-            <div><span>Artifact</span><strong>7,595 bytes</strong><small>29,132-byte source | root main.py</small></div>
+            <div><span>V0.5-class suite</span><strong>60 / 60 wins</strong><small>v0.5.0 + v0.5.1 | both seats</small></div>
+            <div><span>Margin</span><strong>+14,069 average</strong><small>worst game still +8,748</small></div>
+            <div><span>Execution</span><strong>0 fallbacks</strong><small>0 runtime failures | max 319.1 ms</small></div>
+            <div><span>Artifact</span><strong>10,039 bytes</strong><small>40,300-byte source | root main.py</small></div>
           </div>
-          <p class="source-note"><strong>Reverse path:</strong> begin from a sold terminal state, then work backward through latest safe sale, shed travel, final harvest, feed, care, and watering obligations. Visible town demand delays appreciating products only while projected capacity remains safe.</p>
-          <p class="source-note"><strong>Checkpoint lesson:</strong> the first reverse policy went 8-12. A seed-6 counterfactual showed it sold milk too early; demand-timed liquidation flipped that seed from 0-2 to 2-0 and the final exact artifact reached 12-8. The eight remaining losses prevent promotion.</p>
-          <p class="source-note">Evidence: <code>results/reverse_horizon_v0_6_vs_v0_5_1_smoke.json</code>, <code>results/reverse_horizon_v0_6_seed6_trace.json</code>, <code>results/v0_5_1_seed6_self_control.json</code>, <code>results/reverse_horizon_v0_6_seed6_market_timing.json</code>, and <code>results/reverse_horizon_v0_6_vs_v0_5_1_exact.json</code>.</p>
+          <p class="source-note"><strong>Three promoted mechanisms:</strong> score crops and livestock after feed, care, labor, tile time, demand, and crowding; choose mixed strategy groups by probability-weighted utility; and assign all workers together by deadline and travel cost. The economics layer also keeps fertilizer only when applying it is worth more than selling it.</p>
+          <p class="source-note"><strong>Checkpoint lesson:</strong> the first global router passed seeds 0-9 but hit a 299-second action on held-out seed 10. Bounding the optimizer to the best three task alternatives per worker reduced that regression to 75.6 ms and won both seats. The final artifact then went 20-0 against v0.5.0, 20-0 against v0.5.1, and 20-0 against v0.5.1 on held-out seeds 10-19.</p>
+          <p class="source-note">Evidence: <code>results/v0_6_1_vs_v0_5_0_exact.json</code>, <code>results/v0_6_1_vs_v0_5_1_exact.json</code>, <code>results/v0_6_1_vs_v0_5_1_heldout.json</code>, <code>results/v0_6_1_seed10_runtime_regression.json</code>, and <code>results/qa_v0_6_1_packaging.json</code>.</p>
         </section>
         <section class="section shell" aria-labelledby="dense-qa-title">
           <div class="section-heading"><div><p class="eyebrow">Dense predictor QA</p><h2 id="dense-qa-title">v0.5.1 is stronger, not promoted</h2></div><strong class="qa-verdict" data-state="hold">HOLD</strong></div>
@@ -629,12 +629,12 @@
           </div>
         </section>
         <section class="section shell" aria-labelledby="submission-gate-title">
-          <div class="section-heading"><div><p class="eyebrow">Release gate</p><h2 id="submission-gate-title">v0.6 candidate readiness</h2></div><strong class="progress-label" id="submission-progress">0 / 6 ready</strong></div>
+          <div class="section-heading"><div><p class="eyebrow">Release gate</p><h2 id="submission-gate-title">v0.6.1 candidate readiness</h2></div><strong class="progress-label" id="submission-progress">0 / 6 ready</strong></div>
           <div class="candidate-evidence" aria-label="Validated candidate evidence">
             <div><span>Replay diagnoses</span><strong>4 archived</strong><small>1 win · 3 losses</small></div>
-            <div><span>Predecessor challenge</span><strong>12 / 20 wins</strong><small>exact v0.6 vs exact v0.5.1</small></div>
-            <div><span>Average margin</span><strong>+324</strong><small>eight losses | worst -2,999</small></div>
-            <div><span>Runtime failures</span><strong>0</strong><small>max local action 30.3 ms</small></div>
+            <div><span>Predecessor challenge</span><strong>60 / 60 wins</strong><small>exact v0.6.1 vs v0.5-class</small></div>
+            <div><span>Average margin</span><strong>+14,069</strong><small>zero losses | worst +8,748</small></div>
+            <div><span>Runtime failures</span><strong>0</strong><small>max local action 319.1 ms</small></div>
           </div>
           <div class="progress-track" aria-hidden="true"><span id="submission-progress-bar"></span></div>
           <div class="checklist submission-checklist">
@@ -662,7 +662,7 @@
               <div><strong>Daily limit</strong><span>Up to five agent submissions per team</span></div>
             </div>
           </div>
-          <p class="source-note"><strong>Frozen controls:</strong> submitted <code>artifacts/kaggriculture-v0.2.1.tar.gz</code>, v0.4.0, and predecessor <code>artifacts/kaggriculture-v0.5.1.tar.gz</code>. Current local-only candidate: <code>artifacts/kaggriculture-v0.6.0.tar.gz</code>. No Kaggle submission has been made.</p>
+          <p class="source-note"><strong>Frozen controls:</strong> submitted <code>artifacts/kaggriculture-v0.2.1.tar.gz</code>, v0.4.0, v0.5.0, v0.5.1, and v0.6.0. Current local-only candidate: <code>artifacts/kaggriculture-v0.6.1.tar.gz</code>. No Kaggle submission has been made.</p>
           <p class="source-note"><strong>Packaging lesson:</strong> v0.2.0 failed before play because <code>agents</code> collided with a Kaggle-installed module. v0.2.1 packages one self-contained <code>main.py</code> and passed validation.</p>
           <p class="source-note">Submission and ranking behavior: <a href="https://www.kaggle.com/competitions/kaggriculture/overview" target="_blank" rel="noreferrer">official Kaggriculture evaluation section ↗</a>.</p>
         </section>

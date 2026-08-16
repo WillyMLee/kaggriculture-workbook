@@ -1,4 +1,4 @@
-"""Reverse Horizon v0.6: terminal-state planning over the dense predictor."""
+"""Reverse Horizon v0.6.1: economics, strategy utility, and global routing."""
 
 from __future__ import annotations
 
@@ -24,9 +24,9 @@ BASE_PRICES = {
     "FERTILIZER": 100,
 }
 ANIMAL_ECONOMICS = {
-    "GOOSE": {"first_yield_day": 4, "interval": 1, "product": "EGG"},
-    "COW": {"first_yield_day": 8, "interval": 2, "product": "MILK"},
-    "SHEEP": {"first_yield_day": 6, "interval": 3, "product": "WOOL"},
+    "GOOSE": {"cost": 300, "first_yield_day": 4, "interval": 1, "product": "EGG"},
+    "COW": {"cost": 400, "first_yield_day": 8, "interval": 2, "product": "MILK"},
+    "SHEEP": {"cost": 500, "first_yield_day": 6, "interval": 3, "product": "WOOL"},
 }
 SHOP_PRODUCTS = {
     "BAKERY": ("EGG", "WHEAT"),
@@ -46,6 +46,18 @@ MELON_CELLS = ((0, 0), (1, 0), (2, 0), (3, 0), (4, 0), (0, 1), (1, 1), (2, 1), (
 WHEAT_CELLS = ((0, 2), (1, 2), (2, 2), (3, 2), (4, 2))
 STRAWBERRY_CELLS = MELON_CELLS + ((0, 3), (1, 3), (2, 3), (3, 3), (4, 3))
 RECURRING_CELLS = STRAWBERRY_CELLS
+STRATEGY_SUPPLY = {
+    "melon-rush": {"MELON": 1.0},
+    "strawberry-recurring": {"STRAWBERRY": 1.0},
+    "tomato-recurring": {"TOMATO": 1.0},
+    "livestock-compound": {"EGG": 0.25, "MILK": 0.45, "WOOL": 0.30},
+    "goose-volume": {"EGG": 1.0},
+    "cow-milk": {"MILK": 1.0},
+    "sheep-premium": {"WOOL": 1.0},
+    "labor-swarm": {},
+    "land-expansion": {"MELON": 0.20, "STRAWBERRY": 0.25, "TOMATO": 0.20},
+    "mixed": {"CARROT": 0.12, "MELON": 0.16, "TOMATO": 0.18, "STRAWBERRY": 0.18, "EGG": 0.12, "MILK": 0.14, "WOOL": 0.10},
+}
 
 
 def _distance(a, b):
@@ -138,10 +150,19 @@ def _demand_forecast(obs, horizon_days=6):
     }
 
 
-def _portfolio_model(obs, farm, opponent, phase):
-    """Score every crop by time-to-cash, visible demand, price, and crowding."""
+def _expected_supply_pressure(probabilities, product):
+    """Expected opponent supply for a product across all live archetypes."""
+    return sum(
+        float(probability) * STRATEGY_SUPPLY.get(strategy, {}).get(product, 0.0)
+        for strategy, probability in probabilities.items()
+    )
+
+
+def _portfolio_model(obs, farm, opponent, phase, probabilities=None):
+    """Score crops in coins per constrained tile/labor day, not gross revenue."""
     day = int(obs.get("day", 0))
     remaining = max(0, 29 - day)
+    probabilities = probabilities or {}
     forecast = _demand_forecast(obs, horizon_days=min(8, remaining + 1))
     opponent_crops = {
         crop: _count_tiles(opponent, lambda tile, crop=crop: isinstance(tile, dict) and tile.get("crop") == crop)
@@ -154,20 +175,94 @@ def _portfolio_model(obs, farm, opponent, phase):
             continue
         if data["ongoing"]:
             production_days = remaining - data["first_yield_day"]
-            units = min(data["max_yield"], 1 + production_days // data["interval"])
-            water_days = data["first_yield_day"] + max(0, production_days)
+            harvests = min(data["max_yield"], 1 + production_days // data["interval"])
+            units = harvests
+            final_yield_day = data["first_yield_day"] + max(0, harvests - 1) * data["interval"]
+            water_days = final_yield_day + 1
+            tile_days = final_yield_day + 1
+            harvest_actions = harvests
         else:
-            units = data["max_yield"]
-            water_days = data["max_yield_day"]
+            window_start = (data["max_yield_day"] + 1) // 2
+            units = min(data["max_yield"], 1 + data["max_yield_day"] - window_start + 1)
+            water_days = data["max_yield_day"] + 1
+            tile_days = data["max_yield_day"] + 1
+            harvest_actions = 1
         signal = forecast[crop]
         revenue = units * signal["price"]
-        labor = 1.0 + water_days + (units if data["ongoing"] else 1.0)
+        labor = 1.0 + water_days + harvest_actions
         demand_boost = 1.0 + min(0.45, signal["visible_demand"] / 180.0)
-        crowding = 1.0 + 0.035 * opponent_crops[crop]
-        scores[crop] = ((revenue - data["seed"]) / labor) * demand_boost * signal["momentum"] / crowding
+        observed_crowding = 0.035 * opponent_crops[crop]
+        belief_crowding = 0.28 * _expected_supply_pressure(probabilities, crop)
+        switching_cost = 0.0
+        own_other = _count_tiles(
+            farm,
+            lambda tile, crop=crop: isinstance(tile, dict)
+            and tile.get("crop") in CROPS
+            and tile.get("crop") != crop,
+        )
+        if own_other:
+            switching_cost = min(18.0, own_other * 1.5)
+        net_margin = revenue - data["seed"] - switching_cost
+        constrained_days = tile_days + 0.65 * labor
+        scores[crop] = (
+            net_margin
+            * demand_boost
+            * signal["momentum"]
+            / max(1.0, constrained_days)
+            / (1.0 + observed_crowding + belief_crowding)
+        )
     recurring = max(("TOMATO", "STRAWBERRY"), key=lambda crop: (scores[crop], crop))
     cash = max(("CARROT", "MELON"), key=lambda crop: (scores[crop], crop))
     return {"scores": scores, "recurring_crop": recurring, "cash_crop": cash, "forecast": forecast}
+
+
+def _animal_portfolio_model(obs, farm, opponent, probabilities=None):
+    """Estimate animal value after feed, care, collection, tile, and crowding costs."""
+    day = int(obs.get("day", 0))
+    probabilities = probabilities or {}
+    prices = (obs.get("market") or {}).get("prices", {})
+    forecast = _demand_forecast(obs, horizon_days=max(1, min(8, 29 - day)))
+    opponent_animals = {
+        animal: _count_tiles(opponent, lambda tile, animal=animal: isinstance(tile, dict) and tile.get("animal") == animal)
+        for animal in ANIMAL_ECONOMICS
+    }
+    scores = {}
+    details = {}
+    for animal, data in ANIMAL_ECONOMICS.items():
+        first_day = day + data["first_yield_day"]
+        if first_day > 28:
+            scores[animal] = -1e6
+            details[animal] = {"net": -1e6, "units": 0, "payback_day": None}
+            continue
+        production_days = list(range(first_day, 29, data["interval"]))
+        max_held = 4 if animal == "GOOSE" else 6
+        first_units = min(max_held, 1 + data["first_yield_day"])
+        units = first_units + max(0, len(production_days) - 1) * (1 + data["interval"])
+        last_day = production_days[-1]
+        feed_days = last_day - day + 1
+        product = data["product"]
+        product_price = float(prices.get(product, BASE_PRICES[product]))
+        wheat_price = float(prices.get("WHEAT", BASE_PRICES["WHEAT"]))
+        fertilizer_price = float(prices.get("FERTILIZER", BASE_PRICES["FERTILIZER"]))
+        product_revenue = units * product_price
+        # Fertilizer is valuable but collection competes with survival and harvest work.
+        fertilizer_credit = max(0, feed_days - 1) * fertilizer_price * 0.55
+        feed_cost = feed_days * wheat_price
+        labor_actions = feed_days * 2 + len(production_days) + max(0, feed_days - 1) + 3
+        labor_shadow = labor_actions * 3.0
+        crowding = 1.0 + 0.08 * opponent_animals[animal] + 0.32 * _expected_supply_pressure(probabilities, product)
+        demand_boost = 1.0 + min(0.35, forecast[product]["visible_demand"] / 240.0)
+        net = ((product_revenue + fertilizer_credit) * demand_boost / crowding) - data["cost"] - feed_cost - labor_shadow
+        tile_days = max(1, last_day - day + 1)
+        scores[animal] = net / (tile_days + 0.45 * labor_actions)
+        details[animal] = {
+            "net": round(net, 2),
+            "units": units,
+            "feed_days": feed_days,
+            "payback_day": first_day,
+        }
+    choice = max(ANIMAL_ECONOMICS, key=lambda animal: (scores[animal], animal))
+    return {"scores": scores, "animal": choice, "details": details}
 
 
 def _attention_weights(obs, player, strategy_probabilities):
@@ -206,7 +301,11 @@ def _opponent_attention(obs, player):
             "recurring_crop": "STRAWBERRY",
             "recurring_targets": {"STRAWBERRY": 8, "TOMATO": 7},
             "cash_crop": "MELON",
+            "animal": "COW",
+            "animal_target": 4,
             "crop_scores": {},
+            "animal_scores": {},
+            "strategy_utilities": {},
             "probabilities": {},
             "attention_weights": {"operations": 1.0, "opponent": 0.0, "horizon": 0.0},
         }
@@ -216,38 +315,58 @@ def _opponent_attention(obs, player):
     attention = _attention_weights(obs, player, probabilities)
     own_farm = obs.get("farms", [])[player]
     phase = _phase_attention(obs)
-    portfolio = _portfolio_model(obs, own_farm, opponent, phase)
+    portfolio = _portfolio_model(obs, own_farm, opponent, phase, probabilities)
+    animal_portfolio = _animal_portfolio_model(obs, own_farm, opponent, probabilities)
     own_crop_counts = {
         crop: _count_tiles(own_farm, lambda tile, crop=crop: isinstance(tile, dict) and tile.get("crop") == crop)
         for crop in ("CARROT", "MELON", "TOMATO", "STRAWBERRY")
     }
     archetype, confidence = max(probabilities.items(), key=lambda item: item[1])
 
-    # Recurring crops are a portfolio decision. Switch only when the weighted
-    # probability of strawberry crowding materially exceeds tomato crowding.
-    strawberry_risk = probabilities["strawberry-recurring"] + 0.25 * probabilities["mixed"]
-    tomato_risk = probabilities["tomato-recurring"] + 0.18 * probabilities["mixed"]
-    defensive_recurring = (
-        "TOMATO"
-        if strawberry_risk - tomato_risk >= 0.16 and attention["opponent"] >= 0.12
-        else "STRAWBERRY"
-    )
-    recurring_crop = portfolio["recurring_crop"] if attention["opponent"] < 0.32 else defensive_recurring
+    # Convert expected portfolio values into a stable mixed response. A strategy
+    # family never owns the decision outright; its probability changes utility.
+    recurring_crop = portfolio["recurring_crop"]
     if own_crop_counts["TOMATO"] + own_crop_counts["STRAWBERRY"]:
         recurring_crop = max(("TOMATO", "STRAWBERRY"), key=lambda crop: (own_crop_counts[crop], crop))
     cash_crop = portfolio["cash_crop"]
     if own_crop_counts["CARROT"] + own_crop_counts["MELON"]:
         cash_crop = max(("CARROT", "MELON"), key=lambda crop: (own_crop_counts[crop], crop))
+    secondary = "TOMATO" if recurring_crop == "STRAWBERRY" else "STRAWBERRY"
+    primary_score = portfolio["scores"][recurring_crop]
+    secondary_score = portfolio["scores"][secondary]
+    scale = max(1.0, abs(primary_score) + abs(secondary_score))
+    primary_share = 0.5 + 0.30 * math.tanh((primary_score - secondary_score) / scale * 4.0)
+    primary_target = max(8, min(12, int(round(15 * primary_share))))
+    own_animal_counts = {
+        animal_name: _count_tiles(
+            own_farm,
+            lambda tile, animal_name=animal_name: isinstance(tile, dict) and tile.get("animal") == animal_name,
+        )
+        for animal_name in ANIMAL_ECONOMICS
+    }
+    animal = animal_portfolio["animal"]
+    if sum(own_animal_counts.values()):
+        animal = max(ANIMAL_ECONOMICS, key=lambda name: (own_animal_counts[name], name))
+    animal_target = 4 if animal_portfolio["details"][animal]["net"] > 0 else 0
+    strategy_utilities = {
+        "cash-engine": portfolio["scores"][cash_crop] * 10,
+        "recurring-engine": primary_score * primary_target + secondary_score * (15 - primary_target),
+        "livestock-engine": animal_portfolio["scores"][animal] * animal_target,
+    }
     return {
         "archetype": archetype,
         "confidence": round(confidence, 4),
         "recurring_crop": recurring_crop,
         "recurring_targets": {
-            recurring_crop: 8,
-            ("TOMATO" if recurring_crop == "STRAWBERRY" else "STRAWBERRY"): 7,
+            recurring_crop: primary_target,
+            secondary: 15 - primary_target,
         },
         "cash_crop": cash_crop,
+        "animal": animal,
+        "animal_target": animal_target,
         "crop_scores": {key: round(value, 2) for key, value in portfolio["scores"].items()},
+        "animal_scores": {key: round(value, 2) for key, value in animal_portfolio["scores"].items()},
+        "strategy_utilities": {key: round(value, 2) for key, value in strategy_utilities.items()},
         "probabilities": {key: round(value, 4) for key, value in probabilities.items()},
         "attention_weights": {key: round(value, 4) for key, value in attention.items()},
     }
@@ -365,6 +484,44 @@ def _reverse_terminal_plan(obs, farm, private):
     }
 
 
+def _fertilizer_targets(obs, farm):
+    """Plants where one fertilizer can still return more than its sale value."""
+    day = int(obs.get("day", 0))
+    prices = (obs.get("market") or {}).get("prices", {})
+    fertilizer_price = float(prices.get("FERTILIZER", BASE_PRICES["FERTILIZER"]))
+    targets = []
+    for y, row in enumerate(farm.get("tiles", [])):
+        for x, tile in enumerate(row):
+            if not isinstance(tile, dict) or tile.get("kind") != "PLANT":
+                continue
+            if int(tile.get("fertilized_until_day", -1)) >= day:
+                continue
+            crop = tile.get("crop")
+            data = CROPS.get(crop)
+            if not data or crop in ("WHEAT", "CARROT"):
+                continue
+            planted = int(tile.get("planted_day", day))
+            age = day - planted
+            bonus_units = 0
+            if data["ongoing"]:
+                production_days = []
+                for future_day in range(day, min(29, day + 3)):
+                    since_first = future_day + 1 - planted - data["first_yield_day"]
+                    if since_first >= 0 and since_first % data["interval"] == 0:
+                        if since_first // data["interval"] + 1 <= data["max_yield"]:
+                            production_days.append(future_day)
+                bonus_units = len(production_days)
+            else:
+                window_start = (data["max_yield_day"] + 1) // 2
+                days_left = max(0, min(data["max_yield_day"], age + 2) - max(age, window_start) + 1)
+                room = max(0, data["max_yield"] - int(tile.get("yield_units", 0)))
+                bonus_units = min(days_left, room)
+            incremental_value = bonus_units * float(prices.get(crop, BASE_PRICES[crop]))
+            if bonus_units and incremental_value >= fertilizer_price * 1.15:
+                targets.append((-(incremental_value - fertilizer_price), (x, y), ["FERTILIZE"]))
+    return sorted(targets, key=lambda task: (task[0], task[1]))
+
+
 def _market_plan(obs, farm, private, opponent_signal, phase, terminal=None):
     day = int(obs.get("day", 0))
     hour = int(obs.get("hour", 0))
@@ -373,7 +530,8 @@ def _market_plan(obs, farm, private, opponent_signal, phase, terminal=None):
     inventories = private.get("inventories", [])
     orders = []
 
-    animals = _count_tiles(farm, lambda tile: isinstance(tile, dict) and tile.get("animal") == "COW")
+    animals = _count_tiles(farm, lambda tile: isinstance(tile, dict) and "animal" in tile)
+    fertilizer_targets = _fertilizer_targets(obs, farm)
 
     # Shed overflow discards end-of-day output. Forecast harvest already visible
     # on mature crops and clear low-value wheat before it displaces melon or
@@ -413,8 +571,10 @@ def _market_plan(obs, farm, private, opponent_signal, phase, terminal=None):
         safe_to_hold = terminal and day >= 22 and day < 28 and shed_load + incoming_harvest < 92
         if safe_to_hold and item in terminal.get("hold_items", set()):
             continue
-        if shed.get(item, 0) > 0:
-            orders.append(["SELL", item, shed[item]])
+        reserve = min(len(fertilizer_targets), 4) if item == "FERTILIZER" else 0
+        quantity = max(0, int(shed.get(item, 0)) - reserve)
+        if quantity:
+            orders.append(["SELL", item, quantity])
     if phase["late_mode"] == "execute" or (terminal and terminal["liquidation_urgent"]):
         if terminal:
             feed_reserve = int(terminal["feed_units_remaining"])
@@ -446,16 +606,22 @@ def _market_plan(obs, farm, private, opponent_signal, phase, terminal=None):
         if shortfall:
             orders.append(["BUY_SEED", crop, shortfall])
 
-    empty_pastures = _count_tiles(
-        farm, lambda tile: isinstance(tile, dict) and tile.get("kind") == "PASTURE" and "animal" not in tile
+    animal_choice = opponent_signal.get("animal", "COW")
+    structure = "COOP" if animal_choice == "GOOSE" else "PASTURE"
+    selected_animals = _count_tiles(
+        farm, lambda tile: isinstance(tile, dict) and tile.get("animal") == animal_choice
     )
-    carried_cows = sum(int(inv.get("COW", 0)) for inv in inventories)
+    empty_structures = _count_tiles(
+        farm, lambda tile: isinstance(tile, dict) and tile.get("kind") == structure and "animal" not in tile
+    )
+    carried_animals = sum(int(inv.get(animal_choice, 0)) for inv in inventories)
     if 12 <= day <= 20 and phase["allow_animals"]:
-        cow_shortfall = max(0, 4 - animals - int(shed.get("COW", 0)) - carried_cows)
-        if cow_shortfall:
-            orders.append(["BUY_ANIMAL", "COW", cow_shortfall])
+        target = int(opponent_signal.get("animal_target", 4))
+        animal_shortfall = max(0, target - selected_animals - int(shed.get(animal_choice, 0)) - carried_animals)
+        if animal_shortfall:
+            orders.append(["BUY_ANIMAL", animal_choice, animal_shortfall])
         feed_on_hand = int(shed.get("WHEAT", 0)) + sum(int(inv.get("WHEAT", 0)) for inv in inventories)
-        feed_target = max(8, (animals + empty_pastures) * 3)
+        feed_target = max(8, (animals + empty_structures) * 3)
         if feed_on_hand < feed_target:
             orders.append(["BUY_PRODUCT", "WHEAT", feed_target - feed_on_hand])
 
@@ -467,6 +633,9 @@ def _operations_attention(obs, farm, private, opponent_signal, phase, terminal=N
     day = int(obs.get("day", 0))
     shed = private.get("shed", {})
     tasks = []
+    animal_choice = opponent_signal.get("animal", "COW")
+    animal_structure = "COOP" if animal_choice == "GOOSE" else "PASTURE"
+    fertilize_targets = _fertilizer_targets(obs, farm)
 
     for y, row in enumerate(farm["tiles"]):
         for x, tile in enumerate(row):
@@ -500,7 +669,7 @@ def _operations_attention(obs, farm, private, opponent_signal, phase, terminal=N
         for position in PASTURE_CELLS:
             planned_tile = _tile(farm, position)
             if planned_tile is None:
-                tasks.append((5, position, ["BUILD_PASTURE"]))
+                tasks.append((5, position, ["BUILD_COOP" if animal_structure == "COOP" else "BUILD_PASTURE"]))
             elif isinstance(planned_tile, dict) and planned_tile.get("kind") == "WEED":
                 tasks.append((4, position, ["DIG"]))
 
@@ -535,16 +704,65 @@ def _operations_attention(obs, farm, private, opponent_signal, phase, terminal=N
         (x, y)
         for y, row in enumerate(farm["tiles"])
         for x, tile in enumerate(row)
-        if isinstance(tile, dict) and tile.get("kind") == "PASTURE" and "animal" not in tile
+        if isinstance(tile, dict) and tile.get("kind") == animal_structure and "animal" not in tile
     ]
     if animal_tiles and shed.get("WHEAT", 0) > 0:
         for position in SHED_ACCESS:
             tasks.append((1, position, ["PICKUP", "WHEAT", min(len(animal_tiles), shed["WHEAT"])]))
-    if day <= 20 and empty_pastures and shed.get("COW", 0) > 0:
+    if fertilize_targets and shed.get("FERTILIZER", 0) > 0:
         for position in SHED_ACCESS:
-            tasks.append((0, position, ["PICKUP", "COW", 1]))
+            tasks.append((2, position, ["PICKUP", "FERTILIZER", 1]))
+    if day <= 20 and empty_pastures and shed.get(animal_choice, 0) > 0:
+        for position in SHED_ACCESS:
+            tasks.append((0, position, ["PICKUP", animal_choice, 1]))
 
     return tasks
+
+
+def _assign_tasks(positions, available, tasks, hour):
+    """Globally assign today's work with priority, deadline, and travel costs."""
+    workers = sorted(available)
+    if not workers or not tasks:
+        return []
+    # Only today's best reachable work enters the combinatorial assignment.
+    # The complete queue can grow with every plant, animal, pickup point, and
+    # weed; bounding it prevents an unusual board from consuming the 1s action
+    # budget while preserving several alternatives per worker.
+    ranked_tasks = sorted(
+        enumerate(tasks),
+        key=lambda item: (
+            item[1][0],
+            min(_distance(positions[worker], item[1][1]) for worker in workers),
+            item[1][1],
+            item[0],
+        ),
+    )[: max(18, len(workers) * 3)]
+    # Dynamic programming is tiny here: at most eight workers, so 2^8 states.
+    # It avoids the old first-worker-first choice that stranded another worker
+    # with a long route to an equally urgent task.
+    dp = {0: (0, ())}
+    for task_index, (priority, target, operation) in ranked_tasks:
+        next_dp = dict(dp)
+        for mask, (total_cost, assignments) in dp.items():
+            for local_index, worker in enumerate(workers):
+                bit = 1 << local_index
+                if mask & bit:
+                    continue
+                distance = _distance(positions[worker], target)
+                today_deadline = priority <= 4 or operation[0] in ("HARVEST", "WATER", "FEED", "CARE")
+                lateness = max(0, distance + 1 - max(1, 24 - int(hour))) if today_deadline else 0
+                cost = priority * 10000 + lateness * 1800 + distance * 50 + task_index
+                new_mask = mask | bit
+                candidate = (total_cost + cost, assignments + ((worker, task_index),))
+                current = next_dp.get(new_mask)
+                if current is None or candidate[0] < current[0]:
+                    next_dp[new_mask] = candidate
+        dp = next_dp
+    _, best = min(
+        dp.items(),
+        key=lambda item: (-bin(item[0]).count("1"), item[1][0], item[0]),
+    )
+    return list(best[1])
 
 
 def _policy(obs):
@@ -574,18 +792,30 @@ def _policy(obs):
     for index, (position, inventory) in enumerate(zip(positions, inventories)):
         if index not in available:
             continue
-        if inventory.get("COW", 0) > 0:
+        carried_animal = next((name for name in ANIMAL_ECONOMICS if inventory.get(name, 0) > 0), None)
+        if carried_animal:
+            structure = "COOP" if carried_animal == "GOOSE" else "PASTURE"
             targets = [
-                (2, (x, y), ["PLACE", "COW"])
+                (2, (x, y), ["PLACE", carried_animal])
                 for y, row in enumerate(farm["tiles"])
                 for x, tile in enumerate(row)
                 if isinstance(tile, dict)
-                and tile.get("kind") == "PASTURE"
+                and tile.get("kind") == structure
                 and "animal" not in tile
                 and (x, y) not in reserved_targets
             ]
             if targets:
                 _, target, operation = min(targets, key=lambda task: (_distance(position, task[1]), task[1]))
+                actions[index] = operation if position == target else _step_toward(position, target)
+                available.discard(index)
+                reserved_targets.add(target)
+        elif inventory.get("FERTILIZER", 0) > 0:
+            targets = [
+                task for task in _fertilizer_targets(obs, farm)
+                if task[1] not in reserved_targets
+            ]
+            if targets:
+                _, target, operation = min(targets, key=lambda task: (task[0], _distance(position, task[1]), task[1]))
                 actions[index] = operation if position == target else _step_toward(position, target)
                 available.discard(index)
                 reserved_targets.add(target)
@@ -613,25 +843,11 @@ def _policy(obs):
                 actions[index] = ["DROP"] if position == target else _step_toward(position, target)
                 available.discard(index)
 
-    # Assign remaining work greedily, preferring deadlines before travel distance.
-    # Preserve the stable v0.4 dispatcher while the predictive layer is
-    # evaluated independently. Routing is a separate promotion lever.
-    used_tasks = set()
-    for index in sorted(available):
-        position = positions[index]
-        candidates = [
-            (task_index, task)
-            for task_index, task in enumerate(tasks)
-            if task_index not in used_tasks
-        ]
-        if not candidates:
-            continue
-        task_index, (_, target, operation) = min(
-            candidates,
-            key=lambda item: (item[1][0], _distance(position, item[1][1]), item[1][1]),
-        )
-        actions[index] = operation if position == target else _step_toward(position, target)
-        used_tasks.add(task_index)
+    # Assign the remaining workers together so one locally cheap choice cannot
+    # force another worker into a long, deadline-missing route.
+    for index, task_index in _assign_tasks(positions, available, tasks, hour):
+        _, target, operation = tasks[task_index]
+        actions[index] = operation if positions[index] == target else _step_toward(positions[index], target)
 
     # Late in the day, idle carriers return output to the shed for sale.
     if int(obs.get("hour", 0)) >= 20:

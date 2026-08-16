@@ -1,0 +1,329 @@
+{
+  "complete": true,
+  "expected_episodes": 20,
+  "baseline": "kaggriculture-v0.5.1.tar.gz",
+  "challenger": "kaggriculture-v0.6.1.tar.gz",
+  "configuration": {
+    "seed_start": 0,
+    "seeds": 10,
+    "seat_orders": 2
+  },
+  "artifact": {
+    "bytes": 10039,
+    "sha256": "33c82d70c6875e516e89e06802dbaa9ffa34120c8ae6decd6a9236ee5aaa038d",
+    "load_ms": 26.078
+  },
+  "summary": {
+    "episodes": 20,
+    "wins": 20,
+    "losses": 0,
+    "ties": 0,
+    "average_margin": 14072.05,
+    "minimum_margin": 8748.0,
+    "runtime_failures": 0,
+    "suspicious_fallback_turns": 0,
+    "maximum_action_ms": 192.913
+  },
+  "games": [
+    {
+      "seed": 0,
+      "seat": 0,
+      "result": "win",
+      "challenger_bank": 51879.0,
+      "baseline_bank": 38057.0,
+      "margin": 13822.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "suspicious_fallback_turns": 0,
+      "max_action_ms": 78.395,
+      "average_action_ms": 11.225
+    },
+    {
+      "seed": 0,
+      "seat": 1,
+      "result": "win",
+      "challenger_bank": 53197.0,
+      "baseline_bank": 39048.0,
+      "margin": 14149.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "suspicious_fallback_turns": 0,
+      "max_action_ms": 63.384,
+      "average_action_ms": 11.51
+    },
+    {
+      "seed": 1,
+      "seat": 0,
+      "result": "win",
+      "challenger_bank": 55309.0,
+      "baseline_bank": 40801.0,
+      "margin": 14508.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "suspicious_fallback_turns": 0,
+      "max_action_ms": 76.193,
+      "average_action_ms": 10.421
+    },
+    {
+      "seed": 1,
+      "seat": 1,
+      "result": "win",
+      "challenger_bank": 53510.0,
+      "baseline_bank": 40232.0,
+      "margin": 13278.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "suspicious_fallback_turns": 0,
+      "max_action_ms": 65.552,
+      "average_action_ms": 11.413
+    },
+    {
+      "seed": 2,
+      "seat": 0,
+      "result": "win",
+      "challenger_bank": 52790.0,
+      "baseline_bank": 37442.0,
+      "margin": 15348.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "suspicious_fallback_turns": 0,
+      "max_action_ms": 89.261,
+      "average_action_ms": 10.466
+    },
+    {
+      "seed": 2,
+      "seat": 1,
+      "result": "win",
+      "challenger_bank": 52122.0,
+      "baseline_bank": 36189.0,
+      "margin": 15933.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "suspicious_fallback_turns": 0,
+      "max_action_ms": 82.33,
+      "average_action_ms": 10.591
+    },
+    {
+      "seed": 3,
+      "seat": 0,
+      "result": "win",
+      "challenger_bank": 58322.0,
+      "baseline_bank": 44309.0,
+      "margin": 14013.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "suspicious_fallback_turns": 0,
+      "max_action_ms": 83.642,
+      "average_action_ms": 11.119
+    },
+    {
+      "seed": 3,
+      "seat": 1,
+      "result": "win",
+      "challenger_bank": 56718.0,
+      "baseline_bank": 42292.0,
+      "margin": 14426.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "suspicious_fallback_turns": 0,
+      "max_action_ms": 65.932,
+      "average_action_ms": 11.55
+    },
+    {
+      "seed": 4,
+      "seat": 0,
+      "result": "win",
+      "challenger_bank": 51611.0,
+      "baseline_bank": 33161.0,
+      "margin": 18450.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "suspicious_fallback_turns": 0,
+      "max_action_ms": 70.81,
+      "average_action_ms": 10.486
+    },
+    {
+      "seed": 4,
+      "seat": 1,
+      "result": "win",
+      "challenger_bank": 51642.0,
+      "baseline_bank": 32604.0,
+      "margin": 19038.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "suspicious_fallback_turns": 0,
+      "max_action_ms": 72.013,
+      "average_action_ms": 10.488
+    },
+    {
+      "seed": 5,
+      "seat": 0,
+      "result": "win",
+      "challenger_bank": 53693.0,
+      "baseline_bank": 42549.0,
+      "margin": 11144.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "suspicious_fallback_turns": 0,
+      "max_action_ms": 192.913,
+      "average_action_ms": 12.279
+    },
+    {
+      "seed": 5,
+      "seat": 1,
+      "result": "win",
+      "challenger_bank": 56700.0,
+      "baseline_bank": 40833.0,
+      "margin": 15867.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "suspicious_fallback_turns": 0,
+      "max_action_ms": 86.815,
+      "average_action_ms": 11.44
+    },
+    {
+      "seed": 6,
+      "seat": 0,
+      "result": "win",
+      "challenger_bank": 54664.0,
+      "baseline_bank": 38502.0,
+      "margin": 16162.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "suspicious_fallback_turns": 0,
+      "max_action_ms": 88.037,
+      "average_action_ms": 13.148
+    },
+    {
+      "seed": 6,
+      "seat": 1,
+      "result": "win",
+      "challenger_bank": 53635.0,
+      "baseline_bank": 40084.0,
+      "margin": 13551.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "suspicious_fallback_turns": 0,
+      "max_action_ms": 94.007,
+      "average_action_ms": 12.356
+    },
+    {
+      "seed": 7,
+      "seat": 0,
+      "result": "win",
+      "challenger_bank": 55245.0,
+      "baseline_bank": 40319.0,
+      "margin": 14926.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "suspicious_fallback_turns": 0,
+      "max_action_ms": 85.039,
+      "average_action_ms": 12.104
+    },
+    {
+      "seed": 7,
+      "seat": 1,
+      "result": "win",
+      "challenger_bank": 52741.0,
+      "baseline_bank": 43993.0,
+      "margin": 8748.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "suspicious_fallback_turns": 0,
+      "max_action_ms": 108.397,
+      "average_action_ms": 13.076
+    },
+    {
+      "seed": 8,
+      "seat": 0,
+      "result": "win",
+      "challenger_bank": 52357.0,
+      "baseline_bank": 40461.0,
+      "margin": 11896.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "suspicious_fallback_turns": 0,
+      "max_action_ms": 76.9,
+      "average_action_ms": 12.135
+    },
+    {
+      "seed": 8,
+      "seat": 1,
+      "result": "win",
+      "challenger_bank": 52357.0,
+      "baseline_bank": 40461.0,
+      "margin": 11896.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "suspicious_fallback_turns": 0,
+      "max_action_ms": 66.652,
+      "average_action_ms": 11.221
+    },
+    {
+      "seed": 9,
+      "seat": 0,
+      "result": "win",
+      "challenger_bank": 52129.0,
+      "baseline_bank": 38132.0,
+      "margin": 13997.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "suspicious_fallback_turns": 0,
+      "max_action_ms": 76.112,
+      "average_action_ms": 11.097
+    },
+    {
+      "seed": 9,
+      "seat": 1,
+      "result": "win",
+      "challenger_bank": 49205.0,
+      "baseline_bank": 38916.0,
+      "margin": 10289.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "suspicious_fallback_turns": 0,
+      "max_action_ms": 130.544,
+      "average_action_ms": 12.602
+    }
+  ]
+}

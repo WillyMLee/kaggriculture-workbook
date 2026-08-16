@@ -77,7 +77,7 @@ npm run submission:build
 npm run submission:validate
 ```
 
-The generated `artifacts/kaggriculture-v0.6.0.tar.gz` contains one self-contained `main.py`. It is a local-only candidate. The accepted v0.2.1 and frozen v0.4.0/v0.5.1 artifacts remain exact controls.
+The generated `artifacts/kaggriculture-v0.6.1.tar.gz` contains one self-contained `main.py`. It is a promoted local-only candidate. The accepted v0.2.1 and frozen v0.4.0/v0.5.0/v0.5.1/v0.6.0 artifacts remain exact controls.
 
 Kaggle accepted v0.2.1 after v0.2.0 exposed a runtime package-name collision with the generic module name `agents`. Four reviewed matches produced a 1–3 record and exposed fixed labor, market-crowding, and terminal liquidation failures. The compact archive is `results/kaggle_v0_2_1_match_history.json`.
 
@@ -101,6 +101,8 @@ That held-out suite produced 100 wins in 100 games, a +11,853.13 average margin,
 Dense Predictor v0.5.1 is intentionally not promoted yet. Its exact 6,557-byte artifact won 20 of 20 held-out games against submitted v0.2.1 (+10,619 average, +6,012 minimum), then won 19 of 20 against frozen v0.4 (+4,300 average) with one repeatable seed 5, seat 0 loss of 2,719. It recorded zero runtime failures, zero suspicious fallbacks, and a 64.183 ms maximum local action time. The failed case remains the next optimization target.
 
 Reverse Horizon v0.6 is also a held candidate. Its first checkpoint lost 8-12 to v0.5.1. A seed-6 self-control trace showed that earlier operational completion sold milk before town demand lifted its price; adding capacity-safe, demand-timed liquidation flipped that regression from 0-2 to 2-0. The final exact 7,595-byte artifact won 12 of 20 games against v0.5.1 across seeds 0-9 and both seats, averaging +323.7 with a -2,999 minimum margin, zero runtime failures, zero suspicious fallbacks, and a 30.339 ms maximum local action time. This is an aggregate improvement, not sufficient reliability for promotion or submission.
+
+Reverse Horizon v0.6.1 adds marginal crop/livestock economics, probability-weighted strategy-group utility, profitable fertilizer allocation, and deadline-aware global worker assignment. Its first unbounded router timed out on held-out seed 10; bounding the candidate set to three task alternatives per worker fixed that case at 75.64 ms and was added as a stress regression. The final exact 10,039-byte artifact went 60-0 against the v0.5 class: 20-0 against v0.5.0 (+14,911.6 average), 20-0 against v0.5.1 (+14,072.05), and 20-0 on held-out seeds 10-19 against v0.5.1 (+13,222.8). The combined worst margin was +8,748, with zero runtime failures, zero suspicious fallbacks, and a 319.111 ms maximum local action time. It is promoted locally; unfamiliar Kaggle ladder architectures remain the next test.
 
 ## Sources
 

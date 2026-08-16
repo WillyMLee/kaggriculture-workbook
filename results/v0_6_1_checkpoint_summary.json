@@ -1,0 +1,39 @@
+{
+  "version": "v0.6.1",
+  "status": "promoted-local-candidate",
+  "artifact": {
+    "path": "artifacts/kaggriculture-v0.6.1.tar.gz",
+    "sha256": "33c82d70c6875e516e89e06802dbaa9ffa34120c8ae6decd6a9236ee5aaa038d",
+    "compressed_bytes": 10039,
+    "source_bytes": 40300
+  },
+  "combined_v0_5_class": {
+    "episodes": 60,
+    "wins": 60,
+    "losses": 0,
+    "average_margin": 14068.82,
+    "minimum_margin": 8748.0,
+    "runtime_failures": 0,
+    "suspicious_fallback_turns": 0,
+    "maximum_action_ms": 319.111
+  },
+  "mechanisms": [
+    "marginal crop and livestock economics with fertilizer allocation",
+    "probability-weighted strategy-group expected utility",
+    "bounded deadline-aware global worker routing"
+  ],
+  "runtime_regression": {
+    "failure": "unbounded global routing reached the approximately 300 second run ceiling on seed 10",
+    "fix": "admit only the best three task alternatives per worker",
+    "fixed_seed10_maximum_action_ms": 75.64,
+    "permanent_test": "2000-task bounded router stress case"
+  },
+  "evidence": [
+    "results/v0_6_1_vs_v0_5_0_exact.json",
+    "results/v0_6_1_vs_v0_5_1_exact.json",
+    "results/v0_6_1_vs_v0_5_1_heldout.json",
+    "results/v0_6_1_seed10_runtime_regression.json",
+    "results/qa_v0_6_1_packaging.json"
+  ],
+  "next_safe_action": "Test v0.6.1 against unfamiliar strategy families before spending a Kaggle submission."
+}
