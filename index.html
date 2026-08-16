@@ -169,11 +169,12 @@
         </div>
 
         <section class="section shell submission-stats" aria-label="Submission summary">
-          <article><span>Submissions</span><strong id="submission-count">0</strong><small>logged versions</small></article>
-          <article><span>Best rating</span><strong id="submission-best-rating">—</strong><small id="submission-best-version">no data yet</small></article>
+          <article><span>Uploads</span><strong id="submission-count">0</strong><small>accepted + validation errors</small></article>
+          <article><span>Best score</span><strong id="submission-best-rating">—</strong><small id="submission-best-version">no data yet</small></article>
           <article><span>Best rank</span><strong id="submission-best-rank">—</strong><small>lower is better</small></article>
           <article><span>Episodes observed</span><strong id="submission-episodes">0</strong><small>sample size matters</small></article>
         </section>
+        <p class="source-note shell"><strong>Live Kaggle snapshot · August 15:</strong> two uploads today—v0.2.0 failed validation and v0.2.1 is active at 440.9, rank #3,624. The rules allow five submissions per day, so plan around three remaining slots today.</p>
 
         <section class="section shell" aria-labelledby="submission-analysis-title">
           <div class="section-heading compact"><div><p class="eyebrow">Interpretation</p><h2 id="submission-analysis-title">What the ladder is telling us</h2></div></div>
@@ -199,7 +200,7 @@
           <div class="section-heading compact"><div><p class="eyebrow">History</p><h2 id="submission-history-title">Version ledger</h2></div></div>
           <div class="table-wrap" id="submission-table-wrap" hidden>
             <table class="production-table submission-table">
-              <thead><tr><th>Version</th><th>Date</th><th>Status</th><th>Rating</th><th>Rank</th><th>Episodes</th><th>Notes</th><th></th></tr></thead>
+              <thead><tr><th>Version</th><th>Date</th><th>Status</th><th>Score</th><th>Rank</th><th>Episodes</th><th>Notes</th><th></th></tr></thead>
               <tbody id="submission-body"></tbody>
             </table>
           </div>
@@ -605,7 +606,7 @@
 
       <section class="view" id="submission" aria-labelledby="submission-title" hidden>
         <div class="page-intro shell">
-          <div><p class="eyebrow">First ladder entry</p><h1 id="submission-title">Ship an interpretable baseline</h1><p>The first submission is a measuring instrument, not the final strategy.</p></div>
+          <div><p class="eyebrow">Next ladder entry</p><h1 id="submission-title">Promote evidence, not optimism</h1><p>v0.6.1 is the latest local agent. One diversity gate stands between it and Kaggle.</p></div>
           <a class="button button-secondary" href="https://www.kaggle.com/competitions/kaggriculture/rules" target="_blank" rel="noreferrer">Official rules ↗</a>
         </div>
         <section class="section shell" aria-labelledby="first-plan-title">
@@ -627,6 +628,16 @@
             <article data-state="ready"><span>03 · Horizon</span><strong>Respect payback time</strong><p>Stop land, livestock, and recurring-crop investment before they lose time to mature; route carried value to the shed during liquidation.</p></article>
             <article data-state="next"><span>Feedback loop</span><strong>Freeze this bot as the opponent</strong><p>Future architectures play both seats against the exact v0.2 artifact. Promote one mechanism at a time, then compare ladder evidence.</p></article>
           </div>
+        </section>
+        <section class="section shell" aria-labelledby="submission-decision-title">
+          <div class="section-heading"><div><p class="eyebrow">Submission decision</p><h2 id="submission-decision-title">Hold v0.6.1 for one final generalization test</h2></div><strong class="qa-verdict" data-state="hold">HOLD</strong></div>
+          <div class="candidate-evidence">
+            <div><span>Latest agent</span><strong>v0.6.1</strong><small>promoted local candidate</small></div>
+            <div><span>Local evidence</span><strong>60 / 60 wins</strong><small>v0.5-class · both seats</small></div>
+            <div><span>Kaggle today</span><strong>2 / 5 used</strong><small>1 active · 1 validation error</small></div>
+            <div><span>Submit trigger</span><strong>Diverse suite passes</strong><small>crop rush · recurring crop · livestock</small></div>
+          </div>
+          <p class="source-note"><strong>Why hold:</strong> every v0.6.1 victory is against our own v0.5 lineage. Run the opponent-family matrix first; if v0.6.1 clears both seats without a repeated failure pattern, use one of today’s remaining slots. If it exposes a systematic loss, fix that mechanism as v0.6.2 before spending the slot.</p>
         </section>
         <section class="section shell" aria-labelledby="submission-gate-title">
           <div class="section-heading"><div><p class="eyebrow">Release gate</p><h2 id="submission-gate-title">v0.6.1 candidate readiness</h2></div><strong class="progress-label" id="submission-progress">0 / 6 ready</strong></div>
@@ -662,7 +673,7 @@
               <div><strong>Daily limit</strong><span>Up to five agent submissions per team</span></div>
             </div>
           </div>
-          <p class="source-note"><strong>Frozen controls:</strong> submitted <code>artifacts/kaggriculture-v0.2.1.tar.gz</code>, v0.4.0, v0.5.0, v0.5.1, and v0.6.0. Current local-only candidate: <code>artifacts/kaggriculture-v0.6.1.tar.gz</code>. No Kaggle submission has been made.</p>
+          <p class="source-note"><strong>Frozen controls:</strong> submitted <code>artifacts/kaggriculture-v0.2.1.tar.gz</code>, plus local v0.4.0, v0.5.0, v0.5.1, and v0.6.0 controls. Current local-only candidate: <code>artifacts/kaggriculture-v0.6.1.tar.gz</code> · SHA-256 <code>33c82d70…038d</code>.</p>
           <p class="source-note"><strong>Packaging lesson:</strong> v0.2.0 failed before play because <code>agents</code> collided with a Kaggle-installed module. v0.2.1 packages one self-contained <code>main.py</code> and passed validation.</p>
           <p class="source-note">Submission and ranking behavior: <a href="https://www.kaggle.com/competitions/kaggriculture/overview" target="_blank" rel="noreferrer">official Kaggriculture evaluation section ↗</a>.</p>
         </section>

@@ -395,21 +395,17 @@
       date: "2026-08-15",
       status: "active",
       episodes: 4,
-      rating: 418,
-      rank: 3729,
+      rating: 440.9,
+      rank: 3624,
       change: "Single-file artifact; same three-attention policy",
       notes: "Reviewed ladder snapshot: 1 win, 3 losses. Repeated gaps were fixed labor, weak response to shared markets, and a day-27 liquidation bug.",
     },
   ];
   let submissions = readStore(KEYS.submissions, firstLadderEntries);
   if (!Array.isArray(submissions)) submissions = [];
-  submissions = submissions.map((item) => {
-    const isInitialSeed = item.id === "submission-v0-2-1"
-      && item.rating === 600
-      && item.rank === 2862
-      && item.episodes === 1;
-    return isInitialSeed ? { ...firstLadderEntries[1] } : item;
-  });
+  submissions = submissions.map((item) => item.id === "submission-v0-2-1"
+    ? { ...item, rating: 440.9, rank: 3624, episodes: Math.max(item.episodes || 0, 4) }
+    : item);
   writeStore(KEYS.submissions, submissions);
   const submissionDialog = $("#submission-dialog");
   const submissionForm = $("#submission-form");
@@ -522,7 +518,7 @@
       version: "v0.2.1",
       date: "2026-08-15",
       status: "submitted",
-      evidence: "Kaggle 1–3 · rating 418",
+      evidence: "Kaggle 1–3 · score 440.9 · rank #3,624",
       model: "Fixed three-attention baseline; accepted single-file artifact.",
       limitation: "Fixed labor and crop responses; liquidation sold feed and stopped operating.",
     },
