@@ -94,6 +94,55 @@ def daily_trace(steps, seat):
     return trace
 
 
+def summarize_games(games):
+    if not games:
+        return {
+            "episodes": 0,
+            "wins": 0,
+            "losses": 0,
+            "ties": 0,
+            "average_margin": 0,
+            "minimum_margin": 0,
+            "runtime_failures": 0,
+            "suspicious_fallback_turns": 0,
+            "maximum_action_ms": 0,
+        }
+    margins = [game["margin"] for game in games]
+    return {
+        "episodes": len(games),
+        "wins": sum(game["result"] == "win" for game in games),
+        "losses": sum(game["result"] == "loss" for game in games),
+        "ties": sum(game["result"] == "tie" for game in games),
+        "average_margin": round(statistics.mean(margins), 2),
+        "minimum_margin": round(min(margins), 2),
+        "runtime_failures": sum(any(status != "DONE" for status in game["statuses"]) for game in games),
+        "suspicious_fallback_turns": sum(game["suspicious_fallback_turns"] for game in games),
+        "maximum_action_ms": max(game["max_action_ms"] for game in games),
+    }
+
+
+def write_result(path, args, games, challenger_load_ms, complete):
+    artifact = args.challenger_artifact.resolve() if args.challenger_artifact else None
+    payload = {
+        "complete": complete,
+        "expected_episodes": args.seeds * 2,
+        "baseline": args.baseline.name,
+        "challenger": args.challenger_artifact.name if args.challenger_artifact else args.challenger,
+        "configuration": {"seed_start": args.seed_start, "seeds": args.seeds, "seat_orders": 2},
+        "artifact": {
+            "bytes": artifact.stat().st_size,
+            "sha256": hashlib.sha256(artifact.read_bytes()).hexdigest(),
+            "load_ms": challenger_load_ms,
+        } if artifact else None,
+        "summary": summarize_games(games),
+        "games": games,
+    }
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_suffix(path.suffix + ".tmp")
+    temporary.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+    temporary.replace(path)
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("challenger", nargs="?", default="agents.balanced_tempo:agent", help="Python reference such as agents.experimental:agent")
@@ -149,36 +198,12 @@ def main():
                 if args.daily_trace:
                     game["daily_trace"] = daily_trace(env.steps, seat)
                 games.append(game)
+                if args.output:
+                    write_result(args.output, args, games, challenger_load_ms, complete=False)
 
-    margins = [game["margin"] for game in games]
-    summary = {
-        "episodes": len(games),
-        "wins": sum(game["result"] == "win" for game in games),
-        "losses": sum(game["result"] == "loss" for game in games),
-        "ties": sum(game["result"] == "tie" for game in games),
-        "average_margin": round(statistics.mean(margins), 2),
-        "minimum_margin": round(min(margins), 2),
-        "runtime_failures": sum(any(status != "DONE" for status in game["statuses"]) for game in games),
-        "suspicious_fallback_turns": sum(game["suspicious_fallback_turns"] for game in games),
-        "maximum_action_ms": max(game["max_action_ms"] for game in games),
-    }
-    challenger_label = args.challenger_artifact.name if args.challenger_artifact else args.challenger
-    artifact = args.challenger_artifact.resolve() if args.challenger_artifact else None
-    payload = {
-        "baseline": args.baseline.name,
-        "challenger": challenger_label,
-        "configuration": {"seed_start": args.seed_start, "seeds": args.seeds, "seat_orders": 2},
-        "artifact": {
-            "bytes": artifact.stat().st_size,
-            "sha256": hashlib.sha256(artifact.read_bytes()).hexdigest(),
-            "load_ms": challenger_load_ms,
-        } if artifact else None,
-        "summary": summary,
-        "games": games,
-    }
+    summary = summarize_games(games)
     if args.output:
-        args.output.parent.mkdir(parents=True, exist_ok=True)
-        args.output.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+        write_result(args.output, args, games, challenger_load_ms, complete=True)
     print(json.dumps(summary, indent=2))
 
 

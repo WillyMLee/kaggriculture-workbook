@@ -1,0 +1,36 @@
+{
+  "candidate": "v0.6.0 Reverse Horizon",
+  "control": "v0.5.1 Dense Predictor",
+  "decision": "hold",
+  "reason": "Aggregate head-to-head improvement, but eight losses fail the 20/20 promotion rule.",
+  "exact_artifact_result": {
+    "episodes": 20,
+    "wins": 12,
+    "losses": 8,
+    "average_margin": 323.7,
+    "minimum_margin": -2999.0,
+    "runtime_failures": 0,
+    "suspicious_fallback_turns": 0,
+    "maximum_action_ms": 30.339
+  },
+  "artifact": {
+    "compressed_bytes": 7595,
+    "uncompressed_main_bytes": 29132,
+    "sha256": "5eb9620a1df78ceef1eb71b89b77c7060f0045552b1815098305d09d4f027157"
+  },
+  "checkpoint_path": [
+    "Initial reverse policy: 8-12, average margin -325.1.",
+    "Seed 6 counterfactual: v0.6 completed and sold milk earlier than v0.5.1, missing later town-supported prices.",
+    "Demand-timed liquidation: seed 6 flipped from 0-2 to 2-0.",
+    "Final exact artifact: 12-8, average margin +323.7."
+  ],
+  "evidence": [
+    "results/reverse_horizon_v0_6_vs_v0_5_1_smoke.json",
+    "results/reverse_horizon_v0_6_seed6_trace.json",
+    "results/v0_5_1_seed6_self_control.json",
+    "results/reverse_horizon_v0_6_seed6_market_timing.json",
+    "results/reverse_horizon_v0_6_vs_v0_5_1_exact.json",
+    "results/qa_v0_6_packaging.json"
+  ],
+  "next_safe_action": "Classify the eight remaining losses by late-game inventory, public bank margin, and opponent sale timing before changing v0.6."
+}

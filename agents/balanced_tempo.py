@@ -1,4 +1,4 @@
-"""Dense Predictor v0.5: market-aware portfolio prediction and routed operations."""
+"""Reverse Horizon v0.6: terminal-state planning over the dense predictor."""
 
 from __future__ import annotations
 
@@ -12,7 +12,22 @@ CROPS = {
     "STRAWBERRY": {"seed": 100, "first_yield_day": 10, "max_yield_day": 10, "interval": 2, "max_yield": 4, "ongoing": True},
     "MELON": {"seed": 80, "first_yield_day": 10, "max_yield_day": 12, "interval": 0, "max_yield": 6, "ongoing": False},
 }
-BASE_PRICES = {"WHEAT": 25, "CARROT": 35, "TOMATO": 60, "STRAWBERRY": 120, "MELON": 250}
+BASE_PRICES = {
+    "WHEAT": 25,
+    "CARROT": 35,
+    "TOMATO": 60,
+    "STRAWBERRY": 120,
+    "MELON": 250,
+    "EGG": 50,
+    "MILK": 160,
+    "WOOL": 200,
+    "FERTILIZER": 100,
+}
+ANIMAL_ECONOMICS = {
+    "GOOSE": {"first_yield_day": 4, "interval": 1, "product": "EGG"},
+    "COW": {"first_yield_day": 8, "interval": 2, "product": "MILK"},
+    "SHEEP": {"first_yield_day": 6, "interval": 3, "product": "WOOL"},
+}
 SHOP_PRODUCTS = {
     "BAKERY": ("EGG", "WHEAT"),
     "PIZZA_SHOP": ("MILK", "TOMATO", "WHEAT"),
@@ -263,7 +278,94 @@ def _phase_attention(obs):
     }
 
 
-def _market_plan(obs, farm, private, opponent_signal, phase):
+def _reverse_terminal_plan(obs, farm, private):
+    """Work backward from a sold, empty terminal state to today's obligations."""
+    day = int(obs.get("day", 0))
+    hour = int(obs.get("hour", 0))
+    remaining_turns = max(0, (29 - day) * 24 + (24 - hour))
+    feed_positions = set()
+    care_positions = set()
+    water_positions = set()
+    last_cash_day = day
+    feed_units_remaining = 0
+
+    for y, row in enumerate(farm.get("tiles", [])):
+        for x, tile in enumerate(row):
+            if not isinstance(tile, dict):
+                continue
+            position = (x, y)
+            if tile.get("kind") == "PLANT":
+                crop = tile.get("crop")
+                data = CROPS.get(crop, {})
+                planted = int(tile.get("planted_day", day))
+                profitable_days = []
+                if data.get("ongoing"):
+                    for work_day in range(day, 29):
+                        next_day = work_day + 1
+                        since_first = next_day - planted - data["first_yield_day"]
+                        if since_first < 0 or since_first % data["interval"]:
+                            continue
+                        if since_first // data["interval"] + 1 <= data["max_yield"]:
+                            profitable_days.append(work_day)
+                elif day - planted <= data.get("max_yield_day", -1):
+                    maturity_day = planted + data.get("max_yield_day", 99)
+                    if maturity_day <= 28:
+                        profitable_days.append(maturity_day)
+                if profitable_days:
+                    water_positions.add(position)
+                    last_cash_day = max(last_cash_day, max(profitable_days) + 1)
+            if "animal" in tile:
+                animal = tile.get("animal")
+                data = ANIMAL_ECONOMICS.get(animal)
+                if not data:
+                    continue
+                placed = int(tile.get("placed_day", day))
+                production_days = []
+                for work_day in range(day, 29):
+                    next_day = work_day + 1
+                    since_first = next_day - placed - data["first_yield_day"]
+                    if since_first >= 0 and since_first % data["interval"] == 0:
+                        production_days.append(work_day)
+                if production_days:
+                    last_production = max(production_days)
+                    feed_positions.add(position)
+                    feed_units_remaining += last_production - day + 1
+                    last_cash_day = max(last_cash_day, last_production + 1)
+                    if any(production_day > day for production_day in production_days):
+                        care_positions.add(position)
+
+    shed = private.get("shed", {})
+    inventories = private.get("inventories", [])
+    market_prices = (obs.get("market") or {}).get("prices", {})
+    projected_liquidation = 0.0
+    for item in SELLABLE_PRODUCTS:
+        units = int(shed.get(item, 0)) + sum(int(inv.get(item, 0)) for inv in inventories)
+        projected_liquidation += units * float(market_prices.get(item, BASE_PRICES.get(item, 1)))
+
+    forecast = _demand_forecast(obs, horizon_days=max(1, min(7, 28 - day)))
+    hold_items = {
+        item
+        for item in PRODUCTS
+        if item != "FERTILIZER"
+        and day < 28
+        and forecast.get(item, {}).get("visible_demand", 0) >= 6
+        and forecast.get(item, {}).get("momentum", 0) >= 0.9
+    }
+
+    return {
+        "remaining_turns": remaining_turns,
+        "feed_positions": feed_positions,
+        "care_positions": care_positions,
+        "water_positions": water_positions,
+        "feed_units_remaining": feed_units_remaining,
+        "last_cash_day": min(29, last_cash_day),
+        "projected_liquidation": projected_liquidation,
+        "hold_items": hold_items,
+        "liquidation_urgent": day >= 28 or remaining_turns <= 36,
+    }
+
+
+def _market_plan(obs, farm, private, opponent_signal, phase, terminal=None):
     day = int(obs.get("day", 0))
     hour = int(obs.get("hour", 0))
     shed = private.get("shed", {})
@@ -308,17 +410,23 @@ def _market_plan(obs, farm, private, opponent_signal, phase):
     # Convert completed output continuously. Wheat remains feed until late
     # execution, when only the amount above the remaining feed reserve is sold.
     for item in PRODUCTS:
+        safe_to_hold = terminal and day >= 22 and day < 28 and shed_load + incoming_harvest < 92
+        if safe_to_hold and item in terminal.get("hold_items", set()):
+            continue
         if shed.get(item, 0) > 0:
             orders.append(["SELL", item, shed[item]])
-    if phase["late_mode"] == "execute":
-        future_feed_days = max(0, 29 - day)
-        unfed_today = _count_tiles(
-            farm,
-            lambda tile: isinstance(tile, dict)
-            and tile.get("animal") == "COW"
-            and not tile.get("fed_today", False),
-        )
-        feed_reserve = animals * future_feed_days + unfed_today
+    if phase["late_mode"] == "execute" or (terminal and terminal["liquidation_urgent"]):
+        if terminal:
+            feed_reserve = int(terminal["feed_units_remaining"])
+        else:
+            future_feed_days = max(0, 29 - day)
+            unfed_today = _count_tiles(
+                farm,
+                lambda tile: isinstance(tile, dict)
+                and tile.get("animal") == "COW"
+                and not tile.get("fed_today", False),
+            )
+            feed_reserve = animals * future_feed_days + unfed_today
         wheat_to_sell = max(0, int(shed.get("WHEAT", 0)) - feed_reserve - pressure_wheat_sale)
         if wheat_to_sell:
             orders.append(["SELL", "WHEAT", wheat_to_sell])
@@ -354,7 +462,7 @@ def _market_plan(obs, farm, private, opponent_signal, phase):
     return orders[:10]
 
 
-def _operations_attention(obs, farm, private, opponent_signal, phase):
+def _operations_attention(obs, farm, private, opponent_signal, phase, terminal=None):
     """Build the deadline-ordered work queue for farmer and hands."""
     day = int(obs.get("day", 0))
     shed = private.get("shed", {})
@@ -373,14 +481,17 @@ def _operations_attention(obs, farm, private, opponent_signal, phase):
                 )
                 if ready:
                     tasks.append((0, position, ["HARVEST"]))
-                if not tile.get("watered_today", False):
+                terminal_water = not terminal or terminal["remaining_turns"] > 24 or position in terminal["water_positions"]
+                if not tile.get("watered_today", False) and terminal_water:
                     tasks.append((1, position, ["WATER"]))
             if "animal" in tile:
-                if not tile.get("fed_today", False):
+                terminal_feed = not terminal or terminal["remaining_turns"] > 24 or position in terminal["feed_positions"]
+                terminal_care = not terminal or terminal["remaining_turns"] > 24 or position in terminal["care_positions"]
+                if not tile.get("fed_today", False) and terminal_feed:
                     tasks.append((2, position, ["FEED"]))
-                if tile.get("fertilizer_available", False):
+                if tile.get("fertilizer_available", False) and day <= 28:
                     tasks.append((3, position, ["COLLECT_FERTILIZER"]))
-                if not tile.get("cared_today", False):
+                if not tile.get("cared_today", False) and terminal_care:
                     tasks.append((4, position, ["CARE"]))
                 if int(tile.get("yield_units", 0)) > 0:
                     tasks.append((0, position, ["HARVEST"]))
@@ -448,6 +559,7 @@ def _policy(obs):
     farm = farms[player]
     opponent_signal = _opponent_attention(obs, player)
     phase = _phase_attention(obs)
+    terminal = _reverse_terminal_plan(obs, farm, private)
     positions = [tuple(farm["farmer"])] + [tuple(position) for position in farm.get("hands", [])]
     inventories = list(private.get("inventories", []))
     while len(inventories) < len(positions):
@@ -455,7 +567,7 @@ def _policy(obs):
 
     actions = [["PASS"] for _ in positions]
     available = set(range(len(positions)))
-    tasks = _operations_attention(obs, farm, private, opponent_signal, phase)
+    tasks = _operations_attention(obs, farm, private, opponent_signal, phase, terminal)
 
     # Carried resources take precedence because they unlock care and placement.
     reserved_targets = set()
@@ -490,13 +602,13 @@ def _policy(obs):
 
     # In the execution subphase, carried output returns to the shed after any
     # feed delivery has been reserved. This prevents the old day-27 starvation.
-    if phase["late_mode"] == "execute":
+    if phase["late_mode"] == "execute" or terminal["liquidation_urgent"]:
         for index, (position, inventory) in enumerate(zip(positions, inventories)):
             if index not in available:
                 continue
-            has_output = any(int(inventory.get(item, 0)) > 0 for item in PRODUCTS)
-            terminal_wheat = day == 29 and hour >= 20 and int(inventory.get("WHEAT", 0)) > 0
-            if has_output or terminal_wheat:
+            has_output = any(int(inventory.get(item, 0)) > 0 for item in SELLABLE_PRODUCTS)
+            route_cost = _distance(position, _nearest_shed(position)) + 1
+            if has_output and terminal["remaining_turns"] <= route_cost + 24:
                 target = _nearest_shed(position)
                 actions[index] = ["DROP"] if position == target else _step_toward(position, target)
                 available.discard(index)
@@ -533,7 +645,7 @@ def _policy(obs):
     return {
         "farmer": actions[0],
         "hands": actions[1:],
-        "market": _market_plan(obs, farm, private, opponent_signal, phase),
+        "market": _market_plan(obs, farm, private, opponent_signal, phase, terminal),
     }
 
 

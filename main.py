@@ -1,4 +1,4 @@
-"""Local entry point for the Dense Predictor v0.5 candidate."""
+"""Local entry point for the Reverse Horizon v0.6 candidate."""
 
 from agents.balanced_tempo import agent as _balanced_tempo_agent
 

@@ -557,10 +557,19 @@
       id: "agent-v0-5-1",
       version: "v0.5.1",
       date: "2026-08-15",
-      status: "candidate",
+      status: "frozen",
       evidence: "v0.4: 19-1 | v0.2.1: 20-0",
       model: "Dense opponent archetypes, town-demand and crop ROI forecasts, mixed portfolio, capacity lookahead, and obstruction recovery.",
       limitation: "Hold: seed 5 seat 0 still loses to v0.4 by 2,719; requires 20 / 20 before promotion.",
+    },
+    {
+      id: "agent-v0-6-0",
+      version: "v0.6.0",
+      date: "2026-08-15",
+      status: "candidate",
+      evidence: "v0.5.1: 12-8 | average +324",
+      model: "Reverse terminal-state planner with payoff reachability, feed and care cutoffs, travel slack, capacity checks, and demand-timed liquidation.",
+      limitation: "Aggregate improvement only; eight losses and a -2,999 worst margin fail the 20 / 20 promotion rule.",
     },
   ];
   let agentArchive = readStore(KEYS.agentArchive, seededAgents);

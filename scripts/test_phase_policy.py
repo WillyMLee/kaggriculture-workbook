@@ -15,6 +15,7 @@ from agents.balanced_tempo import (
     _opponent_attention,
     _phase_attention,
     _portfolio_model,
+    _reverse_terminal_plan,
     _strategy_belief,
     agent,
 )
@@ -206,6 +207,61 @@ def test_dense_predictor_clears_planned_weeds():
     assert any(target == (0, 4) and action == ["DIG"] for _, target, action in tasks)
 
 
+def test_reverse_terminal_plan_removes_stranded_work():
+    farm = make_farm()
+    farm["tiles"][4][0] = {
+        "kind": "PASTURE",
+        "animal": "COW",
+        "placed_day": 19,
+        "fed_today": False,
+        "cared_today": False,
+        "fertilizer_available": False,
+        "yield_units": 0,
+    }
+    farm["tiles"][0][0] = {
+        "kind": "PLANT",
+        "crop": "STRAWBERRY",
+        "planted_day": 19,
+        "watered_today": False,
+        "yield_units": 0,
+    }
+    private = {"shed": {"WHEAT": 10}, "seeds": {}, "inventories": [{}]}
+    day_28 = _reverse_terminal_plan({"day": 28, "hour": 0, "market": {}}, farm, private)
+    assert (0, 4) in day_28["feed_positions"]
+    assert (0, 4) not in day_28["care_positions"]
+    assert (0, 0) in day_28["water_positions"]
+
+    day_29_obs = {"day": 29, "hour": 0, "market": {"prices": {"WHEAT": 25}}}
+    day_29 = _reverse_terminal_plan(day_29_obs, farm, private)
+    assert day_29["feed_units_remaining"] == 0
+    assert not day_29["feed_positions"]
+    assert not day_29["care_positions"]
+    assert not day_29["water_positions"]
+    signal = {"cash_crop": "MELON", "recurring_crop": "STRAWBERRY", "recurring_targets": {"STRAWBERRY": 8, "TOMATO": 7}}
+    orders = _market_plan(day_29_obs, farm, private, signal, _phase_attention(day_29_obs), day_29)
+    assert ["SELL", "WHEAT", 10] in orders
+    tasks = _operations_attention(day_29_obs, farm, private, signal, _phase_attention(day_29_obs), day_29)
+    assert not any(action[0] in ("FEED", "CARE", "WATER") for _, _, action in tasks)
+
+
+def test_reverse_terminal_plan_times_scarce_market_sales():
+    farm = make_farm()
+    opponent = make_farm()
+    private = {"shed": {"MILK": 8, "STRAWBERRY": 6}, "seeds": {}, "inventories": [{}]}
+    obs = {
+        "day": 24,
+        "hour": 0,
+        "player": 0,
+        "farms": [farm, opponent],
+        "market": {"prices": {"MILK": 180, "STRAWBERRY": 140}},
+        "town": {"unlocked_shops": ["SMOOTHIE_SHOP"]},
+    }
+    plan = _reverse_terminal_plan(obs, farm, private)
+    assert {"MILK", "STRAWBERRY"}.issubset(plan["hold_items"])
+    obs["day"] = 28
+    assert not _reverse_terminal_plan(obs, farm, private)["hold_items"]
+
+
 if __name__ == "__main__":
     test_phase_boundaries()
     test_closeout_keeps_labor_and_feed()
@@ -216,4 +272,6 @@ if __name__ == "__main__":
     test_dense_predictor_uses_town_demand_and_diversifies()
     test_dense_predictor_protects_shed_capacity()
     test_dense_predictor_clears_planned_weeds()
-    print("phase policy regressions: 9 passed")
+    test_reverse_terminal_plan_removes_stranded_work()
+    test_reverse_terminal_plan_times_scarce_market_sales()
+    print("phase policy regressions: 11 passed")
