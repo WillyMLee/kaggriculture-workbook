@@ -388,22 +388,34 @@
           <button class="button button-primary" id="open-agent-form" type="button">Log agent</button>
         </div>
         <section class="section shell" aria-labelledby="current-checkpoint-title">
-          <div class="section-heading"><div><p class="eyebrow">Current checkpoint · August 16</p><h2 id="current-checkpoint-title">v0.6.1 has real ladder evidence</h2></div><strong class="qa-verdict" data-state="hold">9–9</strong></div>
+          <div class="section-heading"><div><p class="eyebrow">Current checkpoint · August 16</p><h2 id="current-checkpoint-title">v0.7.1 is a bounded local experiment</h2></div><strong class="qa-verdict" data-state="hold">HOLD</strong></div>
           <div class="candidate-evidence">
-            <div><span>Submitted agent</span><strong>v0.6.1 live</strong><small>exact SHA 33c82d70…038d</small></div>
-            <div><span>Current score</span><strong>562.2</strong><small>down from the 600.0 validation seed</small></div>
-            <div><span>External record</span><strong>9–9</strong><small>18 visible ladder matches</small></div>
-            <div><span>Reviewed loss</span><strong>−2,742</strong><small>PQ_Marz · episode 93564365</small></div>
+            <div><span>Ladder sample</span><strong>22 matches</strong><small>11 agents · ranks 100–200</small></div>
+            <div><span>Held-out local</span><strong>3–3</strong><small>v0.7.1 vs frozen v0.7.0</small></div>
+            <div><span>Average margin</span><strong>+2,381</strong><small>six games only · not promotion evidence</small></div>
+            <div><span>Turn runtime</span><strong>180.8 ms max</strong><small>1 s action limit · zero failures</small></div>
           </div>
-          <p class="source-note"><strong>Read:</strong> v0.6.1 is viable but not dominant. Its clearest reviewed failure was strategic, not computational: it treated a cash lead as safety while the opponent built a much larger productive base.</p>
+          <p class="source-note"><strong>Read:</strong> dynamic wheat and the three-day opponent forecast are safe enough for wider evaluation, but a 3–3 record is parity. No Kaggle submission was made.</p>
+        </section>
+        <section class="section shell" aria-labelledby="ladder-study-title">
+          <div class="section-heading"><div><p class="eyebrow">Public ladder field study</p><h2 id="ladder-study-title">The rank-100–200 band converges on one engine</h2></div><p class="section-note">Every tenth rank · two recent matches each</p></div>
+          <ol class="system-flow">
+            <li><span>D00–04</span><div><strong>Melon liquidity + livestock immediately</strong><p>The modal opener places 12 melons, 7 wheat, 2 cows, and 2 sheep on day 0; wheat is feed infrastructure, not the strategic objective.</p></div><em>BOOTSTRAP</em></li>
+            <li><span>D05–11</span><div><strong>Convert into strawberries and land</strong><p>Recurring crops start around day 5, the second quadrant appears around day 6, and a third around day 11.</p></div><em>EXPAND</em></li>
+            <li><span>D12–23</span><div><strong>Recurring crop + animal throughput</strong><p>All 264 sampled midgame-days classified as recurring-crop core, typically strawberry with cows, sheep, wheat feed, and fertilizer sales.</p></div><em>COMPOUND</em></li>
+            <li><span>CAUTION</span><div><strong>This band is not a diverse training arena</strong><p>The action schedules are extremely similar. Treat this as one strong archetype and add deliberately different local opponents before fitting a forest.</p></div><em>BIAS CHECK</em></li>
+          </ol>
+          <p class="source-note">Compact evidence: <code>results/kaggle_rank_100_200_midgame_sample.json</code>. Labels describe visible commitments, not private code or intent.</p>
         </section>
         <section class="section shell" aria-labelledby="v07-notes-title">
-          <div class="section-heading"><div><p class="eyebrow">v0.7 candidate</p><h2 id="v07-notes-title">Read productive capacity, not cash alone</h2></div><p class="section-note">12.7 KB artifact packaged locally · no Kaggle submission</p></div>
+          <div class="section-heading"><div><p class="eyebrow">v0.7.1 candidate</p><h2 id="v07-notes-title">Adapt without letting the opponent own the plan</h2></div><p class="section-note">14.1 KB artifact packaged locally · no Kaggle submission</p></div>
           <ol class="system-flow">
             <li><span>01</span><div><strong>Keep within-match memory</strong><p>Carry the previous posterior, bank movement, asset growth, crop mix, animal mix, labor, and unlocked land from one day to the next.</p></div><em>IMPLEMENTED</em></li>
             <li><span>02</span><div><strong>Estimate productive threat</strong><p>Compare terminal value, productive value, occupied scale, animals, and land—not just the visible bank.</p></div><em>IMPLEMENTED</em></li>
             <li><span>03</span><div><strong>Leave replay breadcrumbs</strong><p>Emit one compact decision trace per day and explicit error records so future ladder logs explain what the policy believed.</p></div><em>IMPLEMENTED</em></li>
             <li><span>04</span><div><strong>Reject naive land expansion</strong><p>Ten extra recurring plots lost all four smoke games by about 11k on average because travel and chore load diluted execution.</p></div><em>REJECTED</em></li>
+            <li><span>05</span><div><strong>Make wheat conditional</strong><p>Size wheat from livestock feed, a rolling three-day reserve, town demand, price, shed stock, and days remaining.</p></div><em>IMPLEMENTED</em></li>
+            <li><span>06</span><div><strong>Predict, verify, then switch</strong><p>Forecast visible crop and animal additions three days ahead; lower strategy inertia only after a material prediction break.</p></div><em>IMPLEMENTED</em></li>
           </ol>
         </section>
         <section class="section shell" aria-labelledby="agent-lineage-title">
@@ -578,8 +590,8 @@
           <div class="mechanism-grid">
             <article data-state="ready"><span>01 · Ready</span><strong>Deterministic environment replay</strong><p>Re-run known seeds and reproduce bank, farm, and market transitions.</p></article>
             <article data-state="next"><span>02 · Next</span><strong>Opponent policy library</strong><p>Starter, expansion, livestock, recurring-crop, and mixed response models.</p></article>
-            <article data-state="planned"><span>03 · Planned</span><strong>Stochastic rollouts</strong><p>Sample weeds, shops, and uncertain opponent choices.</p></article>
-            <article data-state="planned"><span>04 · Planned</span><strong>Calibration</strong><p>Compare predicted win probability with held-out episodes and ladder results.</p></article>
+            <article data-state="planned"><span>03 · Planned</span><strong>Offline decision forest</strong><p>Fit shallow trees to diverse arena traces, then ship only compact votes and leaf values under the turn budget.</p></article>
+            <article data-state="planned"><span>04 · Planned</span><strong>Calibration</strong><p>Compare branch value with held-out episodes and ladder results; reject forests trained on one converged archetype.</p></article>
           </div>
         </section>
       </section>
@@ -587,12 +599,16 @@
       <section class="view" id="attention" aria-labelledby="attention-title" hidden>
         <div class="page-intro shell"><div><p class="eyebrow">Agent system D</p><h1 id="attention-title">Attention controller</h1><p>Protect irreversible obligations before spending effort on adaptation.</p></div></div>
         <section class="section shell" aria-labelledby="phase-model-title">
-          <div class="section-heading"><div><p class="eyebrow">Phase model</p><h2 id="phase-model-title">Play the farm like a match</h2></div><p class="section-note">One clock, four distinct decision modes.</p></div>
+          <div class="section-heading"><div><p class="eyebrow">Phase model</p><h2 id="phase-model-title">Play the farm like a match</h2></div><p class="section-note">One clock, eight narrower decision windows.</p></div>
           <ol class="phase-timeline">
-            <li data-phase="early"><span>Days 00–11</span><div><strong>Early · opening</strong><p>Establish cash and wheat, run a bounded melon opener, and probe the opponent’s visible commitment before changing course.</p></div><em>DEVELOP</em></li>
-            <li data-phase="middle"><span>Days 12–21</span><div><strong>Middle · contest</strong><p>Build the recurring-crop and livestock engine. Scale labor, collect fertilizer, and switch crops only on strong evidence.</p></div><em>ADAPT</em></li>
-            <li data-phase="late"><span>Days 22–27</span><div><strong>Late A · optimize</strong><p>Stop long-payback expansion while preserving feed, care, harvests, and existing production. Improve what can still score.</p></div><em>CONVERT</em></li>
-            <li data-phase="execute"><span>Days 28–29</span><div><strong>Late B · execute</strong><p>Keep enough wheat and hands for the remaining chores, then route output to the shed and sell the true surplus.</p></div><em>CLOSE</em></li>
+            <li data-phase="early"><span>Days 00–02</span><div><strong>Bootstrap</strong><p>Create liquidity and mandatory feed capacity while keeping the opener reversible.</p></div><em>FUND</em></li>
+            <li data-phase="early"><span>Days 03–07</span><div><strong>Opener build</strong><p>Validate the first yield path, observe rival commitments, and expand only when travel capacity exists.</p></div><em>PROBE</em></li>
+            <li data-phase="early"><span>Days 08–11</span><div><strong>First conversion</strong><p>Harvest the opener and choose the recurring, livestock, or cash engine with switching cost included.</p></div><em>COMMIT</em></li>
+            <li data-phase="middle"><span>Days 12–15</span><div><strong>Engine commit</strong><p>Scale the selected engine; wheat becomes a calculated feed and liquidity reserve.</p></div><em>BUILD</em></li>
+            <li data-phase="middle"><span>Days 16–19</span><div><strong>Throughput balance</strong><p>Match labor, watering, feed, storage, and routes to productive capacity.</p></div><em>BALANCE</em></li>
+            <li data-phase="late"><span>Days 20–23</span><div><strong>Engine conversion</strong><p>Stop branches that cannot repay and convert fertilizer and mature output into score.</p></div><em>CONVERT</em></li>
+            <li data-phase="late"><span>Days 24–27</span><div><strong>Terminal optimize</strong><p>Preserve only work with reachable terminal value and protect shed capacity.</p></div><em>PRUNE</em></li>
+            <li data-phase="execute"><span>Days 28–29</span><div><strong>Liquidate</strong><p>Keep the exact remaining feed reserve, return carried output, and sell reachable surplus.</p></div><em>CLOSE</em></li>
           </ol>
         </section>
         <section class="section shell" aria-labelledby="phase-tests-title">
@@ -637,7 +653,7 @@
 
       <section class="view" id="submission" aria-labelledby="submission-title" hidden>
         <div class="page-intro shell">
-          <div><p class="eyebrow">Next ladder entry</p><h1 id="submission-title">Promote evidence, not optimism</h1><p>v0.6.1 remains live. Adaptive Horizon v0.7.0 is a local candidate, not a submitted agent.</p></div>
+          <div><p class="eyebrow">Next ladder entry</p><h1 id="submission-title">Promote evidence, not optimism</h1><p>v0.6.1 remains live. Adaptive Horizon v0.7.1 is a local candidate, not a submitted agent.</p></div>
           <a class="button button-secondary" href="https://www.kaggle.com/competitions/kaggriculture/rules" target="_blank" rel="noreferrer">Official rules ↗</a>
         </div>
         <section class="section shell" aria-labelledby="first-plan-title">
@@ -661,22 +677,22 @@
           </div>
         </section>
         <section class="section shell" aria-labelledby="submission-decision-title">
-          <div class="section-heading"><div><p class="eyebrow">Submission decision</p><h2 id="submission-decision-title">Hold v0.7.0 until the full gate finishes</h2></div><strong class="qa-verdict" data-state="hold">HOLD</strong></div>
+          <div class="section-heading"><div><p class="eyebrow">Submission decision</p><h2 id="submission-decision-title">Hold v0.7.1 until the diverse-arena gate</h2></div><strong class="qa-verdict" data-state="hold">HOLD</strong></div>
           <div class="candidate-evidence">
             <div><span>Live agent</span><strong>v0.6.1</strong><small>562.2 · 9–9 external</small></div>
-            <div><span>Local candidate</span><strong>v0.7.0</strong><small>real-loss regression passed</small></div>
+            <div><span>Local candidate</span><strong>v0.7.1</strong><small>3–3 held-out · dynamic wheat</small></div>
             <div><span>Rejected branch</span><strong>Land expansion 0–4</strong><small>−10,982 average margin</small></div>
             <div><span>Exact predecessor</span><strong>7–7–6</strong><small>+104 average · both seats</small></div>
           </div>
           <p class="source-note"><strong>Interpretation boundary:</strong> the replay test proves the new model notices the missed compounding signals. It does not prove that the response wins more games; that requires the completed benchmark and later ladder evidence.</p>
         </section>
         <section class="section shell" aria-labelledby="submission-gate-title">
-          <div class="section-heading"><div><p class="eyebrow">Release gate</p><h2 id="submission-gate-title">v0.7.0 candidate readiness</h2></div><strong class="progress-label" id="submission-progress">0 / 6 ready</strong></div>
+          <div class="section-heading"><div><p class="eyebrow">Release gate</p><h2 id="submission-gate-title">v0.7.1 candidate readiness</h2></div><strong class="progress-label" id="submission-progress">0 / 6 ready</strong></div>
           <div class="candidate-evidence" aria-label="Validated candidate evidence">
             <div><span>Real-loss regression</span><strong>6 checkpoints</strong><small>D00 · D09 · D12 · D15 · D21 · D27</small></div>
-            <div><span>Predecessor challenge</span><strong>7–7–6</strong><small>exact v0.7.0 vs v0.6.1 · both seats</small></div>
-            <div><span>Average margin</span><strong>+104</strong><small>worst −4,621 · parity, not dominance</small></div>
-            <div><span>Runtime failures</span><strong>0</strong><small>0 fallbacks · max local action 123.1 ms</small></div>
+            <div><span>Predecessor challenge</span><strong>3–3</strong><small>v0.7.1 vs exact v0.7.0 · held-out</small></div>
+            <div><span>Average margin</span><strong>+2,381</strong><small>worst −2,430 · six-game sample</small></div>
+            <div><span>Runtime failures</span><strong>0</strong><small>0 fallbacks · max local action 180.8 ms</small></div>
           </div>
           <div class="progress-track" aria-hidden="true"><span id="submission-progress-bar"></span></div>
           <div class="checklist submission-checklist">
@@ -704,7 +720,7 @@
               <div><strong>Daily limit</strong><span>Up to five agent submissions per team</span></div>
             </div>
           </div>
-          <p class="source-note"><strong>Frozen controls:</strong> submitted <code>artifacts/kaggriculture-v0.2.1.tar.gz</code> and <code>artifacts/kaggriculture-v0.6.1.tar.gz</code>, plus local v0.4.0, v0.5.0, v0.5.1, and v0.6.0 controls. The 12,785-byte <code>artifacts/kaggriculture-v0.7.0.tar.gz</code> is packaged locally but remains on hold.</p>
+          <p class="source-note"><strong>Frozen controls:</strong> submitted <code>artifacts/kaggriculture-v0.2.1.tar.gz</code> and <code>artifacts/kaggriculture-v0.6.1.tar.gz</code>, plus local v0.4.0 through v0.7.0 controls. The 14,096-byte <code>artifacts/kaggriculture-v0.7.1.tar.gz</code> is packaged locally but remains on hold.</p>
           <p class="source-note"><strong>Packaging lesson:</strong> v0.2.0 failed before play because <code>agents</code> collided with a Kaggle-installed module. v0.2.1 packages one self-contained <code>main.py</code> and passed validation.</p>
           <p class="source-note">Submission and ranking behavior: <a href="https://www.kaggle.com/competitions/kaggriculture/overview" target="_blank" rel="noreferrer">official Kaggriculture evaluation section ↗</a>.</p>
         </section>
@@ -733,6 +749,7 @@
             <div><span>Basic needs</span><strong>2 missed days</strong><p>Unwatered plants become weeds; unfed animals escape.</p></div>
             <div><span>Labor cost</span><strong>1, 1, 2, 3, 5…</strong><p>Daily hires follow Fibonacci pricing and reset each day.</p></div>
             <div><span>World noise</span><strong>0.5% weed chance</strong><p>Shops unlock every 3 days and consume stock every 4 turns.</p></div>
+            <div><span>Turn compute</span><strong>1 s + 60 s overage</strong><p>Target under 250 ms; treat 700 ms locally as a failed decision.</p></div>
           </div>
         </section>
 

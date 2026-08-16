@@ -13,6 +13,7 @@ from agents.balanced_tempo import (
     _animal_portfolio_model,
     _assign_tasks,
     _demand_forecast,
+    _dynamic_wheat_plan,
     _fertilizer_targets,
     _market_plan,
     _operations_attention,
@@ -340,6 +341,30 @@ def test_high_threat_fifth_animal_has_a_real_slot():
     assert not any(task[1] == (4, 3) and task[2][0] == "PLANT" for task in tasks)
 
 
+def test_wheat_is_a_dynamic_reserve_not_a_fixed_commitment():
+    farm = make_farm()
+    private = {"shed": {}, "inventories": []}
+    base = _dynamic_wheat_plan({"day": 8, "market": {"prices": {"WHEAT": 25}}}, farm, private)
+    add_cows(farm, 4)
+    feed = _dynamic_wheat_plan({"day": 8, "market": {"prices": {"WHEAT": 25}}}, farm, private)
+    scarce = _dynamic_wheat_plan({"day": 8, "market": {"prices": {"WHEAT": 32}}}, farm, private)
+    assert base["tile_target"] == 3
+    assert feed["feed_reserve"] == 12
+    assert scarce["tile_target"] > feed["tile_target"]
+
+
+def test_opponent_prediction_breaks_on_material_deviation():
+    _EPISODE_MEMORY.clear()
+    ours = make_farm()
+    opponent = make_farm()
+    _opponent_attention({"day": 9, "player": 0, "farms": [ours, opponent]}, 0)
+    for x in range(8):
+        opponent["tiles"][0][x] = {"kind": "PLANT", "crop": "MELON", "yield_units": 0}
+    signal = _opponent_attention({"day": 10, "player": 0, "farms": [ours, opponent]}, 0)
+    assert signal["prediction_break"] is True
+    assert signal["prediction_error"] >= 8
+
+
 if __name__ == "__main__":
     test_phase_boundaries()
     test_closeout_keeps_labor_and_feed()
@@ -356,4 +381,6 @@ if __name__ == "__main__":
     test_expected_utility_counters_concentrated_recurring_supply()
     test_deadline_router_assigns_workers_globally()
     test_high_threat_fifth_animal_has_a_real_slot()
-    print("phase policy regressions: 15 passed")
+    test_wheat_is_a_dynamic_reserve_not_a_fixed_commitment()
+    test_opponent_prediction_breaks_on_material_deviation()
+    print("phase policy regressions: 17 passed")

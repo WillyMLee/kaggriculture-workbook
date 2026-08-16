@@ -152,10 +152,12 @@ def main():
     parser.add_argument("--seed-start", type=int, default=0)
     parser.add_argument("--output", type=Path)
     parser.add_argument("--daily-trace", action="store_true")
+    parser.add_argument("--max-wall-seconds", type=float, default=600.0)
     args = parser.parse_args()
 
     kaggle, _ = load_environment()
     games = []
+    suite_started = time.perf_counter()
     with tempfile.TemporaryDirectory(prefix="kaggriculture-baseline-") as temp_dir:
         temp_root = Path(temp_dir)
         baseline = load_artifact_agent(args.baseline.resolve(), temp_root / "baseline")
@@ -168,6 +170,17 @@ def main():
         challenger_load_ms = round((time.perf_counter() - load_started) * 1000, 3)
         for seed in range(args.seed_start, args.seed_start + args.seeds):
             for seat in (0, 1):
+                elapsed = time.perf_counter() - suite_started
+                if elapsed >= args.max_wall_seconds:
+                    if args.output:
+                        write_result(args.output, args, games, challenger_load_ms, complete=False)
+                    print(json.dumps({
+                        "stopped": "wall_clock_cap",
+                        "elapsed_seconds": round(elapsed, 2),
+                        "completed_episodes": len(games),
+                        "expected_episodes": args.seeds * 2,
+                    }), flush=True)
+                    return
                 action_times_ms = []
 
                 def timed_challenger(obs):
@@ -200,6 +213,14 @@ def main():
                 games.append(game)
                 if args.output:
                     write_result(args.output, args, games, challenger_load_ms, complete=False)
+                print(json.dumps({
+                    "checkpoint": f"{len(games)}/{args.seeds * 2}",
+                    "seed": seed,
+                    "seat": seat,
+                    "result": game["result"],
+                    "margin": game["margin"],
+                    "max_action_ms": game["max_action_ms"],
+                }), flush=True)
 
     summary = summarize_games(games)
     if args.output:

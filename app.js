@@ -611,6 +611,15 @@
       model: "Within-match opponent memory, temporal Bayesian beliefs, productive-asset threat, asset-aware valuation, and sparse daily telemetry.",
       limitation: "Parity is not superiority; test more unfamiliar strategy families before submission. Naive second-quadrant expansion was rejected 0–4.",
     },
+    {
+      id: "agent-v0-7-1",
+      version: "v0.7.1",
+      date: "2026-08-16",
+      status: "candidate",
+      evidence: "v0.7.0 held-out: 3–3 · +2,381 avg · 180.8 ms max",
+      model: "Dynamic wheat reserve, environment-first crowding weights, three-day opponent commitment forecast, and softmax strategy-switch hysteresis.",
+      limitation: "Six games show parity, not superiority. The rank-100–200 sample converges on one archetype, so a diverse arena is still required before forest fitting or submission.",
+    },
   ];
   let agentArchive = readStore(KEYS.agentArchive, seededAgents);
   if (!Array.isArray(agentArchive)) agentArchive = [...seededAgents];

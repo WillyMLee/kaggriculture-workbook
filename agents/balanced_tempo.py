@@ -1,4 +1,4 @@
-"""Adaptive Horizon v0.7.0: temporal beliefs and asset-aware planning."""
+"""Adaptive Horizon v0.7.1: dynamic reserves and bounded opponent prediction."""
 
 from __future__ import annotations
 
@@ -113,6 +113,9 @@ def _episode_memory(obs, player):
             "asset_growth": 0.0,
             "bank_delta": 0.0,
             "history": [],
+            "predicted_delta": None,
+            "prediction_error": 0.0,
+            "prediction_break": False,
             "trace_days": set(),
             "last_seen_step": step,
         }
@@ -275,6 +278,8 @@ def _strategy_belief(obs, farm, day, memory=None):
     prior = memory.get("probabilities")
     asset_growth = 0.0
     bank_delta = 0.0
+    crop_delta = {crop: 0 for crop in CROPS}
+    animal_delta = {animal: 0 for animal in ANIMAL_ECONOMICS}
     if previous:
         crop_delta = {
             crop: current["crops"][crop] - previous["crops"].get(crop, 0)
@@ -300,6 +305,25 @@ def _strategy_belief(obs, farm, day, memory=None):
         scores["labor-swarm"] += 0.28 * max(0, current["hands"] - previous.get("hands", 0))
         scores["land-expansion"] += 1.25 * max(0, current["quadrants"] - previous.get("quadrants", 0))
         scores["mixed"] += 0.00008 * investment
+
+        # Predict only the next few visible commitments.  If the opponent
+        # deviates materially, lower inertia immediately; otherwise retain the
+        # incumbent response and avoid thrashing on a single observation.
+        prior_prediction = memory.get("predicted_delta") or {}
+        predicted_crops = prior_prediction.get("crops", {})
+        predicted_animals = prior_prediction.get("animals", {})
+        prediction_error = sum(
+            abs(crop_delta[crop] - float(predicted_crops.get(crop, 0)))
+            for crop in CROPS
+        ) + sum(
+            abs(animal_delta[animal] - float(predicted_animals.get(animal, 0)))
+            for animal in ANIMAL_ECONOMICS
+        )
+        predicted_scale = 1.0 + sum(abs(float(value)) for value in predicted_crops.values()) + sum(
+            abs(float(value)) for value in predicted_animals.values()
+        )
+        memory["prediction_error"] = round(prediction_error, 3)
+        memory["prediction_break"] = prediction_error > max(4.0, 0.75 * predicted_scale)
     if prior:
         uniform = 1.0 / len(STRATEGY_NAMES)
         for strategy in scores:
@@ -311,6 +335,18 @@ def _strategy_belief(obs, farm, day, memory=None):
     memory["probabilities"] = probabilities
     memory["asset_growth"] = round(asset_growth, 2)
     memory["bank_delta"] = round(bank_delta, 2)
+    previous_prediction = memory.get("predicted_delta") or {}
+    memory["predicted_delta"] = {
+        "crops": {
+            crop: round(0.7 * max(0, crop_delta[crop]) + 0.3 * float((previous_prediction.get("crops") or {}).get(crop, 0)), 2)
+            for crop in CROPS
+        },
+        "animals": {
+            animal: round(0.7 * max(0, animal_delta[animal]) + 0.3 * float((previous_prediction.get("animals") or {}).get(animal, 0)), 2)
+            for animal in ANIMAL_ECONOMICS
+        },
+        "horizon_days": 3,
+    }
     memory["history"].append({
         "day": day,
         "terminal_proxy": current["terminal_proxy"],
@@ -318,6 +354,10 @@ def _strategy_belief(obs, farm, day, memory=None):
         "money": current["money"],
         "asset_growth": round(asset_growth, 2),
         "bank_delta": round(bank_delta, 2),
+        "crop_delta": crop_delta,
+        "animal_delta": animal_delta,
+        "prediction_error": memory.get("prediction_error", 0.0),
+        "prediction_break": memory.get("prediction_break", False),
     })
     memory["history"] = memory["history"][-8:]
     return probabilities
@@ -339,6 +379,40 @@ def _demand_forecast(obs, horizon_days=6):
             "momentum": float(prices.get(item, BASE_PRICES.get(item, 1))) / max(1.0, BASE_PRICES.get(item, 1)),
         }
         for item in SELLABLE_PRODUCTS
+    }
+
+
+def _dynamic_wheat_plan(obs, farm, private):
+    """Size wheat as feed, liquidity, and town demand—not a fixed opener."""
+    day = int(obs.get("day", 0))
+    remaining = max(0, 29 - day)
+    animals = _count_tiles(farm, lambda tile: isinstance(tile, dict) and tile.get("animal"))
+    wheat_tiles = _count_tiles(
+        farm, lambda tile: isinstance(tile, dict) and tile.get("crop") == "WHEAT"
+    )
+    wheat_price = float((obs.get("market") or {}).get("prices", {}).get("WHEAT", BASE_PRICES["WHEAT"]))
+    town = _demand_forecast(obs, horizon_days=min(4, remaining + 1))["WHEAT"]
+    shed_wheat = int((private.get("shed") or {}).get("WHEAT", 0))
+    carried_wheat = sum(int(inv.get("WHEAT", 0)) for inv in (private.get("inventories") or []))
+
+    # Maintain only a rolling reserve because the market remains available.
+    reserve_days = min(3, remaining + 1)
+    feed_reserve = animals * reserve_days
+    feed_gap = max(0, feed_reserve - shed_wheat - carried_wheat)
+    town_support = min(3, int(town["visible_demand"] // 40))
+    price_support = 2 if wheat_price >= BASE_PRICES["WHEAT"] * 1.12 else 0
+    if animals:
+        tile_target = min(len(WHEAT_CELLS), max(3, (animals + 1) // 2 + town_support + price_support))
+    else:
+        tile_target = min(len(WHEAT_CELLS), 3 + town_support + price_support)
+    if day >= 24:
+        tile_target = min(tile_target, max(0, remaining - 1))
+    return {
+        "tile_target": tile_target,
+        "current_tiles": wheat_tiles,
+        "feed_reserve": feed_reserve,
+        "feed_gap": feed_gap,
+        "price": wheat_price,
     }
 
 
@@ -383,8 +457,10 @@ def _portfolio_model(obs, farm, opponent, phase, probabilities=None):
         revenue = units * signal["price"]
         labor = 1.0 + water_days + harvest_actions
         demand_boost = 1.0 + min(0.45, signal["visible_demand"] / 180.0)
-        observed_crowding = 0.035 * opponent_crops[crop]
-        belief_crowding = 0.28 * _expected_supply_pressure(probabilities, crop)
+        # Shared-market crowding matters, but it should not overpower our own
+        # ROI, town demand, or switching cost.
+        observed_crowding = 0.045 * opponent_crops[crop]
+        belief_crowding = 0.08 * _expected_supply_pressure(probabilities, crop)
         switching_cost = 0.0
         own_other = _count_tiles(
             farm,
@@ -442,7 +518,7 @@ def _animal_portfolio_model(obs, farm, opponent, probabilities=None):
         feed_cost = feed_days * wheat_price
         labor_actions = feed_days * 2 + len(production_days) + max(0, feed_days - 1) + 3
         labor_shadow = labor_actions * 3.0
-        crowding = 1.0 + 0.08 * opponent_animals[animal] + 0.32 * _expected_supply_pressure(probabilities, product)
+        crowding = 1.0 + 0.035 * opponent_animals[animal] + 0.12 * _expected_supply_pressure(probabilities, product)
         demand_boost = 1.0 + min(0.35, forecast[product]["visible_demand"] / 240.0)
         net = ((product_revenue + fertilizer_credit) * demand_boost / crowding) - data["cost"] - feed_cost - labor_shadow
         tile_days = max(1, last_day - day + 1)
@@ -483,8 +559,10 @@ def _attention_weights(obs, player, strategy_probabilities, asset_threat=0.0):
         opponent_window = 0.20
     progress = day / 29.0
     scores = {
-        "operations": 0.8 + 2.8 * min(1.0, urgent_work / 8.0),
-        "opponent": 0.35 + 2.4 * certainty * opponent_window + 1.65 * float(asset_threat),
+        "operations": 1.15 + 3.0 * min(1.0, urgent_work / 8.0),
+        # Opponent inference is advisory.  The town, our deadlines, and our
+        # productive state retain most of the decision budget.
+        "opponent": 0.10 + 1.25 * certainty * opponent_window + 0.70 * float(asset_threat),
         "horizon": -0.3 + 3.2 * progress * progress + (1.4 if day >= 28 else 0.0),
     }
     return _softmax(scores, temperature=0.9)
@@ -565,12 +643,24 @@ def _opponent_attention(obs, player):
     # family never owns the decision outright; its probability changes utility.
     recurring_crop = portfolio["recurring_crop"]
     incumbent_recurring = max(("TOMATO", "STRAWBERRY"), key=lambda crop: (own_crop_counts[crop], crop))
-    if own_crop_counts[incumbent_recurring] and asset_threat < 0.62:
-        recurring_crop = incumbent_recurring
+    prediction_break = bool(memory.get("prediction_break", False))
+    if own_crop_counts[incumbent_recurring]:
+        challenger = recurring_crop
+        incumbent_score = portfolio["scores"][incumbent_recurring]
+        challenger_score = portfolio["scores"][challenger]
+        score_scale = max(1.0, abs(incumbent_score) + abs(challenger_score))
+        switch_margin = (challenger_score - incumbent_score) / score_scale
+        threshold = 0.16 if prediction_break else 0.30
+        if challenger == incumbent_recurring or switch_margin < threshold:
+            recurring_crop = incumbent_recurring
     cash_crop = portfolio["cash_crop"]
     incumbent_cash = max(("CARROT", "MELON"), key=lambda crop: (own_crop_counts[crop], crop))
-    if own_crop_counts[incumbent_cash] and asset_threat < 0.62:
-        cash_crop = incumbent_cash
+    if own_crop_counts[incumbent_cash]:
+        cash_margin = (
+            portfolio["scores"][cash_crop] - portfolio["scores"][incumbent_cash]
+        ) / max(1.0, abs(portfolio["scores"][cash_crop]) + abs(portfolio["scores"][incumbent_cash]))
+        if cash_crop == incumbent_cash or cash_margin < (0.14 if prediction_break else 0.26):
+            cash_crop = incumbent_cash
     secondary = "TOMATO" if recurring_crop == "STRAWBERRY" else "STRAWBERRY"
     primary_score = portfolio["scores"][recurring_crop]
     secondary_score = portfolio["scores"][secondary]
@@ -625,6 +715,9 @@ def _opponent_attention(obs, player):
         "opponent_terminal_proxy": round(float(opponent_value["terminal_proxy"]), 2),
         "asset_growth": round(asset_growth, 2),
         "capital_mode": capital_mode,
+        "opponent_forecast": memory.get("predicted_delta") or {},
+        "prediction_error": memory.get("prediction_error", 0.0),
+        "prediction_break": prediction_break,
     }
 
 
@@ -788,6 +881,7 @@ def _market_plan(obs, farm, private, opponent_signal, phase, terminal=None):
 
     animals = _count_tiles(farm, lambda tile: isinstance(tile, dict) and "animal" in tile)
     fertilizer_targets = _fertilizer_targets(obs, farm)
+    wheat_plan = _dynamic_wheat_plan(obs, farm, private)
 
     # Shed overflow discards end-of-day output. Forecast harvest already visible
     # on mature crops and clear low-value wheat before it displaces melon or
@@ -851,7 +945,7 @@ def _market_plan(obs, farm, private, opponent_signal, phase, terminal=None):
         crop: _count_tiles(farm, lambda tile, crop=crop: isinstance(tile, dict) and tile.get("crop") == crop)
         for crop in CROPS
     }
-    desired = {"WHEAT": 5} if day <= 25 else {}
+    desired = {"WHEAT": wheat_plan["tile_target"]} if wheat_plan["tile_target"] else {}
     if phase["phase"] == "early":
         desired[opponent_signal.get("cash_crop", "MELON")] = 10
     elif phase["allow_recurring"]:
@@ -880,7 +974,7 @@ def _market_plan(obs, farm, private, opponent_signal, phase, terminal=None):
         if animal_shortfall:
             orders.append(["BUY_ANIMAL", animal_choice, animal_shortfall])
         feed_on_hand = int(shed.get("WHEAT", 0)) + sum(int(inv.get("WHEAT", 0)) for inv in inventories)
-        feed_target = max(8, (animals + empty_structures) * 3)
+        feed_target = max(8, wheat_plan["feed_reserve"], (animals + empty_structures) * 2)
         if feed_on_hand < feed_target:
             orders.append(["BUY_PRODUCT", "WHEAT", feed_target - feed_on_hand])
 
@@ -1055,6 +1149,8 @@ def _emit_day_trace(obs, player, opponent_signal, phase, result):
         "animal_gap": opponent_signal.get("animal_gap", 0),
         "threat": opponent_signal.get("asset_threat", 0),
         "belief": top_beliefs,
+        "prediction_error": opponent_signal.get("prediction_error", 0),
+        "prediction_break": opponent_signal.get("prediction_break", False),
         "capital": opponent_signal.get("capital_mode", "hold"),
         "crop": [opponent_signal.get("cash_crop"), opponent_signal.get("recurring_crop")],
         "animal": [opponent_signal.get("animal"), opponent_signal.get("animal_target", 0)],
