@@ -171,10 +171,10 @@
         <section class="section shell submission-stats" aria-label="Submission summary">
           <article><span>Uploads</span><strong id="submission-count">0</strong><small>accepted + validation errors</small></article>
           <article><span>Best score</span><strong id="submission-best-rating">—</strong><small id="submission-best-version">no data yet</small></article>
-          <article><span>Best rank</span><strong id="submission-best-rank">—</strong><small>lower is better</small></article>
+          <article><span>Best rank</span><strong id="submission-best-rank">—</strong><small>recorded peak</small></article>
           <article><span>Episodes observed</span><strong id="submission-episodes">0</strong><small>sample size matters</small></article>
         </section>
-        <p class="source-note shell"><strong>Live Kaggle snapshot · August 15 ET / August 16 UTC:</strong> v0.6.1 is accepted at an initial 600.0 and rank #2,891; v0.2.1 remains active at 459.2 and rank #3,536. One of five slots is used in the current Kaggle reset window.</p>
+        <p class="source-note shell"><strong>Live Kaggle snapshot · August 16:</strong> v0.6.1 is active at 562.2 after 18 external matches: 9 wins and 9 losses. The current rank was not captured, so the workbook leaves it blank rather than preserving the stale validation rank.</p>
 
         <section class="section shell" aria-labelledby="submission-analysis-title">
           <div class="section-heading compact"><div><p class="eyebrow">Interpretation</p><h2 id="submission-analysis-title">What the ladder is telling us</h2></div></div>
@@ -194,6 +194,17 @@
             <article role="listitem" data-result="loss"><span>93430151 · Loss</span><strong>Sisu16</strong><p><b>26,036</b> vs 27,953</p><small>Led after day 27, then sold feed, stopped hiring, and lost all four cows before scoring.</small></article>
           </div>
           <p class="source-note">Compact evidence: <code>results/kaggle_v0_2_1_match_history.json</code>. Raw replays remain external because each source file is roughly 14 MB.</p>
+        </section>
+
+        <section class="section shell" aria-labelledby="v061-match-title">
+          <div class="section-heading"><div><p class="eyebrow">v0.6.1 loss lab</p><h2 id="v061-match-title">The bank lead hid an opponent production engine</h2></div><p class="section-note">Episode 93564365 · PQ_Marz · final margin −2,742</p></div>
+          <div class="match-ledger" role="list">
+            <article role="listitem" data-result="win"><span>Day 9 · cash lead</span><strong>1,870 vs 2</strong><p>Our opening looked dominant in cash.</p><small>The opponent already had three animals; bank alone understated its position.</small></article>
+            <article role="listitem"><span>Day 15 · scale gap</span><strong>20 vs 54 productive tiles</strong><p>14,462 vs 542 cash</p><small>The rival had converted cash into land, crops, and livestock while we read the low bank as weakness.</small></article>
+            <article role="listitem" data-result="loss"><span>Day 21 · livestock compound</span><strong>28 vs 4 animals</strong><p>15,144 vs 6,760 cash</p><small>Production capacity, not current cash, was now the decisive signal.</small></article>
+            <article role="listitem" data-result="loss"><span>Final · loss</span><strong>57,559 vs 60,301</strong><p>The lead changed after day 26.</p><small>v0.7 now tracks temporal commitments and productive scale explicitly.</small></article>
+          </div>
+          <p class="source-note">Regression fixture: <code>results/kaggle_v0_6_1_pq_marz_regression.json</code>. The full 20 MB replay remains outside the repository.</p>
         </section>
 
         <section class="section shell" aria-labelledby="submission-history-title">
@@ -377,22 +388,22 @@
           <button class="button button-primary" id="open-agent-form" type="button">Log agent</button>
         </div>
         <section class="section shell" aria-labelledby="current-checkpoint-title">
-          <div class="section-heading"><div><p class="eyebrow">Current checkpoint · August 15</p><h2 id="current-checkpoint-title">v0.6.1 entered the ladder</h2></div><strong class="qa-verdict">ACCEPTED</strong></div>
+          <div class="section-heading"><div><p class="eyebrow">Current checkpoint · August 16</p><h2 id="current-checkpoint-title">v0.6.1 has real ladder evidence</h2></div><strong class="qa-verdict" data-state="hold">9–9</strong></div>
           <div class="candidate-evidence">
             <div><span>Submitted agent</span><strong>v0.6.1 live</strong><small>exact SHA 33c82d70…038d</small></div>
-            <div><span>Initial score</span><strong>600.0</strong><small>validation seed only</small></div>
-            <div><span>Initial rank</span><strong>#2,891</strong><small>up 645 places from v0.2.1</small></div>
-            <div><span>External matches</span><strong>0 reviewed</strong><small>competitive signal not ready</small></div>
+            <div><span>Current score</span><strong>562.2</strong><small>down from the 600.0 validation seed</small></div>
+            <div><span>External record</span><strong>9–9</strong><small>18 visible ladder matches</small></div>
+            <div><span>Reviewed loss</span><strong>−2,742</strong><small>PQ_Marz · episode 93564365</small></div>
           </div>
-          <p class="source-note"><strong>Read:</strong> acceptance clears the packaging and runtime gate. The 600.0 score comes from one validation self-play episode, so it is not evidence that v0.6.1 beats unfamiliar ladder agents yet.</p>
+          <p class="source-note"><strong>Read:</strong> v0.6.1 is viable but not dominant. Its clearest reviewed failure was strategic, not computational: it treated a cash lead as safety while the opponent built a much larger productive base.</p>
         </section>
         <section class="section shell" aria-labelledby="v07-notes-title">
-          <div class="section-heading"><div><p class="eyebrow">v0.7 evidence plan</p><h2 id="v07-notes-title">Learn before changing the mechanism</h2></div><p class="section-note">Grade the earliest repeatable failure.</p></div>
+          <div class="section-heading"><div><p class="eyebrow">v0.7 candidate</p><h2 id="v07-notes-title">Read productive capacity, not cash alone</h2></div><p class="section-note">12.7 KB artifact packaged locally · no Kaggle submission</p></div>
           <ol class="system-flow">
-            <li><span>01</span><div><strong>Wait for external evidence</strong><p>Capture checkpoints at 10, 25, and 50 non-validation episodes. Do not optimize against the self-play seed.</p></div><em>SAMPLE</em></li>
-            <li><span>02</span><div><strong>Trace the first real loss</strong><p>Record opponent family, bank curve, production mix, worker utilization, first irreversible divergence, and terminal inventory.</p></div><em>LOSS LAB</em></li>
-            <li><span>03</span><div><strong>Test a temporal opponent belief</strong><p>If losses come from late recognition, add spending trajectory, structure count, crop and animal age, and production timing to the opponent model.</p></div><em>LIKELY LEVER</em></li>
-            <li><span>04</span><div><strong>Add rollout only on evidence</strong><p>If the same tactical choice fails repeatedly, compare bounded two-to-three-day rollouts. Keep the 319 ms action-time ceiling visible.</p></div><em>CONDITIONAL</em></li>
+            <li><span>01</span><div><strong>Keep within-match memory</strong><p>Carry the previous posterior, bank movement, asset growth, crop mix, animal mix, labor, and unlocked land from one day to the next.</p></div><em>IMPLEMENTED</em></li>
+            <li><span>02</span><div><strong>Estimate productive threat</strong><p>Compare terminal value, productive value, occupied scale, animals, and land—not just the visible bank.</p></div><em>IMPLEMENTED</em></li>
+            <li><span>03</span><div><strong>Leave replay breadcrumbs</strong><p>Emit one compact decision trace per day and explicit error records so future ladder logs explain what the policy believed.</p></div><em>IMPLEMENTED</em></li>
+            <li><span>04</span><div><strong>Reject naive land expansion</strong><p>Ten extra recurring plots lost all four smoke games by about 11k on average because travel and chore load diluted execution.</p></div><em>REJECTED</em></li>
           </ol>
         </section>
         <section class="section shell" aria-labelledby="agent-lineage-title">
@@ -528,6 +539,7 @@
             <div><span>Visible</span><p>Opponent farm state and the shared market.</p></div>
             <div><span>Hidden</span><p>Opponent shed, private inventory, source code, and future actions.</p></div>
             <div><span>Output</span><p>Archetype probabilities, predicted constraint, confidence, and response budget.</p></div>
+            <div><span>Memory scope</span><p>RAM persists within one match only. Across matches, replay evidence improves the next submitted artifact offline; a deployed game cannot write learning into future games.</p></div>
           </div>
         </section>
         <section class="section shell" aria-labelledby="softmax-title">
@@ -535,7 +547,7 @@
           <ol class="softmax-flow">
             <li><span>FEATURES</span><div><strong>Visible commitments</strong><p>Crop counts, animals, unlocked land, labor, match day, and bank trajectory.</p></div><em>x</em></li>
             <li><span>LOGITS</span><div><strong>Weighted strategy scores</strong><p>Each strategy receives evidence for and against it; no single threshold owns the decision.</p></div><em>z = Wx + b</em></li>
-            <li><span>SOFTMAX</span><div><strong>Belief distribution</strong><p>Melon rush, recurring strawberry, recurring tomato, livestock compound, land expansion, and mixed play sum to 100%.</p></div><em>P(strategy)</em></li>
+            <li><span>SOFTMAX</span><div><strong>Belief distribution</strong><p>Short-cycle crop volume, melon rush, recurring crops, livestock families, labor, land expansion, and mixed play sum to 100%.</p></div><em>P(strategy)</em></li>
             <li><span>UTILITY</span><div><strong>Expected counter value</strong><p>Score each response across every strategy, weighted by belief and reduced by switching cost and execution risk.</p></div><em>Σ P(s)U(a,s)</em></li>
             <li><span>UPDATE</span><div><strong>Observe and recalibrate</strong><p>Compare the predicted commitment with the next farm state, then revise weights without erasing alternatives.</p></div><em>Pₜ₊₁</em></li>
           </ol>
@@ -545,7 +557,7 @@
             <div><span>Mixed</span><i style="--belief:.11"></i><strong>11%</strong></div>
             <div><span>Other strategies</span><i style="--belief:.08"></i><strong>8%</strong></div>
           </div>
-          <p class="source-note">Observed on day 13 of the repaired seed-5 regression. Candidate code computes beliefs from public farm state; calibration still requires a broader opponent library.</p>
+          <p class="source-note">The distribution above is illustrative. v0.7 updates its real posterior once per day from public farm state and the prior day’s belief; calibration still requires a broader opponent library.</p>
         </section>
       </section>
 
@@ -596,10 +608,10 @@
           <div class="section-heading"><div><p class="eyebrow">Weighted thinking model</p><h2 id="attention-weight-title">Attention changes with the position</h2></div><p class="section-note">Weights are normalized each turn; hard safety obligations remain protected.</p></div>
           <div class="attention-model">
             <article><span>Operations</span><strong>Urgent work</strong><p>Unwatered crops, unfed animals, ready harvests, carried resources, and route congestion increase this weight.</p><small>dominant when delay destroys value</small></article>
-            <article><span>Opponent</span><strong>Useful certainty</strong><p>Belief concentration matters most during reversible opening and middle-game decisions.</p><small>certainty × response window</small></article>
+            <article><span>Opponent</span><strong>Temporal threat</strong><p>Belief concentration, asset growth, occupied scale, animal count, and land commitments matter most while a response can still repay.</p><small>posterior × threat × response window</small></article>
             <article><span>Horizon</span><strong>Payback pressure</strong><p>The weight rises nonlinearly with elapsed days and sharply during final execution.</p><small>time remaining × terminal risk</small></article>
           </div>
-          <div class="attention-equation"><span>Decision score</span><strong>hard obligations + Σ attention<sub>m</sub> × expected value<sub>m</sub> − switching cost − failure risk</strong></div>
+          <div class="attention-equation"><span>Decision score</span><strong>hard obligations + Σ attention<sub>m</sub> × expected value<sub>m</sub> + productive threat − switching cost − failure risk</strong></div>
         </section>
         <section class="section shell" aria-labelledby="attention-order-title">
           <div class="section-heading"><div><p class="eyebrow">Priority stack</p><h2 id="attention-order-title">What gets attention first</h2></div><p class="section-note">Lower number wins when tasks compete.</p></div>
@@ -615,7 +627,7 @@
         <section class="section shell" aria-labelledby="attention-budget-title">
           <div class="section-heading compact"><div><p class="eyebrow">Guardrails</p><h2 id="attention-budget-title">Adaptation without thrashing</h2></div></div>
           <div class="attention-budget">
-            <article><span>Confidence gate</span><strong>Do not counter a guess</strong><p>Stay on the baseline until multiple signals support the same opponent model.</p></article>
+            <article><span>Memory gate</span><strong>Read the trajectory</strong><p>Update once per day from the prior posterior and visible commitment changes; do not classify each turn in isolation.</p></article>
             <article><span>Switching-cost gate</span><strong>Count stranded capital</strong><p>A response is only useful if the gain exceeds the cost of abandoning the current plan.</p></article>
             <article><span>Action-budget gate</span><strong>Observation is computation</strong><p>Opponent analysis must not steal in-game actions from mandatory farm work.</p></article>
             <article><span>Exploration gate</span><strong>One bounded probe</strong><p>Use small reversible deviations to learn; avoid large speculative commitments.</p></article>
@@ -625,7 +637,7 @@
 
       <section class="view" id="submission" aria-labelledby="submission-title" hidden>
         <div class="page-intro shell">
-          <div><p class="eyebrow">Next ladder entry</p><h1 id="submission-title">Promote evidence, not optimism</h1><p>v0.6.1 is the latest local agent. One diversity gate stands between it and Kaggle.</p></div>
+          <div><p class="eyebrow">Next ladder entry</p><h1 id="submission-title">Promote evidence, not optimism</h1><p>v0.6.1 remains live. Adaptive Horizon v0.7.0 is a local candidate, not a submitted agent.</p></div>
           <a class="button button-secondary" href="https://www.kaggle.com/competitions/kaggriculture/rules" target="_blank" rel="noreferrer">Official rules ↗</a>
         </div>
         <section class="section shell" aria-labelledby="first-plan-title">
@@ -643,28 +655,28 @@
           <div class="section-heading"><div><p class="eyebrow">Candidate architecture</p><h2 id="candidate-architecture-title">Three attention modules, one safe policy</h2></div><p class="section-note">Each module has a narrow decision boundary.</p></div>
           <div class="mechanism-grid">
             <article data-state="ready"><span>01 · Operations</span><strong>Protect mandatory work</strong><p>Prioritize harvest, watering, feed, care, placement, and worker routing by deadline and travel distance.</p></article>
-            <article data-state="ready"><span>02 · Opponent</span><strong>Counter visible commitments</strong><p>Classify expansion, livestock, or recurring-crop concentration. Only a strong strawberry signal switches our recurring crop to tomato.</p></article>
+            <article data-state="ready"><span>02 · Opponent</span><strong>Track visible commitments</strong><p>Carry a daily posterior across the match and score changes in crops, animals, labor, land, and productive value.</p></article>
             <article data-state="ready"><span>03 · Horizon</span><strong>Respect payback time</strong><p>Stop land, livestock, and recurring-crop investment before they lose time to mature; route carried value to the shed during liquidation.</p></article>
-            <article data-state="next"><span>Feedback loop</span><strong>Freeze this bot as the opponent</strong><p>Future architectures play both seats against the exact v0.2 artifact. Promote one mechanism at a time, then compare ladder evidence.</p></article>
+            <article data-state="next"><span>Feedback loop</span><strong>Replay, regress, then benchmark</strong><p>Turn real losses into compact fixtures, test the inferred threat, and compare both seats against exact frozen artifacts.</p></article>
           </div>
         </section>
         <section class="section shell" aria-labelledby="submission-decision-title">
-          <div class="section-heading"><div><p class="eyebrow">Submission decision</p><h2 id="submission-decision-title">v0.6.1 is live; collect ladder evidence</h2></div><strong class="qa-verdict">SUBMITTED</strong></div>
+          <div class="section-heading"><div><p class="eyebrow">Submission decision</p><h2 id="submission-decision-title">Hold v0.7.0 until the full gate finishes</h2></div><strong class="qa-verdict" data-state="hold">HOLD</strong></div>
           <div class="candidate-evidence">
-            <div><span>Latest agent</span><strong>v0.6.1</strong><small>Kaggle accepted</small></div>
-            <div><span>Local evidence</span><strong>60 / 60 wins</strong><small>v0.5-class · both seats</small></div>
-            <div><span>Kaggle window</span><strong>1 / 5 used</strong><small>4 slots remain after reset</small></div>
-            <div><span>Next checkpoint</span><strong>10 external games</strong><small>first loss gets a full trace</small></div>
+            <div><span>Live agent</span><strong>v0.6.1</strong><small>562.2 · 9–9 external</small></div>
+            <div><span>Local candidate</span><strong>v0.7.0</strong><small>real-loss regression passed</small></div>
+            <div><span>Rejected branch</span><strong>Land expansion 0–4</strong><small>−10,982 average margin</small></div>
+            <div><span>Exact predecessor</span><strong>7–7–6</strong><small>+104 average · both seats</small></div>
           </div>
-          <p class="source-note"><strong>Interpretation boundary:</strong> score 600.0 and rank #2,891 are the initial validation snapshot. Wait for unfamiliar opponents before attributing the movement to economics, strategy utility, or routing.</p>
+          <p class="source-note"><strong>Interpretation boundary:</strong> the replay test proves the new model notices the missed compounding signals. It does not prove that the response wins more games; that requires the completed benchmark and later ladder evidence.</p>
         </section>
         <section class="section shell" aria-labelledby="submission-gate-title">
-          <div class="section-heading"><div><p class="eyebrow">Release gate</p><h2 id="submission-gate-title">v0.6.1 candidate readiness</h2></div><strong class="progress-label" id="submission-progress">0 / 6 ready</strong></div>
+          <div class="section-heading"><div><p class="eyebrow">Release gate</p><h2 id="submission-gate-title">v0.7.0 candidate readiness</h2></div><strong class="progress-label" id="submission-progress">0 / 6 ready</strong></div>
           <div class="candidate-evidence" aria-label="Validated candidate evidence">
-            <div><span>Replay diagnoses</span><strong>4 archived</strong><small>1 win · 3 losses</small></div>
-            <div><span>Predecessor challenge</span><strong>60 / 60 wins</strong><small>exact v0.6.1 vs v0.5-class</small></div>
-            <div><span>Average margin</span><strong>+14,069</strong><small>zero losses | worst +8,748</small></div>
-            <div><span>Runtime failures</span><strong>0</strong><small>max local action 319.1 ms</small></div>
+            <div><span>Real-loss regression</span><strong>6 checkpoints</strong><small>D00 · D09 · D12 · D15 · D21 · D27</small></div>
+            <div><span>Predecessor challenge</span><strong>7–7–6</strong><small>exact v0.7.0 vs v0.6.1 · both seats</small></div>
+            <div><span>Average margin</span><strong>+104</strong><small>worst −4,621 · parity, not dominance</small></div>
+            <div><span>Runtime failures</span><strong>0</strong><small>0 fallbacks · max local action 123.1 ms</small></div>
           </div>
           <div class="progress-track" aria-hidden="true"><span id="submission-progress-bar"></span></div>
           <div class="checklist submission-checklist">
@@ -692,7 +704,7 @@
               <div><strong>Daily limit</strong><span>Up to five agent submissions per team</span></div>
             </div>
           </div>
-          <p class="source-note"><strong>Frozen controls:</strong> submitted <code>artifacts/kaggriculture-v0.2.1.tar.gz</code>, plus local v0.4.0, v0.5.0, v0.5.1, and v0.6.0 controls. Current local-only candidate: <code>artifacts/kaggriculture-v0.6.1.tar.gz</code> · SHA-256 <code>33c82d70…038d</code>.</p>
+          <p class="source-note"><strong>Frozen controls:</strong> submitted <code>artifacts/kaggriculture-v0.2.1.tar.gz</code> and <code>artifacts/kaggriculture-v0.6.1.tar.gz</code>, plus local v0.4.0, v0.5.0, v0.5.1, and v0.6.0 controls. The 12,785-byte <code>artifacts/kaggriculture-v0.7.0.tar.gz</code> is packaged locally but remains on hold.</p>
           <p class="source-note"><strong>Packaging lesson:</strong> v0.2.0 failed before play because <code>agents</code> collided with a Kaggle-installed module. v0.2.1 packages one self-contained <code>main.py</code> and passed validation.</p>
           <p class="source-note">Submission and ranking behavior: <a href="https://www.kaggle.com/competitions/kaggriculture/overview" target="_blank" rel="noreferrer">official Kaggriculture evaluation section ↗</a>.</p>
         </section>

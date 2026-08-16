@@ -397,6 +397,7 @@
       episodes: 4,
       rating: 459.2,
       rank: 3536,
+      peakRank: 3536,
       change: "Single-file artifact; same three-attention policy",
       notes: "Reviewed ladder snapshot: 1 win, 3 losses. Repeated gaps were fixed labor, weak response to shared markets, and a day-27 liquidation bug.",
     },
@@ -405,11 +406,12 @@
       version: "v0.6.1",
       date: "2026-08-15",
       status: "active",
-      episodes: 1,
-      rating: 600,
-      rank: 2891,
+      episodes: 18,
+      rating: 562.2,
+      rank: null,
+      peakRank: 2891,
       change: "Economics, strategy utility, and bounded global routing",
-      notes: "Accepted by Kaggle. Snapshot includes only validation self-play; no external opponent evidence yet.",
+      notes: "18 external matches: 9 wins and 9 losses. PQ_Marz loss exposed a cash-only blind spot while the opponent compounded productive assets.",
     },
   ];
   let submissions = readStore(KEYS.submissions, firstLadderEntries);
@@ -500,9 +502,12 @@
   function renderSubmissions() {
     const sorted = [...submissions].sort((a, b) => new Date(a.date) - new Date(b.date));
     const ratings = submissions.filter((item) => item.rating != null);
-    const ranks = submissions.filter((item) => item.rank != null);
+    const ranks = submissions.flatMap((item) => {
+      const value = item.rank ?? item.peakRank;
+      return value == null ? [] : [value];
+    });
     const bestRating = ratings.length ? [...ratings].sort((a, b) => b.rating - a.rating)[0] : null;
-    const bestRank = ranks.length ? Math.min(...ranks.map((item) => item.rank)) : null;
+    const bestRank = ranks.length ? Math.min(...ranks) : null;
     $("#submission-count").textContent = String(submissions.length);
     $("#submission-best-rating").textContent = bestRating ? bestRating.rating.toFixed(1) : "—";
     $("#submission-best-version").textContent = bestRating ? `from ${bestRating.version}` : "no data yet";
@@ -593,9 +598,18 @@
       version: "v0.6.1",
       date: "2026-08-15",
       status: "submitted",
-      evidence: "Kaggle accepted · initial 600.0 · rank #2,891",
+      evidence: "Kaggle 9–9 external · current score 562.2",
       model: "Marginal crop/livestock economics, expected-utility strategy grouping, profitable fertilizer use, and bounded global worker routing.",
-      limitation: "Only validation self-play was available at the first snapshot; wait for external matches before choosing a v0.7 mechanism.",
+      limitation: "PQ_Marz exposed a cash-only blind spot: the opponent built a 28-animal engine while our visible bank still led.",
+    },
+    {
+      id: "agent-v0-7-0",
+      version: "v0.7.0",
+      date: "2026-08-16",
+      status: "candidate",
+      evidence: "v0.6.1: 7–7–6 · +104 avg · 12.8 KB artifact",
+      model: "Within-match opponent memory, temporal Bayesian beliefs, productive-asset threat, asset-aware valuation, and sparse daily telemetry.",
+      limitation: "Parity is not superiority; test more unfamiliar strategy families before submission. Naive second-quadrant expansion was rejected 0–4.",
     },
   ];
   let agentArchive = readStore(KEYS.agentArchive, seededAgents);

@@ -1,4 +1,4 @@
-"""Focused regression checks for the v0.3 phase and closeout policy."""
+"""Focused regressions for phase, economics, routing, and closeout policy."""
 
 from __future__ import annotations
 
@@ -9,6 +9,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
 
 from agents.balanced_tempo import (
+    _EPISODE_MEMORY,
     _animal_portfolio_model,
     _assign_tasks,
     _demand_forecast,
@@ -127,7 +128,7 @@ def test_strategy_softmax_is_normalized_and_differentiates_crops():
             "watered_today": False,
             "yield_units": 0,
         }
-    probabilities = _strategy_belief(opponent, 14)
+    probabilities = _strategy_belief({"day": 14}, opponent, 14)
     assert abs(sum(probabilities.values()) - 1.0) < 1e-9
     assert max(probabilities, key=probabilities.get) == "strawberry-recurring"
 
@@ -162,7 +163,7 @@ def test_strategy_archetype_probes():
         (make_farm(), 15, "mixed"),
     ])
     for farm, day, expected in cases:
-        probabilities = _strategy_belief(farm, day)
+        probabilities = _strategy_belief({"day": day}, farm, day)
         assert max(probabilities, key=probabilities.get) == expected
 
 
@@ -273,7 +274,7 @@ def test_marginal_economics_prices_livestock_and_fertilizer():
         "market": {"prices": {"WHEAT": 25, "EGG": 50, "MILK": 220, "WOOL": 200, "FERTILIZER": 100}},
         "town": {"unlocked_shops": ["SMOOTHIE_SHOP"]},
     }
-    model = _animal_portfolio_model(obs, farm, opponent, _strategy_belief(opponent, 12))
+    model = _animal_portfolio_model(obs, farm, opponent, _strategy_belief(obs, opponent, 12))
     assert model["animal"] == "COW"
     assert model["details"]["COW"]["net"] > model["details"]["GOOSE"]["net"]
     farm["tiles"][0][0] = {
@@ -289,6 +290,7 @@ def test_marginal_economics_prices_livestock_and_fertilizer():
 
 
 def test_expected_utility_counters_concentrated_recurring_supply():
+    _EPISODE_MEMORY.clear()
     farm = make_farm()
     opponent = make_farm()
     for x in range(10):
@@ -306,7 +308,7 @@ def test_expected_utility_counters_concentrated_recurring_supply():
         "town": {"unlocked_shops": []},
     }, 0)
     assert signal["recurring_crop"] == "TOMATO"
-    assert signal["probabilities"]["strawberry-recurring"] > 0.8
+    assert signal["probabilities"]["strawberry-recurring"] > 0.6
     assert set(signal["strategy_utilities"]) == {"cash-engine", "recurring-engine", "livestock-engine"}
 
 
@@ -318,6 +320,24 @@ def test_deadline_router_assigns_workers_globally():
     crowded = [(priority % 7, (priority % 10, (priority // 10) % 10), ["WATER"]) for priority in range(2000)]
     bounded = _assign_tasks([(index, 0) for index in range(9)], set(range(9)), crowded, 12)
     assert len(bounded) == 9
+
+
+def test_high_threat_fifth_animal_has_a_real_slot():
+    farm = make_farm()
+    signal = {
+        "recurring_crop": "STRAWBERRY",
+        "recurring_targets": {"STRAWBERRY": 9, "TOMATO": 6},
+        "animal": "COW",
+        "animal_target": 5,
+    }
+    private = {"shed": {}, "seeds": {"STRAWBERRY": 9, "TOMATO": 6}, "inventories": [{}]}
+    tasks = _operations_attention(
+        {"day": 14, "hour": 0}, farm, private, signal, _phase_attention({"day": 14})
+    )
+    builds = [task for task in tasks if task[2][0] == "BUILD_PASTURE"]
+    assert len(builds) == 5
+    assert any(task[1] == (4, 3) for task in builds)
+    assert not any(task[1] == (4, 3) and task[2][0] == "PLANT" for task in tasks)
 
 
 if __name__ == "__main__":
@@ -335,4 +355,5 @@ if __name__ == "__main__":
     test_marginal_economics_prices_livestock_and_fertilizer()
     test_expected_utility_counters_concentrated_recurring_supply()
     test_deadline_router_assigns_workers_globally()
-    print("phase policy regressions: 14 passed")
+    test_high_threat_fifth_animal_has_a_real_slot()
+    print("phase policy regressions: 15 passed")

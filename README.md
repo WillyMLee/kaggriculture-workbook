@@ -59,9 +59,9 @@ Run it with:
 
 The project-local runtime loads the official Kaggriculture environment plugin from `.vendor/kaggle-environments` while remaining compatible with Python 3.9.
 
-## Reverse Horizon candidate
+## Adaptive Horizon candidate
 
-`main.py` is the local entry point for Reverse Horizon v0.6. It extends Dense Predictor v0.5.1 with a backward terminal-state model: payoff reachability, last productive feed/care/water obligations, travel slack, shed capacity, and demand-timed liquidation. Unexpected states still fall back to a valid `PASS` action, while the evaluator separately flags suspicious fallbacks.
+`main.py` is the local entry point for Adaptive Horizon v0.7.0. It keeps the v0.6.1 terminal planner and adds within-match opponent memory, temporal strategy beliefs, productive-asset threat, asset-aware valuation, and one compact diagnostic trace per game day. Unexpected states still fall back to a valid `PASS` action and now emit an explicit error record.
 
 Validate the exact entry point through self-play and benchmark it against the starter:
 
@@ -77,7 +77,7 @@ npm run submission:build
 npm run submission:validate
 ```
 
-The generated `artifacts/kaggriculture-v0.6.1.tar.gz` contains one self-contained `main.py`. It is a promoted local-only candidate. The accepted v0.2.1 and frozen v0.4.0/v0.5.0/v0.5.1/v0.6.0 artifacts remain exact controls.
+The generated `artifacts/kaggriculture-v0.7.0.tar.gz` contains one self-contained `main.py`. It remains local until its benchmark and packaging gates pass. The submitted v0.2.1/v0.6.1 and frozen v0.4.0/v0.5.0/v0.5.1/v0.6.0 artifacts remain exact controls.
 
 Kaggle accepted v0.2.1 after v0.2.0 exposed a runtime package-name collision with the generic module name `agents`. Four reviewed matches produced a 1–3 record and exposed fixed labor, market-crowding, and terminal liquidation failures. The compact archive is `results/kaggle_v0_2_1_match_history.json`.
 
@@ -104,7 +104,11 @@ Reverse Horizon v0.6 is also a held candidate. Its first checkpoint lost 8-12 to
 
 Reverse Horizon v0.6.1 adds marginal crop/livestock economics, probability-weighted strategy-group utility, profitable fertilizer allocation, and deadline-aware global worker assignment. Its first unbounded router timed out on held-out seed 10; bounding the candidate set to three task alternatives per worker fixed that case at 75.64 ms and was added as a stress regression. The final exact 10,039-byte artifact went 60-0 against the v0.5 class: 20-0 against v0.5.0 (+14,911.6 average), 20-0 against v0.5.1 (+14,072.05), and 20-0 on held-out seeds 10-19 against v0.5.1 (+13,222.8). The combined worst margin was +8,748, with zero runtime failures, zero suspicious fallbacks, and a 319.111 ms maximum local action time. It is promoted locally; unfamiliar Kaggle ladder architectures remain the next test.
 
-v0.6.1 was submitted to Kaggle on August 15 ET / August 16 UTC. The exact frozen artifact was accepted with an initial score of 600.0 and rank #2,891. The only available episode at the first checkpoint was validation self-play, so competitive conclusions are deferred until external matches arrive.
+v0.6.1 was submitted to Kaggle on August 15 ET / August 16 UTC. After 18 visible external matches it was 9–9 with a 562.2 score. Episode 93564365 against PQ_Marz exposed a specific blind spot: our cash led through the middle game while the opponent accumulated far more land, crops, and animals, then won 60,301 to 57,559.
+
+Adaptive Horizon v0.7.0 turns that replay into `results/kaggle_v0_6_1_pq_marz_regression.json`. The temporal regression detects livestock compounding by day 9, a 35-tile scale gap and fifth-animal response by day 12, and a 24-animal gap by day 21. A naive second-quadrant branch was tested and rejected after going 0–4 against v0.6.1 with a −10,982 average margin; extra plots increased chore and travel load faster than realized output. Use `scripts/extract_replay_learning.py` to convert future Kaggle replays into the same compact evidence format.
+
+The final exact both-seat suite against frozen v0.6.1 finished 7–7–6 across 20 games, with a +103.8 average margin, −4,621 minimum margin, zero runtime failures, zero suspicious fallbacks, and 123.095 ms maximum action time. This is a non-regression result with one improved asymmetric seed, not evidence of superiority. The local 12,785-byte artifact passed the single-file packaging contract with SHA-256 `0c1c5cbbd21f7f094173a2b8dd2cc1f51f853df6c64d8bef52b7a43590588ab7`; it should remain on hold until broader opponent-family tests justify a ladder submission.
 
 ## Sources
 
