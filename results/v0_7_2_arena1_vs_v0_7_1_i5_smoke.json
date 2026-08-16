@@ -1,0 +1,3059 @@
+{
+  "complete": true,
+  "expected_episodes": 2,
+  "baseline": "kaggriculture-v0.7.1-i5.tar.gz",
+  "challenger": "kaggriculture-v0.7.2-arena1.tar.gz",
+  "configuration": {
+    "seed_start": 620,
+    "seeds": 1,
+    "seat_orders": 2
+  },
+  "artifact": {
+    "bytes": 17425,
+    "sha256": "32f35b2cd1115961de5feaa8b150764cb7322923799ce1c4b0dc65fc6d9e2767",
+    "load_ms": 37.49
+  },
+  "summary": {
+    "episodes": 2,
+    "wins": 0,
+    "losses": 2,
+    "ties": 0,
+    "average_margin": -12363.5,
+    "minimum_margin": -13211.0,
+    "runtime_failures": 0,
+    "suspicious_fallback_turns": 0,
+    "maximum_action_ms": 368.852
+  },
+  "games": [
+    {
+      "seed": 620,
+      "seat": 0,
+      "result": "loss",
+      "challenger_bank": 48128.0,
+      "baseline_bank": 61339.0,
+      "margin": -13211.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "suspicious_fallback_turns": 0,
+      "max_action_ms": 348.828,
+      "average_action_ms": 11.058,
+      "daily_trace": [
+        {
+          "day": 0,
+          "bank": 3000.0,
+          "opponent_bank": 3000.0,
+          "crops": {},
+          "opponent_crops": {},
+          "animals": {},
+          "opponent_animals": {},
+          "shed": {
+            "WHEAT": 0,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 0,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 0,
+            "WOOL": 0,
+            "FERTILIZER": 0,
+            "GOOSE": 0,
+            "COW": 0,
+            "SHEEP": 0
+          },
+          "prices": {
+            "WHEAT": 25,
+            "CARROT": 35,
+            "TOMATO": 60,
+            "STRAWBERRY": 120,
+            "MELON": 250,
+            "EGG": 50,
+            "MILK": 160,
+            "WOOL": 200,
+            "FERTILIZER": 100
+          },
+          "shops": []
+        },
+        {
+          "day": 1,
+          "bank": 25.0,
+          "opponent_bank": 2158.0,
+          "crops": {
+            "MELON": 7,
+            "WHEAT": 7
+          },
+          "opponent_crops": {
+            "MELON": 10,
+            "WHEAT": 2
+          },
+          "animals": {
+            "COW": 2,
+            "SHEEP": 2
+          },
+          "opponent_animals": {},
+          "shed": {
+            "WHEAT": 1,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 0,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 0,
+            "WOOL": 0,
+            "FERTILIZER": 0,
+            "GOOSE": 0,
+            "COW": 0,
+            "SHEEP": 0
+          },
+          "prices": {
+            "WHEAT": 27,
+            "CARROT": 36,
+            "TOMATO": 60,
+            "STRAWBERRY": 128,
+            "MELON": 256,
+            "EGG": 50,
+            "MILK": 169,
+            "WOOL": 206,
+            "FERTILIZER": 100
+          },
+          "shops": []
+        },
+        {
+          "day": 2,
+          "bank": 240.0,
+          "opponent_bank": 2138.0,
+          "crops": {
+            "MELON": 7,
+            "WHEAT": 7
+          },
+          "opponent_crops": {
+            "MELON": 10,
+            "WHEAT": 2
+          },
+          "animals": {
+            "COW": 2,
+            "SHEEP": 2
+          },
+          "opponent_animals": {},
+          "shed": {
+            "WHEAT": 3,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 0,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 0,
+            "WOOL": 0,
+            "FERTILIZER": 0,
+            "GOOSE": 0,
+            "COW": 0,
+            "SHEEP": 0
+          },
+          "prices": {
+            "WHEAT": 28,
+            "CARROT": 36,
+            "TOMATO": 60,
+            "STRAWBERRY": 132,
+            "MELON": 260,
+            "EGG": 50,
+            "MILK": 172,
+            "WOOL": 209,
+            "FERTILIZER": 99
+          },
+          "shops": []
+        },
+        {
+          "day": 3,
+          "bank": 169.0,
+          "opponent_bank": 2098.0,
+          "crops": {
+            "MELON": 12,
+            "WHEAT": 7
+          },
+          "opponent_crops": {
+            "MELON": 10,
+            "WHEAT": 5
+          },
+          "animals": {
+            "COW": 2,
+            "SHEEP": 2
+          },
+          "opponent_animals": {},
+          "shed": {
+            "WHEAT": 12,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 0,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 0,
+            "WOOL": 0,
+            "FERTILIZER": 0,
+            "GOOSE": 0,
+            "COW": 0,
+            "SHEEP": 0
+          },
+          "prices": {
+            "WHEAT": 30,
+            "CARROT": 37,
+            "TOMATO": 60,
+            "STRAWBERRY": 135,
+            "MELON": 262,
+            "EGG": 50,
+            "MILK": 175,
+            "WOOL": 212,
+            "FERTILIZER": 98
+          },
+          "shops": [
+            "ICE_CREAM_SHOP"
+          ]
+        },
+        {
+          "day": 4,
+          "bank": 294.0,
+          "opponent_bank": 2065.0,
+          "crops": {
+            "MELON": 12,
+            "WHEAT": 7
+          },
+          "opponent_crops": {
+            "MELON": 10,
+            "WHEAT": 5
+          },
+          "animals": {
+            "COW": 2,
+            "SHEEP": 2
+          },
+          "opponent_animals": {},
+          "shed": {
+            "WHEAT": 12,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 0,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 0,
+            "WOOL": 0,
+            "FERTILIZER": 0,
+            "GOOSE": 0,
+            "COW": 0,
+            "SHEEP": 0
+          },
+          "prices": {
+            "WHEAT": 31,
+            "CARROT": 37,
+            "TOMATO": 60,
+            "STRAWBERRY": 147,
+            "MELON": 264,
+            "EGG": 50,
+            "MILK": 187,
+            "WOOL": 214,
+            "FERTILIZER": 98
+          },
+          "shops": [
+            "ICE_CREAM_SHOP"
+          ]
+        },
+        {
+          "day": 5,
+          "bank": 510.0,
+          "opponent_bank": 2012.0,
+          "crops": {
+            "MELON": 12,
+            "WHEAT": 3
+          },
+          "opponent_crops": {
+            "MELON": 10,
+            "WHEAT": 5
+          },
+          "animals": {
+            "COW": 2,
+            "SHEEP": 2
+          },
+          "opponent_animals": {},
+          "shed": {
+            "WHEAT": 29,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 0,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 0,
+            "WOOL": 0,
+            "FERTILIZER": 0,
+            "GOOSE": 0,
+            "COW": 0,
+            "SHEEP": 0
+          },
+          "prices": {
+            "WHEAT": 31,
+            "CARROT": 37,
+            "TOMATO": 61,
+            "STRAWBERRY": 155,
+            "MELON": 266,
+            "EGG": 50,
+            "MILK": 196,
+            "WOOL": 215,
+            "FERTILIZER": 97
+          },
+          "shops": [
+            "ICE_CREAM_SHOP"
+          ]
+        },
+        {
+          "day": 6,
+          "bank": 353.0,
+          "opponent_bank": 1979.0,
+          "crops": {
+            "MELON": 12,
+            "WHEAT": 3,
+            "STRAWBERRY": 4
+          },
+          "opponent_crops": {
+            "MELON": 10,
+            "WHEAT": 5
+          },
+          "animals": {
+            "COW": 2,
+            "SHEEP": 2
+          },
+          "opponent_animals": {},
+          "shed": {
+            "WHEAT": 25,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 0,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 0,
+            "WOOL": 0,
+            "FERTILIZER": 0,
+            "GOOSE": 0,
+            "COW": 0,
+            "SHEEP": 0
+          },
+          "prices": {
+            "WHEAT": 32,
+            "CARROT": 37,
+            "TOMATO": 61,
+            "STRAWBERRY": 161,
+            "MELON": 267,
+            "EGG": 50,
+            "MILK": 203,
+            "WOOL": 217,
+            "FERTILIZER": 96
+          },
+          "shops": [
+            "ICE_CREAM_SHOP",
+            "ICE_CREAM_SHOP"
+          ]
+        },
+        {
+          "day": 7,
+          "bank": 884.0,
+          "opponent_bank": 1916.0,
+          "crops": {
+            "MELON": 12,
+            "WHEAT": 3,
+            "STRAWBERRY": 4
+          },
+          "opponent_crops": {
+            "MELON": 10,
+            "WHEAT": 5
+          },
+          "animals": {
+            "COW": 4,
+            "SHEEP": 2
+          },
+          "opponent_animals": {},
+          "shed": {
+            "WHEAT": 21,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 0,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 0,
+            "WOOL": 0,
+            "FERTILIZER": 0,
+            "GOOSE": 0,
+            "COW": 0,
+            "SHEEP": 0
+          },
+          "prices": {
+            "WHEAT": 33,
+            "CARROT": 37,
+            "TOMATO": 61,
+            "STRAWBERRY": 171,
+            "MELON": 268,
+            "EGG": 50,
+            "MILK": 213,
+            "WOOL": 199,
+            "FERTILIZER": 95
+          },
+          "shops": [
+            "ICE_CREAM_SHOP",
+            "ICE_CREAM_SHOP"
+          ]
+        },
+        {
+          "day": 8,
+          "bank": 179.0,
+          "opponent_bank": 1883.0,
+          "crops": {
+            "MELON": 12,
+            "STRAWBERRY": 9,
+            "WHEAT": 3
+          },
+          "opponent_crops": {
+            "MELON": 10,
+            "WHEAT": 5
+          },
+          "animals": {
+            "COW": 4,
+            "SHEEP": 2
+          },
+          "opponent_animals": {},
+          "shed": {
+            "WHEAT": 18,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 0,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 0,
+            "WOOL": 0,
+            "FERTILIZER": 0,
+            "GOOSE": 0,
+            "COW": 0,
+            "SHEEP": 0
+          },
+          "prices": {
+            "WHEAT": 34,
+            "CARROT": 38,
+            "TOMATO": 61,
+            "STRAWBERRY": 179,
+            "MELON": 269,
+            "EGG": 50,
+            "MILK": 221,
+            "WOOL": 200,
+            "FERTILIZER": 94
+          },
+          "shops": [
+            "ICE_CREAM_SHOP",
+            "ICE_CREAM_SHOP"
+          ]
+        },
+        {
+          "day": 9,
+          "bank": 367.0,
+          "opponent_bank": 1830.0,
+          "crops": {
+            "MELON": 12,
+            "STRAWBERRY": 11,
+            "WHEAT": 3
+          },
+          "opponent_crops": {
+            "MELON": 10,
+            "WHEAT": 5
+          },
+          "animals": {
+            "COW": 4,
+            "SHEEP": 2
+          },
+          "opponent_animals": {},
+          "shed": {
+            "WHEAT": 21,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 0,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 12,
+            "WOOL": 0,
+            "FERTILIZER": 0,
+            "GOOSE": 0,
+            "COW": 0,
+            "SHEEP": 0
+          },
+          "prices": {
+            "WHEAT": 35,
+            "CARROT": 38,
+            "TOMATO": 61,
+            "STRAWBERRY": 187,
+            "MELON": 270,
+            "EGG": 51,
+            "MILK": 229,
+            "WOOL": 200,
+            "FERTILIZER": 93
+          },
+          "shops": [
+            "ICE_CREAM_SHOP",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET"
+          ]
+        },
+        {
+          "day": 10,
+          "bank": 206.0,
+          "opponent_bank": 1797.0,
+          "crops": {
+            "MELON": 12,
+            "STRAWBERRY": 11,
+            "WHEAT": 3
+          },
+          "opponent_crops": {
+            "MELON": 10,
+            "WHEAT": 5
+          },
+          "animals": {
+            "COW": 7,
+            "SHEEP": 2
+          },
+          "opponent_animals": {},
+          "shed": {
+            "WHEAT": 15,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 0,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 0,
+            "WOOL": 8,
+            "FERTILIZER": 3,
+            "GOOSE": 0,
+            "COW": 1,
+            "SHEEP": 1
+          },
+          "prices": {
+            "WHEAT": 36,
+            "CARROT": 38,
+            "TOMATO": 62,
+            "STRAWBERRY": 196,
+            "MELON": 271,
+            "EGG": 51,
+            "MILK": 230,
+            "WOOL": 200,
+            "FERTILIZER": 92
+          },
+          "shops": [
+            "ICE_CREAM_SHOP",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET"
+          ]
+        },
+        {
+          "day": 11,
+          "bank": 2108.0,
+          "opponent_bank": 1734.0,
+          "crops": {
+            "MELON": 12,
+            "STRAWBERRY": 11,
+            "WHEAT": 3
+          },
+          "opponent_crops": {
+            "MELON": 10,
+            "WHEAT": 5
+          },
+          "animals": {
+            "COW": 7,
+            "SHEEP": 2
+          },
+          "opponent_animals": {},
+          "shed": {
+            "WHEAT": 27,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 0,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 3,
+            "WOOL": 0,
+            "FERTILIZER": 1,
+            "GOOSE": 0,
+            "COW": 1,
+            "SHEEP": 2
+          },
+          "prices": {
+            "WHEAT": 37,
+            "CARROT": 39,
+            "TOMATO": 63,
+            "STRAWBERRY": 204,
+            "MELON": 272,
+            "EGG": 51,
+            "MILK": 235,
+            "WOOL": 197,
+            "FERTILIZER": 90
+          },
+          "shops": [
+            "ICE_CREAM_SHOP",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET"
+          ]
+        },
+        {
+          "day": 12,
+          "bank": 3223.0,
+          "opponent_bank": 1701.0,
+          "crops": {
+            "MELON": 12,
+            "STRAWBERRY": 11,
+            "WHEAT": 3
+          },
+          "opponent_crops": {
+            "MELON": 10,
+            "WHEAT": 5
+          },
+          "animals": {
+            "COW": 7,
+            "SHEEP": 2
+          },
+          "opponent_animals": {},
+          "shed": {
+            "WHEAT": 27,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 0,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 0,
+            "WOOL": 0,
+            "FERTILIZER": 0,
+            "GOOSE": 0,
+            "COW": 1,
+            "SHEEP": 2
+          },
+          "prices": {
+            "WHEAT": 38,
+            "CARROT": 39,
+            "TOMATO": 64,
+            "STRAWBERRY": 212,
+            "MELON": 272,
+            "EGG": 51,
+            "MILK": 240,
+            "WOOL": 198,
+            "FERTILIZER": 88
+          },
+          "shops": [
+            "ICE_CREAM_SHOP",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET",
+            "PET_CAFE"
+          ]
+        },
+        {
+          "day": 13,
+          "bank": 21.0,
+          "opponent_bank": 1954.0,
+          "crops": {
+            "MELON": 5,
+            "STRAWBERRY": 11
+          },
+          "opponent_crops": {
+            "STRAWBERRY": 12,
+            "WHEAT": 5,
+            "TOMATO": 2
+          },
+          "animals": {
+            "COW": 8,
+            "SHEEP": 3
+          },
+          "opponent_animals": {},
+          "shed": {
+            "WHEAT": 27,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 0,
+            "MELON": 42,
+            "EGG": 0,
+            "MILK": 3,
+            "WOOL": 6,
+            "FERTILIZER": 3,
+            "GOOSE": 0,
+            "COW": 0,
+            "SHEEP": 1
+          },
+          "prices": {
+            "WHEAT": 39,
+            "CARROT": 39,
+            "TOMATO": 64,
+            "STRAWBERRY": 219,
+            "MELON": 268,
+            "EGG": 51,
+            "MILK": 246,
+            "WOOL": 199,
+            "FERTILIZER": 88
+          },
+          "shops": [
+            "ICE_CREAM_SHOP",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET",
+            "PET_CAFE"
+          ]
+        },
+        {
+          "day": 14,
+          "bank": 7661.0,
+          "opponent_bank": 13160.0,
+          "crops": {
+            "MELON": 5,
+            "STRAWBERRY": 11
+          },
+          "opponent_crops": {
+            "STRAWBERRY": 12,
+            "WHEAT": 5,
+            "TOMATO": 2
+          },
+          "animals": {
+            "COW": 8,
+            "SHEEP": 3
+          },
+          "opponent_animals": {
+            "COW": 5
+          },
+          "shed": {
+            "WHEAT": 32,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 0,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 0,
+            "WOOL": 0,
+            "FERTILIZER": 5,
+            "GOOSE": 0,
+            "COW": 2,
+            "SHEEP": 1
+          },
+          "prices": {
+            "WHEAT": 40,
+            "CARROT": 40,
+            "TOMATO": 65,
+            "STRAWBERRY": 226,
+            "MELON": 173,
+            "EGG": 51,
+            "MILK": 250,
+            "WOOL": 194,
+            "FERTILIZER": 88
+          },
+          "shops": [
+            "ICE_CREAM_SHOP",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET",
+            "PET_CAFE"
+          ]
+        },
+        {
+          "day": 15,
+          "bank": 7114.0,
+          "opponent_bank": 12987.0,
+          "crops": {
+            "STRAWBERRY": 11
+          },
+          "opponent_crops": {
+            "STRAWBERRY": 12,
+            "WHEAT": 5,
+            "TOMATO": 2
+          },
+          "animals": {
+            "COW": 8,
+            "SHEEP": 3
+          },
+          "opponent_animals": {
+            "COW": 5
+          },
+          "shed": {
+            "WHEAT": 33,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 0,
+            "MELON": 29,
+            "EGG": 0,
+            "MILK": 14,
+            "WOOL": 0,
+            "FERTILIZER": 3,
+            "GOOSE": 0,
+            "COW": 2,
+            "SHEEP": 1
+          },
+          "prices": {
+            "WHEAT": 41,
+            "CARROT": 40,
+            "TOMATO": 66,
+            "STRAWBERRY": 232,
+            "MELON": 174,
+            "EGG": 51,
+            "MILK": 255,
+            "WOOL": 195,
+            "FERTILIZER": 88
+          },
+          "shops": [
+            "ICE_CREAM_SHOP",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET",
+            "PET_CAFE",
+            "YARN_STORE"
+          ]
+        },
+        {
+          "day": 16,
+          "bank": 11394.0,
+          "opponent_bank": 13282.0,
+          "crops": {
+            "STRAWBERRY": 10
+          },
+          "opponent_crops": {
+            "STRAWBERRY": 12,
+            "WHEAT": 5,
+            "TOMATO": 2
+          },
+          "animals": {
+            "COW": 8,
+            "SHEEP": 3
+          },
+          "opponent_animals": {
+            "COW": 5
+          },
+          "shed": {
+            "WHEAT": 33,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 8,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 0,
+            "WOOL": 4,
+            "FERTILIZER": 12,
+            "GOOSE": 0,
+            "COW": 2,
+            "SHEEP": 7
+          },
+          "prices": {
+            "WHEAT": 42,
+            "CARROT": 40,
+            "TOMATO": 67,
+            "STRAWBERRY": 238,
+            "MELON": 118,
+            "EGG": 51,
+            "MILK": 255,
+            "WOOL": 214,
+            "FERTILIZER": 87
+          },
+          "shops": [
+            "ICE_CREAM_SHOP",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET",
+            "PET_CAFE",
+            "YARN_STORE"
+          ]
+        },
+        {
+          "day": 17,
+          "bank": 14768.0,
+          "opponent_bank": 13636.0,
+          "crops": {
+            "STRAWBERRY": 14,
+            "WHEAT": 7
+          },
+          "opponent_crops": {
+            "STRAWBERRY": 12,
+            "WHEAT": 5,
+            "TOMATO": 2
+          },
+          "animals": {
+            "COW": 8,
+            "SHEEP": 3
+          },
+          "opponent_animals": {
+            "COW": 5
+          },
+          "shed": {
+            "WHEAT": 22,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 0,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 4,
+            "WOOL": 0,
+            "FERTILIZER": 11,
+            "GOOSE": 0,
+            "COW": 2,
+            "SHEEP": 7
+          },
+          "prices": {
+            "WHEAT": 43,
+            "CARROT": 41,
+            "TOMATO": 68,
+            "STRAWBERRY": 241,
+            "MELON": 120,
+            "EGG": 51,
+            "MILK": 260,
+            "WOOL": 223,
+            "FERTILIZER": 84
+          },
+          "shops": [
+            "ICE_CREAM_SHOP",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET",
+            "PET_CAFE",
+            "YARN_STORE"
+          ]
+        },
+        {
+          "day": 18,
+          "bank": 16124.0,
+          "opponent_bank": 13909.0,
+          "crops": {
+            "STRAWBERRY": 14,
+            "WHEAT": 7
+          },
+          "opponent_crops": {
+            "STRAWBERRY": 12,
+            "WHEAT": 5,
+            "TOMATO": 2
+          },
+          "animals": {
+            "COW": 8,
+            "SHEEP": 3
+          },
+          "opponent_animals": {
+            "COW": 5
+          },
+          "shed": {
+            "WHEAT": 12,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 16,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 14,
+            "WOOL": 0,
+            "FERTILIZER": 7,
+            "GOOSE": 0,
+            "COW": 2,
+            "SHEEP": 7
+          },
+          "prices": {
+            "WHEAT": 43,
+            "CARROT": 41,
+            "TOMATO": 69,
+            "STRAWBERRY": 246,
+            "MELON": 122,
+            "EGG": 51,
+            "MILK": 263,
+            "WOOL": 228,
+            "FERTILIZER": 81
+          },
+          "shops": [
+            "ICE_CREAM_SHOP",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET",
+            "PET_CAFE",
+            "YARN_STORE",
+            "PET_CAFE"
+          ]
+        },
+        {
+          "day": 19,
+          "bank": 23814.0,
+          "opponent_bank": 13778.0,
+          "crops": {
+            "STRAWBERRY": 14,
+            "WHEAT": 7
+          },
+          "opponent_crops": {
+            "STRAWBERRY": 12,
+            "WHEAT": 5,
+            "TOMATO": 2
+          },
+          "animals": {
+            "COW": 8,
+            "SHEEP": 2
+          },
+          "opponent_animals": {
+            "COW": 5
+          },
+          "shed": {
+            "WHEAT": 3,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 4,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 11,
+            "WOOL": 7,
+            "FERTILIZER": 6,
+            "GOOSE": 0,
+            "COW": 2,
+            "SHEEP": 7
+          },
+          "prices": {
+            "WHEAT": 44,
+            "CARROT": 41,
+            "TOMATO": 69,
+            "STRAWBERRY": 247,
+            "MELON": 125,
+            "EGG": 51,
+            "MILK": 263,
+            "WOOL": 232,
+            "FERTILIZER": 80
+          },
+          "shops": [
+            "ICE_CREAM_SHOP",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET",
+            "PET_CAFE",
+            "YARN_STORE",
+            "PET_CAFE"
+          ]
+        },
+        {
+          "day": 20,
+          "bank": 29326.0,
+          "opponent_bank": 13690.0,
+          "crops": {
+            "STRAWBERRY": 14,
+            "WHEAT": 7
+          },
+          "opponent_crops": {
+            "STRAWBERRY": 12,
+            "WHEAT": 5,
+            "TOMATO": 2
+          },
+          "animals": {
+            "COW": 7,
+            "SHEEP": 3
+          },
+          "opponent_animals": {
+            "COW": 5
+          },
+          "shed": {
+            "WHEAT": 0,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 11,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 5,
+            "WOOL": 0,
+            "FERTILIZER": 4,
+            "GOOSE": 0,
+            "COW": 2,
+            "SHEEP": 6
+          },
+          "prices": {
+            "WHEAT": 44,
+            "CARROT": 41,
+            "TOMATO": 70,
+            "STRAWBERRY": 251,
+            "MELON": 127,
+            "EGG": 51,
+            "MILK": 264,
+            "WOOL": 233,
+            "FERTILIZER": 80
+          },
+          "shops": [
+            "ICE_CREAM_SHOP",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET",
+            "PET_CAFE",
+            "YARN_STORE",
+            "PET_CAFE"
+          ]
+        },
+        {
+          "day": 21,
+          "bank": 31093.0,
+          "opponent_bank": 13582.0,
+          "crops": {
+            "STRAWBERRY": 14
+          },
+          "opponent_crops": {
+            "STRAWBERRY": 12,
+            "WHEAT": 5,
+            "TOMATO": 2
+          },
+          "animals": {
+            "COW": 7,
+            "SHEEP": 4
+          },
+          "opponent_animals": {
+            "COW": 5
+          },
+          "shed": {
+            "WHEAT": 11,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 2,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 5,
+            "WOOL": 0,
+            "FERTILIZER": 13,
+            "GOOSE": 0,
+            "COW": 2,
+            "SHEEP": 5
+          },
+          "prices": {
+            "WHEAT": 45,
+            "CARROT": 41,
+            "TOMATO": 71,
+            "STRAWBERRY": 253,
+            "MELON": 129,
+            "EGG": 51,
+            "MILK": 266,
+            "WOOL": 235,
+            "FERTILIZER": 80
+          },
+          "shops": [
+            "ICE_CREAM_SHOP",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET",
+            "PET_CAFE",
+            "YARN_STORE",
+            "PET_CAFE",
+            "BAKERY"
+          ]
+        },
+        {
+          "day": 22,
+          "bank": 33503.0,
+          "opponent_bank": 15908.0,
+          "crops": {
+            "STRAWBERRY": 14
+          },
+          "opponent_crops": {
+            "STRAWBERRY": 12,
+            "WHEAT": 5,
+            "TOMATO": 2
+          },
+          "animals": {
+            "COW": 7,
+            "SHEEP": 4
+          },
+          "opponent_animals": {
+            "COW": 5
+          },
+          "shed": {
+            "WHEAT": 5,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 10,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 2,
+            "WOOL": 2,
+            "FERTILIZER": 4,
+            "GOOSE": 0,
+            "COW": 2,
+            "SHEEP": 5
+          },
+          "prices": {
+            "WHEAT": 45,
+            "CARROT": 41,
+            "TOMATO": 71,
+            "STRAWBERRY": 258,
+            "MELON": 131,
+            "EGG": 52,
+            "MILK": 267,
+            "WOOL": 237,
+            "FERTILIZER": 77
+          },
+          "shops": [
+            "ICE_CREAM_SHOP",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET",
+            "PET_CAFE",
+            "YARN_STORE",
+            "PET_CAFE",
+            "BAKERY"
+          ]
+        },
+        {
+          "day": 23,
+          "bank": 33360.0,
+          "opponent_bank": 15735.0,
+          "crops": {
+            "STRAWBERRY": 10
+          },
+          "opponent_crops": {
+            "STRAWBERRY": 12,
+            "WHEAT": 2,
+            "TOMATO": 2
+          },
+          "animals": {
+            "COW": 4,
+            "SHEEP": 2
+          },
+          "opponent_animals": {
+            "COW": 5
+          },
+          "shed": {
+            "WHEAT": 0,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 13,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 8,
+            "WOOL": 2,
+            "FERTILIZER": 8,
+            "GOOSE": 0,
+            "COW": 2,
+            "SHEEP": 5
+          },
+          "prices": {
+            "WHEAT": 46,
+            "CARROT": 42,
+            "TOMATO": 72,
+            "STRAWBERRY": 263,
+            "MELON": 133,
+            "EGG": 52,
+            "MILK": 272,
+            "WOOL": 238,
+            "FERTILIZER": 77
+          },
+          "shops": [
+            "ICE_CREAM_SHOP",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET",
+            "PET_CAFE",
+            "YARN_STORE",
+            "PET_CAFE",
+            "BAKERY"
+          ]
+        },
+        {
+          "day": 24,
+          "bank": 33635.0,
+          "opponent_bank": 28861.0,
+          "crops": {
+            "STRAWBERRY": 10
+          },
+          "opponent_crops": {
+            "STRAWBERRY": 12,
+            "WHEAT": 2,
+            "TOMATO": 2
+          },
+          "animals": {
+            "COW": 3,
+            "SHEEP": 2
+          },
+          "opponent_animals": {
+            "COW": 5
+          },
+          "shed": {
+            "WHEAT": 0,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 20,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 8,
+            "WOOL": 2,
+            "FERTILIZER": 3,
+            "GOOSE": 0,
+            "COW": 2,
+            "SHEEP": 5
+          },
+          "prices": {
+            "WHEAT": 47,
+            "CARROT": 42,
+            "TOMATO": 72,
+            "STRAWBERRY": 261,
+            "MELON": 136,
+            "EGG": 53,
+            "MILK": 268,
+            "WOOL": 239,
+            "FERTILIZER": 77
+          },
+          "shops": [
+            "ICE_CREAM_SHOP",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET",
+            "PET_CAFE",
+            "YARN_STORE",
+            "PET_CAFE",
+            "BAKERY",
+            "PET_CAFE"
+          ]
+        },
+        {
+          "day": 25,
+          "bank": 33602.0,
+          "opponent_bank": 28753.0,
+          "crops": {
+            "STRAWBERRY": 6
+          },
+          "opponent_crops": {
+            "STRAWBERRY": 12,
+            "WHEAT": 4
+          },
+          "animals": {},
+          "opponent_animals": {
+            "COW": 5
+          },
+          "shed": {
+            "WHEAT": 0,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 23,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 11,
+            "WOOL": 4,
+            "FERTILIZER": 5,
+            "GOOSE": 0,
+            "COW": 2,
+            "SHEEP": 5
+          },
+          "prices": {
+            "WHEAT": 47,
+            "CARROT": 42,
+            "TOMATO": 73,
+            "STRAWBERRY": 266,
+            "MELON": 138,
+            "EGG": 53,
+            "MILK": 272,
+            "WOOL": 240,
+            "FERTILIZER": 77
+          },
+          "shops": [
+            "ICE_CREAM_SHOP",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET",
+            "PET_CAFE",
+            "YARN_STORE",
+            "PET_CAFE",
+            "BAKERY",
+            "PET_CAFE"
+          ]
+        },
+        {
+          "day": 26,
+          "bank": 33900.0,
+          "opponent_bank": 28775.0,
+          "crops": {
+            "STRAWBERRY": 4,
+            "WHEAT": 5
+          },
+          "opponent_crops": {
+            "STRAWBERRY": 12,
+            "WHEAT": 4
+          },
+          "animals": {},
+          "opponent_animals": {
+            "COW": 5
+          },
+          "shed": {
+            "WHEAT": 0,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 23,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 11,
+            "WOOL": 4,
+            "FERTILIZER": 0,
+            "GOOSE": 0,
+            "COW": 2,
+            "SHEEP": 5
+          },
+          "prices": {
+            "WHEAT": 48,
+            "CARROT": 42,
+            "TOMATO": 74,
+            "STRAWBERRY": 270,
+            "MELON": 140,
+            "EGG": 53,
+            "MILK": 277,
+            "WOOL": 241,
+            "FERTILIZER": 76
+          },
+          "shops": [
+            "ICE_CREAM_SHOP",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET",
+            "PET_CAFE",
+            "YARN_STORE",
+            "PET_CAFE",
+            "BAKERY",
+            "PET_CAFE"
+          ]
+        },
+        {
+          "day": 27,
+          "bank": 33880.0,
+          "opponent_bank": 28687.0,
+          "crops": {
+            "STRAWBERRY": 4,
+            "WHEAT": 5
+          },
+          "opponent_crops": {
+            "STRAWBERRY": 12,
+            "WHEAT": 4
+          },
+          "animals": {},
+          "opponent_animals": {
+            "COW": 5
+          },
+          "shed": {
+            "WHEAT": 0,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 31,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 11,
+            "WOOL": 4,
+            "FERTILIZER": 0,
+            "GOOSE": 0,
+            "COW": 2,
+            "SHEEP": 5
+          },
+          "prices": {
+            "WHEAT": 48,
+            "CARROT": 42,
+            "TOMATO": 75,
+            "STRAWBERRY": 275,
+            "MELON": 142,
+            "EGG": 54,
+            "MILK": 281,
+            "WOOL": 242,
+            "FERTILIZER": 76
+          },
+          "shops": [
+            "ICE_CREAM_SHOP",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET",
+            "PET_CAFE",
+            "YARN_STORE",
+            "PET_CAFE",
+            "BAKERY",
+            "PET_CAFE"
+          ]
+        },
+        {
+          "day": 28,
+          "bank": 33868.0,
+          "opponent_bank": 41032.0,
+          "crops": {
+            "STRAWBERRY": 4,
+            "WHEAT": 5
+          },
+          "opponent_crops": {
+            "STRAWBERRY": 12,
+            "WHEAT": 4
+          },
+          "animals": {},
+          "opponent_animals": {
+            "COW": 5
+          },
+          "shed": {
+            "WHEAT": 0,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 31,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 11,
+            "WOOL": 4,
+            "FERTILIZER": 0,
+            "GOOSE": 0,
+            "COW": 2,
+            "SHEEP": 5
+          },
+          "prices": {
+            "WHEAT": 49,
+            "CARROT": 42,
+            "TOMATO": 75,
+            "STRAWBERRY": 269,
+            "MELON": 144,
+            "EGG": 54,
+            "MILK": 285,
+            "WOOL": 243,
+            "FERTILIZER": 75
+          },
+          "shops": [
+            "ICE_CREAM_SHOP",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET",
+            "PET_CAFE",
+            "YARN_STORE",
+            "PET_CAFE",
+            "BAKERY",
+            "PET_CAFE"
+          ]
+        },
+        {
+          "day": 29,
+          "bank": 46418.0,
+          "opponent_bank": 53535.0,
+          "crops": {
+            "STRAWBERRY": 4,
+            "WHEAT": 5
+          },
+          "opponent_crops": {
+            "STRAWBERRY": 12
+          },
+          "animals": {},
+          "opponent_animals": {
+            "COW": 5
+          },
+          "shed": {
+            "WHEAT": 0,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 4,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 0,
+            "WOOL": 0,
+            "FERTILIZER": 0,
+            "GOOSE": 0,
+            "COW": 2,
+            "SHEEP": 5
+          },
+          "prices": {
+            "WHEAT": 49,
+            "CARROT": 42,
+            "TOMATO": 76,
+            "STRAWBERRY": 265,
+            "MELON": 146,
+            "EGG": 55,
+            "MILK": 272,
+            "WOOL": 243,
+            "FERTILIZER": 74
+          },
+          "shops": [
+            "ICE_CREAM_SHOP",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET",
+            "PET_CAFE",
+            "YARN_STORE",
+            "PET_CAFE",
+            "BAKERY",
+            "PET_CAFE"
+          ]
+        }
+      ]
+    },
+    {
+      "seed": 620,
+      "seat": 1,
+      "result": "loss",
+      "challenger_bank": 51825.0,
+      "baseline_bank": 63341.0,
+      "margin": -11516.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "suspicious_fallback_turns": 0,
+      "max_action_ms": 368.852,
+      "average_action_ms": 11.242,
+      "daily_trace": [
+        {
+          "day": 0,
+          "bank": 3000.0,
+          "opponent_bank": 3000.0,
+          "crops": {},
+          "opponent_crops": {},
+          "animals": {},
+          "opponent_animals": {},
+          "shed": {
+            "WHEAT": 0,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 0,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 0,
+            "WOOL": 0,
+            "FERTILIZER": 0,
+            "GOOSE": 0,
+            "COW": 0,
+            "SHEEP": 0
+          },
+          "prices": {
+            "WHEAT": 25,
+            "CARROT": 35,
+            "TOMATO": 60,
+            "STRAWBERRY": 120,
+            "MELON": 250,
+            "EGG": 50,
+            "MILK": 160,
+            "WOOL": 200,
+            "FERTILIZER": 100
+          },
+          "shops": []
+        },
+        {
+          "day": 1,
+          "bank": 25.0,
+          "opponent_bank": 2158.0,
+          "crops": {
+            "MELON": 7,
+            "WHEAT": 7
+          },
+          "opponent_crops": {
+            "MELON": 10,
+            "WHEAT": 2
+          },
+          "animals": {
+            "COW": 2,
+            "SHEEP": 2
+          },
+          "opponent_animals": {},
+          "shed": {
+            "WHEAT": 1,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 0,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 0,
+            "WOOL": 0,
+            "FERTILIZER": 0,
+            "GOOSE": 0,
+            "COW": 0,
+            "SHEEP": 0
+          },
+          "prices": {
+            "WHEAT": 27,
+            "CARROT": 36,
+            "TOMATO": 60,
+            "STRAWBERRY": 128,
+            "MELON": 256,
+            "EGG": 50,
+            "MILK": 169,
+            "WOOL": 206,
+            "FERTILIZER": 100
+          },
+          "shops": []
+        },
+        {
+          "day": 2,
+          "bank": 240.0,
+          "opponent_bank": 2138.0,
+          "crops": {
+            "MELON": 7,
+            "WHEAT": 7
+          },
+          "opponent_crops": {
+            "MELON": 10,
+            "WHEAT": 2
+          },
+          "animals": {
+            "COW": 2,
+            "SHEEP": 2
+          },
+          "opponent_animals": {},
+          "shed": {
+            "WHEAT": 3,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 0,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 0,
+            "WOOL": 0,
+            "FERTILIZER": 0,
+            "GOOSE": 0,
+            "COW": 0,
+            "SHEEP": 0
+          },
+          "prices": {
+            "WHEAT": 28,
+            "CARROT": 36,
+            "TOMATO": 60,
+            "STRAWBERRY": 132,
+            "MELON": 260,
+            "EGG": 50,
+            "MILK": 172,
+            "WOOL": 209,
+            "FERTILIZER": 99
+          },
+          "shops": []
+        },
+        {
+          "day": 3,
+          "bank": 169.0,
+          "opponent_bank": 2098.0,
+          "crops": {
+            "MELON": 12,
+            "WHEAT": 7
+          },
+          "opponent_crops": {
+            "MELON": 10,
+            "WHEAT": 5
+          },
+          "animals": {
+            "COW": 2,
+            "SHEEP": 2
+          },
+          "opponent_animals": {},
+          "shed": {
+            "WHEAT": 12,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 0,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 0,
+            "WOOL": 0,
+            "FERTILIZER": 0,
+            "GOOSE": 0,
+            "COW": 0,
+            "SHEEP": 0
+          },
+          "prices": {
+            "WHEAT": 30,
+            "CARROT": 37,
+            "TOMATO": 60,
+            "STRAWBERRY": 135,
+            "MELON": 262,
+            "EGG": 50,
+            "MILK": 175,
+            "WOOL": 212,
+            "FERTILIZER": 98
+          },
+          "shops": [
+            "ICE_CREAM_SHOP"
+          ]
+        },
+        {
+          "day": 4,
+          "bank": 294.0,
+          "opponent_bank": 2065.0,
+          "crops": {
+            "MELON": 12,
+            "WHEAT": 7
+          },
+          "opponent_crops": {
+            "MELON": 10,
+            "WHEAT": 5
+          },
+          "animals": {
+            "COW": 2,
+            "SHEEP": 2
+          },
+          "opponent_animals": {},
+          "shed": {
+            "WHEAT": 12,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 0,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 0,
+            "WOOL": 0,
+            "FERTILIZER": 0,
+            "GOOSE": 0,
+            "COW": 0,
+            "SHEEP": 0
+          },
+          "prices": {
+            "WHEAT": 31,
+            "CARROT": 37,
+            "TOMATO": 60,
+            "STRAWBERRY": 147,
+            "MELON": 264,
+            "EGG": 50,
+            "MILK": 187,
+            "WOOL": 214,
+            "FERTILIZER": 98
+          },
+          "shops": [
+            "ICE_CREAM_SHOP"
+          ]
+        },
+        {
+          "day": 5,
+          "bank": 510.0,
+          "opponent_bank": 2012.0,
+          "crops": {
+            "MELON": 12,
+            "WHEAT": 3
+          },
+          "opponent_crops": {
+            "MELON": 10,
+            "WHEAT": 5
+          },
+          "animals": {
+            "COW": 2,
+            "SHEEP": 2
+          },
+          "opponent_animals": {},
+          "shed": {
+            "WHEAT": 29,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 0,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 0,
+            "WOOL": 0,
+            "FERTILIZER": 0,
+            "GOOSE": 0,
+            "COW": 0,
+            "SHEEP": 0
+          },
+          "prices": {
+            "WHEAT": 31,
+            "CARROT": 37,
+            "TOMATO": 61,
+            "STRAWBERRY": 155,
+            "MELON": 266,
+            "EGG": 50,
+            "MILK": 196,
+            "WOOL": 215,
+            "FERTILIZER": 97
+          },
+          "shops": [
+            "ICE_CREAM_SHOP"
+          ]
+        },
+        {
+          "day": 6,
+          "bank": 353.0,
+          "opponent_bank": 1979.0,
+          "crops": {
+            "MELON": 12,
+            "WHEAT": 3,
+            "STRAWBERRY": 4
+          },
+          "opponent_crops": {
+            "MELON": 10,
+            "WHEAT": 5
+          },
+          "animals": {
+            "COW": 2,
+            "SHEEP": 2
+          },
+          "opponent_animals": {},
+          "shed": {
+            "WHEAT": 25,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 0,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 0,
+            "WOOL": 0,
+            "FERTILIZER": 0,
+            "GOOSE": 0,
+            "COW": 0,
+            "SHEEP": 0
+          },
+          "prices": {
+            "WHEAT": 32,
+            "CARROT": 37,
+            "TOMATO": 61,
+            "STRAWBERRY": 161,
+            "MELON": 267,
+            "EGG": 50,
+            "MILK": 203,
+            "WOOL": 217,
+            "FERTILIZER": 96
+          },
+          "shops": [
+            "ICE_CREAM_SHOP",
+            "ICE_CREAM_SHOP"
+          ]
+        },
+        {
+          "day": 7,
+          "bank": 884.0,
+          "opponent_bank": 1916.0,
+          "crops": {
+            "MELON": 12,
+            "WHEAT": 3,
+            "STRAWBERRY": 4
+          },
+          "opponent_crops": {
+            "MELON": 10,
+            "WHEAT": 5
+          },
+          "animals": {
+            "COW": 4,
+            "SHEEP": 2
+          },
+          "opponent_animals": {},
+          "shed": {
+            "WHEAT": 21,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 0,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 0,
+            "WOOL": 0,
+            "FERTILIZER": 0,
+            "GOOSE": 0,
+            "COW": 0,
+            "SHEEP": 0
+          },
+          "prices": {
+            "WHEAT": 33,
+            "CARROT": 37,
+            "TOMATO": 61,
+            "STRAWBERRY": 171,
+            "MELON": 268,
+            "EGG": 50,
+            "MILK": 213,
+            "WOOL": 199,
+            "FERTILIZER": 95
+          },
+          "shops": [
+            "ICE_CREAM_SHOP",
+            "ICE_CREAM_SHOP"
+          ]
+        },
+        {
+          "day": 8,
+          "bank": 179.0,
+          "opponent_bank": 1883.0,
+          "crops": {
+            "MELON": 12,
+            "STRAWBERRY": 9,
+            "WHEAT": 3
+          },
+          "opponent_crops": {
+            "MELON": 10,
+            "WHEAT": 5
+          },
+          "animals": {
+            "COW": 4,
+            "SHEEP": 2
+          },
+          "opponent_animals": {},
+          "shed": {
+            "WHEAT": 18,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 0,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 0,
+            "WOOL": 0,
+            "FERTILIZER": 0,
+            "GOOSE": 0,
+            "COW": 0,
+            "SHEEP": 0
+          },
+          "prices": {
+            "WHEAT": 34,
+            "CARROT": 38,
+            "TOMATO": 61,
+            "STRAWBERRY": 179,
+            "MELON": 269,
+            "EGG": 50,
+            "MILK": 221,
+            "WOOL": 200,
+            "FERTILIZER": 94
+          },
+          "shops": [
+            "ICE_CREAM_SHOP",
+            "ICE_CREAM_SHOP"
+          ]
+        },
+        {
+          "day": 9,
+          "bank": 367.0,
+          "opponent_bank": 1830.0,
+          "crops": {
+            "MELON": 12,
+            "STRAWBERRY": 11,
+            "WHEAT": 3
+          },
+          "opponent_crops": {
+            "MELON": 10,
+            "WHEAT": 5
+          },
+          "animals": {
+            "COW": 4,
+            "SHEEP": 2
+          },
+          "opponent_animals": {},
+          "shed": {
+            "WHEAT": 21,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 0,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 12,
+            "WOOL": 0,
+            "FERTILIZER": 0,
+            "GOOSE": 0,
+            "COW": 0,
+            "SHEEP": 0
+          },
+          "prices": {
+            "WHEAT": 35,
+            "CARROT": 38,
+            "TOMATO": 61,
+            "STRAWBERRY": 187,
+            "MELON": 270,
+            "EGG": 51,
+            "MILK": 229,
+            "WOOL": 200,
+            "FERTILIZER": 93
+          },
+          "shops": [
+            "ICE_CREAM_SHOP",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET"
+          ]
+        },
+        {
+          "day": 10,
+          "bank": 206.0,
+          "opponent_bank": 1797.0,
+          "crops": {
+            "MELON": 12,
+            "STRAWBERRY": 11,
+            "WHEAT": 3
+          },
+          "opponent_crops": {
+            "MELON": 10,
+            "WHEAT": 5
+          },
+          "animals": {
+            "COW": 7,
+            "SHEEP": 2
+          },
+          "opponent_animals": {},
+          "shed": {
+            "WHEAT": 15,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 0,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 0,
+            "WOOL": 8,
+            "FERTILIZER": 3,
+            "GOOSE": 0,
+            "COW": 1,
+            "SHEEP": 1
+          },
+          "prices": {
+            "WHEAT": 36,
+            "CARROT": 38,
+            "TOMATO": 62,
+            "STRAWBERRY": 196,
+            "MELON": 271,
+            "EGG": 51,
+            "MILK": 230,
+            "WOOL": 200,
+            "FERTILIZER": 92
+          },
+          "shops": [
+            "ICE_CREAM_SHOP",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET"
+          ]
+        },
+        {
+          "day": 11,
+          "bank": 2108.0,
+          "opponent_bank": 1734.0,
+          "crops": {
+            "MELON": 12,
+            "STRAWBERRY": 11,
+            "WHEAT": 3
+          },
+          "opponent_crops": {
+            "MELON": 10,
+            "WHEAT": 5
+          },
+          "animals": {
+            "COW": 7,
+            "SHEEP": 2
+          },
+          "opponent_animals": {},
+          "shed": {
+            "WHEAT": 27,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 0,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 3,
+            "WOOL": 0,
+            "FERTILIZER": 1,
+            "GOOSE": 0,
+            "COW": 1,
+            "SHEEP": 2
+          },
+          "prices": {
+            "WHEAT": 37,
+            "CARROT": 39,
+            "TOMATO": 63,
+            "STRAWBERRY": 204,
+            "MELON": 272,
+            "EGG": 51,
+            "MILK": 235,
+            "WOOL": 197,
+            "FERTILIZER": 90
+          },
+          "shops": [
+            "ICE_CREAM_SHOP",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET"
+          ]
+        },
+        {
+          "day": 12,
+          "bank": 3223.0,
+          "opponent_bank": 1701.0,
+          "crops": {
+            "MELON": 12,
+            "STRAWBERRY": 11,
+            "WHEAT": 3
+          },
+          "opponent_crops": {
+            "MELON": 10,
+            "WHEAT": 5
+          },
+          "animals": {
+            "COW": 7,
+            "SHEEP": 2
+          },
+          "opponent_animals": {},
+          "shed": {
+            "WHEAT": 27,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 0,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 0,
+            "WOOL": 0,
+            "FERTILIZER": 0,
+            "GOOSE": 0,
+            "COW": 1,
+            "SHEEP": 2
+          },
+          "prices": {
+            "WHEAT": 38,
+            "CARROT": 39,
+            "TOMATO": 64,
+            "STRAWBERRY": 212,
+            "MELON": 272,
+            "EGG": 51,
+            "MILK": 240,
+            "WOOL": 198,
+            "FERTILIZER": 88
+          },
+          "shops": [
+            "ICE_CREAM_SHOP",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET",
+            "PET_CAFE"
+          ]
+        },
+        {
+          "day": 13,
+          "bank": 21.0,
+          "opponent_bank": 1954.0,
+          "crops": {
+            "MELON": 5,
+            "STRAWBERRY": 11
+          },
+          "opponent_crops": {
+            "STRAWBERRY": 12,
+            "WHEAT": 5,
+            "TOMATO": 2
+          },
+          "animals": {
+            "COW": 8,
+            "SHEEP": 3
+          },
+          "opponent_animals": {},
+          "shed": {
+            "WHEAT": 27,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 0,
+            "MELON": 42,
+            "EGG": 0,
+            "MILK": 3,
+            "WOOL": 6,
+            "FERTILIZER": 3,
+            "GOOSE": 0,
+            "COW": 0,
+            "SHEEP": 1
+          },
+          "prices": {
+            "WHEAT": 39,
+            "CARROT": 39,
+            "TOMATO": 64,
+            "STRAWBERRY": 219,
+            "MELON": 268,
+            "EGG": 51,
+            "MILK": 246,
+            "WOOL": 199,
+            "FERTILIZER": 88
+          },
+          "shops": [
+            "ICE_CREAM_SHOP",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET",
+            "PET_CAFE"
+          ]
+        },
+        {
+          "day": 14,
+          "bank": 7661.0,
+          "opponent_bank": 13160.0,
+          "crops": {
+            "MELON": 5,
+            "STRAWBERRY": 11
+          },
+          "opponent_crops": {
+            "STRAWBERRY": 12,
+            "WHEAT": 5,
+            "TOMATO": 2
+          },
+          "animals": {
+            "COW": 8,
+            "SHEEP": 3
+          },
+          "opponent_animals": {
+            "COW": 5
+          },
+          "shed": {
+            "WHEAT": 32,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 0,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 0,
+            "WOOL": 0,
+            "FERTILIZER": 5,
+            "GOOSE": 0,
+            "COW": 2,
+            "SHEEP": 1
+          },
+          "prices": {
+            "WHEAT": 40,
+            "CARROT": 40,
+            "TOMATO": 65,
+            "STRAWBERRY": 226,
+            "MELON": 173,
+            "EGG": 51,
+            "MILK": 250,
+            "WOOL": 194,
+            "FERTILIZER": 88
+          },
+          "shops": [
+            "ICE_CREAM_SHOP",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET",
+            "PET_CAFE"
+          ]
+        },
+        {
+          "day": 15,
+          "bank": 7114.0,
+          "opponent_bank": 12987.0,
+          "crops": {
+            "STRAWBERRY": 11
+          },
+          "opponent_crops": {
+            "STRAWBERRY": 12,
+            "WHEAT": 5,
+            "TOMATO": 2
+          },
+          "animals": {
+            "COW": 8,
+            "SHEEP": 3
+          },
+          "opponent_animals": {
+            "COW": 5
+          },
+          "shed": {
+            "WHEAT": 33,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 0,
+            "MELON": 29,
+            "EGG": 0,
+            "MILK": 14,
+            "WOOL": 0,
+            "FERTILIZER": 3,
+            "GOOSE": 0,
+            "COW": 2,
+            "SHEEP": 1
+          },
+          "prices": {
+            "WHEAT": 41,
+            "CARROT": 40,
+            "TOMATO": 66,
+            "STRAWBERRY": 232,
+            "MELON": 174,
+            "EGG": 51,
+            "MILK": 255,
+            "WOOL": 195,
+            "FERTILIZER": 88
+          },
+          "shops": [
+            "ICE_CREAM_SHOP",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET",
+            "PET_CAFE",
+            "YARN_STORE"
+          ]
+        },
+        {
+          "day": 16,
+          "bank": 11394.0,
+          "opponent_bank": 13282.0,
+          "crops": {
+            "STRAWBERRY": 10
+          },
+          "opponent_crops": {
+            "STRAWBERRY": 12,
+            "WHEAT": 5,
+            "TOMATO": 2
+          },
+          "animals": {
+            "COW": 8,
+            "SHEEP": 3
+          },
+          "opponent_animals": {
+            "COW": 5
+          },
+          "shed": {
+            "WHEAT": 33,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 8,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 0,
+            "WOOL": 4,
+            "FERTILIZER": 12,
+            "GOOSE": 0,
+            "COW": 2,
+            "SHEEP": 7
+          },
+          "prices": {
+            "WHEAT": 42,
+            "CARROT": 40,
+            "TOMATO": 67,
+            "STRAWBERRY": 238,
+            "MELON": 118,
+            "EGG": 51,
+            "MILK": 255,
+            "WOOL": 214,
+            "FERTILIZER": 87
+          },
+          "shops": [
+            "ICE_CREAM_SHOP",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET",
+            "PET_CAFE",
+            "YARN_STORE"
+          ]
+        },
+        {
+          "day": 17,
+          "bank": 14768.0,
+          "opponent_bank": 13636.0,
+          "crops": {
+            "STRAWBERRY": 14,
+            "WHEAT": 7
+          },
+          "opponent_crops": {
+            "STRAWBERRY": 12,
+            "WHEAT": 5,
+            "TOMATO": 2
+          },
+          "animals": {
+            "COW": 8,
+            "SHEEP": 3
+          },
+          "opponent_animals": {
+            "COW": 5
+          },
+          "shed": {
+            "WHEAT": 22,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 0,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 4,
+            "WOOL": 0,
+            "FERTILIZER": 11,
+            "GOOSE": 0,
+            "COW": 2,
+            "SHEEP": 7
+          },
+          "prices": {
+            "WHEAT": 43,
+            "CARROT": 41,
+            "TOMATO": 68,
+            "STRAWBERRY": 241,
+            "MELON": 120,
+            "EGG": 51,
+            "MILK": 260,
+            "WOOL": 223,
+            "FERTILIZER": 84
+          },
+          "shops": [
+            "ICE_CREAM_SHOP",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET",
+            "PET_CAFE",
+            "YARN_STORE"
+          ]
+        },
+        {
+          "day": 18,
+          "bank": 16024.0,
+          "opponent_bank": 13909.0,
+          "crops": {
+            "STRAWBERRY": 14,
+            "WHEAT": 7
+          },
+          "opponent_crops": {
+            "STRAWBERRY": 12,
+            "WHEAT": 5,
+            "TOMATO": 2
+          },
+          "animals": {
+            "COW": 8,
+            "SHEEP": 3
+          },
+          "opponent_animals": {
+            "COW": 5
+          },
+          "shed": {
+            "WHEAT": 14,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 16,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 14,
+            "WOOL": 0,
+            "FERTILIZER": 4,
+            "GOOSE": 0,
+            "COW": 2,
+            "SHEEP": 7
+          },
+          "prices": {
+            "WHEAT": 43,
+            "CARROT": 41,
+            "TOMATO": 69,
+            "STRAWBERRY": 246,
+            "MELON": 122,
+            "EGG": 51,
+            "MILK": 263,
+            "WOOL": 228,
+            "FERTILIZER": 81
+          },
+          "shops": [
+            "ICE_CREAM_SHOP",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET",
+            "PET_CAFE",
+            "YARN_STORE",
+            "BRUNCH_SPOT"
+          ]
+        },
+        {
+          "day": 19,
+          "bank": 23476.0,
+          "opponent_bank": 13779.0,
+          "crops": {
+            "STRAWBERRY": 14,
+            "WHEAT": 7
+          },
+          "opponent_crops": {
+            "STRAWBERRY": 12,
+            "WHEAT": 5,
+            "TOMATO": 2
+          },
+          "animals": {
+            "COW": 8,
+            "SHEEP": 2
+          },
+          "opponent_animals": {
+            "COW": 5
+          },
+          "shed": {
+            "WHEAT": 4,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 4,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 11,
+            "WOOL": 7,
+            "FERTILIZER": 8,
+            "GOOSE": 0,
+            "COW": 2,
+            "SHEEP": 7
+          },
+          "prices": {
+            "WHEAT": 44,
+            "CARROT": 41,
+            "TOMATO": 69,
+            "STRAWBERRY": 249,
+            "MELON": 125,
+            "EGG": 52,
+            "MILK": 263,
+            "WOOL": 232,
+            "FERTILIZER": 81
+          },
+          "shops": [
+            "ICE_CREAM_SHOP",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET",
+            "PET_CAFE",
+            "YARN_STORE",
+            "BRUNCH_SPOT"
+          ]
+        },
+        {
+          "day": 20,
+          "bank": 29158.0,
+          "opponent_bank": 13691.0,
+          "crops": {
+            "STRAWBERRY": 14,
+            "WHEAT": 7
+          },
+          "opponent_crops": {
+            "STRAWBERRY": 12,
+            "WHEAT": 5,
+            "TOMATO": 2
+          },
+          "animals": {
+            "COW": 8,
+            "SHEEP": 3
+          },
+          "opponent_animals": {
+            "COW": 5
+          },
+          "shed": {
+            "WHEAT": 0,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 14,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 6,
+            "WOOL": 0,
+            "FERTILIZER": 8,
+            "GOOSE": 0,
+            "COW": 2,
+            "SHEEP": 6
+          },
+          "prices": {
+            "WHEAT": 45,
+            "CARROT": 41,
+            "TOMATO": 70,
+            "STRAWBERRY": 254,
+            "MELON": 127,
+            "EGG": 52,
+            "MILK": 264,
+            "WOOL": 233,
+            "FERTILIZER": 80
+          },
+          "shops": [
+            "ICE_CREAM_SHOP",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET",
+            "PET_CAFE",
+            "YARN_STORE",
+            "BRUNCH_SPOT"
+          ]
+        },
+        {
+          "day": 21,
+          "bank": 32303.0,
+          "opponent_bank": 13583.0,
+          "crops": {
+            "STRAWBERRY": 14
+          },
+          "opponent_crops": {
+            "STRAWBERRY": 12,
+            "WHEAT": 5,
+            "TOMATO": 2
+          },
+          "animals": {
+            "COW": 8,
+            "SHEEP": 3
+          },
+          "opponent_animals": {
+            "COW": 5
+          },
+          "shed": {
+            "WHEAT": 10,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 2,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 5,
+            "WOOL": 0,
+            "FERTILIZER": 10,
+            "GOOSE": 0,
+            "COW": 2,
+            "SHEEP": 6
+          },
+          "prices": {
+            "WHEAT": 45,
+            "CARROT": 41,
+            "TOMATO": 71,
+            "STRAWBERRY": 257,
+            "MELON": 129,
+            "EGG": 52,
+            "MILK": 266,
+            "WOOL": 235,
+            "FERTILIZER": 79
+          },
+          "shops": [
+            "ICE_CREAM_SHOP",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET",
+            "PET_CAFE",
+            "YARN_STORE",
+            "BRUNCH_SPOT",
+            "FARMERS_MARKET"
+          ]
+        },
+        {
+          "day": 22,
+          "bank": 34482.0,
+          "opponent_bank": 15910.0,
+          "crops": {
+            "STRAWBERRY": 14
+          },
+          "opponent_crops": {
+            "STRAWBERRY": 12,
+            "WHEAT": 5,
+            "TOMATO": 2
+          },
+          "animals": {
+            "COW": 8,
+            "SHEEP": 3
+          },
+          "opponent_animals": {
+            "COW": 5
+          },
+          "shed": {
+            "WHEAT": 5,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 13,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 3,
+            "WOOL": 2,
+            "FERTILIZER": 4,
+            "GOOSE": 0,
+            "COW": 2,
+            "SHEEP": 6
+          },
+          "prices": {
+            "WHEAT": 46,
+            "CARROT": 41,
+            "TOMATO": 72,
+            "STRAWBERRY": 265,
+            "MELON": 131,
+            "EGG": 53,
+            "MILK": 267,
+            "WOOL": 237,
+            "FERTILIZER": 77
+          },
+          "shops": [
+            "ICE_CREAM_SHOP",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET",
+            "PET_CAFE",
+            "YARN_STORE",
+            "BRUNCH_SPOT",
+            "FARMERS_MARKET"
+          ]
+        },
+        {
+          "day": 23,
+          "bank": 34493.0,
+          "opponent_bank": 15737.0,
+          "crops": {
+            "STRAWBERRY": 10
+          },
+          "opponent_crops": {
+            "STRAWBERRY": 12,
+            "WHEAT": 2,
+            "TOMATO": 2
+          },
+          "animals": {
+            "COW": 3,
+            "SHEEP": 2
+          },
+          "opponent_animals": {
+            "COW": 5
+          },
+          "shed": {
+            "WHEAT": 0,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 16,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 9,
+            "WOOL": 2,
+            "FERTILIZER": 12,
+            "GOOSE": 0,
+            "COW": 2,
+            "SHEEP": 6
+          },
+          "prices": {
+            "WHEAT": 47,
+            "CARROT": 41,
+            "TOMATO": 73,
+            "STRAWBERRY": 272,
+            "MELON": 133,
+            "EGG": 53,
+            "MILK": 271,
+            "WOOL": 238,
+            "FERTILIZER": 77
+          },
+          "shops": [
+            "ICE_CREAM_SHOP",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET",
+            "PET_CAFE",
+            "YARN_STORE",
+            "BRUNCH_SPOT",
+            "FARMERS_MARKET"
+          ]
+        },
+        {
+          "day": 24,
+          "bank": 35071.0,
+          "opponent_bank": 29098.0,
+          "crops": {
+            "STRAWBERRY": 10
+          },
+          "opponent_crops": {
+            "STRAWBERRY": 12,
+            "WHEAT": 2,
+            "TOMATO": 2
+          },
+          "animals": {
+            "COW": 3,
+            "SHEEP": 2
+          },
+          "opponent_animals": {
+            "COW": 5
+          },
+          "shed": {
+            "WHEAT": 0,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 23,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 9,
+            "WOOL": 2,
+            "FERTILIZER": 2,
+            "GOOSE": 0,
+            "COW": 2,
+            "SHEEP": 6
+          },
+          "prices": {
+            "WHEAT": 47,
+            "CARROT": 41,
+            "TOMATO": 74,
+            "STRAWBERRY": 274,
+            "MELON": 136,
+            "EGG": 54,
+            "MILK": 268,
+            "WOOL": 239,
+            "FERTILIZER": 75
+          },
+          "shops": [
+            "ICE_CREAM_SHOP",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET",
+            "PET_CAFE",
+            "YARN_STORE",
+            "BRUNCH_SPOT",
+            "FARMERS_MARKET",
+            "PIZZA_SHOP"
+          ]
+        },
+        {
+          "day": 25,
+          "bank": 35038.0,
+          "opponent_bank": 28990.0,
+          "crops": {
+            "STRAWBERRY": 6
+          },
+          "opponent_crops": {
+            "STRAWBERRY": 12,
+            "WHEAT": 4
+          },
+          "animals": {},
+          "opponent_animals": {
+            "COW": 5
+          },
+          "shed": {
+            "WHEAT": 0,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 27,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 12,
+            "WOOL": 4,
+            "FERTILIZER": 4,
+            "GOOSE": 0,
+            "COW": 2,
+            "SHEEP": 6
+          },
+          "prices": {
+            "WHEAT": 48,
+            "CARROT": 42,
+            "TOMATO": 77,
+            "STRAWBERRY": 280,
+            "MELON": 138,
+            "EGG": 54,
+            "MILK": 274,
+            "WOOL": 240,
+            "FERTILIZER": 75
+          },
+          "shops": [
+            "ICE_CREAM_SHOP",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET",
+            "PET_CAFE",
+            "YARN_STORE",
+            "BRUNCH_SPOT",
+            "FARMERS_MARKET",
+            "PIZZA_SHOP"
+          ]
+        },
+        {
+          "day": 26,
+          "bank": 35256.0,
+          "opponent_bank": 29011.0,
+          "crops": {
+            "STRAWBERRY": 4,
+            "WHEAT": 5
+          },
+          "opponent_crops": {
+            "STRAWBERRY": 12,
+            "WHEAT": 4
+          },
+          "animals": {},
+          "opponent_animals": {
+            "COW": 5
+          },
+          "shed": {
+            "WHEAT": 0,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 27,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 12,
+            "WOOL": 4,
+            "FERTILIZER": 0,
+            "GOOSE": 0,
+            "COW": 2,
+            "SHEEP": 6
+          },
+          "prices": {
+            "WHEAT": 49,
+            "CARROT": 42,
+            "TOMATO": 79,
+            "STRAWBERRY": 287,
+            "MELON": 140,
+            "EGG": 54,
+            "MILK": 280,
+            "WOOL": 241,
+            "FERTILIZER": 75
+          },
+          "shops": [
+            "ICE_CREAM_SHOP",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET",
+            "PET_CAFE",
+            "YARN_STORE",
+            "BRUNCH_SPOT",
+            "FARMERS_MARKET",
+            "PIZZA_SHOP"
+          ]
+        },
+        {
+          "day": 27,
+          "bank": 35236.0,
+          "opponent_bank": 28923.0,
+          "crops": {
+            "STRAWBERRY": 4,
+            "WHEAT": 5
+          },
+          "opponent_crops": {
+            "STRAWBERRY": 12,
+            "WHEAT": 4
+          },
+          "animals": {},
+          "opponent_animals": {
+            "COW": 5
+          },
+          "shed": {
+            "WHEAT": 0,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 35,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 12,
+            "WOOL": 4,
+            "FERTILIZER": 0,
+            "GOOSE": 0,
+            "COW": 2,
+            "SHEEP": 6
+          },
+          "prices": {
+            "WHEAT": 50,
+            "CARROT": 42,
+            "TOMATO": 81,
+            "STRAWBERRY": 294,
+            "MELON": 142,
+            "EGG": 55,
+            "MILK": 286,
+            "WOOL": 242,
+            "FERTILIZER": 75
+          },
+          "shops": [
+            "ICE_CREAM_SHOP",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET",
+            "PET_CAFE",
+            "YARN_STORE",
+            "BRUNCH_SPOT",
+            "FARMERS_MARKET",
+            "PIZZA_SHOP"
+          ]
+        },
+        {
+          "day": 28,
+          "bank": 35224.0,
+          "opponent_bank": 42139.0,
+          "crops": {
+            "STRAWBERRY": 4,
+            "WHEAT": 5
+          },
+          "opponent_crops": {
+            "STRAWBERRY": 12,
+            "WHEAT": 4
+          },
+          "animals": {},
+          "opponent_animals": {
+            "COW": 5
+          },
+          "shed": {
+            "WHEAT": 0,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 35,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 12,
+            "WOOL": 4,
+            "FERTILIZER": 0,
+            "GOOSE": 0,
+            "COW": 2,
+            "SHEEP": 6
+          },
+          "prices": {
+            "WHEAT": 50,
+            "CARROT": 42,
+            "TOMATO": 83,
+            "STRAWBERRY": 291,
+            "MELON": 144,
+            "EGG": 55,
+            "MILK": 292,
+            "WOOL": 243,
+            "FERTILIZER": 74
+          },
+          "shops": [
+            "ICE_CREAM_SHOP",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET",
+            "PET_CAFE",
+            "YARN_STORE",
+            "BRUNCH_SPOT",
+            "FARMERS_MARKET",
+            "PIZZA_SHOP"
+          ]
+        },
+        {
+          "day": 29,
+          "bank": 49989.0,
+          "opponent_bank": 54995.0,
+          "crops": {
+            "STRAWBERRY": 4,
+            "WHEAT": 5
+          },
+          "opponent_crops": {
+            "STRAWBERRY": 12
+          },
+          "animals": {},
+          "opponent_animals": {
+            "COW": 5
+          },
+          "shed": {
+            "WHEAT": 0,
+            "CARROT": 0,
+            "TOMATO": 0,
+            "STRAWBERRY": 4,
+            "MELON": 0,
+            "EGG": 0,
+            "MILK": 0,
+            "WOOL": 0,
+            "FERTILIZER": 0,
+            "GOOSE": 0,
+            "COW": 2,
+            "SHEEP": 6
+          },
+          "prices": {
+            "WHEAT": 51,
+            "CARROT": 42,
+            "TOMATO": 85,
+            "STRAWBERRY": 289,
+            "MELON": 146,
+            "EGG": 56,
+            "MILK": 281,
+            "WOOL": 243,
+            "FERTILIZER": 73
+          },
+          "shops": [
+            "ICE_CREAM_SHOP",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET",
+            "PET_CAFE",
+            "YARN_STORE",
+            "BRUNCH_SPOT",
+            "FARMERS_MARKET",
+            "PIZZA_SHOP"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -620,6 +620,15 @@
       model: "Dynamic wheat and labor reserves, sticky hand routes, bounded purchases, three-day opponent forecast, crop×livestock diagnostics, and terminal-aware resource pickup.",
       limitation: "Locally promoted over v0.7.0, but the mixed-conversion persona still wins both seats by 13,434; hold the Kaggle submission until that strategy family is understood.",
     },
+    {
+      id: "agent-v0-7-2",
+      version: "v0.7.2",
+      date: "2026-08-16",
+      status: "candidate",
+      evidence: "frontier arena: 1–7 | v0.7.1-i5: 0–2, −1,755 avg",
+      model: "Replay-derived frontier cascade, land payback gates, mixed livestock targets, protected expansion crew, twelve-hand service cap, and trajectory milestone training signals.",
+      limitation: "Experimental only: the high-cap branch approaches the frontier proxy but loses broadly to lean engines and never reaches 60k by day 24. Keep v0.7.1-i5 as control.",
+    },
   ];
   let agentArchive = readStore(KEYS.agentArchive, seededAgents);
   if (!Array.isArray(agentArchive)) agentArchive = [...seededAgents];

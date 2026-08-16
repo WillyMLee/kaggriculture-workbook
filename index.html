@@ -388,14 +388,24 @@
           <button class="button button-primary" id="open-agent-form" type="button">Log agent</button>
         </div>
         <section class="section shell" aria-labelledby="current-checkpoint-title">
-          <div class="section-heading"><div><p class="eyebrow">Current checkpoint · August 16</p><h2 id="current-checkpoint-title">v0.7.1-i5 clears the predecessor gate</h2></div><strong class="qa-verdict">LOCAL PASS</strong></div>
+          <div class="section-heading"><div><p class="eyebrow">Experimental checkpoint · August 16</p><h2 id="current-checkpoint-title">v0.7.2 reaches the frontier, but does not clear promotion</h2></div><strong class="qa-verdict" data-state="hold">HOLD</strong></div>
           <div class="candidate-evidence">
-            <div><span>Ladder sample</span><strong>22 matches</strong><small>11 agents · ranks 100–200</small></div>
-            <div><span>Exact gate</span><strong>20 / 20</strong><small>v0.7.0 · 10 seeds · both seats</small></div>
-            <div><span>Average margin</span><strong>+5,685</strong><small>worst +380 · fresh seeds 500–509</small></div>
-            <div><span>Persona sanity</span><strong>4 / 6</strong><small>mixed-conversion remains 0–2</small></div>
+            <div><span>Leader evidence</span><strong>2 replays</strong><small>current #1 vs #2 / #3</small></div>
+            <div><span>Leader timing</span><strong>D07 / D12</strong><small>observed second / third quadrant target</small></div>
+            <div><span>Control gate</span><strong>0 / 2</strong><small>average −1,755 vs v0.7.1-i5</small></div>
+            <div><span>Training arena</span><strong>1 / 8</strong><small>max action 289 ms · no fallbacks</small></div>
           </div>
-          <p class="source-note"><strong>Read:</strong> terminal pickup now honors the reverse plan, so hands no longer withdraw wheat after the final feed obligation. The seed-503 regression flipped from −6 to +380 and the full gate finished 20–0. This is a local promotion over v0.7.0, not yet a Kaggle release recommendation.</p>
+          <p class="source-note"><strong>Read:</strong> the replay-derived opener now converts into land, 14 livestock, and 30 recurring plots instead of buying idle inventory. Extra service labor cut the fixed-seed deficit from about 13k to 1.8k, but the candidate still loses broadly to leaner engines. Keep v0.7.1-i5 as the promoted control.</p>
+        </section>
+        <section class="section shell" aria-labelledby="frontier-v072-title">
+          <div class="section-heading"><div><p class="eyebrow">v0.7.2 frontier lab</p><h2 id="frontier-v072-title">Train on outcomes, not imitation</h2></div><p class="section-note">18.3 KB artifact · packaged locally · not submitted</p></div>
+          <ol class="system-flow">
+            <li><span>REPLAY</span><div><strong>A deterministic opener creates the launchpad</strong><p>The two sampled leader games use identical actions through the first 144 turns: 12 melons, 7 wheat, 2 cows, 2 sheep, and 5 work hands before adapting.</p></div><em>OBSERVED</em></li>
+            <li><span>CASCADE</span><div><strong>Land is coupled to deployable capacity</strong><p>The winning path opens quadrant two around day 6 and quadrant three around day 11, then compounds recurring crops, mixed livestock, fertilizer sales, and 8–12 daily hands.</p></div><em>IMPLEMENTED</em></li>
+            <li><span>ARENA</span><div><strong>Eight bounded games produce milestone rewards</strong><p>Every run records win/loss, quadrant timing, recurring density, livestock deployment, day-24 bank, fallbacks, and action latency. The personas are public-commitment proxies, not copied private agents.</p></div><em>OFFLINE LEARNING</em></li>
+            <li><span>RESULT</span><div><strong>The upper-cap branch is still too expensive</strong><p>v0.7.2 hit quadrant two by day 7 in all arena games and exceeded 15 recurring plots plus 8 livestock by day 15, but never reached a 60k bank by day 24 and finished 1–7.</p></div><em>DO NOT PROMOTE</em></li>
+          </ol>
+          <p class="source-note">Evidence: <code>results/kaggle_top_agent_expansion_sample.json</code>, <code>results/v0_7_2_arena3_training_arena.json</code>, and <code>results/v0_7_2_arena3_vs_v0_7_1_i5_smoke.json</code>.</p>
         </section>
         <section class="section shell" aria-labelledby="ladder-study-title">
           <div class="section-heading"><div><p class="eyebrow">Public ladder field study</p><h2 id="ladder-study-title">The rank-100–200 band converges on one engine</h2></div><p class="section-note">Every tenth rank · two recent matches each</p></div>

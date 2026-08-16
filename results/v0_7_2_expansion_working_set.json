@@ -1,0 +1,34 @@
+{
+  "objective": "Identify the expansion and high-terminal-bank mechanisms used by current leading agents, then add a bounded land-payback branch that can raise v0.7.1-i5's ceiling without weakening its control results.",
+  "control": "artifacts/kaggriculture-v0.7.1-i5.tar.gz",
+  "success_gates": {
+    "evidence": "At least two current high-bank public replays with day-level land, labor, engine, and bank transitions.",
+    "known_regression": "Seed 503 against frozen v0.7.0 remains 2-0.",
+    "candidate_comparison": "Both seats against v0.7.1-i5 plus a bounded persona sanity suite.",
+    "upper_cap": "Candidate must show a materially higher terminal bank on at least one expansion-favorable seed.",
+    "runtime": "Target under 250 ms; reject any action above 700 ms.",
+    "resumed_iterations": 2,
+    "wall_seconds_per_arena": 240
+  },
+  "boundaries": [
+    "No Kaggle submission",
+    "No Cloudflare deployment",
+    "No blind expansion rule",
+    "Stop after two resumed policy iterations"
+  ],
+  "status": "held_experimental_candidate",
+  "findings": [
+    "Two current-leader replays were action-identical for the first 144 turns, then diverged as environment and opponent signals accumulated.",
+    "The high-bank path is a coupled cascade: 12 melon, 7 wheat, 2 cows, 2 sheep, five opening hires, second quadrant near day 6, third near day 11, recurring crops, mixed livestock, fertilizer sales, and 8-12 daily hands.",
+    "Protected expansion labor plus a twelve-hand service cap reduced the fixed-seed deficit versus v0.7.1-i5 from roughly 13k to an average 1,755.",
+    "The final arena still finished 1-7 and never reached 60k bank by day 24, so v0.7.2 does not replace v0.7.1-i5."
+  ],
+  "evidence_paths": [
+    "results/kaggle_top_agent_expansion_sample.json",
+    "results/v0_7_2_arena2_training_arena.json",
+    "results/v0_7_2_arena3_training_arena.json",
+    "results/v0_7_2_arena3_vs_v0_7_1_i5_smoke.json",
+    "results/submission_v0_7_2_manifest.json"
+  ],
+  "next_hypothesis": "Make expansion conditional on estimated service-adjusted return versus a lean-engine counterfactual, rather than assuming the frontier cascade is always the highest-value branch."
+}

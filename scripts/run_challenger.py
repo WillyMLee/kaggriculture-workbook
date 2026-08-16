@@ -83,6 +83,8 @@ def daily_trace(steps, seat):
             "day": int(obs.get("day", 0)),
             "bank": float(ours.get("money", 0)),
             "opponent_bank": float(theirs.get("money", 0)),
+            "quadrants": list(ours.get("unlocked_quadrants", [])),
+            "opponent_quadrants": list(theirs.get("unlocked_quadrants", [])),
             "crops": crop_counts(ours),
             "opponent_crops": crop_counts(theirs),
             "animals": animal_counts(ours),

@@ -16,6 +16,7 @@ from agents.balanced_tempo import (
     _dynamic_wheat_plan,
     _engine_combo_model,
     _fertilizer_targets,
+    _frontier_growth_plan,
     _labor_plan,
     _market_plan,
     _operations_attention,
@@ -370,14 +371,14 @@ def test_opponent_prediction_breaks_on_material_deviation():
     assert signal["prediction_error"] >= 8
 
 
-def test_engine_combo_is_available_without_forcing_a_switch():
+def test_engine_combo_and_frontier_bootstrap_are_available():
     _EPISODE_MEMORY.clear()
     ours = make_farm()
     ours["money"] = 3000
     opponent = make_farm()
     add_cows(opponent, 2, fed=True)
     obs = {
-        "day": 3,
+        "day": 0,
         "hour": 0,
         "player": 0,
         "farms": [ours, opponent],
@@ -388,7 +389,42 @@ def test_engine_combo_is_available_without_forcing_a_switch():
     signal = _opponent_attention(obs, 0)
     assert len(signal["engine_combo"]["scores"]) == 6
     action = agent(obs)
-    assert not any(order[0] == "BUY_ANIMAL" for order in action["market"])
+    assert ["BUY_SEED", "MELON", 12] in action["market"]
+    assert ["BUY_SEED", "WHEAT", 7] in action["market"]
+    assert ["BUY_ANIMAL", "COW", 2] in action["market"]
+    assert ["BUY_ANIMAL", "SHEEP", 2] in action["market"]
+
+
+def test_frontier_land_purchase_requires_saturation_and_payback():
+    farm = make_farm()
+    farm["money"] = 1200
+    for index in range(21):
+        farm["tiles"][index // 5][index % 5] = {"kind": "PLANT", "crop": "STRAWBERRY"}
+    for index in range(4):
+        farm["tiles"][4][index] = {"kind": "PASTURE", "animal": "COW"}
+    signal = {"animal_scores": {"COW": 10, "SHEEP": 8}}
+    private = {"shed": {}, "seeds": {}, "inventories": []}
+
+    too_early = _frontier_growth_plan({"day": 5, "market": {"prices": {}}}, farm, private, signal)
+    second_quadrant = _frontier_growth_plan({"day": 6, "market": {"prices": {}}}, farm, private, signal)
+    assert too_early["buy_land"] is False
+    assert second_quadrant["buy_land"] is True
+    assert second_quadrant["payback_ratio"] >= second_quadrant["payback_gate"]
+
+    farm["unlocked_quadrants"] = ["NW", "NE"]
+    farm["money"] = 2200
+    for y in range(5):
+        for x in range(5, 9):
+            farm["tiles"][y][x] = {"kind": "PLANT", "crop": "STRAWBERRY"}
+    for x in range(5, 9):
+        farm["tiles"][4][x] = {"kind": "PASTURE", "animal": "COW"}
+    third_quadrant = _frontier_growth_plan({"day": 11, "market": {"prices": {}}}, farm, private, signal)
+    assert third_quadrant["buy_land"] is True
+
+    farm["unlocked_quadrants"] = ["NW", "NE", "SW"]
+    full_frontier = _frontier_growth_plan({"day": 12, "market": {"prices": {}}}, farm, private, signal)
+    assert full_frontier["buy_land"] is False
+    assert full_frontier["labor_target"] == 12
 
 
 if __name__ == "__main__":
@@ -409,5 +445,6 @@ if __name__ == "__main__":
     test_high_threat_fifth_animal_has_a_real_slot()
     test_wheat_is_a_dynamic_reserve_not_a_fixed_commitment()
     test_opponent_prediction_breaks_on_material_deviation()
-    test_engine_combo_is_available_without_forcing_a_switch()
-    print("phase policy regressions: 18 passed")
+    test_engine_combo_and_frontier_bootstrap_are_available()
+    test_frontier_land_purchase_requires_saturation_and_payback()
+    print("phase policy regressions: 19 passed")

@@ -1,0 +1,5634 @@
+{
+  "schema": "kaggriculture-public-ladder-strategy-v1",
+  "capture_date": "2026-08-16",
+  "sample_design": "Every tenth public rank from 100 through 200; two most recent visible matches per team.",
+  "classifier": {
+    "type": "transparent weighted commitment classifier",
+    "labels": [
+      "staple-volume",
+      "cash-crop",
+      "recurring-crop",
+      "livestock",
+      "hybrid",
+      "undeclared"
+    ],
+    "caveat": "Labels describe visible commitments, not private intent or source code."
+  },
+  "summary": {
+    "episodes": 2,
+    "teams": 1,
+    "wins": 1,
+    "losses": 1,
+    "ties": 0,
+    "midgame_engine_days": {
+      "recurring-crop": 24
+    },
+    "midgame_action_counts": {
+      "SELL:FERTILIZER": 2373,
+      "SELL:WHEAT": 1683,
+      "BUY_PRODUCT:WHEAT": 956,
+      "WEST": 954,
+      "WATER": 950,
+      "NORTH": 866,
+      "EAST": 839,
+      "SOUTH": 811,
+      "SELL": 582,
+      "HARVEST": 429,
+      "COLLECT_FERTILIZER": 371,
+      "SELL:STRAWBERRY": 334,
+      "FEED": 323,
+      "CARE": 321,
+      "HIRE": 268,
+      "SELL:MILK": 238,
+      "SELL:WOOL": 198,
+      "PICKUP": 143,
+      "PLANT": 135,
+      "PLANT:WHEAT": 123,
+      "BUY_SEED:WHEAT": 119,
+      "FERTILIZE": 112,
+      "BUY_SEED": 91,
+      "BUY_PRODUCT": 82,
+      "PLACE": 34,
+      "DIG": 19,
+      "PLANT:STRAWBERRY": 8,
+      "BUILD_PASTURE": 4,
+      "BUY_ANIMAL:SHEEP": 4,
+      "BUY_SEED:CARROT": 4,
+      "PLANT:CARROT": 4,
+      "BUY_ANIMAL": 2,
+      "BUY_LAND": 1
+    },
+    "team_midgame_modes": {
+      "\u30ab\u30ef\u30b7\u30ae": [
+        [
+          "recurring-crop",
+          24
+        ]
+      ]
+    }
+  },
+  "episodes": [
+    {
+      "episode_id": 93767766,
+      "seed": 1696916094,
+      "rank_at_capture": 1,
+      "team": "\u30ab\u30ef\u30b7\u30ae",
+      "opponent": "peikopon",
+      "seat": 0,
+      "result": "loss",
+      "reward": 66972.0,
+      "opponent_reward": 68140.0,
+      "margin": -1168.0,
+      "daily": [
+        {
+          "day": 0,
+          "phase": "bootstrap",
+          "engine": {
+            "label": "cash-crop",
+            "confidence": 0.724,
+            "scores": {
+              "staple-volume": 0.0,
+              "cash-crop": 4.2,
+              "recurring-crop": 0.0,
+              "livestock": 1.6
+            }
+          },
+          "engine_transition": false,
+          "farm": {
+            "bank": 3000.0,
+            "hands": 0,
+            "quadrants": 1,
+            "crops": {},
+            "animals": {},
+            "weeds": 0
+          },
+          "opponent": {
+            "bank": 3000.0,
+            "hands": 0,
+            "quadrants": 1,
+            "crops": {},
+            "animals": {},
+            "weeds": 0
+          },
+          "bank_margin": 0.0,
+          "actions": {
+            "BUILD_PASTURE": 4,
+            "BUY_ANIMAL": 2,
+            "BUY_ANIMAL:COW": 2,
+            "BUY_ANIMAL:SHEEP": 2,
+            "BUY_PRODUCT": 3,
+            "BUY_PRODUCT:WHEAT": 9,
+            "BUY_SEED": 2,
+            "BUY_SEED:MELON": 12,
+            "BUY_SEED:WHEAT": 7,
+            "CARE": 2,
+            "EAST": 6,
+            "FEED": 2,
+            "HIRE": 5,
+            "NORTH": 22,
+            "PICKUP": 6,
+            "PLACE": 4,
+            "PLANT": 19,
+            "PLANT:MELON": 12,
+            "PLANT:WHEAT": 7,
+            "SELL": 1,
+            "SELL:WHEAT": 3,
+            "SOUTH": 2,
+            "WATER": 19,
+            "WEST": 22
+          },
+          "shed": {},
+          "prices": {
+            "CARROT": 35,
+            "EGG": 50,
+            "FERTILIZER": 100,
+            "MELON": 250,
+            "MILK": 160,
+            "STRAWBERRY": 120,
+            "TOMATO": 60,
+            "WHEAT": 25,
+            "WOOL": 200
+          },
+          "shops": []
+        },
+        {
+          "day": 1,
+          "phase": "bootstrap",
+          "engine": {
+            "label": "cash-crop",
+            "confidence": 0.652,
+            "scores": {
+              "staple-volume": 3.15,
+              "cash-crop": 16.8,
+              "recurring-crop": 0.0,
+              "livestock": 5.8
+            }
+          },
+          "engine_transition": false,
+          "farm": {
+            "bank": 23.0,
+            "hands": 0,
+            "quadrants": 1,
+            "crops": {
+              "WHEAT": 7,
+              "MELON": 12
+            },
+            "animals": {
+              "COW": 2,
+              "SHEEP": 2
+            },
+            "weeds": 0
+          },
+          "opponent": {
+            "bank": 23.0,
+            "hands": 0,
+            "quadrants": 1,
+            "crops": {
+              "WHEAT": 7,
+              "MELON": 12
+            },
+            "animals": {
+              "COW": 2,
+              "SHEEP": 2
+            },
+            "weeds": 0
+          },
+          "bank_margin": 0.0,
+          "actions": {
+            "BUY_PRODUCT": 1,
+            "BUY_PRODUCT:WHEAT": 5,
+            "CARE": 4,
+            "COLLECT_FERTILIZER": 3,
+            "EAST": 2,
+            "FEED": 4,
+            "NORTH": 3,
+            "PICKUP": 2,
+            "PLACE": 1,
+            "SELL": 1,
+            "SELL:FERTILIZER": 3,
+            "SOUTH": 2,
+            "WEST": 2
+          },
+          "shed": {
+            "WHEAT": 3
+          },
+          "prices": {
+            "CARROT": 35,
+            "EGG": 50,
+            "FERTILIZER": 100,
+            "MELON": 256,
+            "MILK": 169,
+            "STRAWBERRY": 128,
+            "TOMATO": 60,
+            "WHEAT": 28,
+            "WOOL": 206
+          },
+          "shops": []
+        },
+        {
+          "day": 2,
+          "phase": "bootstrap",
+          "engine": {
+            "label": "cash-crop",
+            "confidence": 0.652,
+            "scores": {
+              "staple-volume": 3.15,
+              "cash-crop": 16.8,
+              "recurring-crop": 0.0,
+              "livestock": 5.8
+            }
+          },
+          "engine_transition": false,
+          "farm": {
+            "bank": 176.0,
+            "hands": 0,
+            "quadrants": 1,
+            "crops": {
+              "WHEAT": 7,
+              "MELON": 12
+            },
+            "animals": {
+              "COW": 2,
+              "SHEEP": 2
+            },
+            "weeds": 0
+          },
+          "opponent": {
+            "bank": 176.0,
+            "hands": 0,
+            "quadrants": 1,
+            "crops": {
+              "WHEAT": 7,
+              "MELON": 12
+            },
+            "animals": {
+              "COW": 2,
+              "SHEEP": 2
+            },
+            "weeds": 0
+          },
+          "bank_margin": 0.0,
+          "actions": {
+            "BUILD_PASTURE": 1,
+            "BUY_PRODUCT": 2,
+            "BUY_PRODUCT:WHEAT": 4,
+            "CARE": 4,
+            "COLLECT_FERTILIZER": 4,
+            "EAST": 2,
+            "FEED": 4,
+            "HIRE": 4,
+            "NORTH": 17,
+            "PICKUP": 1,
+            "SOUTH": 5,
+            "WATER": 19,
+            "WEST": 22
+          },
+          "shed": {
+            "WHEAT": 4
+          },
+          "prices": {
+            "CARROT": 35,
+            "EGG": 50,
+            "FERTILIZER": 99,
+            "MELON": 260,
+            "MILK": 172,
+            "STRAWBERRY": 132,
+            "TOMATO": 60,
+            "WHEAT": 30,
+            "WOOL": 209
+          },
+          "shops": []
+        },
+        {
+          "day": 3,
+          "phase": "opener-build",
+          "engine": {
+            "label": "cash-crop",
+            "confidence": 0.642,
+            "scores": {
+              "staple-volume": 3.15,
+              "cash-crop": 16.8,
+              "recurring-crop": 0.0,
+              "livestock": 6.2
+            }
+          },
+          "engine_transition": false,
+          "farm": {
+            "bank": 49.0,
+            "hands": 0,
+            "quadrants": 1,
+            "crops": {
+              "WHEAT": 7,
+              "MELON": 12
+            },
+            "animals": {
+              "COW": 2,
+              "SHEEP": 2
+            },
+            "weeds": 0
+          },
+          "opponent": {
+            "bank": 49.0,
+            "hands": 0,
+            "quadrants": 1,
+            "crops": {
+              "WHEAT": 7,
+              "MELON": 12
+            },
+            "animals": {
+              "COW": 2,
+              "SHEEP": 2
+            },
+            "weeds": 0
+          },
+          "bank_margin": 0.0,
+          "actions": {
+            "BUY_ANIMAL": 1,
+            "BUY_ANIMAL:COW": 1,
+            "CARE": 4,
+            "COLLECT_FERTILIZER": 4,
+            "EAST": 1,
+            "FEED": 4,
+            "HIRE": 5,
+            "NORTH": 25,
+            "PICKUP": 2,
+            "PLACE": 1,
+            "SELL": 1,
+            "SELL:FERTILIZER": 4,
+            "SOUTH": 3,
+            "WATER": 14,
+            "WEST": 19
+          },
+          "shed": {
+            "FERTILIZER": 4,
+            "WHEAT": 4
+          },
+          "prices": {
+            "CARROT": 35,
+            "EGG": 50,
+            "FERTILIZER": 99,
+            "MELON": 262,
+            "MILK": 175,
+            "STRAWBERRY": 135,
+            "TOMATO": 60,
+            "WHEAT": 31,
+            "WOOL": 212
+          },
+          "shops": [
+            "YARN_STORE"
+          ]
+        },
+        {
+          "day": 4,
+          "phase": "opener-build",
+          "engine": {
+            "label": "cash-crop",
+            "confidence": 0.619,
+            "scores": {
+              "staple-volume": 3.15,
+              "cash-crop": 16.8,
+              "recurring-crop": 0.0,
+              "livestock": 7.2
+            }
+          },
+          "engine_transition": false,
+          "farm": {
+            "bank": 30.0,
+            "hands": 0,
+            "quadrants": 1,
+            "crops": {
+              "WHEAT": 7,
+              "MELON": 12
+            },
+            "animals": {
+              "COW": 3,
+              "SHEEP": 2
+            },
+            "weeds": 0
+          },
+          "opponent": {
+            "bank": 10.0,
+            "hands": 0,
+            "quadrants": 1,
+            "crops": {
+              "WHEAT": 7,
+              "MELON": 12
+            },
+            "animals": {
+              "COW": 3,
+              "SHEEP": 2
+            },
+            "weeds": 0
+          },
+          "bank_margin": 20.0,
+          "actions": {
+            "BUILD_PASTURE": 1,
+            "BUY_PRODUCT": 1,
+            "BUY_PRODUCT:WHEAT": 6,
+            "BUY_SEED": 1,
+            "BUY_SEED:WHEAT": 7,
+            "CARE": 5,
+            "COLLECT_FERTILIZER": 5,
+            "EAST": 5,
+            "FEED": 5,
+            "HARVEST": 7,
+            "HIRE": 5,
+            "NORTH": 22,
+            "PICKUP": 1,
+            "PLANT": 3,
+            "PLANT:WHEAT": 3,
+            "SELL": 1,
+            "SELL:FERTILIZER": 4,
+            "SOUTH": 5,
+            "WATER": 15,
+            "WEST": 19
+          },
+          "shed": {
+            "FERTILIZER": 4
+          },
+          "prices": {
+            "CARROT": 35,
+            "EGG": 50,
+            "FERTILIZER": 97,
+            "MELON": 264,
+            "MILK": 177,
+            "STRAWBERRY": 137,
+            "TOMATO": 60,
+            "WHEAT": 31,
+            "WOOL": 224
+          },
+          "shops": [
+            "YARN_STORE"
+          ]
+        },
+        {
+          "day": 5,
+          "phase": "opener-build",
+          "engine": {
+            "label": "cash-crop",
+            "confidence": 0.628,
+            "scores": {
+              "staple-volume": 1.35,
+              "cash-crop": 16.8,
+              "recurring-crop": 1.0,
+              "livestock": 7.6
+            }
+          },
+          "engine_transition": false,
+          "farm": {
+            "bank": 147.0,
+            "hands": 0,
+            "quadrants": 1,
+            "crops": {
+              "WHEAT": 3,
+              "MELON": 12
+            },
+            "animals": {
+              "COW": 3,
+              "SHEEP": 2
+            },
+            "weeds": 0
+          },
+          "opponent": {
+            "bank": 127.0,
+            "hands": 0,
+            "quadrants": 1,
+            "crops": {
+              "WHEAT": 3,
+              "MELON": 12
+            },
+            "animals": {
+              "COW": 3,
+              "SHEEP": 2
+            },
+            "weeds": 0
+          },
+          "bank_margin": 20.0,
+          "actions": {
+            "BUY_ANIMAL": 1,
+            "BUY_ANIMAL:COW": 1,
+            "BUY_PRODUCT": 1,
+            "BUY_PRODUCT:WHEAT": 2,
+            "BUY_SEED": 2,
+            "BUY_SEED:STRAWBERRY": 4,
+            "CARE": 6,
+            "COLLECT_FERTILIZER": 5,
+            "EAST": 5,
+            "FEED": 6,
+            "HIRE": 4,
+            "NORTH": 18,
+            "PICKUP": 3,
+            "PLACE": 1,
+            "PLANT": 4,
+            "PLANT:STRAWBERRY": 4,
+            "SELL": 4,
+            "SELL:FERTILIZER": 5,
+            "SELL:WHEAT": 18,
+            "SOUTH": 5,
+            "WATER": 13,
+            "WEST": 16
+          },
+          "shed": {
+            "FERTILIZER": 5,
+            "WHEAT": 29
+          },
+          "prices": {
+            "CARROT": 35,
+            "EGG": 50,
+            "FERTILIZER": 96,
+            "MELON": 266,
+            "MILK": 179,
+            "STRAWBERRY": 139,
+            "TOMATO": 61,
+            "WHEAT": 32,
+            "WOOL": 229
+          },
+          "shops": [
+            "YARN_STORE"
+          ]
+        },
+        {
+          "day": 6,
+          "phase": "opener-build",
+          "engine": {
+            "label": "cash-crop",
+            "confidence": 0.499,
+            "scores": {
+              "staple-volume": 1.35,
+              "cash-crop": 16.8,
+              "recurring-crop": 6.95,
+              "livestock": 8.6
+            }
+          },
+          "engine_transition": false,
+          "farm": {
+            "bank": 300.0,
+            "hands": 0,
+            "quadrants": 1,
+            "crops": {
+              "WHEAT": 3,
+              "STRAWBERRY": 4,
+              "MELON": 12
+            },
+            "animals": {
+              "COW": 4,
+              "SHEEP": 2
+            },
+            "weeds": 0
+          },
+          "opponent": {
+            "bank": 39.0,
+            "hands": 0,
+            "quadrants": 1,
+            "crops": {
+              "WHEAT": 3,
+              "STRAWBERRY": 4,
+              "MELON": 12
+            },
+            "animals": {
+              "COW": 4,
+              "SHEEP": 2
+            },
+            "weeds": 0
+          },
+          "bank_margin": 261.0,
+          "actions": {
+            "BUILD_PASTURE": 1,
+            "BUY_LAND": 1,
+            "BUY_PRODUCT": 3,
+            "BUY_PRODUCT:WHEAT": 6,
+            "BUY_SEED": 3,
+            "BUY_SEED:CARROT": 8,
+            "BUY_SEED:STRAWBERRY": 3,
+            "CARE": 6,
+            "COLLECT_FERTILIZER": 6,
+            "EAST": 11,
+            "FEED": 6,
+            "HARVEST": 2,
+            "HIRE": 4,
+            "NORTH": 24,
+            "PICKUP": 1,
+            "PLACE": 2,
+            "PLANT": 2,
+            "PLANT:STRAWBERRY": 2,
+            "SELL": 3,
+            "SELL:FERTILIZER": 5,
+            "SELL:WOOL": 12,
+            "SOUTH": 12,
+            "WATER": 19,
+            "WEST": 19
+          },
+          "shed": {
+            "FERTILIZER": 5,
+            "WHEAT": 7
+          },
+          "prices": {
+            "CARROT": 35,
+            "EGG": 50,
+            "FERTILIZER": 94,
+            "MELON": 267,
+            "MILK": 181,
+            "STRAWBERRY": 141,
+            "TOMATO": 61,
+            "WHEAT": 29,
+            "WOOL": 232
+          },
+          "shops": [
+            "YARN_STORE",
+            "PIZZA_SHOP"
+          ]
+        },
+        {
+          "day": 7,
+          "phase": "opener-build",
+          "engine": {
+            "label": "cash-crop",
+            "confidence": 0.435,
+            "scores": {
+              "staple-volume": 1.35,
+              "cash-crop": 16.8,
+              "recurring-crop": 10.3,
+              "livestock": 10.2
+            }
+          },
+          "engine_transition": false,
+          "farm": {
+            "bank": 1886.0,
+            "hands": 0,
+            "quadrants": 2,
+            "crops": {
+              "WHEAT": 3,
+              "STRAWBERRY": 6,
+              "MELON": 12
+            },
+            "animals": {
+              "COW": 4,
+              "SHEEP": 2
+            },
+            "weeds": 0
+          },
+          "opponent": {
+            "bank": 1285.0,
+            "hands": 0,
+            "quadrants": 2,
+            "crops": {
+              "WHEAT": 3,
+              "STRAWBERRY": 4,
+              "MELON": 14
+            },
+            "animals": {
+              "COW": 4,
+              "SHEEP": 2
+            },
+            "weeds": 0
+          },
+          "bank_margin": 601.0,
+          "actions": {
+            "BUILD_PASTURE": 3,
+            "BUY_ANIMAL": 2,
+            "BUY_ANIMAL:COW": 2,
+            "BUY_ANIMAL:SHEEP": 2,
+            "BUY_PRODUCT": 2,
+            "BUY_PRODUCT:WHEAT": 4,
+            "BUY_SEED": 2,
+            "BUY_SEED:STRAWBERRY": 4,
+            "BUY_SEED:WHEAT": 4,
+            "CARE": 9,
+            "COLLECT_FERTILIZER": 6,
+            "EAST": 47,
+            "FEED": 9,
+            "HIRE": 8,
+            "NORTH": 29,
+            "PICKUP": 8,
+            "PLACE": 3,
+            "PLANT": 5,
+            "PLANT:STRAWBERRY": 5,
+            "SELL": 1,
+            "SELL:FERTILIZER": 6,
+            "SOUTH": 9,
+            "WATER": 23,
+            "WEST": 31
+          },
+          "shed": {
+            "FERTILIZER": 6,
+            "WHEAT": 7
+          },
+          "prices": {
+            "CARROT": 36,
+            "EGG": 50,
+            "FERTILIZER": 92,
+            "MELON": 268,
+            "MILK": 191,
+            "STRAWBERRY": 142,
+            "TOMATO": 62,
+            "WHEAT": 31,
+            "WOOL": 230
+          },
+          "shops": [
+            "YARN_STORE",
+            "PIZZA_SHOP"
+          ]
+        },
+        {
+          "day": 8,
+          "phase": "first-conversion",
+          "engine": {
+            "label": "hybrid:recurring-crop+cash-crop",
+            "confidence": 0.38,
+            "scores": {
+              "staple-volume": 1.35,
+              "cash-crop": 16.8,
+              "recurring-crop": 19.05,
+              "livestock": 12.9
+            }
+          },
+          "engine_transition": true,
+          "farm": {
+            "bank": 12.0,
+            "hands": 0,
+            "quadrants": 2,
+            "crops": {
+              "WHEAT": 3,
+              "STRAWBERRY": 11,
+              "MELON": 12
+            },
+            "animals": {
+              "COW": 6,
+              "SHEEP": 3
+            },
+            "weeds": 1
+          },
+          "opponent": {
+            "bank": 273.0,
+            "hands": 0,
+            "quadrants": 2,
+            "crops": {
+              "WHEAT": 3,
+              "STRAWBERRY": 8,
+              "MELON": 20
+            },
+            "animals": {
+              "COW": 6,
+              "SHEEP": 3
+            },
+            "weeds": 0
+          },
+          "bank_margin": -261.0,
+          "actions": {
+            "BUILD_PASTURE": 2,
+            "BUY_PRODUCT": 4,
+            "BUY_PRODUCT:WHEAT": 16,
+            "BUY_SEED": 4,
+            "BUY_SEED:STRAWBERRY": 8,
+            "BUY_SEED:WHEAT": 3,
+            "CARE": 10,
+            "COLLECT_FERTILIZER": 9,
+            "EAST": 72,
+            "FEED": 10,
+            "HARVEST": 5,
+            "HIRE": 11,
+            "NORTH": 42,
+            "PICKUP": 4,
+            "PLACE": 3,
+            "PLANT": 11,
+            "PLANT:STRAWBERRY": 8,
+            "PLANT:WHEAT": 3,
+            "SELL": 2,
+            "SELL:FERTILIZER": 6,
+            "SELL:MILK": 12,
+            "SOUTH": 8,
+            "WATER": 32,
+            "WEST": 32
+          },
+          "shed": {
+            "FERTILIZER": 6,
+            "SHEEP": 1,
+            "WHEAT": 2
+          },
+          "prices": {
+            "CARROT": 36,
+            "EGG": 50,
+            "FERTILIZER": 89,
+            "MELON": 269,
+            "MILK": 199,
+            "STRAWBERRY": 144,
+            "TOMATO": 62,
+            "WHEAT": 32,
+            "WOOL": 233
+          },
+          "shops": [
+            "YARN_STORE",
+            "PIZZA_SHOP"
+          ]
+        },
+        {
+          "day": 9,
+          "phase": "first-conversion",
+          "engine": {
+            "label": "recurring-crop",
+            "confidence": 0.469,
+            "scores": {
+              "staple-volume": 1.35,
+              "cash-crop": 16.8,
+              "recurring-crop": 29.45,
+              "livestock": 15.2
+            }
+          },
+          "engine_transition": true,
+          "farm": {
+            "bank": 1122.0,
+            "hands": 0,
+            "quadrants": 2,
+            "crops": {
+              "WHEAT": 3,
+              "STRAWBERRY": 19,
+              "MELON": 12
+            },
+            "animals": {
+              "COW": 6,
+              "SHEEP": 4
+            },
+            "weeds": 0
+          },
+          "opponent": {
+            "bank": 1591.0,
+            "hands": 0,
+            "quadrants": 2,
+            "crops": {
+              "WHEAT": 5,
+              "STRAWBERRY": 11,
+              "MELON": 20
+            },
+            "animals": {
+              "COW": 6,
+              "SHEEP": 4
+            },
+            "weeds": 0
+          },
+          "bank_margin": -469.0,
+          "actions": {
+            "BUY_ANIMAL": 1,
+            "BUY_ANIMAL:SHEEP": 2,
+            "BUY_PRODUCT": 5,
+            "BUY_PRODUCT:WHEAT": 11,
+            "BUY_SEED": 3,
+            "BUY_SEED:WHEAT": 3,
+            "CARE": 10,
+            "COLLECT_FERTILIZER": 10,
+            "DIG": 1,
+            "EAST": 28,
+            "FEED": 11,
+            "HARVEST": 2,
+            "HIRE": 12,
+            "NORTH": 46,
+            "PICKUP": 5,
+            "PLACE": 4,
+            "PLANT": 3,
+            "PLANT:WHEAT": 3,
+            "SELL": 5,
+            "SELL:FERTILIZER": 9,
+            "SELL:WHEAT": 8,
+            "SELL:WOOL": 8,
+            "SOUTH": 7,
+            "WATER": 26,
+            "WEST": 29
+          },
+          "shed": {
+            "FERTILIZER": 9,
+            "WHEAT": 20
+          },
+          "prices": {
+            "CARROT": 36,
+            "EGG": 51,
+            "FERTILIZER": 87,
+            "MELON": 270,
+            "MILK": 175,
+            "STRAWBERRY": 145,
+            "TOMATO": 63,
+            "WHEAT": 34,
+            "WOOL": 235
+          },
+          "shops": [
+            "YARN_STORE",
+            "PIZZA_SHOP",
+            "BAKERY"
+          ]
+        },
+        {
+          "day": 10,
+          "phase": "first-conversion",
+          "engine": {
+            "label": "recurring-crop",
+            "confidence": 0.444,
+            "scores": {
+              "staple-volume": 2.7,
+              "cash-crop": 16.8,
+              "recurring-crop": 29.45,
+              "livestock": 17.4
+            }
+          },
+          "engine_transition": false,
+          "farm": {
+            "bank": 2250.0,
+            "hands": 0,
+            "quadrants": 2,
+            "crops": {
+              "WHEAT": 6,
+              "STRAWBERRY": 19,
+              "MELON": 12
+            },
+            "animals": {
+              "COW": 6,
+              "SHEEP": 6
+            },
+            "weeds": 0
+          },
+          "opponent": {
+            "bank": 2545.0,
+            "hands": 0,
+            "quadrants": 2,
+            "crops": {
+              "WHEAT": 5,
+              "STRAWBERRY": 11,
+              "MELON": 20
+            },
+            "animals": {
+              "COW": 6,
+              "SHEEP": 6
+            },
+            "weeds": 0
+          },
+          "bank_margin": -295.0,
+          "actions": {
+            "BUY_PRODUCT": 4,
+            "BUY_PRODUCT:WHEAT": 37,
+            "BUY_SEED": 2,
+            "BUY_SEED:WHEAT": 3,
+            "CARE": 13,
+            "COLLECT_FERTILIZER": 12,
+            "EAST": 38,
+            "FEED": 12,
+            "HARVEST": 14,
+            "HIRE": 11,
+            "NORTH": 47,
+            "PICKUP": 3,
+            "PLACE": 5,
+            "PLANT": 5,
+            "PLANT:WHEAT": 5,
+            "SELL": 20,
+            "SELL:FERTILIZER": 139,
+            "SELL:MELON": 60,
+            "SELL:WHEAT": 26,
+            "SOUTH": 22,
+            "WATER": 30,
+            "WEST": 56
+          },
+          "shed": {
+            "FERTILIZER": 10,
+            "WHEAT": 12
+          },
+          "prices": {
+            "CARROT": 36,
+            "EGG": 51,
+            "FERTILIZER": 83,
+            "MELON": 271,
+            "MILK": 187,
+            "STRAWBERRY": 147,
+            "TOMATO": 64,
+            "WHEAT": 35,
+            "WOOL": 234
+          },
+          "shops": [
+            "YARN_STORE",
+            "PIZZA_SHOP",
+            "BAKERY"
+          ]
+        },
+        {
+          "day": 11,
+          "phase": "first-conversion",
+          "engine": {
+            "label": "recurring-crop",
+            "confidence": 0.603,
+            "scores": {
+              "staple-volume": 4.95,
+              "cash-crop": 0.0,
+              "recurring-crop": 35.2,
+              "livestock": 18.2
+            }
+          },
+          "engine_transition": false,
+          "farm": {
+            "bank": 15037.0,
+            "hands": 0,
+            "quadrants": 2,
+            "crops": {
+              "WHEAT": 11,
+              "STRAWBERRY": 19
+            },
+            "animals": {
+              "COW": 6,
+              "SHEEP": 6
+            },
+            "weeds": 0
+          },
+          "opponent": {
+            "bank": 15622.0,
+            "hands": 0,
+            "quadrants": 2,
+            "crops": {
+              "WHEAT": 8,
+              "STRAWBERRY": 11,
+              "MELON": 8
+            },
+            "animals": {
+              "COW": 6,
+              "SHEEP": 6
+            },
+            "weeds": 0
+          },
+          "bank_margin": -585.0,
+          "actions": {
+            "BUILD_PASTURE": 2,
+            "BUY_ANIMAL": 1,
+            "BUY_ANIMAL:SHEEP": 2,
+            "BUY_LAND": 1,
+            "BUY_PRODUCT": 2,
+            "BUY_PRODUCT:WHEAT": 16,
+            "BUY_SEED": 7,
+            "BUY_SEED:STRAWBERRY": 23,
+            "BUY_SEED:WHEAT": 7,
+            "CARE": 14,
+            "COLLECT_FERTILIZER": 12,
+            "EAST": 26,
+            "FEED": 14,
+            "HARVEST": 1,
+            "HIRE": 12,
+            "NORTH": 27,
+            "PICKUP": 6,
+            "PLACE": 2,
+            "PLANT": 27,
+            "PLANT:STRAWBERRY": 22,
+            "PLANT:WHEAT": 5,
+            "SELL": 2,
+            "SELL:MELON": 12,
+            "SELL:MILK": 6,
+            "SOUTH": 41,
+            "WATER": 44,
+            "WEST": 58
+          },
+          "shed": {
+            "FERTILIZER": 12,
+            "MELON": 12,
+            "MILK": 6,
+            "WHEAT": 18
+          },
+          "prices": {
+            "CARROT": 36,
+            "EGG": 51,
+            "FERTILIZER": 79,
+            "MELON": 131,
+            "MILK": 196,
+            "STRAWBERRY": 148,
+            "TOMATO": 65,
+            "WHEAT": 37,
+            "WOOL": 236
+          },
+          "shops": [
+            "YARN_STORE",
+            "PIZZA_SHOP",
+            "BAKERY"
+          ]
+        },
+        {
+          "day": 12,
+          "phase": "engine-commit",
+          "engine": {
+            "label": "recurring-crop",
+            "confidence": 0.691,
+            "scores": {
+              "staple-volume": 7.2,
+              "cash-crop": 0.0,
+              "recurring-crop": 63.55,
+              "livestock": 21.2
+            }
+          },
+          "engine_transition": false,
+          "farm": {
+            "bank": 10963.0,
+            "hands": 0,
+            "quadrants": 3,
+            "crops": {
+              "WHEAT": 16,
+              "STRAWBERRY": 41
+            },
+            "animals": {
+              "COW": 6,
+              "SHEEP": 8
+            },
+            "weeds": 0
+          },
+          "opponent": {
+            "bank": 12677.0,
+            "hands": 0,
+            "quadrants": 3,
+            "crops": {
+              "WHEAT": 17,
+              "STRAWBERRY": 31,
+              "MELON": 8
+            },
+            "animals": {
+              "COW": 6,
+              "SHEEP": 8
+            },
+            "weeds": 0
+          },
+          "bank_margin": -1714.0,
+          "actions": {
+            "BUILD_PASTURE": 3,
+            "BUY_ANIMAL": 1,
+            "BUY_ANIMAL:SHEEP": 2,
+            "BUY_LAND": 1,
+            "BUY_PRODUCT": 1,
+            "BUY_PRODUCT:WHEAT": 8,
+            "BUY_SEED": 8,
+            "BUY_SEED:WHEAT": 11,
+            "CARE": 15,
+            "COLLECT_FERTILIZER": 13,
+            "EAST": 37,
+            "FEED": 15,
+            "HARVEST": 7,
+            "HIRE": 10,
+            "NORTH": 27,
+            "PICKUP": 8,
+            "PLACE": 2,
+            "PLANT": 11,
+            "PLANT:WHEAT": 11,
+            "SELL": 6,
+            "SELL:FERTILIZER": 15,
+            "SELL:MILK": 6,
+            "SOUTH": 24,
+            "WATER": 35,
+            "WEST": 43
+          },
+          "shed": {
+            "FERTILIZER": 24,
+            "MILK": 6,
+            "WHEAT": 20
+          },
+          "prices": {
+            "CARROT": 36,
+            "EGG": 52,
+            "FERTILIZER": 77,
+            "MELON": 76,
+            "MILK": 190,
+            "STRAWBERRY": 149,
+            "TOMATO": 66,
+            "WHEAT": 39,
+            "WOOL": 238
+          },
+          "shops": [
+            "YARN_STORE",
+            "PIZZA_SHOP",
+            "BAKERY",
+            "PIZZA_SHOP"
+          ]
+        },
+        {
+          "day": 13,
+          "phase": "engine-commit",
+          "engine": {
+            "label": "recurring-crop",
+            "confidence": 0.645,
+            "scores": {
+              "staple-volume": 10.8,
+              "cash-crop": 0.0,
+              "recurring-crop": 63.55,
+              "livestock": 24.2
+            }
+          },
+          "engine_transition": false,
+          "farm": {
+            "bank": 7603.0,
+            "hands": 0,
+            "quadrants": 4,
+            "crops": {
+              "WHEAT": 24,
+              "STRAWBERRY": 41
+            },
+            "animals": {
+              "COW": 6,
+              "SHEEP": 10
+            },
+            "weeds": 1
+          },
+          "opponent": {
+            "bank": 8524.0,
+            "hands": 0,
+            "quadrants": 4,
+            "crops": {
+              "WHEAT": 21,
+              "STRAWBERRY": 33,
+              "MELON": 8
+            },
+            "animals": {
+              "COW": 6,
+              "SHEEP": 9
+            },
+            "weeds": 0
+          },
+          "bank_margin": -921.0,
+          "actions": {
+            "BUILD_PASTURE": 1,
+            "BUY_ANIMAL": 1,
+            "BUY_ANIMAL:SHEEP": 2,
+            "BUY_PRODUCT": 2,
+            "BUY_PRODUCT:WHEAT": 18,
+            "BUY_SEED": 2,
+            "BUY_SEED:WHEAT": 3,
+            "CARE": 17,
+            "COLLECT_FERTILIZER": 17,
+            "EAST": 41,
+            "FEED": 18,
+            "HARVEST": 6,
+            "HIRE": 11,
+            "NORTH": 30,
+            "PICKUP": 8,
+            "PLACE": 2,
+            "PLANT": 5,
+            "PLANT:STRAWBERRY": 1,
+            "PLANT:WHEAT": 4,
+            "SELL": 9,
+            "SELL:FERTILIZER": 30,
+            "SELL:MILK": 6,
+            "SELL:WOOL": 8,
+            "SOUTH": 44,
+            "WATER": 48,
+            "WEST": 32
+          },
+          "shed": {
+            "FERTILIZER": 23,
+            "MILK": 6,
+            "WHEAT": 22,
+            "WOOL": 8
+          },
+          "prices": {
+            "CARROT": 36,
+            "EGG": 52,
+            "FERTILIZER": 73,
+            "MELON": 78,
+            "MILK": 191,
+            "STRAWBERRY": 150,
+            "TOMATO": 67,
+            "WHEAT": 40,
+            "WOOL": 239
+          },
+          "shops": [
+            "YARN_STORE",
+            "PIZZA_SHOP",
+            "BAKERY",
+            "PIZZA_SHOP"
+          ]
+        },
+        {
+          "day": 14,
+          "phase": "engine-commit",
+          "engine": {
+            "label": "recurring-crop",
+            "confidence": 0.643,
+            "scores": {
+              "staple-volume": 11.25,
+              "cash-crop": 0.0,
+              "recurring-crop": 65.1,
+              "livestock": 24.9
+            }
+          },
+          "engine_transition": false,
+          "farm": {
+            "bank": 10292.0,
+            "hands": 0,
+            "quadrants": 4,
+            "crops": {
+              "WHEAT": 25,
+              "STRAWBERRY": 42
+            },
+            "animals": {
+              "COW": 6,
+              "SHEEP": 11
+            },
+            "weeds": 1
+          },
+          "opponent": {
+            "bank": 11799.0,
+            "hands": 0,
+            "quadrants": 4,
+            "crops": {
+              "WHEAT": 24,
+              "STRAWBERRY": 34,
+              "MELON": 8
+            },
+            "animals": {
+              "COW": 6,
+              "SHEEP": 10
+            },
+            "weeds": 0
+          },
+          "bank_margin": -1507.0,
+          "actions": {
+            "BUY_PRODUCT": 1,
+            "BUY_PRODUCT:WHEAT": 10,
+            "BUY_SEED": 3,
+            "BUY_SEED:WHEAT": 3,
+            "CARE": 17,
+            "COLLECT_FERTILIZER": 16,
+            "EAST": 23,
+            "FEED": 17,
+            "FERTILIZE": 4,
+            "HARVEST": 8,
+            "HIRE": 8,
+            "NORTH": 29,
+            "PICKUP": 6,
+            "PLANT": 3,
+            "PLANT:WHEAT": 3,
+            "SELL": 8,
+            "SELL:FERTILIZER": 14,
+            "SELL:MILK": 9,
+            "SELL:WHEAT": 6,
+            "SELL:WOOL": 6,
+            "SOUTH": 22,
+            "WATER": 31,
+            "WEST": 26
+          },
+          "shed": {
+            "FERTILIZER": 14,
+            "MILK": 9,
+            "SHEEP": 1,
+            "WHEAT": 32,
+            "WOOL": 6
+          },
+          "prices": {
+            "CARROT": 36,
+            "EGG": 53,
+            "FERTILIZER": 63,
+            "MELON": 81,
+            "MILK": 193,
+            "STRAWBERRY": 151,
+            "TOMATO": 69,
+            "WHEAT": 42,
+            "WOOL": 239
+          },
+          "shops": [
+            "YARN_STORE",
+            "PIZZA_SHOP",
+            "BAKERY",
+            "PIZZA_SHOP"
+          ]
+        },
+        {
+          "day": 15,
+          "phase": "engine-commit",
+          "engine": {
+            "label": "recurring-crop",
+            "confidence": 0.652,
+            "scores": {
+              "staple-volume": 9.9,
+              "cash-crop": 0.0,
+              "recurring-crop": 65.1,
+              "livestock": 24.9
+            }
+          },
+          "engine_transition": false,
+          "farm": {
+            "bank": 13901.0,
+            "hands": 0,
+            "quadrants": 4,
+            "crops": {
+              "WHEAT": 22,
+              "STRAWBERRY": 42
+            },
+            "animals": {
+              "COW": 6,
+              "SHEEP": 11
+            },
+            "weeds": 2
+          },
+          "opponent": {
+            "bank": 15149.0,
+            "hands": 0,
+            "quadrants": 4,
+            "crops": {
+              "WHEAT": 22,
+              "STRAWBERRY": 34,
+              "MELON": 8
+            },
+            "animals": {
+              "COW": 6,
+              "SHEEP": 10
+            },
+            "weeds": 0
+          },
+          "bank_margin": -1248.0,
+          "actions": {
+            "BUY_PRODUCT": 1,
+            "BUY_PRODUCT:WHEAT": 11,
+            "BUY_SEED": 4,
+            "BUY_SEED:WHEAT": 4,
+            "CARE": 17,
+            "COLLECT_FERTILIZER": 17,
+            "EAST": 42,
+            "FEED": 17,
+            "FERTILIZE": 2,
+            "HARVEST": 17,
+            "HIRE": 12,
+            "NORTH": 31,
+            "PICKUP": 6,
+            "PLACE": 1,
+            "PLANT": 3,
+            "PLANT:WHEAT": 3,
+            "SELL": 26,
+            "SELL:FERTILIZER": 213,
+            "SELL:MILK": 6,
+            "SELL:WHEAT": 23,
+            "SELL:WOOL": 12,
+            "SOUTH": 48,
+            "WATER": 50,
+            "WEST": 36
+          },
+          "shed": {
+            "FERTILIZER": 12,
+            "MILK": 6,
+            "SHEEP": 1,
+            "WHEAT": 35,
+            "WOOL": 6
+          },
+          "prices": {
+            "CARROT": 36,
+            "EGG": 53,
+            "FERTILIZER": 58,
+            "MELON": 84,
+            "MILK": 186,
+            "STRAWBERRY": 153,
+            "TOMATO": 70,
+            "WHEAT": 43,
+            "WOOL": 239
+          },
+          "shops": [
+            "YARN_STORE",
+            "PIZZA_SHOP",
+            "BAKERY",
+            "PIZZA_SHOP",
+            "BRUNCH_SPOT"
+          ]
+        },
+        {
+          "day": 16,
+          "phase": "throughput-balance",
+          "engine": {
+            "label": "recurring-crop",
+            "confidence": 0.658,
+            "scores": {
+              "staple-volume": 9.0,
+              "cash-crop": 0.0,
+              "recurring-crop": 65.1,
+              "livestock": 24.9
+            }
+          },
+          "engine_transition": false,
+          "farm": {
+            "bank": 18400.0,
+            "hands": 0,
+            "quadrants": 4,
+            "crops": {
+              "WHEAT": 20,
+              "STRAWBERRY": 42
+            },
+            "animals": {
+              "COW": 6,
+              "SHEEP": 11
+            },
+            "weeds": 1
+          },
+          "opponent": {
+            "bank": 19202.0,
+            "hands": 0,
+            "quadrants": 4,
+            "crops": {
+              "WHEAT": 17,
+              "STRAWBERRY": 34,
+              "MELON": 8
+            },
+            "animals": {
+              "COW": 6,
+              "SHEEP": 11
+            },
+            "weeds": 0
+          },
+          "bank_margin": -802.0,
+          "actions": {
+            "BUY_PRODUCT": 1,
+            "BUY_PRODUCT:WHEAT": 11,
+            "BUY_SEED": 4,
+            "BUY_SEED:WHEAT": 7,
+            "CARE": 17,
+            "COLLECT_FERTILIZER": 17,
+            "DIG": 1,
+            "EAST": 23,
+            "FEED": 17,
+            "FERTILIZE": 5,
+            "HARVEST": 15,
+            "HIRE": 9,
+            "NORTH": 41,
+            "PICKUP": 6,
+            "PLANT": 9,
+            "PLANT:WHEAT": 9,
+            "SELL": 12,
+            "SELL:FERTILIZER": 96,
+            "SELL:MILK": 18,
+            "SELL:STRAWBERRY": 8,
+            "SELL:WHEAT": 10,
+            "SELL:WOOL": 14,
+            "SOUTH": 19,
+            "WATER": 33,
+            "WEST": 21
+          },
+          "shed": {
+            "FERTILIZER": 15,
+            "MILK": 18,
+            "SHEEP": 1,
+            "STRAWBERRY": 8,
+            "WHEAT": 27,
+            "WOOL": 14
+          },
+          "prices": {
+            "CARROT": 36,
+            "EGG": 54,
+            "FERTILIZER": 53,
+            "MELON": 86,
+            "MILK": 187,
+            "STRAWBERRY": 159,
+            "TOMATO": 72,
+            "WHEAT": 43,
+            "WOOL": 238
+          },
+          "shops": [
+            "YARN_STORE",
+            "PIZZA_SHOP",
+            "BAKERY",
+            "PIZZA_SHOP",
+            "BRUNCH_SPOT"
+          ]
+        },
+        {
+          "day": 17,
+          "phase": "throughput-balance",
+          "engine": {
+            "label": "recurring-crop",
+            "confidence": 0.661,
+            "scores": {
+              "staple-volume": 8.55,
+              "cash-crop": 0.0,
+              "recurring-crop": 65.1,
+              "livestock": 24.9
+            }
+          },
+          "engine_transition": false,
+          "farm": {
+            "bank": 25907.0,
+            "hands": 0,
+            "quadrants": 4,
+            "crops": {
+              "WHEAT": 19,
+              "STRAWBERRY": 42
+            },
+            "animals": {
+              "COW": 6,
+              "SHEEP": 11
+            },
+            "weeds": 1
+          },
+          "opponent": {
+            "bank": 27792.0,
+            "hands": 0,
+            "quadrants": 4,
+            "crops": {
+              "WHEAT": 16,
+              "STRAWBERRY": 34,
+              "MELON": 6
+            },
+            "animals": {
+              "COW": 6,
+              "SHEEP": 11
+            },
+            "weeds": 0
+          },
+          "bank_margin": -1885.0,
+          "actions": {
+            "BUY_SEED": 4,
+            "BUY_SEED:WHEAT": 6,
+            "CARE": 17,
+            "COLLECT_FERTILIZER": 17,
+            "EAST": 43,
+            "FEED": 17,
+            "FERTILIZE": 7,
+            "HARVEST": 20,
+            "HIRE": 12,
+            "NORTH": 33,
+            "PICKUP": 6,
+            "PLACE": 1,
+            "PLANT": 5,
+            "PLANT:WHEAT": 5,
+            "SELL": 14,
+            "SELL:FERTILIZER": 32,
+            "SELL:MILK": 6,
+            "SELL:STRAWBERRY": 4,
+            "SELL:WHEAT": 47,
+            "SELL:WOOL": 16,
+            "SOUTH": 39,
+            "WATER": 49,
+            "WEST": 34
+          },
+          "shed": {
+            "FERTILIZER": 12,
+            "MILK": 6,
+            "SHEEP": 1,
+            "STRAWBERRY": 4,
+            "WHEAT": 49,
+            "WOOL": 4
+          },
+          "prices": {
+            "CARROT": 36,
+            "EGG": 55,
+            "FERTILIZER": 47,
+            "MELON": 73,
+            "MILK": 133,
+            "STRAWBERRY": 150,
+            "TOMATO": 74,
+            "WHEAT": 44,
+            "WOOL": 236
+          },
+          "shops": [
+            "YARN_STORE",
+            "PIZZA_SHOP",
+            "BAKERY",
+            "PIZZA_SHOP",
+            "BRUNCH_SPOT"
+          ]
+        },
+        {
+          "day": 18,
+          "phase": "throughput-balance",
+          "engine": {
+            "label": "recurring-crop",
+            "confidence": 0.658,
+            "scores": {
+              "staple-volume": 9.0,
+              "cash-crop": 0.0,
+              "recurring-crop": 65.1,
+              "livestock": 24.9
+            }
+          },
+          "engine_transition": false,
+          "farm": {
+            "bank": 31965.0,
+            "hands": 0,
+            "quadrants": 4,
+            "crops": {
+              "WHEAT": 20,
+              "STRAWBERRY": 42
+            },
+            "animals": {
+              "COW": 6,
+              "SHEEP": 11
+            },
+            "weeds": 0
+          },
+          "opponent": {
+            "bank": 34090.0,
+            "hands": 0,
+            "quadrants": 4,
+            "crops": {
+              "WHEAT": 18,
+              "STRAWBERRY": 33
+            },
+            "animals": {
+              "COW": 6,
+              "SHEEP": 12
+            },
+            "weeds": 3
+          },
+          "bank_margin": -2125.0,
+          "actions": {
+            "BUY_PRODUCT": 9,
+            "BUY_PRODUCT:WHEAT": 113,
+            "BUY_SEED": 7,
+            "BUY_SEED:WHEAT": 8,
+            "CARE": 15,
+            "COLLECT_FERTILIZER": 17,
+            "DIG": 1,
+            "EAST": 39,
+            "FEED": 16,
+            "FERTILIZE": 5,
+            "HARVEST": 21,
+            "HIRE": 12,
+            "NORTH": 47,
+            "PICKUP": 7,
+            "PLACE": 4,
+            "PLANT": 7,
+            "PLANT:WHEAT": 7,
+            "SELL": 39,
+            "SELL:FERTILIZER": 91,
+            "SELL:MILK": 12,
+            "SELL:STRAWBERRY": 18,
+            "SELL:WHEAT": 157,
+            "SELL:WOOL": 19,
+            "SOUTH": 34,
+            "WATER": 37,
+            "WEST": 37
+          },
+          "shed": {
+            "FERTILIZER": 9,
+            "MILK": 12,
+            "SHEEP": 1,
+            "STRAWBERRY": 18,
+            "WHEAT": 25,
+            "WOOL": 4
+          },
+          "prices": {
+            "CARROT": 36,
+            "EGG": 55,
+            "FERTILIZER": 43,
+            "MELON": 7,
+            "MILK": 129,
+            "STRAWBERRY": 154,
+            "TOMATO": 75,
+            "WHEAT": 44,
+            "WOOL": 233
+          },
+          "shops": [
+            "YARN_STORE",
+            "PIZZA_SHOP",
+            "BAKERY",
+            "PIZZA_SHOP",
+            "BRUNCH_SPOT",
+            "BRUNCH_SPOT"
+          ]
+        },
+        {
+          "day": 19,
+          "phase": "throughput-balance",
+          "engine": {
+            "label": "recurring-crop",
+            "confidence": 0.636,
+            "scores": {
+              "staple-volume": 10.8,
+              "cash-crop": 0.0,
+              "recurring-crop": 65.1,
+              "livestock": 26.4
+            }
+          },
+          "engine_transition": false,
+          "farm": {
+            "bank": 39774.0,
+            "hands": 0,
+            "quadrants": 4,
+            "crops": {
+              "WHEAT": 24,
+              "STRAWBERRY": 42
+            },
+            "animals": {
+              "COW": 6,
+              "SHEEP": 12
+            },
+            "weeds": 0
+          },
+          "opponent": {
+            "bank": 36818.0,
+            "hands": 0,
+            "quadrants": 4,
+            "crops": {
+              "WHEAT": 34,
+              "STRAWBERRY": 33
+            },
+            "animals": {
+              "COW": 6,
+              "SHEEP": 12
+            },
+            "weeds": 0
+          },
+          "bank_margin": 2956.0,
+          "actions": {
+            "BUY_PRODUCT": 8,
+            "BUY_PRODUCT:WHEAT": 92,
+            "BUY_SEED": 2,
+            "BUY_SEED:WHEAT": 2,
+            "CARE": 18,
+            "COLLECT_FERTILIZER": 18,
+            "EAST": 34,
+            "FEED": 17,
+            "FERTILIZE": 2,
+            "HARVEST": 17,
+            "HIRE": 12,
+            "NORTH": 36,
+            "PICKUP": 8,
+            "PLACE": 1,
+            "PLANT": 3,
+            "PLANT:WHEAT": 3,
+            "SELL": 23,
+            "SELL:FERTILIZER": 23,
+            "SELL:MILK": 6,
+            "SELL:STRAWBERRY": 26,
+            "SELL:WHEAT": 82,
+            "SELL:WOOL": 12,
+            "SOUTH": 45,
+            "WATER": 48,
+            "WEST": 44
+          },
+          "shed": {
+            "FERTILIZER": 13,
+            "MILK": 6,
+            "STRAWBERRY": 20,
+            "WHEAT": 25,
+            "WOOL": 12
+          },
+          "prices": {
+            "CARROT": 36,
+            "EGG": 57,
+            "FERTILIZER": 38,
+            "MELON": 1,
+            "MILK": 105,
+            "STRAWBERRY": 135,
+            "TOMATO": 77,
+            "WHEAT": 45,
+            "WOOL": 231
+          },
+          "shops": [
+            "YARN_STORE",
+            "PIZZA_SHOP",
+            "BAKERY",
+            "PIZZA_SHOP",
+            "BRUNCH_SPOT",
+            "BRUNCH_SPOT"
+          ]
+        },
+        {
+          "day": 20,
+          "phase": "engine-convert",
+          "engine": {
+            "label": "recurring-crop",
+            "confidence": 0.619,
+            "scores": {
+              "staple-volume": 10.8,
+              "cash-crop": 0.0,
+              "recurring-crop": 60.45,
+              "livestock": 26.4
+            }
+          },
+          "engine_transition": false,
+          "farm": {
+            "bank": 45293.0,
+            "hands": 0,
+            "quadrants": 4,
+            "crops": {
+              "WHEAT": 24,
+              "STRAWBERRY": 39
+            },
+            "animals": {
+              "COW": 6,
+              "SHEEP": 12
+            },
+            "weeds": 3
+          },
+          "opponent": {
+            "bank": 44410.0,
+            "hands": 0,
+            "quadrants": 4,
+            "crops": {
+              "WHEAT": 36,
+              "STRAWBERRY": 33
+            },
+            "animals": {
+              "COW": 6,
+              "SHEEP": 12
+            },
+            "weeds": 1
+          },
+          "bank_margin": 883.0,
+          "actions": {
+            "BUY_PRODUCT": 6,
+            "BUY_PRODUCT:WHEAT": 71,
+            "BUY_SEED": 2,
+            "BUY_SEED:WHEAT": 2,
+            "CARE": 18,
+            "COLLECT_FERTILIZER": 18,
+            "DIG": 1,
+            "EAST": 26,
+            "FEED": 18,
+            "FERTILIZE": 9,
+            "HARVEST": 24,
+            "HIRE": 12,
+            "NORTH": 32,
+            "PICKUP": 5,
+            "PLACE": 1,
+            "PLANT": 2,
+            "PLANT:WHEAT": 2,
+            "SELL": 33,
+            "SELL:FERTILIZER": 39,
+            "SELL:MILK": 12,
+            "SELL:STRAWBERRY": 20,
+            "SELL:WHEAT": 115,
+            "SELL:WOOL": 4,
+            "SOUTH": 50,
+            "WATER": 44,
+            "WEST": 39
+          },
+          "shed": {
+            "FERTILIZER": 16,
+            "MILK": 12,
+            "STRAWBERRY": 12,
+            "WHEAT": 18,
+            "WOOL": 4
+          },
+          "prices": {
+            "CARROT": 37,
+            "EGG": 58,
+            "FERTILIZER": 33,
+            "MELON": 4,
+            "MILK": 114,
+            "STRAWBERRY": 62,
+            "TOMATO": 78,
+            "WHEAT": 46,
+            "WOOL": 221
+          },
+          "shops": [
+            "YARN_STORE",
+            "PIZZA_SHOP",
+            "BAKERY",
+            "PIZZA_SHOP",
+            "BRUNCH_SPOT",
+            "BRUNCH_SPOT"
+          ]
+        },
+        {
+          "day": 21,
+          "phase": "engine-convert",
+          "engine": {
+            "label": "recurring-crop",
+            "confidence": 0.634,
+            "scores": {
+              "staple-volume": 7.65,
+              "cash-crop": 0.0,
+              "recurring-crop": 58.9,
+              "livestock": 26.4
+            }
+          },
+          "engine_transition": false,
+          "farm": {
+            "bank": 48075.0,
+            "hands": 0,
+            "quadrants": 4,
+            "crops": {
+              "WHEAT": 17,
+              "STRAWBERRY": 38
+            },
+            "animals": {
+              "COW": 6,
+              "SHEEP": 12
+            },
+            "weeds": 2
+          },
+          "opponent": {
+            "bank": 47361.0,
+            "hands": 0,
+            "quadrants": 4,
+            "crops": {
+              "WHEAT": 34,
+              "STRAWBERRY": 33
+            },
+            "animals": {
+              "COW": 6,
+              "SHEEP": 12
+            },
+            "weeds": 1
+          },
+          "bank_margin": 714.0,
+          "actions": {
+            "BUY_PRODUCT": 7,
+            "BUY_PRODUCT:WHEAT": 97,
+            "BUY_SEED": 5,
+            "BUY_SEED:WHEAT": 6,
+            "CARE": 18,
+            "COLLECT_FERTILIZER": 16,
+            "DIG": 2,
+            "EAST": 49,
+            "FEED": 18,
+            "FERTILIZE": 8,
+            "HARVEST": 39,
+            "HIRE": 12,
+            "NORTH": 34,
+            "PICKUP": 5,
+            "PLACE": 2,
+            "PLANT": 5,
+            "PLANT:WHEAT": 5,
+            "SELL": 39,
+            "SELL:FERTILIZER": 212,
+            "SELL:MILK": 6,
+            "SELL:STRAWBERRY": 28,
+            "SELL:WHEAT": 170,
+            "SELL:WOOL": 12,
+            "SOUTH": 41,
+            "WATER": 21,
+            "WEST": 33
+          },
+          "shed": {
+            "FERTILIZER": 9,
+            "MILK": 6,
+            "STRAWBERRY": 12,
+            "WHEAT": 30,
+            "WOOL": 12
+          },
+          "prices": {
+            "CARROT": 37,
+            "EGG": 59,
+            "FERTILIZER": 26,
+            "MELON": 7,
+            "MILK": 91,
+            "STRAWBERRY": 30,
+            "TOMATO": 80,
+            "WHEAT": 47,
+            "WOOL": 223
+          },
+          "shops": [
+            "YARN_STORE",
+            "PIZZA_SHOP",
+            "BAKERY",
+            "PIZZA_SHOP",
+            "BRUNCH_SPOT",
+            "BRUNCH_SPOT",
+            "BAKERY"
+          ]
+        },
+        {
+          "day": 22,
+          "phase": "engine-convert",
+          "engine": {
+            "label": "recurring-crop",
+            "confidence": 0.64,
+            "scores": {
+              "staple-volume": 6.75,
+              "cash-crop": 0.0,
+              "recurring-crop": 58.9,
+              "livestock": 26.4
+            }
+          },
+          "engine_transition": false,
+          "farm": {
+            "bank": 51460.0,
+            "hands": 0,
+            "quadrants": 4,
+            "crops": {
+              "WHEAT": 15,
+              "STRAWBERRY": 38
+            },
+            "animals": {
+              "COW": 6,
+              "SHEEP": 12
+            },
+            "weeds": 3
+          },
+          "opponent": {
+            "bank": 52054.0,
+            "hands": 0,
+            "quadrants": 4,
+            "crops": {
+              "WHEAT": 28,
+              "STRAWBERRY": 33
+            },
+            "animals": {
+              "COW": 6,
+              "SHEEP": 12
+            },
+            "weeds": 4
+          },
+          "bank_margin": -594.0,
+          "actions": {
+            "BUY_PRODUCT": 1,
+            "BUY_PRODUCT:WHEAT": 16,
+            "BUY_SEED": 4,
+            "BUY_SEED:WHEAT": 6,
+            "CARE": 18,
+            "COLLECT_FERTILIZER": 19,
+            "DIG": 1,
+            "EAST": 35,
+            "FEED": 18,
+            "FERTILIZE": 11,
+            "HARVEST": 22,
+            "HIRE": 12,
+            "NORTH": 29,
+            "PICKUP": 9,
+            "PLANT": 9,
+            "PLANT:WHEAT": 9,
+            "SELL": 35,
+            "SELL:FERTILIZER": 76,
+            "SELL:MILK": 12,
+            "SELL:STRAWBERRY": 19,
+            "SELL:WHEAT": 181,
+            "SELL:WOOL": 23,
+            "SOUTH": 42,
+            "WATER": 42,
+            "WEST": 36
+          },
+          "shed": {
+            "FERTILIZER": 9,
+            "MILK": 12,
+            "STRAWBERRY": 20,
+            "WHEAT": 19,
+            "WOOL": 23
+          },
+          "prices": {
+            "CARROT": 37,
+            "EGG": 60,
+            "FERTILIZER": 23,
+            "MELON": 10,
+            "MILK": 93,
+            "STRAWBERRY": 5,
+            "TOMATO": 81,
+            "WHEAT": 47,
+            "WOOL": 198
+          },
+          "shops": [
+            "YARN_STORE",
+            "PIZZA_SHOP",
+            "BAKERY",
+            "PIZZA_SHOP",
+            "BRUNCH_SPOT",
+            "BRUNCH_SPOT",
+            "BAKERY"
+          ]
+        },
+        {
+          "day": 23,
+          "phase": "engine-convert",
+          "engine": {
+            "label": "recurring-crop",
+            "confidence": 0.597,
+            "scores": {
+              "staple-volume": 8.1,
+              "cash-crop": 0.0,
+              "recurring-crop": 51.15,
+              "livestock": 26.4
+            }
+          },
+          "engine_transition": false,
+          "farm": {
+            "bank": 55219.0,
+            "hands": 0,
+            "quadrants": 4,
+            "crops": {
+              "WHEAT": 18,
+              "STRAWBERRY": 33
+            },
+            "animals": {
+              "COW": 6,
+              "SHEEP": 12
+            },
+            "weeds": 6
+          },
+          "opponent": {
+            "bank": 55331.0,
+            "hands": 0,
+            "quadrants": 4,
+            "crops": {
+              "WHEAT": 17,
+              "STRAWBERRY": 29
+            },
+            "animals": {
+              "COW": 6,
+              "SHEEP": 12
+            },
+            "weeds": 7
+          },
+          "bank_margin": -112.0,
+          "actions": {
+            "BUY_PRODUCT": 9,
+            "BUY_PRODUCT:WHEAT": 122,
+            "BUY_SEED": 5,
+            "BUY_SEED:WHEAT": 9,
+            "CARE": 17,
+            "COLLECT_FERTILIZER": 18,
+            "DIG": 3,
+            "EAST": 46,
+            "FEED": 18,
+            "HARVEST": 33,
+            "HIRE": 12,
+            "NORTH": 39,
+            "PICKUP": 6,
+            "PLACE": 4,
+            "PLANT": 8,
+            "PLANT:WHEAT": 8,
+            "SELL": 44,
+            "SELL:FERTILIZER": 214,
+            "SELL:MILK": 6,
+            "SELL:STRAWBERRY": 41,
+            "SELL:WHEAT": 160,
+            "SELL:WOOL": 16,
+            "SOUTH": 34,
+            "WATER": 24,
+            "WEST": 41
+          },
+          "shed": {
+            "FERTILIZER": 7,
+            "MILK": 6,
+            "STRAWBERRY": 23,
+            "WHEAT": 27,
+            "WOOL": 8
+          },
+          "prices": {
+            "CARROT": 37,
+            "EGG": 62,
+            "FERTILIZER": 18,
+            "MELON": 13,
+            "MILK": 70,
+            "STRAWBERRY": 1,
+            "TOMATO": 83,
+            "WHEAT": 48,
+            "WOOL": 141
+          },
+          "shops": [
+            "YARN_STORE",
+            "PIZZA_SHOP",
+            "BAKERY",
+            "PIZZA_SHOP",
+            "BRUNCH_SPOT",
+            "BRUNCH_SPOT",
+            "BAKERY"
+          ]
+        },
+        {
+          "day": 24,
+          "phase": "terminal-optimize",
+          "engine": {
+            "label": "recurring-crop",
+            "confidence": 0.564,
+            "scores": {
+              "staple-volume": 10.8,
+              "cash-crop": 0.0,
+              "recurring-crop": 48.05,
+              "livestock": 26.4
+            }
+          },
+          "engine_transition": false,
+          "farm": {
+            "bank": 56633.0,
+            "hands": 0,
+            "quadrants": 4,
+            "crops": {
+              "WHEAT": 24,
+              "STRAWBERRY": 31
+            },
+            "animals": {
+              "COW": 6,
+              "SHEEP": 12
+            },
+            "weeds": 6
+          },
+          "opponent": {
+            "bank": 58660.0,
+            "hands": 0,
+            "quadrants": 4,
+            "crops": {
+              "WHEAT": 19,
+              "STRAWBERRY": 28
+            },
+            "animals": {
+              "COW": 6,
+              "SHEEP": 12
+            },
+            "weeds": 7
+          },
+          "bank_margin": -2027.0,
+          "actions": {
+            "BUY_PRODUCT": 11,
+            "BUY_PRODUCT:WHEAT": 142,
+            "BUY_SEED": 8,
+            "BUY_SEED:CARROT": 2,
+            "BUY_SEED:WHEAT": 9,
+            "CARE": 7,
+            "COLLECT_FERTILIZER": 18,
+            "DIG": 3,
+            "EAST": 29,
+            "FEED": 6,
+            "FERTILIZE": 6,
+            "HARVEST": 18,
+            "HIRE": 11,
+            "NORTH": 37,
+            "PICKUP": 1,
+            "PLACE": 3,
+            "PLANT": 12,
+            "PLANT:CARROT": 3,
+            "PLANT:WHEAT": 9,
+            "SELL": 39,
+            "SELL:FERTILIZER": 74,
+            "SELL:MILK": 12,
+            "SELL:STRAWBERRY": 26,
+            "SELL:WHEAT": 148,
+            "SELL:WOOL": 16,
+            "SOUTH": 39,
+            "WATER": 48,
+            "WEST": 44
+          },
+          "shed": {
+            "FERTILIZER": 25,
+            "MILK": 12,
+            "STRAWBERRY": 24,
+            "WHEAT": 17
+          },
+          "prices": {
+            "CARROT": 37,
+            "EGG": 63,
+            "FERTILIZER": 16,
+            "MELON": 16,
+            "MILK": 72,
+            "STRAWBERRY": 1,
+            "TOMATO": 85,
+            "WHEAT": 48,
+            "WOOL": 11
+          },
+          "shops": [
+            "YARN_STORE",
+            "PIZZA_SHOP",
+            "BAKERY",
+            "PIZZA_SHOP",
+            "BRUNCH_SPOT",
+            "BRUNCH_SPOT",
+            "BAKERY",
+            "ICE_CREAM_SHOP"
+          ]
+        },
+        {
+          "day": 25,
+          "phase": "terminal-optimize",
+          "engine": {
+            "label": "recurring-crop",
+            "confidence": 0.488,
+            "scores": {
+              "staple-volume": 13.95,
+              "cash-crop": 1.95,
+              "recurring-crop": 40.3,
+              "livestock": 26.4
+            }
+          },
+          "engine_transition": false,
+          "farm": {
+            "bank": 57673.0,
+            "hands": 0,
+            "quadrants": 4,
+            "crops": {
+              "WHEAT": 31,
+              "CARROT": 3,
+              "STRAWBERRY": 26
+            },
+            "animals": {
+              "COW": 6,
+              "SHEEP": 12
+            },
+            "weeds": 8
+          },
+          "opponent": {
+            "bank": 58739.0,
+            "hands": 0,
+            "quadrants": 4,
+            "crops": {
+              "WHEAT": 22,
+              "CARROT": 1,
+              "STRAWBERRY": 23
+            },
+            "animals": {
+              "COW": 6,
+              "SHEEP": 12
+            },
+            "weeds": 10
+          },
+          "bank_margin": -1066.0,
+          "actions": {
+            "BUY_PRODUCT": 5,
+            "BUY_PRODUCT:WHEAT": 66,
+            "BUY_SEED": 5,
+            "BUY_SEED:CARROT": 1,
+            "BUY_SEED:WHEAT": 5,
+            "CARE": 16,
+            "COLLECT_FERTILIZER": 18,
+            "DIG": 1,
+            "EAST": 42,
+            "FEED": 16,
+            "FERTILIZE": 1,
+            "HARVEST": 28,
+            "HIRE": 11,
+            "NORTH": 37,
+            "PICKUP": 4,
+            "PLACE": 4,
+            "PLANT": 6,
+            "PLANT:WHEAT": 6,
+            "SELL": 40,
+            "SELL:FERTILIZER": 87,
+            "SELL:MILK": 12,
+            "SELL:STRAWBERRY": 30,
+            "SELL:WHEAT": 160,
+            "SELL:WOOL": 21,
+            "SOUTH": 31,
+            "WATER": 20,
+            "WEST": 46
+          },
+          "shed": {
+            "FERTILIZER": 11,
+            "MILK": 6,
+            "STRAWBERRY": 14,
+            "WHEAT": 13,
+            "WOOL": 17
+          },
+          "prices": {
+            "CARROT": 37,
+            "EGG": 65,
+            "FERTILIZER": 8,
+            "MELON": 19,
+            "MILK": 61,
+            "STRAWBERRY": 12,
+            "TOMATO": 87,
+            "WHEAT": 49,
+            "WOOL": 24
+          },
+          "shops": [
+            "YARN_STORE",
+            "PIZZA_SHOP",
+            "BAKERY",
+            "PIZZA_SHOP",
+            "BRUNCH_SPOT",
+            "BRUNCH_SPOT",
+            "BAKERY",
+            "ICE_CREAM_SHOP"
+          ]
+        },
+        {
+          "day": 26,
+          "phase": "terminal-optimize",
+          "engine": {
+            "label": "hybrid:recurring-crop+livestock",
+            "confidence": 0.41,
+            "scores": {
+              "staple-volume": 13.95,
+              "cash-crop": 1.95,
+              "recurring-crop": 29.45,
+              "livestock": 26.4
+            }
+          },
+          "engine_transition": true,
+          "farm": {
+            "bank": 57898.0,
+            "hands": 0,
+            "quadrants": 4,
+            "crops": {
+              "WHEAT": 31,
+              "CARROT": 3,
+              "STRAWBERRY": 19
+            },
+            "animals": {
+              "COW": 6,
+              "SHEEP": 12
+            },
+            "weeds": 15
+          },
+          "opponent": {
+            "bank": 58866.0,
+            "hands": 0,
+            "quadrants": 4,
+            "crops": {
+              "WHEAT": 29,
+              "CARROT": 1,
+              "STRAWBERRY": 20
+            },
+            "animals": {
+              "COW": 6,
+              "SHEEP": 12
+            },
+            "weeds": 11
+          },
+          "bank_margin": -968.0,
+          "actions": {
+            "BUY_PRODUCT": 4,
+            "BUY_PRODUCT:WHEAT": 42,
+            "BUY_SEED": 8,
+            "BUY_SEED:CARROT": 1,
+            "BUY_SEED:WHEAT": 10,
+            "CARE": 14,
+            "COLLECT_FERTILIZER": 18,
+            "DIG": 4,
+            "EAST": 27,
+            "FEED": 15,
+            "FERTILIZE": 10,
+            "HARVEST": 13,
+            "HIRE": 11,
+            "NORTH": 27,
+            "PICKUP": 6,
+            "PLANT": 8,
+            "PLANT:CARROT": 1,
+            "PLANT:WHEAT": 7,
+            "SELL": 15,
+            "SELL:MILK": 6,
+            "SELL:STRAWBERRY": 18,
+            "SELL:WHEAT": 66,
+            "SELL:WOOL": 4,
+            "SOUTH": 35,
+            "WATER": 52,
+            "WEST": 41
+          },
+          "shed": {
+            "FERTILIZER": 18,
+            "MILK": 6,
+            "STRAWBERRY": 18,
+            "WHEAT": 24,
+            "WOOL": 4
+          },
+          "prices": {
+            "CARROT": 37,
+            "EGG": 66,
+            "FERTILIZER": 4,
+            "MELON": 22,
+            "MILK": 63,
+            "STRAWBERRY": 1,
+            "TOMATO": 92,
+            "WHEAT": 51,
+            "WOOL": 1
+          },
+          "shops": [
+            "YARN_STORE",
+            "PIZZA_SHOP",
+            "BAKERY",
+            "PIZZA_SHOP",
+            "BRUNCH_SPOT",
+            "BRUNCH_SPOT",
+            "BAKERY",
+            "ICE_CREAM_SHOP"
+          ]
+        },
+        {
+          "day": 27,
+          "phase": "terminal-optimize",
+          "engine": {
+            "label": "hybrid:recurring-crop+livestock",
+            "confidence": 0.417,
+            "scores": {
+              "staple-volume": 12.15,
+              "cash-crop": 2.6,
+              "recurring-crop": 29.45,
+              "livestock": 26.4
+            }
+          },
+          "engine_transition": false,
+          "farm": {
+            "bank": 58157.0,
+            "hands": 0,
+            "quadrants": 4,
+            "crops": {
+              "WHEAT": 27,
+              "CARROT": 4,
+              "STRAWBERRY": 19
+            },
+            "animals": {
+              "COW": 6,
+              "SHEEP": 12
+            },
+            "weeds": 12
+          },
+          "opponent": {
+            "bank": 58947.0,
+            "hands": 0,
+            "quadrants": 4,
+            "crops": {
+              "WHEAT": 33,
+              "CARROT": 2,
+              "STRAWBERRY": 20
+            },
+            "animals": {
+              "COW": 6,
+              "SHEEP": 12
+            },
+            "weeds": 8
+          },
+          "bank_margin": -790.0,
+          "actions": {
+            "BUY_PRODUCT": 1,
+            "BUY_PRODUCT:WHEAT": 10,
+            "BUY_SEED": 6,
+            "BUY_SEED:WHEAT": 10,
+            "CARE": 11,
+            "COLLECT_FERTILIZER": 11,
+            "DIG": 3,
+            "EAST": 37,
+            "FEED": 10,
+            "HARVEST": 39,
+            "HIRE": 11,
+            "NORTH": 37,
+            "PICKUP": 4,
+            "PLACE": 5,
+            "PLANT": 11,
+            "PLANT:WHEAT": 11,
+            "SELL": 30,
+            "SELL:FERTILIZER": 26,
+            "SELL:STRAWBERRY": 28,
+            "SELL:WHEAT": 139,
+            "SELL:WOOL": 18,
+            "SOUTH": 37,
+            "WATER": 28,
+            "WEST": 37
+          },
+          "shed": {
+            "FERTILIZER": 26,
+            "STRAWBERRY": 1,
+            "WHEAT": 31,
+            "WOOL": 9
+          },
+          "prices": {
+            "CARROT": 37,
+            "EGG": 68,
+            "FERTILIZER": 1,
+            "MELON": 25,
+            "MILK": 66,
+            "STRAWBERRY": 18,
+            "TOMATO": 98,
+            "WHEAT": 51,
+            "WOOL": 77
+          },
+          "shops": [
+            "YARN_STORE",
+            "PIZZA_SHOP",
+            "BAKERY",
+            "PIZZA_SHOP",
+            "BRUNCH_SPOT",
+            "BRUNCH_SPOT",
+            "BAKERY",
+            "ICE_CREAM_SHOP"
+          ]
+        },
+        {
+          "day": 28,
+          "phase": "liquidate",
+          "engine": {
+            "label": "liquidation:hybrid:livestock+recurring-crop",
+            "confidence": 0.397,
+            "scores": {
+              "staple-volume": 13.95,
+              "cash-crop": 1.3,
+              "recurring-crop": 24.8,
+              "livestock": 26.4
+            }
+          },
+          "engine_transition": true,
+          "farm": {
+            "bank": 58944.0,
+            "hands": 0,
+            "quadrants": 4,
+            "crops": {
+              "WHEAT": 31,
+              "CARROT": 2,
+              "STRAWBERRY": 16
+            },
+            "animals": {
+              "COW": 6,
+              "SHEEP": 12
+            },
+            "weeds": 11
+          },
+          "opponent": {
+            "bank": 60253.0,
+            "hands": 0,
+            "quadrants": 4,
+            "crops": {
+              "WHEAT": 32,
+              "CARROT": 1,
+              "STRAWBERRY": 18
+            },
+            "animals": {
+              "COW": 6,
+              "SHEEP": 12
+            },
+            "weeds": 8
+          },
+          "bank_margin": -1309.0,
+          "actions": {
+            "BUY_PRODUCT": 2,
+            "BUY_PRODUCT:WHEAT": 5,
+            "BUY_SEED": 1,
+            "BUY_SEED:WHEAT": 1,
+            "CARE": 7,
+            "COLLECT_FERTILIZER": 7,
+            "DIG": 2,
+            "EAST": 27,
+            "FEED": 7,
+            "HARVEST": 24,
+            "HIRE": 10,
+            "NORTH": 33,
+            "PICKUP": 4,
+            "SELL": 19,
+            "SELL:CARROT": 5,
+            "SELL:FERTILIZER": 11,
+            "SELL:MILK": 12,
+            "SELL:STRAWBERRY": 8,
+            "SELL:WHEAT": 36,
+            "SELL:WOOL": 12,
+            "SOUTH": 24,
+            "WATER": 29,
+            "WEST": 27
+          },
+          "shed": {
+            "CARROT": 5,
+            "FERTILIZER": 11,
+            "MILK": 12,
+            "STRAWBERRY": 8,
+            "WHEAT": 33,
+            "WOOL": 12
+          },
+          "prices": {
+            "CARROT": 37,
+            "EGG": 69,
+            "FERTILIZER": 1,
+            "MELON": 28,
+            "MILK": 93,
+            "STRAWBERRY": 1,
+            "TOMATO": 106,
+            "WHEAT": 52,
+            "WOOL": 1
+          },
+          "shops": [
+            "YARN_STORE",
+            "PIZZA_SHOP",
+            "BAKERY",
+            "PIZZA_SHOP",
+            "BRUNCH_SPOT",
+            "BRUNCH_SPOT",
+            "BAKERY",
+            "ICE_CREAM_SHOP"
+          ]
+        },
+        {
+          "day": 29,
+          "phase": "liquidate",
+          "engine": {
+            "label": "liquidation:livestock",
+            "confidence": 0.71,
+            "scores": {
+              "staple-volume": 4.95,
+              "cash-crop": 0.0,
+              "recurring-crop": 1.55,
+              "livestock": 15.9
+            }
+          },
+          "engine_transition": true,
+          "farm": {
+            "bank": 61050.0,
+            "hands": 0,
+            "quadrants": 4,
+            "crops": {
+              "WHEAT": 11,
+              "STRAWBERRY": 1
+            },
+            "animals": {
+              "COW": 6,
+              "SHEEP": 5
+            },
+            "weeds": 27
+          },
+          "opponent": {
+            "bank": 61474.0,
+            "hands": 0,
+            "quadrants": 4,
+            "crops": {
+              "WHEAT": 7,
+              "STRAWBERRY": 2
+            },
+            "animals": {
+              "COW": 6,
+              "SHEEP": 8
+            },
+            "weeds": 24
+          },
+          "bank_margin": -424.0,
+          "actions": {
+            "DROP": 9,
+            "EAST": 34,
+            "HARVEST": 19,
+            "HIRE": 8,
+            "NORTH": 23,
+            "SELL": 12,
+            "SELL:CARROT": 2,
+            "SELL:FERTILIZER": 7,
+            "SELL:MILK": 21,
+            "SELL:STRAWBERRY": 2,
+            "SELL:WHEAT": 82,
+            "SELL:WOOL": 15,
+            "SOUTH": 23,
+            "WATER": 11,
+            "WEST": 34
+          },
+          "shed": {
+            "CARROT": 2,
+            "FERTILIZER": 7,
+            "MILK": 9,
+            "WHEAT": 61,
+            "WOOL": 6
+          },
+          "prices": {
+            "CARROT": 37,
+            "EGG": 71,
+            "FERTILIZER": 1,
+            "MELON": 31,
+            "MILK": 82,
+            "STRAWBERRY": 37,
+            "TOMATO": 115,
+            "WHEAT": 52,
+            "WOOL": 77
+          },
+          "shops": [
+            "YARN_STORE",
+            "PIZZA_SHOP",
+            "BAKERY",
+            "PIZZA_SHOP",
+            "BRUNCH_SPOT",
+            "BRUNCH_SPOT",
+            "BAKERY",
+            "ICE_CREAM_SHOP"
+          ]
+        }
+      ]
+    },
+    {
+      "episode_id": 93743523,
+      "seed": 198465440,
+      "rank_at_capture": 1,
+      "team": "\u30ab\u30ef\u30b7\u30ae",
+      "opponent": "Thomas Tschinkel",
+      "seat": 0,
+      "result": "win",
+      "reward": 98603.0,
+      "opponent_reward": 93945.0,
+      "margin": 4658.0,
+      "daily": [
+        {
+          "day": 0,
+          "phase": "bootstrap",
+          "engine": {
+            "label": "cash-crop",
+            "confidence": 0.724,
+            "scores": {
+              "staple-volume": 0.0,
+              "cash-crop": 4.2,
+              "recurring-crop": 0.0,
+              "livestock": 1.6
+            }
+          },
+          "engine_transition": false,
+          "farm": {
+            "bank": 3000.0,
+            "hands": 0,
+            "quadrants": 1,
+            "crops": {},
+            "animals": {},
+            "weeds": 0
+          },
+          "opponent": {
+            "bank": 3000.0,
+            "hands": 0,
+            "quadrants": 1,
+            "crops": {},
+            "animals": {},
+            "weeds": 0
+          },
+          "bank_margin": 0.0,
+          "actions": {
+            "BUILD_PASTURE": 4,
+            "BUY_ANIMAL": 2,
+            "BUY_ANIMAL:COW": 2,
+            "BUY_ANIMAL:SHEEP": 2,
+            "BUY_PRODUCT": 3,
+            "BUY_PRODUCT:WHEAT": 9,
+            "BUY_SEED": 2,
+            "BUY_SEED:MELON": 12,
+            "BUY_SEED:WHEAT": 7,
+            "CARE": 2,
+            "EAST": 6,
+            "FEED": 2,
+            "HIRE": 5,
+            "NORTH": 22,
+            "PICKUP": 6,
+            "PLACE": 4,
+            "PLANT": 19,
+            "PLANT:MELON": 12,
+            "PLANT:WHEAT": 7,
+            "SELL": 1,
+            "SELL:WHEAT": 3,
+            "SOUTH": 2,
+            "WATER": 19,
+            "WEST": 22
+          },
+          "shed": {},
+          "prices": {
+            "CARROT": 35,
+            "EGG": 50,
+            "FERTILIZER": 100,
+            "MELON": 250,
+            "MILK": 160,
+            "STRAWBERRY": 120,
+            "TOMATO": 60,
+            "WHEAT": 25,
+            "WOOL": 200
+          },
+          "shops": []
+        },
+        {
+          "day": 1,
+          "phase": "bootstrap",
+          "engine": {
+            "label": "cash-crop",
+            "confidence": 0.652,
+            "scores": {
+              "staple-volume": 3.15,
+              "cash-crop": 16.8,
+              "recurring-crop": 0.0,
+              "livestock": 5.8
+            }
+          },
+          "engine_transition": false,
+          "farm": {
+            "bank": 23.0,
+            "hands": 0,
+            "quadrants": 1,
+            "crops": {
+              "WHEAT": 7,
+              "MELON": 12
+            },
+            "animals": {
+              "COW": 2,
+              "SHEEP": 2
+            },
+            "weeds": 0
+          },
+          "opponent": {
+            "bank": 23.0,
+            "hands": 0,
+            "quadrants": 1,
+            "crops": {
+              "WHEAT": 7,
+              "MELON": 12
+            },
+            "animals": {
+              "COW": 2,
+              "SHEEP": 2
+            },
+            "weeds": 0
+          },
+          "bank_margin": 0.0,
+          "actions": {
+            "BUY_PRODUCT": 1,
+            "BUY_PRODUCT:WHEAT": 5,
+            "CARE": 4,
+            "COLLECT_FERTILIZER": 3,
+            "EAST": 2,
+            "FEED": 4,
+            "NORTH": 3,
+            "PICKUP": 2,
+            "PLACE": 1,
+            "SELL": 1,
+            "SELL:FERTILIZER": 3,
+            "SOUTH": 2,
+            "WEST": 2
+          },
+          "shed": {
+            "WHEAT": 3
+          },
+          "prices": {
+            "CARROT": 35,
+            "EGG": 50,
+            "FERTILIZER": 100,
+            "MELON": 256,
+            "MILK": 169,
+            "STRAWBERRY": 128,
+            "TOMATO": 60,
+            "WHEAT": 28,
+            "WOOL": 206
+          },
+          "shops": []
+        },
+        {
+          "day": 2,
+          "phase": "bootstrap",
+          "engine": {
+            "label": "cash-crop",
+            "confidence": 0.652,
+            "scores": {
+              "staple-volume": 3.15,
+              "cash-crop": 16.8,
+              "recurring-crop": 0.0,
+              "livestock": 5.8
+            }
+          },
+          "engine_transition": false,
+          "farm": {
+            "bank": 176.0,
+            "hands": 0,
+            "quadrants": 1,
+            "crops": {
+              "WHEAT": 7,
+              "MELON": 12
+            },
+            "animals": {
+              "COW": 2,
+              "SHEEP": 2
+            },
+            "weeds": 0
+          },
+          "opponent": {
+            "bank": 176.0,
+            "hands": 0,
+            "quadrants": 1,
+            "crops": {
+              "WHEAT": 7,
+              "MELON": 12
+            },
+            "animals": {
+              "COW": 2,
+              "SHEEP": 2
+            },
+            "weeds": 0
+          },
+          "bank_margin": 0.0,
+          "actions": {
+            "BUILD_PASTURE": 1,
+            "BUY_PRODUCT": 2,
+            "BUY_PRODUCT:WHEAT": 4,
+            "CARE": 4,
+            "COLLECT_FERTILIZER": 4,
+            "EAST": 2,
+            "FEED": 4,
+            "HIRE": 4,
+            "NORTH": 17,
+            "PICKUP": 1,
+            "SOUTH": 5,
+            "WATER": 19,
+            "WEST": 22
+          },
+          "shed": {
+            "WHEAT": 4
+          },
+          "prices": {
+            "CARROT": 35,
+            "EGG": 50,
+            "FERTILIZER": 99,
+            "MELON": 260,
+            "MILK": 172,
+            "STRAWBERRY": 132,
+            "TOMATO": 60,
+            "WHEAT": 30,
+            "WOOL": 209
+          },
+          "shops": []
+        },
+        {
+          "day": 3,
+          "phase": "opener-build",
+          "engine": {
+            "label": "cash-crop",
+            "confidence": 0.642,
+            "scores": {
+              "staple-volume": 3.15,
+              "cash-crop": 16.8,
+              "recurring-crop": 0.0,
+              "livestock": 6.2
+            }
+          },
+          "engine_transition": false,
+          "farm": {
+            "bank": 49.0,
+            "hands": 0,
+            "quadrants": 1,
+            "crops": {
+              "WHEAT": 7,
+              "MELON": 12
+            },
+            "animals": {
+              "COW": 2,
+              "SHEEP": 2
+            },
+            "weeds": 0
+          },
+          "opponent": {
+            "bank": 49.0,
+            "hands": 0,
+            "quadrants": 1,
+            "crops": {
+              "WHEAT": 7,
+              "MELON": 12
+            },
+            "animals": {
+              "COW": 2,
+              "SHEEP": 2
+            },
+            "weeds": 0
+          },
+          "bank_margin": 0.0,
+          "actions": {
+            "BUY_ANIMAL": 1,
+            "BUY_ANIMAL:COW": 1,
+            "CARE": 4,
+            "COLLECT_FERTILIZER": 4,
+            "EAST": 1,
+            "FEED": 4,
+            "HIRE": 5,
+            "NORTH": 25,
+            "PICKUP": 2,
+            "PLACE": 1,
+            "SELL": 1,
+            "SELL:FERTILIZER": 4,
+            "SOUTH": 3,
+            "WATER": 14,
+            "WEST": 19
+          },
+          "shed": {
+            "FERTILIZER": 4,
+            "WHEAT": 4
+          },
+          "prices": {
+            "CARROT": 35,
+            "EGG": 50,
+            "FERTILIZER": 99,
+            "MELON": 262,
+            "MILK": 175,
+            "STRAWBERRY": 135,
+            "TOMATO": 60,
+            "WHEAT": 31,
+            "WOOL": 212
+          },
+          "shops": [
+            "BRUNCH_SPOT"
+          ]
+        },
+        {
+          "day": 4,
+          "phase": "opener-build",
+          "engine": {
+            "label": "cash-crop",
+            "confidence": 0.619,
+            "scores": {
+              "staple-volume": 3.15,
+              "cash-crop": 16.8,
+              "recurring-crop": 0.0,
+              "livestock": 7.2
+            }
+          },
+          "engine_transition": false,
+          "farm": {
+            "bank": 30.0,
+            "hands": 0,
+            "quadrants": 1,
+            "crops": {
+              "WHEAT": 7,
+              "MELON": 12
+            },
+            "animals": {
+              "COW": 3,
+              "SHEEP": 2
+            },
+            "weeds": 0
+          },
+          "opponent": {
+            "bank": 30.0,
+            "hands": 0,
+            "quadrants": 1,
+            "crops": {
+              "WHEAT": 7,
+              "MELON": 12
+            },
+            "animals": {
+              "COW": 3,
+              "SHEEP": 2
+            },
+            "weeds": 0
+          },
+          "bank_margin": 0.0,
+          "actions": {
+            "BUILD_PASTURE": 1,
+            "BUY_PRODUCT": 1,
+            "BUY_PRODUCT:WHEAT": 6,
+            "BUY_SEED": 1,
+            "BUY_SEED:WHEAT": 7,
+            "CARE": 5,
+            "COLLECT_FERTILIZER": 5,
+            "EAST": 5,
+            "FEED": 5,
+            "HARVEST": 7,
+            "HIRE": 5,
+            "NORTH": 22,
+            "PICKUP": 1,
+            "PLANT": 3,
+            "PLANT:WHEAT": 3,
+            "SELL": 1,
+            "SELL:FERTILIZER": 4,
+            "SOUTH": 5,
+            "WATER": 15,
+            "WEST": 19
+          },
+          "shed": {
+            "FERTILIZER": 4
+          },
+          "prices": {
+            "CARROT": 35,
+            "EGG": 51,
+            "FERTILIZER": 97,
+            "MELON": 264,
+            "MILK": 177,
+            "STRAWBERRY": 147,
+            "TOMATO": 60,
+            "WHEAT": 31,
+            "WOOL": 214
+          },
+          "shops": [
+            "BRUNCH_SPOT"
+          ]
+        },
+        {
+          "day": 5,
+          "phase": "opener-build",
+          "engine": {
+            "label": "cash-crop",
+            "confidence": 0.628,
+            "scores": {
+              "staple-volume": 1.35,
+              "cash-crop": 16.8,
+              "recurring-crop": 1.0,
+              "livestock": 7.6
+            }
+          },
+          "engine_transition": false,
+          "farm": {
+            "bank": 144.0,
+            "hands": 0,
+            "quadrants": 1,
+            "crops": {
+              "WHEAT": 3,
+              "MELON": 12
+            },
+            "animals": {
+              "COW": 3,
+              "SHEEP": 2
+            },
+            "weeds": 0
+          },
+          "opponent": {
+            "bank": 176.0,
+            "hands": 0,
+            "quadrants": 1,
+            "crops": {
+              "WHEAT": 3,
+              "MELON": 12
+            },
+            "animals": {
+              "COW": 3,
+              "SHEEP": 2
+            },
+            "weeds": 0
+          },
+          "bank_margin": -32.0,
+          "actions": {
+            "BUY_ANIMAL": 1,
+            "BUY_ANIMAL:COW": 1,
+            "BUY_PRODUCT": 1,
+            "BUY_PRODUCT:WHEAT": 2,
+            "BUY_SEED": 2,
+            "BUY_SEED:STRAWBERRY": 4,
+            "CARE": 6,
+            "COLLECT_FERTILIZER": 5,
+            "EAST": 5,
+            "FEED": 6,
+            "HIRE": 4,
+            "NORTH": 18,
+            "PICKUP": 3,
+            "PLACE": 1,
+            "PLANT": 4,
+            "PLANT:STRAWBERRY": 4,
+            "SELL": 4,
+            "SELL:FERTILIZER": 5,
+            "SELL:WHEAT": 18,
+            "SOUTH": 5,
+            "WATER": 13,
+            "WEST": 16
+          },
+          "shed": {
+            "FERTILIZER": 5,
+            "WHEAT": 29
+          },
+          "prices": {
+            "CARROT": 35,
+            "EGG": 51,
+            "FERTILIZER": 96,
+            "MELON": 266,
+            "MILK": 179,
+            "STRAWBERRY": 155,
+            "TOMATO": 61,
+            "WHEAT": 32,
+            "WOOL": 215
+          },
+          "shops": [
+            "BRUNCH_SPOT"
+          ]
+        },
+        {
+          "day": 6,
+          "phase": "opener-build",
+          "engine": {
+            "label": "cash-crop",
+            "confidence": 0.499,
+            "scores": {
+              "staple-volume": 1.35,
+              "cash-crop": 16.8,
+              "recurring-crop": 6.95,
+              "livestock": 8.6
+            }
+          },
+          "engine_transition": false,
+          "farm": {
+            "bank": 304.0,
+            "hands": 0,
+            "quadrants": 1,
+            "crops": {
+              "WHEAT": 3,
+              "STRAWBERRY": 4,
+              "MELON": 12
+            },
+            "animals": {
+              "COW": 4,
+              "SHEEP": 2
+            },
+            "weeds": 0
+          },
+          "opponent": {
+            "bank": 321.0,
+            "hands": 0,
+            "quadrants": 1,
+            "crops": {
+              "WHEAT": 3,
+              "STRAWBERRY": 4,
+              "MELON": 12
+            },
+            "animals": {
+              "COW": 4,
+              "SHEEP": 2
+            },
+            "weeds": 0
+          },
+          "bank_margin": -17.0,
+          "actions": {
+            "BUILD_PASTURE": 1,
+            "BUY_LAND": 1,
+            "BUY_PRODUCT": 3,
+            "BUY_PRODUCT:WHEAT": 6,
+            "BUY_SEED": 3,
+            "BUY_SEED:CARROT": 8,
+            "BUY_SEED:STRAWBERRY": 3,
+            "CARE": 6,
+            "COLLECT_FERTILIZER": 6,
+            "EAST": 11,
+            "FEED": 6,
+            "HARVEST": 2,
+            "HIRE": 4,
+            "NORTH": 24,
+            "PICKUP": 1,
+            "PLACE": 2,
+            "PLANT": 2,
+            "PLANT:STRAWBERRY": 2,
+            "SELL": 3,
+            "SELL:FERTILIZER": 5,
+            "SELL:WOOL": 12,
+            "SOUTH": 12,
+            "WATER": 19,
+            "WEST": 19
+          },
+          "shed": {
+            "FERTILIZER": 5,
+            "WHEAT": 7
+          },
+          "prices": {
+            "CARROT": 35,
+            "EGG": 51,
+            "FERTILIZER": 94,
+            "MELON": 267,
+            "MILK": 181,
+            "STRAWBERRY": 161,
+            "TOMATO": 61,
+            "WHEAT": 31,
+            "WOOL": 217
+          },
+          "shops": [
+            "BRUNCH_SPOT",
+            "ICE_CREAM_SHOP"
+          ]
+        },
+        {
+          "day": 7,
+          "phase": "opener-build",
+          "engine": {
+            "label": "cash-crop",
+            "confidence": 0.443,
+            "scores": {
+              "staple-volume": 1.35,
+              "cash-crop": 16.8,
+              "recurring-crop": 9.55,
+              "livestock": 10.2
+            }
+          },
+          "engine_transition": false,
+          "farm": {
+            "bank": 1522.0,
+            "hands": 0,
+            "quadrants": 2,
+            "crops": {
+              "WHEAT": 3,
+              "STRAWBERRY": 6,
+              "MELON": 12
+            },
+            "animals": {
+              "COW": 4,
+              "SHEEP": 2
+            },
+            "weeds": 0
+          },
+          "opponent": {
+            "bank": 1539.0,
+            "hands": 0,
+            "quadrants": 2,
+            "crops": {
+              "WHEAT": 3,
+              "STRAWBERRY": 6,
+              "MELON": 12
+            },
+            "animals": {
+              "COW": 4,
+              "SHEEP": 2
+            },
+            "weeds": 0
+          },
+          "bank_margin": -17.0,
+          "actions": {
+            "BUILD_PASTURE": 3,
+            "BUY_ANIMAL": 2,
+            "BUY_ANIMAL:COW": 2,
+            "BUY_ANIMAL:SHEEP": 2,
+            "BUY_PRODUCT": 1,
+            "BUY_PRODUCT:WHEAT": 2,
+            "BUY_SEED": 2,
+            "BUY_SEED:STRAWBERRY": 1,
+            "BUY_SEED:WHEAT": 4,
+            "CARE": 9,
+            "COLLECT_FERTILIZER": 6,
+            "EAST": 36,
+            "FEED": 9,
+            "HIRE": 8,
+            "NORTH": 29,
+            "PICKUP": 8,
+            "PLACE": 3,
+            "PLANT": 2,
+            "PLANT:STRAWBERRY": 2,
+            "SELL": 1,
+            "SELL:FERTILIZER": 6,
+            "SOUTH": 11,
+            "WATER": 20,
+            "WEST": 30
+          },
+          "shed": {
+            "FERTILIZER": 6,
+            "WHEAT": 7
+          },
+          "prices": {
+            "CARROT": 36,
+            "EGG": 52,
+            "FERTILIZER": 92,
+            "MELON": 268,
+            "MILK": 191,
+            "STRAWBERRY": 171,
+            "TOMATO": 61,
+            "WHEAT": 33,
+            "WOOL": 183
+          },
+          "shops": [
+            "BRUNCH_SPOT",
+            "ICE_CREAM_SHOP"
+          ]
+        },
+        {
+          "day": 8,
+          "phase": "first-conversion",
+          "engine": {
+            "label": "hybrid:cash-crop+recurring-crop",
+            "confidence": 0.364,
+            "scores": {
+              "staple-volume": 1.35,
+              "cash-crop": 16.8,
+              "recurring-crop": 15.15,
+              "livestock": 12.9
+            }
+          },
+          "engine_transition": true,
+          "farm": {
+            "bank": 6.0,
+            "hands": 0,
+            "quadrants": 2,
+            "crops": {
+              "WHEAT": 3,
+              "STRAWBERRY": 8,
+              "MELON": 12
+            },
+            "animals": {
+              "COW": 6,
+              "SHEEP": 3
+            },
+            "weeds": 0
+          },
+          "opponent": {
+            "bank": 23.0,
+            "hands": 0,
+            "quadrants": 2,
+            "crops": {
+              "WHEAT": 3,
+              "STRAWBERRY": 8,
+              "MELON": 12
+            },
+            "animals": {
+              "COW": 6,
+              "SHEEP": 3
+            },
+            "weeds": 0
+          },
+          "bank_margin": -17.0,
+          "actions": {
+            "BUILD_PASTURE": 2,
+            "BUY_PRODUCT": 3,
+            "BUY_PRODUCT:WHEAT": 14,
+            "BUY_SEED": 5,
+            "BUY_SEED:STRAWBERRY": 11,
+            "BUY_SEED:WHEAT": 5,
+            "CARE": 10,
+            "COLLECT_FERTILIZER": 9,
+            "EAST": 55,
+            "FEED": 10,
+            "HARVEST": 5,
+            "HIRE": 11,
+            "NORTH": 44,
+            "PICKUP": 3,
+            "PLACE": 3,
+            "PLANT": 17,
+            "PLANT:STRAWBERRY": 11,
+            "PLANT:WHEAT": 6,
+            "SELL": 3,
+            "SELL:FERTILIZER": 6,
+            "SELL:MILK": 12,
+            "SOUTH": 8,
+            "WATER": 36,
+            "WEST": 27
+          },
+          "shed": {
+            "FERTILIZER": 6,
+            "SHEEP": 1
+          },
+          "prices": {
+            "CARROT": 36,
+            "EGG": 52,
+            "FERTILIZER": 89,
+            "MELON": 269,
+            "MILK": 199,
+            "STRAWBERRY": 179,
+            "TOMATO": 61,
+            "WHEAT": 34,
+            "WOOL": 185
+          },
+          "shops": [
+            "BRUNCH_SPOT",
+            "ICE_CREAM_SHOP"
+          ]
+        },
+        {
+          "day": 9,
+          "phase": "first-conversion",
+          "engine": {
+            "label": "recurring-crop",
+            "confidence": 0.459,
+            "scores": {
+              "staple-volume": 2.7,
+              "cash-crop": 16.8,
+              "recurring-crop": 29.45,
+              "livestock": 15.2
+            }
+          },
+          "engine_transition": true,
+          "farm": {
+            "bank": 991.0,
+            "hands": 0,
+            "quadrants": 2,
+            "crops": {
+              "WHEAT": 6,
+              "STRAWBERRY": 19,
+              "MELON": 12
+            },
+            "animals": {
+              "COW": 6,
+              "SHEEP": 4
+            },
+            "weeds": 1
+          },
+          "opponent": {
+            "bank": 1058.0,
+            "hands": 0,
+            "quadrants": 2,
+            "crops": {
+              "WHEAT": 3,
+              "STRAWBERRY": 19,
+              "MELON": 12
+            },
+            "animals": {
+              "COW": 6,
+              "SHEEP": 4
+            },
+            "weeds": 0
+          },
+          "bank_margin": -67.0,
+          "actions": {
+            "BUY_ANIMAL": 1,
+            "BUY_ANIMAL:COW": 2,
+            "BUY_PRODUCT": 4,
+            "BUY_PRODUCT:WHEAT": 11,
+            "BUY_SEED": 2,
+            "BUY_SEED:WHEAT": 2,
+            "CARE": 10,
+            "COLLECT_FERTILIZER": 10,
+            "DIG": 1,
+            "EAST": 43,
+            "FEED": 11,
+            "HARVEST": 2,
+            "HIRE": 12,
+            "NORTH": 46,
+            "PICKUP": 6,
+            "PLACE": 4,
+            "PLANT": 1,
+            "PLANT:WHEAT": 1,
+            "SELL": 5,
+            "SELL:FERTILIZER": 9,
+            "SELL:WHEAT": 4,
+            "SELL:WOOL": 8,
+            "SOUTH": 8,
+            "WATER": 25,
+            "WEST": 37
+          },
+          "shed": {
+            "FERTILIZER": 9,
+            "WHEAT": 15
+          },
+          "prices": {
+            "CARROT": 36,
+            "EGG": 53,
+            "FERTILIZER": 87,
+            "MELON": 270,
+            "MILK": 175,
+            "STRAWBERRY": 187,
+            "TOMATO": 61,
+            "WHEAT": 35,
+            "WOOL": 187
+          },
+          "shops": [
+            "BRUNCH_SPOT",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET"
+          ]
+        },
+        {
+          "day": 10,
+          "phase": "first-conversion",
+          "engine": {
+            "label": "recurring-crop",
+            "confidence": 0.442,
+            "scores": {
+              "staple-volume": 3.15,
+              "cash-crop": 16.8,
+              "recurring-crop": 29.45,
+              "livestock": 17.2
+            }
+          },
+          "engine_transition": false,
+          "farm": {
+            "bank": 1662.0,
+            "hands": 0,
+            "quadrants": 2,
+            "crops": {
+              "WHEAT": 7,
+              "STRAWBERRY": 19,
+              "MELON": 12
+            },
+            "animals": {
+              "COW": 8,
+              "SHEEP": 4
+            },
+            "weeds": 0
+          },
+          "opponent": {
+            "bank": 1068.0,
+            "hands": 0,
+            "quadrants": 2,
+            "crops": {
+              "WHEAT": 5,
+              "STRAWBERRY": 19,
+              "MELON": 12
+            },
+            "animals": {
+              "COW": 8,
+              "SHEEP": 4
+            },
+            "weeds": 0
+          },
+          "bank_margin": 594.0,
+          "actions": {
+            "BUY_PRODUCT": 5,
+            "BUY_PRODUCT:WHEAT": 42,
+            "BUY_SEED": 1,
+            "BUY_SEED:WHEAT": 1,
+            "CARE": 13,
+            "COLLECT_FERTILIZER": 12,
+            "EAST": 39,
+            "FEED": 12,
+            "HARVEST": 14,
+            "HIRE": 11,
+            "NORTH": 50,
+            "PICKUP": 3,
+            "PLACE": 6,
+            "PLANT": 1,
+            "PLANT:WHEAT": 1,
+            "SELL": 22,
+            "SELL:FERTILIZER": 145,
+            "SELL:MELON": 58,
+            "SELL:WHEAT": 30,
+            "SOUTH": 26,
+            "WATER": 29,
+            "WEST": 55
+          },
+          "shed": {
+            "FERTILIZER": 10,
+            "WHEAT": 13
+          },
+          "prices": {
+            "CARROT": 36,
+            "EGG": 53,
+            "FERTILIZER": 83,
+            "MELON": 271,
+            "MILK": 187,
+            "STRAWBERRY": 196,
+            "TOMATO": 62,
+            "WHEAT": 37,
+            "WOOL": 158
+          },
+          "shops": [
+            "BRUNCH_SPOT",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET"
+          ]
+        },
+        {
+          "day": 11,
+          "phase": "first-conversion",
+          "engine": {
+            "label": "recurring-crop",
+            "confidence": 0.62,
+            "scores": {
+              "staple-volume": 3.6,
+              "cash-crop": 0.0,
+              "recurring-crop": 35.2,
+              "livestock": 18.0
+            }
+          },
+          "engine_transition": false,
+          "farm": {
+            "bank": 15180.0,
+            "hands": 0,
+            "quadrants": 2,
+            "crops": {
+              "WHEAT": 8,
+              "STRAWBERRY": 19
+            },
+            "animals": {
+              "COW": 8,
+              "SHEEP": 4
+            },
+            "weeds": 0
+          },
+          "opponent": {
+            "bank": 14769.0,
+            "hands": 0,
+            "quadrants": 2,
+            "crops": {
+              "WHEAT": 9,
+              "STRAWBERRY": 19
+            },
+            "animals": {
+              "COW": 8,
+              "SHEEP": 4
+            },
+            "weeds": 0
+          },
+          "bank_margin": 411.0,
+          "actions": {
+            "BUILD_PASTURE": 2,
+            "BUY_ANIMAL": 1,
+            "BUY_ANIMAL:COW": 2,
+            "BUY_LAND": 1,
+            "BUY_PRODUCT": 2,
+            "BUY_PRODUCT:WHEAT": 16,
+            "BUY_SEED": 8,
+            "BUY_SEED:STRAWBERRY": 23,
+            "BUY_SEED:WHEAT": 11,
+            "CARE": 14,
+            "COLLECT_FERTILIZER": 12,
+            "EAST": 23,
+            "FEED": 14,
+            "HARVEST": 1,
+            "HIRE": 12,
+            "NORTH": 33,
+            "PICKUP": 6,
+            "PLACE": 2,
+            "PLANT": 27,
+            "PLANT:STRAWBERRY": 16,
+            "PLANT:WHEAT": 11,
+            "SELL": 3,
+            "SELL:MELON": 14,
+            "SELL:MILK": 6,
+            "SOUTH": 56,
+            "WATER": 41,
+            "WEST": 42
+          },
+          "shed": {
+            "FERTILIZER": 12,
+            "MELON": 6,
+            "MILK": 6,
+            "WHEAT": 18
+          },
+          "prices": {
+            "CARROT": 37,
+            "EGG": 54,
+            "FERTILIZER": 79,
+            "MELON": 104,
+            "MILK": 196,
+            "STRAWBERRY": 204,
+            "TOMATO": 63,
+            "WHEAT": 39,
+            "WOOL": 161
+          },
+          "shops": [
+            "BRUNCH_SPOT",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET"
+          ]
+        },
+        {
+          "day": 12,
+          "phase": "engine-commit",
+          "engine": {
+            "label": "recurring-crop",
+            "confidence": 0.655,
+            "scores": {
+              "staple-volume": 8.55,
+              "cash-crop": 0.0,
+              "recurring-crop": 54.25,
+              "livestock": 20.0
+            }
+          },
+          "engine_transition": false,
+          "farm": {
+            "bank": 10618.0,
+            "hands": 0,
+            "quadrants": 3,
+            "crops": {
+              "WHEAT": 19,
+              "STRAWBERRY": 35
+            },
+            "animals": {
+              "COW": 10,
+              "SHEEP": 4
+            },
+            "weeds": 0
+          },
+          "opponent": {
+            "bank": 10737.0,
+            "hands": 0,
+            "quadrants": 3,
+            "crops": {
+              "WHEAT": 17,
+              "STRAWBERRY": 37
+            },
+            "animals": {
+              "COW": 10,
+              "SHEEP": 4
+            },
+            "weeds": 0
+          },
+          "bank_margin": -119.0,
+          "actions": {
+            "BUY_PRODUCT": 1,
+            "BUY_PRODUCT:WHEAT": 9,
+            "BUY_SEED": 2,
+            "BUY_SEED:WHEAT": 3,
+            "CARE": 14,
+            "COLLECT_FERTILIZER": 14,
+            "EAST": 30,
+            "FEED": 14,
+            "HARVEST": 10,
+            "HIRE": 10,
+            "NORTH": 32,
+            "PICKUP": 5,
+            "PLANT": 8,
+            "PLANT:STRAWBERRY": 5,
+            "PLANT:WHEAT": 3,
+            "SELL": 14,
+            "SELL:FERTILIZER": 117,
+            "SELL:MILK": 6,
+            "SOUTH": 37,
+            "WATER": 33,
+            "WEST": 43
+          },
+          "shed": {
+            "FERTILIZER": 24,
+            "MILK": 6,
+            "WHEAT": 20
+          },
+          "prices": {
+            "CARROT": 37,
+            "EGG": 54,
+            "FERTILIZER": 78,
+            "MELON": 76,
+            "MILK": 190,
+            "STRAWBERRY": 212,
+            "TOMATO": 64,
+            "WHEAT": 41,
+            "WOOL": 164
+          },
+          "shops": [
+            "BRUNCH_SPOT",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET",
+            "FARMERS_MARKET"
+          ]
+        },
+        {
+          "day": 13,
+          "phase": "engine-commit",
+          "engine": {
+            "label": "recurring-crop",
+            "confidence": 0.695,
+            "scores": {
+              "staple-volume": 7.2,
+              "cash-crop": 0.0,
+              "recurring-crop": 62.0,
+              "livestock": 20.0
+            }
+          },
+          "engine_transition": false,
+          "farm": {
+            "bank": 12370.0,
+            "hands": 0,
+            "quadrants": 3,
+            "crops": {
+              "WHEAT": 16,
+              "STRAWBERRY": 40
+            },
+            "animals": {
+              "COW": 10,
+              "SHEEP": 4
+            },
+            "weeds": 0
+          },
+          "opponent": {
+            "bank": 12250.0,
+            "hands": 0,
+            "quadrants": 3,
+            "crops": {
+              "WHEAT": 17,
+              "STRAWBERRY": 39
+            },
+            "animals": {
+              "COW": 10,
+              "SHEEP": 4
+            },
+            "weeds": 0
+          },
+          "bank_margin": 120.0,
+          "actions": {
+            "BUY_PRODUCT": 1,
+            "BUY_PRODUCT:WHEAT": 8,
+            "CARE": 14,
+            "COLLECT_FERTILIZER": 14,
+            "EAST": 31,
+            "FEED": 14,
+            "HARVEST": 4,
+            "HIRE": 11,
+            "NORTH": 32,
+            "PICKUP": 5,
+            "PLANT": 2,
+            "PLANT:STRAWBERRY": 2,
+            "SELL": 6,
+            "SELL:FERTILIZER": 30,
+            "SELL:MILK": 6,
+            "SELL:WHEAT": 10,
+            "SELL:WOOL": 8,
+            "SOUTH": 36,
+            "WATER": 42,
+            "WEST": 41
+          },
+          "shed": {
+            "FERTILIZER": 22,
+            "MILK": 6,
+            "WHEAT": 37,
+            "WOOL": 8
+          },
+          "prices": {
+            "CARROT": 38,
+            "EGG": 54,
+            "FERTILIZER": 73,
+            "MELON": 78,
+            "MILK": 183,
+            "STRAWBERRY": 221,
+            "TOMATO": 65,
+            "WHEAT": 42,
+            "WOOL": 167
+          },
+          "shops": [
+            "BRUNCH_SPOT",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET",
+            "FARMERS_MARKET"
+          ]
+        },
+        {
+          "day": 14,
+          "phase": "engine-commit",
+          "engine": {
+            "label": "recurring-crop",
+            "confidence": 0.709,
+            "scores": {
+              "staple-volume": 6.75,
+              "cash-crop": 0.0,
+              "recurring-crop": 65.1,
+              "livestock": 20.0
+            }
+          },
+          "engine_transition": false,
+          "farm": {
+            "bank": 15567.0,
+            "hands": 0,
+            "quadrants": 3,
+            "crops": {
+              "WHEAT": 15,
+              "STRAWBERRY": 42
+            },
+            "animals": {
+              "COW": 10,
+              "SHEEP": 4
+            },
+            "weeds": 0
+          },
+          "opponent": {
+            "bank": 14664.0,
+            "hands": 0,
+            "quadrants": 3,
+            "crops": {
+              "WHEAT": 19,
+              "STRAWBERRY": 42
+            },
+            "animals": {
+              "COW": 10,
+              "SHEEP": 4
+            },
+            "weeds": 0
+          },
+          "bank_margin": 903.0,
+          "actions": {
+            "BUY_PRODUCT": 1,
+            "BUY_PRODUCT:WHEAT": 8,
+            "BUY_SEED": 1,
+            "BUY_SEED:WHEAT": 1,
+            "CARE": 14,
+            "COLLECT_FERTILIZER": 13,
+            "EAST": 21,
+            "FEED": 14,
+            "FERTILIZE": 4,
+            "HARVEST": 4,
+            "HIRE": 8,
+            "NORTH": 30,
+            "PICKUP": 6,
+            "PLACE": 1,
+            "PLANT": 1,
+            "PLANT:WHEAT": 1,
+            "SELL": 6,
+            "SELL:FERTILIZER": 3,
+            "SELL:MILK": 9,
+            "SELL:WHEAT": 3,
+            "SELL:WOOL": 6,
+            "SOUTH": 16,
+            "WATER": 27,
+            "WEST": 45
+          },
+          "shed": {
+            "FERTILIZER": 19,
+            "MILK": 9,
+            "WHEAT": 24,
+            "WOOL": 6
+          },
+          "prices": {
+            "CARROT": 39,
+            "EGG": 55,
+            "FERTILIZER": 67,
+            "MELON": 81,
+            "MILK": 172,
+            "STRAWBERRY": 230,
+            "TOMATO": 67,
+            "WHEAT": 43,
+            "WOOL": 116
+          },
+          "shops": [
+            "BRUNCH_SPOT",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET",
+            "FARMERS_MARKET"
+          ]
+        },
+        {
+          "day": 15,
+          "phase": "engine-commit",
+          "engine": {
+            "label": "recurring-crop",
+            "confidence": 0.704,
+            "scores": {
+              "staple-volume": 6.75,
+              "cash-crop": 0.0,
+              "recurring-crop": 63.55,
+              "livestock": 20.0
+            }
+          },
+          "engine_transition": false,
+          "farm": {
+            "bank": 17339.0,
+            "hands": 0,
+            "quadrants": 3,
+            "crops": {
+              "WHEAT": 15,
+              "STRAWBERRY": 41
+            },
+            "animals": {
+              "COW": 10,
+              "SHEEP": 4
+            },
+            "weeds": 1
+          },
+          "opponent": {
+            "bank": 17468.0,
+            "hands": 0,
+            "quadrants": 3,
+            "crops": {
+              "WHEAT": 17,
+              "STRAWBERRY": 38
+            },
+            "animals": {
+              "COW": 10,
+              "SHEEP": 4
+            },
+            "weeds": 4
+          },
+          "bank_margin": -129.0,
+          "actions": {
+            "BUY_PRODUCT": 1,
+            "BUY_PRODUCT:WHEAT": 8,
+            "BUY_SEED": 5,
+            "BUY_SEED:WHEAT": 9,
+            "CARE": 13,
+            "COLLECT_FERTILIZER": 15,
+            "EAST": 30,
+            "FEED": 13,
+            "FERTILIZE": 2,
+            "HARVEST": 21,
+            "HIRE": 12,
+            "NORTH": 34,
+            "PICKUP": 6,
+            "PLACE": 1,
+            "PLANT": 11,
+            "PLANT:WHEAT": 11,
+            "SELL": 29,
+            "SELL:FERTILIZER": 219,
+            "SELL:MILK": 6,
+            "SELL:WHEAT": 44,
+            "SELL:WOOL": 6,
+            "SOUTH": 36,
+            "WATER": 47,
+            "WEST": 57
+          },
+          "shed": {
+            "FERTILIZER": 26,
+            "MILK": 6,
+            "WHEAT": 19,
+            "WOOL": 6
+          },
+          "prices": {
+            "CARROT": 40,
+            "EGG": 55,
+            "FERTILIZER": 63,
+            "MELON": 84,
+            "MILK": 141,
+            "STRAWBERRY": 237,
+            "TOMATO": 68,
+            "WHEAT": 44,
+            "WOOL": 61
+          },
+          "shops": [
+            "BRUNCH_SPOT",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET",
+            "FARMERS_MARKET",
+            "BAKERY"
+          ]
+        },
+        {
+          "day": 16,
+          "phase": "throughput-balance",
+          "engine": {
+            "label": "recurring-crop",
+            "confidence": 0.704,
+            "scores": {
+              "staple-volume": 6.75,
+              "cash-crop": 0.0,
+              "recurring-crop": 63.55,
+              "livestock": 20.0
+            }
+          },
+          "engine_transition": false,
+          "farm": {
+            "bank": 19182.0,
+            "hands": 0,
+            "quadrants": 3,
+            "crops": {
+              "WHEAT": 15,
+              "STRAWBERRY": 41
+            },
+            "animals": {
+              "COW": 10,
+              "SHEEP": 4
+            },
+            "weeds": 0
+          },
+          "opponent": {
+            "bank": 19270.0,
+            "hands": 0,
+            "quadrants": 3,
+            "crops": {
+              "WHEAT": 12,
+              "STRAWBERRY": 38
+            },
+            "animals": {
+              "COW": 10,
+              "SHEEP": 4
+            },
+            "weeds": 1
+          },
+          "bank_margin": -88.0,
+          "actions": {
+            "BUY_SEED": 5,
+            "BUY_SEED:WHEAT": 7,
+            "CARE": 11,
+            "COLLECT_FERTILIZER": 14,
+            "DIG": 1,
+            "EAST": 20,
+            "FEED": 11,
+            "FERTILIZE": 2,
+            "HARVEST": 8,
+            "HIRE": 9,
+            "NORTH": 35,
+            "PICKUP": 4,
+            "PLANT": 5,
+            "PLANT:WHEAT": 5,
+            "SELL": 13,
+            "SELL:FERTILIZER": 42,
+            "SELL:MILK": 18,
+            "SELL:STRAWBERRY": 8,
+            "SELL:WHEAT": 23,
+            "SELL:WOOL": 8,
+            "SOUTH": 44,
+            "WATER": 35,
+            "WEST": 27
+          },
+          "shed": {
+            "FERTILIZER": 18,
+            "MILK": 18,
+            "STRAWBERRY": 8,
+            "WHEAT": 43,
+            "WOOL": 8
+          },
+          "prices": {
+            "CARROT": 41,
+            "EGG": 56,
+            "FERTILIZER": 59,
+            "MELON": 86,
+            "MILK": 105,
+            "STRAWBERRY": 245,
+            "TOMATO": 70,
+            "WHEAT": 45,
+            "WOOL": 1
+          },
+          "shops": [
+            "BRUNCH_SPOT",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET",
+            "FARMERS_MARKET",
+            "BAKERY"
+          ]
+        },
+        {
+          "day": 17,
+          "phase": "throughput-balance",
+          "engine": {
+            "label": "recurring-crop",
+            "confidence": 0.697,
+            "scores": {
+              "staple-volume": 7.65,
+              "cash-crop": 0.0,
+              "recurring-crop": 63.55,
+              "livestock": 20.0
+            }
+          },
+          "engine_transition": false,
+          "farm": {
+            "bank": 24217.0,
+            "hands": 0,
+            "quadrants": 3,
+            "crops": {
+              "WHEAT": 17,
+              "STRAWBERRY": 41
+            },
+            "animals": {
+              "COW": 10,
+              "SHEEP": 4
+            },
+            "weeds": 0
+          },
+          "opponent": {
+            "bank": 23301.0,
+            "hands": 0,
+            "quadrants": 3,
+            "crops": {
+              "WHEAT": 17,
+              "STRAWBERRY": 38
+            },
+            "animals": {
+              "COW": 10,
+              "SHEEP": 4
+            },
+            "weeds": 1
+          },
+          "bank_margin": 916.0,
+          "actions": {
+            "BUY_SEED": 3,
+            "BUY_SEED:WHEAT": 3,
+            "CARE": 5,
+            "COLLECT_FERTILIZER": 14,
+            "EAST": 48,
+            "FEED": 5,
+            "FERTILIZE": 9,
+            "HARVEST": 13,
+            "HIRE": 12,
+            "NORTH": 43,
+            "PICKUP": 5,
+            "PLACE": 1,
+            "PLANT": 3,
+            "PLANT:WHEAT": 3,
+            "SELL": 21,
+            "SELL:FERTILIZER": 86,
+            "SELL:MILK": 15,
+            "SELL:STRAWBERRY": 4,
+            "SELL:WHEAT": 6,
+            "SOUTH": 26,
+            "WATER": 46,
+            "WEST": 28
+          },
+          "shed": {
+            "FERTILIZER": 12,
+            "MILK": 6,
+            "STRAWBERRY": 4,
+            "WHEAT": 27,
+            "WOOL": 4
+          },
+          "prices": {
+            "CARROT": 42,
+            "EGG": 57,
+            "FERTILIZER": 50,
+            "MELON": 89,
+            "MILK": 70,
+            "STRAWBERRY": 247,
+            "TOMATO": 71,
+            "WHEAT": 45,
+            "WOOL": 1
+          },
+          "shops": [
+            "BRUNCH_SPOT",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET",
+            "FARMERS_MARKET",
+            "BAKERY"
+          ]
+        },
+        {
+          "day": 18,
+          "phase": "throughput-balance",
+          "engine": {
+            "label": "recurring-crop",
+            "confidence": 0.687,
+            "scores": {
+              "staple-volume": 9.0,
+              "cash-crop": 0.0,
+              "recurring-crop": 63.55,
+              "livestock": 20.0
+            }
+          },
+          "engine_transition": false,
+          "farm": {
+            "bank": 25996.0,
+            "hands": 0,
+            "quadrants": 3,
+            "crops": {
+              "WHEAT": 20,
+              "STRAWBERRY": 41
+            },
+            "animals": {
+              "COW": 10,
+              "SHEEP": 4
+            },
+            "weeds": 0
+          },
+          "opponent": {
+            "bank": 26223.0,
+            "hands": 0,
+            "quadrants": 3,
+            "crops": {
+              "WHEAT": 16,
+              "STRAWBERRY": 38
+            },
+            "animals": {
+              "COW": 10,
+              "SHEEP": 4
+            },
+            "weeds": 1
+          },
+          "bank_margin": -227.0,
+          "actions": {
+            "BUY_PRODUCT": 6,
+            "BUY_PRODUCT:WHEAT": 60,
+            "BUY_SEED": 1,
+            "BUY_SEED:WHEAT": 1,
+            "CARE": 10,
+            "COLLECT_FERTILIZER": 14,
+            "EAST": 42,
+            "FEED": 10,
+            "FERTILIZE": 4,
+            "HARVEST": 18,
+            "HIRE": 12,
+            "NORTH": 49,
+            "PICKUP": 7,
+            "PLACE": 1,
+            "PLANT": 1,
+            "PLANT:WHEAT": 1,
+            "SELL": 20,
+            "SELL:FERTILIZER": 31,
+            "SELL:MILK": 15,
+            "SELL:STRAWBERRY": 12,
+            "SELL:WHEAT": 60,
+            "SELL:WOOL": 7,
+            "SOUTH": 18,
+            "WATER": 42,
+            "WEST": 40
+          },
+          "shed": {
+            "FERTILIZER": 13,
+            "MILK": 15,
+            "STRAWBERRY": 12,
+            "WHEAT": 16,
+            "WOOL": 7
+          },
+          "prices": {
+            "CARROT": 43,
+            "EGG": 58,
+            "FERTILIZER": 47,
+            "MELON": 91,
+            "MILK": 40,
+            "STRAWBERRY": 250,
+            "TOMATO": 73,
+            "WHEAT": 45,
+            "WOOL": 5
+          },
+          "shops": [
+            "BRUNCH_SPOT",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET",
+            "FARMERS_MARKET",
+            "BAKERY",
+            "PIZZA_SHOP"
+          ]
+        },
+        {
+          "day": 19,
+          "phase": "throughput-balance",
+          "engine": {
+            "label": "recurring-crop",
+            "confidence": 0.687,
+            "scores": {
+              "staple-volume": 9.0,
+              "cash-crop": 0.0,
+              "recurring-crop": 63.55,
+              "livestock": 20.0
+            }
+          },
+          "engine_transition": false,
+          "farm": {
+            "bank": 28676.0,
+            "hands": 0,
+            "quadrants": 3,
+            "crops": {
+              "WHEAT": 20,
+              "STRAWBERRY": 41
+            },
+            "animals": {
+              "COW": 10,
+              "SHEEP": 4
+            },
+            "weeds": 0
+          },
+          "opponent": {
+            "bank": 30755.0,
+            "hands": 0,
+            "quadrants": 3,
+            "crops": {
+              "WHEAT": 20,
+              "STRAWBERRY": 38
+            },
+            "animals": {
+              "COW": 10,
+              "SHEEP": 4
+            },
+            "weeds": 0
+          },
+          "bank_margin": -2079.0,
+          "actions": {
+            "BUY_PRODUCT": 6,
+            "BUY_PRODUCT:WHEAT": 63,
+            "BUY_SEED": 6,
+            "BUY_SEED:WHEAT": 9,
+            "CARE": 5,
+            "COLLECT_FERTILIZER": 14,
+            "EAST": 27,
+            "FEED": 5,
+            "FERTILIZE": 4,
+            "HARVEST": 20,
+            "HIRE": 12,
+            "NORTH": 51,
+            "PICKUP": 4,
+            "PLACE": 1,
+            "PLANT": 11,
+            "PLANT:WHEAT": 11,
+            "SELL": 43,
+            "SELL:FERTILIZER": 194,
+            "SELL:MILK": 18,
+            "SELL:STRAWBERRY": 24,
+            "SELL:WHEAT": 131,
+            "SELL:WOOL": 6,
+            "SOUTH": 26,
+            "WATER": 49,
+            "WEST": 43
+          },
+          "shed": {
+            "FERTILIZER": 20,
+            "MILK": 6,
+            "STRAWBERRY": 24,
+            "WHEAT": 12,
+            "WOOL": 6
+          },
+          "prices": {
+            "CARROT": 44,
+            "EGG": 58,
+            "FERTILIZER": 46,
+            "MELON": 94,
+            "MILK": 22,
+            "STRAWBERRY": 249,
+            "TOMATO": 75,
+            "WHEAT": 46,
+            "WOOL": 1
+          },
+          "shops": [
+            "BRUNCH_SPOT",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET",
+            "FARMERS_MARKET",
+            "BAKERY",
+            "PIZZA_SHOP"
+          ]
+        },
+        {
+          "day": 20,
+          "phase": "engine-convert",
+          "engine": {
+            "label": "recurring-crop",
+            "confidence": 0.687,
+            "scores": {
+              "staple-volume": 9.0,
+              "cash-crop": 0.0,
+              "recurring-crop": 63.55,
+              "livestock": 20.0
+            }
+          },
+          "engine_transition": false,
+          "farm": {
+            "bank": 34582.0,
+            "hands": 0,
+            "quadrants": 3,
+            "crops": {
+              "WHEAT": 20,
+              "STRAWBERRY": 41
+            },
+            "animals": {
+              "COW": 10,
+              "SHEEP": 4
+            },
+            "weeds": 0
+          },
+          "opponent": {
+            "bank": 33916.0,
+            "hands": 0,
+            "quadrants": 3,
+            "crops": {
+              "WHEAT": 23,
+              "STRAWBERRY": 38
+            },
+            "animals": {
+              "COW": 10,
+              "SHEEP": 4
+            },
+            "weeds": 0
+          },
+          "bank_margin": 666.0,
+          "actions": {
+            "BUY_PRODUCT": 3,
+            "BUY_PRODUCT:WHEAT": 28,
+            "BUY_SEED": 4,
+            "BUY_SEED:WHEAT": 6,
+            "CARE": 11,
+            "COLLECT_FERTILIZER": 14,
+            "EAST": 29,
+            "FEED": 11,
+            "FERTILIZE": 18,
+            "HARVEST": 19,
+            "HIRE": 12,
+            "NORTH": 32,
+            "PICKUP": 7,
+            "PLACE": 1,
+            "PLANT": 5,
+            "PLANT:WHEAT": 5,
+            "SELL": 23,
+            "SELL:FERTILIZER": 52,
+            "SELL:STRAWBERRY": 12,
+            "SELL:WHEAT": 94,
+            "SELL:WOOL": 3,
+            "SOUTH": 27,
+            "WATER": 45,
+            "WEST": 52
+          },
+          "shed": {
+            "FERTILIZER": 30,
+            "STRAWBERRY": 12,
+            "WHEAT": 40,
+            "WOOL": 3
+          },
+          "prices": {
+            "CARROT": 45,
+            "EGG": 59,
+            "FERTILIZER": 44,
+            "MELON": 96,
+            "MILK": 5,
+            "STRAWBERRY": 246,
+            "TOMATO": 78,
+            "WHEAT": 47,
+            "WOOL": 1
+          },
+          "shops": [
+            "BRUNCH_SPOT",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET",
+            "FARMERS_MARKET",
+            "BAKERY",
+            "PIZZA_SHOP"
+          ]
+        },
+        {
+          "day": 21,
+          "phase": "engine-convert",
+          "engine": {
+            "label": "recurring-crop",
+            "confidence": 0.687,
+            "scores": {
+              "staple-volume": 9.0,
+              "cash-crop": 0.0,
+              "recurring-crop": 63.55,
+              "livestock": 20.0
+            }
+          },
+          "engine_transition": false,
+          "farm": {
+            "bank": 38689.0,
+            "hands": 0,
+            "quadrants": 3,
+            "crops": {
+              "WHEAT": 20,
+              "STRAWBERRY": 41
+            },
+            "animals": {
+              "COW": 10,
+              "SHEEP": 4
+            },
+            "weeds": 0
+          },
+          "opponent": {
+            "bank": 39052.0,
+            "hands": 0,
+            "quadrants": 3,
+            "crops": {
+              "WHEAT": 21,
+              "STRAWBERRY": 38
+            },
+            "animals": {
+              "COW": 10,
+              "SHEEP": 4
+            },
+            "weeds": 0
+          },
+          "bank_margin": -363.0,
+          "actions": {
+            "BUY_PRODUCT": 6,
+            "BUY_PRODUCT:WHEAT": 88,
+            "BUY_SEED": 3,
+            "BUY_SEED:CARROT": 2,
+            "BUY_SEED:WHEAT": 1,
+            "CARE": 4,
+            "COLLECT_FERTILIZER": 14,
+            "DIG": 2,
+            "EAST": 51,
+            "FEED": 4,
+            "FERTILIZE": 9,
+            "HARVEST": 30,
+            "HIRE": 12,
+            "NORTH": 45,
+            "PICKUP": 3,
+            "PLACE": 5,
+            "PLANT": 2,
+            "PLANT:CARROT": 2,
+            "SELL": 46,
+            "SELL:FERTILIZER": 272,
+            "SELL:STRAWBERRY": 48,
+            "SELL:WHEAT": 132,
+            "SELL:WOOL": 3,
+            "SOUTH": 32,
+            "WATER": 34,
+            "WEST": 47
+          },
+          "shed": {
+            "FERTILIZER": 17,
+            "STRAWBERRY": 26,
+            "WHEAT": 20,
+            "WOOL": 3
+          },
+          "prices": {
+            "CARROT": 46,
+            "EGG": 60,
+            "FERTILIZER": 41,
+            "MELON": 99,
+            "MILK": 28,
+            "STRAWBERRY": 244,
+            "TOMATO": 80,
+            "WHEAT": 47,
+            "WOOL": 1
+          },
+          "shops": [
+            "BRUNCH_SPOT",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET",
+            "FARMERS_MARKET",
+            "BAKERY",
+            "PIZZA_SHOP",
+            "ICE_CREAM_SHOP"
+          ]
+        },
+        {
+          "day": 22,
+          "phase": "engine-convert",
+          "engine": {
+            "label": "recurring-crop",
+            "confidence": 0.676,
+            "scores": {
+              "staple-volume": 7.65,
+              "cash-crop": 1.3,
+              "recurring-crop": 60.45,
+              "livestock": 20.0
+            }
+          },
+          "engine_transition": false,
+          "farm": {
+            "bank": 49978.0,
+            "hands": 0,
+            "quadrants": 3,
+            "crops": {
+              "WHEAT": 17,
+              "CARROT": 2,
+              "STRAWBERRY": 39
+            },
+            "animals": {
+              "COW": 10,
+              "SHEEP": 4
+            },
+            "weeds": 0
+          },
+          "opponent": {
+            "bank": 49162.0,
+            "hands": 0,
+            "quadrants": 3,
+            "crops": {
+              "WHEAT": 19,
+              "STRAWBERRY": 37
+            },
+            "animals": {
+              "COW": 10,
+              "SHEEP": 4
+            },
+            "weeds": 0
+          },
+          "bank_margin": 816.0,
+          "actions": {
+            "BUY_PRODUCT": 6,
+            "BUY_PRODUCT:WHEAT": 68,
+            "BUY_SEED": 5,
+            "BUY_SEED:CARROT": 2,
+            "BUY_SEED:WHEAT": 3,
+            "CARE": 11,
+            "COLLECT_FERTILIZER": 14,
+            "DIG": 4,
+            "EAST": 38,
+            "FEED": 11,
+            "FERTILIZE": 3,
+            "HARVEST": 22,
+            "HIRE": 12,
+            "NORTH": 37,
+            "PICKUP": 8,
+            "PLACE": 2,
+            "PLANT": 5,
+            "PLANT:CARROT": 2,
+            "PLANT:WHEAT": 3,
+            "SELL": 31,
+            "SELL:FERTILIZER": 98,
+            "SELL:MILK": 24,
+            "SELL:STRAWBERRY": 20,
+            "SELL:WHEAT": 96,
+            "SELL:WOOL": 6,
+            "SOUTH": 42,
+            "WATER": 45,
+            "WEST": 47
+          },
+          "shed": {
+            "FERTILIZER": 19,
+            "MILK": 24,
+            "STRAWBERRY": 20,
+            "WHEAT": 17,
+            "WOOL": 6
+          },
+          "prices": {
+            "CARROT": 47,
+            "EGG": 61,
+            "FERTILIZER": 39,
+            "MELON": 101,
+            "MILK": 59,
+            "STRAWBERRY": 227,
+            "TOMATO": 82,
+            "WHEAT": 47,
+            "WOOL": 1
+          },
+          "shops": [
+            "BRUNCH_SPOT",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET",
+            "FARMERS_MARKET",
+            "BAKERY",
+            "PIZZA_SHOP",
+            "ICE_CREAM_SHOP"
+          ]
+        },
+        {
+          "day": 23,
+          "phase": "engine-convert",
+          "engine": {
+            "label": "recurring-crop",
+            "confidence": 0.607,
+            "scores": {
+              "staple-volume": 8.55,
+              "cash-crop": 2.6,
+              "recurring-crop": 48.05,
+              "livestock": 20.0
+            }
+          },
+          "engine_transition": false,
+          "farm": {
+            "bank": 54850.0,
+            "hands": 0,
+            "quadrants": 3,
+            "crops": {
+              "WHEAT": 19,
+              "CARROT": 4,
+              "STRAWBERRY": 31
+            },
+            "animals": {
+              "COW": 10,
+              "SHEEP": 4
+            },
+            "weeds": 4
+          },
+          "opponent": {
+            "bank": 55081.0,
+            "hands": 0,
+            "quadrants": 3,
+            "crops": {
+              "WHEAT": 23,
+              "CARROT": 1,
+              "STRAWBERRY": 32
+            },
+            "animals": {
+              "COW": 10,
+              "SHEEP": 4
+            },
+            "weeds": 1
+          },
+          "bank_margin": -231.0,
+          "actions": {
+            "BUY_PRODUCT": 5,
+            "BUY_PRODUCT:WHEAT": 47,
+            "BUY_SEED": 6,
+            "BUY_SEED:WHEAT": 9,
+            "CARE": 5,
+            "COLLECT_FERTILIZER": 14,
+            "DIG": 3,
+            "EAST": 34,
+            "FEED": 5,
+            "FERTILIZE": 4,
+            "HARVEST": 31,
+            "HIRE": 12,
+            "NORTH": 38,
+            "PICKUP": 3,
+            "PLACE": 3,
+            "PLANT": 11,
+            "PLANT:WHEAT": 11,
+            "SELL": 42,
+            "SELL:FERTILIZER": 174,
+            "SELL:MILK": 16,
+            "SELL:STRAWBERRY": 42,
+            "SELL:WHEAT": 133,
+            "SELL:WOOL": 3,
+            "SOUTH": 29,
+            "WATER": 43,
+            "WEST": 62
+          },
+          "shed": {
+            "FERTILIZER": 15,
+            "MILK": 8,
+            "STRAWBERRY": 30,
+            "WHEAT": 14,
+            "WOOL": 3
+          },
+          "prices": {
+            "CARROT": 48,
+            "EGG": 62,
+            "FERTILIZER": 35,
+            "MELON": 104,
+            "MILK": 38,
+            "STRAWBERRY": 222,
+            "TOMATO": 84,
+            "WHEAT": 48,
+            "WOOL": 1
+          },
+          "shops": [
+            "BRUNCH_SPOT",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET",
+            "FARMERS_MARKET",
+            "BAKERY",
+            "PIZZA_SHOP",
+            "ICE_CREAM_SHOP"
+          ]
+        },
+        {
+          "day": 24,
+          "phase": "terminal-optimize",
+          "engine": {
+            "label": "recurring-crop",
+            "confidence": 0.591,
+            "scores": {
+              "staple-volume": 8.55,
+              "cash-crop": 2.6,
+              "recurring-crop": 44.95,
+              "livestock": 20.0
+            }
+          },
+          "engine_transition": false,
+          "farm": {
+            "bank": 64243.0,
+            "hands": 0,
+            "quadrants": 3,
+            "crops": {
+              "WHEAT": 19,
+              "CARROT": 4,
+              "STRAWBERRY": 29
+            },
+            "animals": {
+              "COW": 10,
+              "SHEEP": 4
+            },
+            "weeds": 4
+          },
+          "opponent": {
+            "bank": 62623.0,
+            "hands": 0,
+            "quadrants": 3,
+            "crops": {
+              "WHEAT": 21,
+              "CARROT": 2,
+              "STRAWBERRY": 30
+            },
+            "animals": {
+              "COW": 10,
+              "SHEEP": 4
+            },
+            "weeds": 1
+          },
+          "bank_margin": 1620.0,
+          "actions": {
+            "BUY_PRODUCT": 2,
+            "BUY_PRODUCT:WHEAT": 17,
+            "BUY_SEED": 6,
+            "BUY_SEED:WHEAT": 11,
+            "CARE": 10,
+            "COLLECT_FERTILIZER": 14,
+            "DIG": 4,
+            "EAST": 32,
+            "FEED": 10,
+            "FERTILIZE": 9,
+            "HARVEST": 22,
+            "HIRE": 11,
+            "NORTH": 37,
+            "PICKUP": 5,
+            "PLACE": 1,
+            "PLANT": 9,
+            "PLANT:WHEAT": 9,
+            "SELL": 19,
+            "SELL:FERTILIZER": 35,
+            "SELL:STRAWBERRY": 24,
+            "SELL:WHEAT": 73,
+            "SELL:WOOL": 3,
+            "SOUTH": 37,
+            "WATER": 33,
+            "WEST": 45
+          },
+          "shed": {
+            "FERTILIZER": 25,
+            "STRAWBERRY": 22,
+            "WHEAT": 37,
+            "WOOL": 3
+          },
+          "prices": {
+            "CARROT": 49,
+            "EGG": 62,
+            "FERTILIZER": 34,
+            "MELON": 106,
+            "MILK": 36,
+            "STRAWBERRY": 205,
+            "TOMATO": 89,
+            "WHEAT": 49,
+            "WOOL": 1
+          },
+          "shops": [
+            "BRUNCH_SPOT",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET",
+            "FARMERS_MARKET",
+            "BAKERY",
+            "PIZZA_SHOP",
+            "ICE_CREAM_SHOP",
+            "SMOOTHIE_SHOP"
+          ]
+        },
+        {
+          "day": 25,
+          "phase": "terminal-optimize",
+          "engine": {
+            "label": "recurring-crop",
+            "confidence": 0.578,
+            "scores": {
+              "staple-volume": 10.35,
+              "cash-crop": 1.3,
+              "recurring-crop": 43.4,
+              "livestock": 20.0
+            }
+          },
+          "engine_transition": false,
+          "farm": {
+            "bank": 71848.0,
+            "hands": 0,
+            "quadrants": 3,
+            "crops": {
+              "WHEAT": 23,
+              "CARROT": 2,
+              "STRAWBERRY": 28
+            },
+            "animals": {
+              "COW": 10,
+              "SHEEP": 4
+            },
+            "weeds": 1
+          },
+          "opponent": {
+            "bank": 70203.0,
+            "hands": 0,
+            "quadrants": 3,
+            "crops": {
+              "WHEAT": 25,
+              "CARROT": 2,
+              "STRAWBERRY": 29
+            },
+            "animals": {
+              "COW": 10,
+              "SHEEP": 4
+            },
+            "weeds": 1
+          },
+          "bank_margin": 1645.0,
+          "actions": {
+            "BUY_PRODUCT": 9,
+            "BUY_PRODUCT:WHEAT": 104,
+            "BUY_SEED": 8,
+            "BUY_SEED:CARROT": 4,
+            "BUY_SEED:WHEAT": 7,
+            "CARE": 12,
+            "COLLECT_FERTILIZER": 14,
+            "DIG": 5,
+            "EAST": 28,
+            "FEED": 12,
+            "FERTILIZE": 2,
+            "HARVEST": 25,
+            "HIRE": 11,
+            "NORTH": 42,
+            "PICKUP": 4,
+            "PLACE": 5,
+            "PLANT": 11,
+            "PLANT:CARROT": 4,
+            "PLANT:WHEAT": 7,
+            "SELL": 46,
+            "SELL:CARROT": 4,
+            "SELL:FERTILIZER": 189,
+            "SELL:MILK": 8,
+            "SELL:STRAWBERRY": 48,
+            "SELL:WHEAT": 134,
+            "SELL:WOOL": 6,
+            "SOUTH": 31,
+            "WATER": 35,
+            "WEST": 44
+          },
+          "shed": {
+            "CARROT": 4,
+            "FERTILIZER": 17,
+            "STRAWBERRY": 20,
+            "WHEAT": 21,
+            "WOOL": 6
+          },
+          "prices": {
+            "CARROT": 50,
+            "EGG": 63,
+            "FERTILIZER": 28,
+            "MELON": 108,
+            "MILK": 55,
+            "STRAWBERRY": 193,
+            "TOMATO": 97,
+            "WHEAT": 49,
+            "WOOL": 1
+          },
+          "shops": [
+            "BRUNCH_SPOT",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET",
+            "FARMERS_MARKET",
+            "BAKERY",
+            "PIZZA_SHOP",
+            "ICE_CREAM_SHOP",
+            "SMOOTHIE_SHOP"
+          ]
+        },
+        {
+          "day": 26,
+          "phase": "terminal-optimize",
+          "engine": {
+            "label": "recurring-crop",
+            "confidence": 0.439,
+            "scores": {
+              "staple-volume": 13.05,
+              "cash-crop": 2.6,
+              "recurring-crop": 27.9,
+              "livestock": 20.0
+            }
+          },
+          "engine_transition": false,
+          "farm": {
+            "bank": 79461.0,
+            "hands": 0,
+            "quadrants": 3,
+            "crops": {
+              "WHEAT": 29,
+              "CARROT": 4,
+              "STRAWBERRY": 18
+            },
+            "animals": {
+              "COW": 10,
+              "SHEEP": 4
+            },
+            "weeds": 7
+          },
+          "opponent": {
+            "bank": 74011.0,
+            "hands": 0,
+            "quadrants": 3,
+            "crops": {
+              "WHEAT": 37,
+              "CARROT": 2,
+              "STRAWBERRY": 18
+            },
+            "animals": {
+              "COW": 10,
+              "SHEEP": 4
+            },
+            "weeds": 0
+          },
+          "bank_margin": 5450.0,
+          "actions": {
+            "BUY_PRODUCT": 1,
+            "BUY_PRODUCT:WHEAT": 10,
+            "BUY_SEED": 6,
+            "BUY_SEED:WHEAT": 10,
+            "CARE": 11,
+            "COLLECT_FERTILIZER": 14,
+            "DIG": 6,
+            "EAST": 42,
+            "FEED": 11,
+            "FERTILIZE": 5,
+            "HARVEST": 10,
+            "HIRE": 11,
+            "NORTH": 28,
+            "PICKUP": 5,
+            "PLANT": 11,
+            "PLANT:WHEAT": 11,
+            "SELL": 19,
+            "SELL:CARROT": 6,
+            "SELL:FERTILIZER": 6,
+            "SELL:MILK": 16,
+            "SELL:STRAWBERRY": 4,
+            "SELL:WHEAT": 46,
+            "SELL:WOOL": 3,
+            "SOUTH": 31,
+            "WATER": 52,
+            "WEST": 44
+          },
+          "shed": {
+            "CARROT": 6,
+            "FERTILIZER": 20,
+            "MILK": 16,
+            "STRAWBERRY": 4,
+            "WHEAT": 21,
+            "WOOL": 3
+          },
+          "prices": {
+            "CARROT": 51,
+            "EGG": 64,
+            "FERTILIZER": 25,
+            "MELON": 111,
+            "MILK": 74,
+            "STRAWBERRY": 182,
+            "TOMATO": 108,
+            "WHEAT": 50,
+            "WOOL": 1
+          },
+          "shops": [
+            "BRUNCH_SPOT",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET",
+            "FARMERS_MARKET",
+            "BAKERY",
+            "PIZZA_SHOP",
+            "ICE_CREAM_SHOP",
+            "SMOOTHIE_SHOP"
+          ]
+        },
+        {
+          "day": 27,
+          "phase": "terminal-optimize",
+          "engine": {
+            "label": "recurring-crop",
+            "confidence": 0.415,
+            "scores": {
+              "staple-volume": 16.65,
+              "cash-crop": 2.6,
+              "recurring-crop": 27.9,
+              "livestock": 20.0
+            }
+          },
+          "engine_transition": false,
+          "farm": {
+            "bank": 81125.0,
+            "hands": 0,
+            "quadrants": 3,
+            "crops": {
+              "WHEAT": 37,
+              "CARROT": 4,
+              "STRAWBERRY": 18
+            },
+            "animals": {
+              "COW": 10,
+              "SHEEP": 4
+            },
+            "weeds": 0
+          },
+          "opponent": {
+            "bank": 77778.0,
+            "hands": 0,
+            "quadrants": 3,
+            "crops": {
+              "WHEAT": 35,
+              "CARROT": 3,
+              "STRAWBERRY": 18
+            },
+            "animals": {
+              "COW": 10,
+              "SHEEP": 4
+            },
+            "weeds": 1
+          },
+          "bank_margin": 3347.0,
+          "actions": {
+            "BUY_PRODUCT": 1,
+            "BUY_PRODUCT:WHEAT": 8,
+            "BUY_SEED": 6,
+            "BUY_SEED:WHEAT": 7,
+            "CARE": 12,
+            "COLLECT_FERTILIZER": 12,
+            "DIG": 1,
+            "EAST": 31,
+            "FEED": 12,
+            "FERTILIZE": 2,
+            "HARVEST": 31,
+            "HIRE": 11,
+            "NORTH": 41,
+            "PICKUP": 4,
+            "PLACE": 4,
+            "PLANT": 8,
+            "PLANT:WHEAT": 8,
+            "SELL": 29,
+            "SELL:FERTILIZER": 27,
+            "SELL:MILK": 13,
+            "SELL:STRAWBERRY": 12,
+            "SELL:WHEAT": 118,
+            "SELL:WOOL": 3,
+            "SOUTH": 32,
+            "WATER": 38,
+            "WEST": 39
+          },
+          "shed": {
+            "FERTILIZER": 23,
+            "MILK": 8,
+            "STRAWBERRY": 8,
+            "WHEAT": 21,
+            "WOOL": 3
+          },
+          "prices": {
+            "CARROT": 52,
+            "EGG": 65,
+            "FERTILIZER": 21,
+            "MELON": 113,
+            "MILK": 68,
+            "STRAWBERRY": 191,
+            "TOMATO": 123,
+            "WHEAT": 51,
+            "WOOL": 1
+          },
+          "shops": [
+            "BRUNCH_SPOT",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET",
+            "FARMERS_MARKET",
+            "BAKERY",
+            "PIZZA_SHOP",
+            "ICE_CREAM_SHOP",
+            "SMOOTHIE_SHOP"
+          ]
+        },
+        {
+          "day": 28,
+          "phase": "liquidate",
+          "engine": {
+            "label": "liquidation:recurring-crop",
+            "confidence": 0.421,
+            "scores": {
+              "staple-volume": 15.75,
+              "cash-crop": 2.6,
+              "recurring-crop": 27.9,
+              "livestock": 20.0
+            }
+          },
+          "engine_transition": true,
+          "farm": {
+            "bank": 84500.0,
+            "hands": 0,
+            "quadrants": 3,
+            "crops": {
+              "WHEAT": 35,
+              "CARROT": 4,
+              "STRAWBERRY": 18
+            },
+            "animals": {
+              "COW": 10,
+              "SHEEP": 4
+            },
+            "weeds": 1
+          },
+          "opponent": {
+            "bank": 83172.0,
+            "hands": 0,
+            "quadrants": 3,
+            "crops": {
+              "WHEAT": 41,
+              "CARROT": 3,
+              "STRAWBERRY": 13
+            },
+            "animals": {
+              "COW": 10,
+              "SHEEP": 4
+            },
+            "weeds": 1
+          },
+          "bank_margin": 1328.0,
+          "actions": {
+            "BUY_PRODUCT": 2,
+            "BUY_PRODUCT:WHEAT": 7,
+            "BUY_SEED": 1,
+            "BUY_SEED:WHEAT": 2,
+            "CARE": 9,
+            "COLLECT_FERTILIZER": 9,
+            "EAST": 28,
+            "FEED": 9,
+            "HARVEST": 41,
+            "HIRE": 10,
+            "NORTH": 38,
+            "PICKUP": 4,
+            "SELL": 15,
+            "SELL:FERTILIZER": 9,
+            "SELL:MILK": 20,
+            "SELL:STRAWBERRY": 24,
+            "SELL:WHEAT": 42,
+            "SELL:WOOL": 6,
+            "SOUTH": 21,
+            "WATER": 31,
+            "WEST": 35
+          },
+          "shed": {
+            "FERTILIZER": 9,
+            "MILK": 20,
+            "STRAWBERRY": 24,
+            "WHEAT": 40,
+            "WOOL": 6
+          },
+          "prices": {
+            "CARROT": 52,
+            "EGG": 65,
+            "FERTILIZER": 14,
+            "MELON": 115,
+            "MILK": 84,
+            "STRAWBERRY": 194,
+            "TOMATO": 142,
+            "WHEAT": 51,
+            "WOOL": 1
+          },
+          "shops": [
+            "BRUNCH_SPOT",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET",
+            "FARMERS_MARKET",
+            "BAKERY",
+            "PIZZA_SHOP",
+            "ICE_CREAM_SHOP",
+            "SMOOTHIE_SHOP"
+          ]
+        },
+        {
+          "day": 29,
+          "phase": "liquidate",
+          "engine": {
+            "label": "liquidation:livestock",
+            "confidence": 0.6,
+            "scores": {
+              "staple-volume": 3.6,
+              "cash-crop": 0.0,
+              "recurring-crop": 7.75,
+              "livestock": 17.0
+            }
+          },
+          "engine_transition": true,
+          "farm": {
+            "bank": 91066.0,
+            "hands": 0,
+            "quadrants": 3,
+            "crops": {
+              "WHEAT": 8,
+              "STRAWBERRY": 5
+            },
+            "animals": {
+              "COW": 10,
+              "SHEEP": 2
+            },
+            "weeds": 15
+          },
+          "opponent": {
+            "bank": 87034.0,
+            "hands": 0,
+            "quadrants": 3,
+            "crops": {
+              "WHEAT": 10,
+              "STRAWBERRY": 3
+            },
+            "animals": {
+              "COW": 10,
+              "SHEEP": 2
+            },
+            "weeds": 11
+          },
+          "bank_margin": 4032.0,
+          "actions": {
+            "DROP": 8,
+            "EAST": 22,
+            "HARVEST": 18,
+            "HIRE": 8,
+            "NORTH": 26,
+            "SELL": 12,
+            "SELL:CARROT": 10,
+            "SELL:FERTILIZER": 9,
+            "SELL:MILK": 30,
+            "SELL:STRAWBERRY": 8,
+            "SELL:WHEAT": 83,
+            "SELL:WOOL": 6,
+            "SOUTH": 22,
+            "WATER": 9,
+            "WEST": 24
+          },
+          "shed": {
+            "CARROT": 10,
+            "FERTILIZER": 9,
+            "MILK": 6,
+            "STRAWBERRY": 6,
+            "WHEAT": 66,
+            "WOOL": 3
+          },
+          "prices": {
+            "CARROT": 53,
+            "EGG": 66,
+            "FERTILIZER": 10,
+            "MELON": 118,
+            "MILK": 53,
+            "STRAWBERRY": 194,
+            "TOMATO": 164,
+            "WHEAT": 51,
+            "WOOL": 5
+          },
+          "shops": [
+            "BRUNCH_SPOT",
+            "ICE_CREAM_SHOP",
+            "FARMERS_MARKET",
+            "FARMERS_MARKET",
+            "BAKERY",
+            "PIZZA_SHOP",
+            "ICE_CREAM_SHOP",
+            "SMOOTHIE_SHOP"
+          ]
+        }
+      ]
+    }
+  ]
+}
