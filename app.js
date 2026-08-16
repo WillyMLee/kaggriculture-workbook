@@ -400,12 +400,30 @@
       change: "Single-file artifact; same three-attention policy",
       notes: "Reviewed ladder snapshot: 1 win, 3 losses. Repeated gaps were fixed labor, weak response to shared markets, and a day-27 liquidation bug.",
     },
+    {
+      id: "submission-v0-6-1",
+      version: "v0.6.1",
+      date: "2026-08-15",
+      status: "active",
+      episodes: 1,
+      rating: 600,
+      rank: 2891,
+      change: "Economics, strategy utility, and bounded global routing",
+      notes: "Accepted by Kaggle. Snapshot includes only validation self-play; no external opponent evidence yet.",
+    },
   ];
   let submissions = readStore(KEYS.submissions, firstLadderEntries);
   if (!Array.isArray(submissions)) submissions = [];
-  submissions = submissions.map((item) => item.id === "submission-v0-2-1"
-    ? { ...item, rating: 459.2, rank: 3536, episodes: Math.max(item.episodes || 0, 4) }
-    : item);
+  submissions = submissions.map((item) => {
+    if (item.id === "submission-v0-2-1") {
+      return { ...item, rating: 459.2, rank: 3536, episodes: Math.max(item.episodes || 0, 4) };
+    }
+    if (item.id === "submission-v0-6-1") return { ...item, ...firstLadderEntries[2] };
+    return item;
+  });
+  firstLadderEntries.forEach((seeded) => {
+    if (!submissions.some((item) => item.id === seeded.id)) submissions.push(seeded);
+  });
   writeStore(KEYS.submissions, submissions);
   const submissionDialog = $("#submission-dialog");
   const submissionForm = $("#submission-form");
@@ -457,6 +475,9 @@
     if (latest.status === "error") {
       signalTitle = "Validation failure";
       signalText = "Fix the runtime or action contract before interpreting strategy quality.";
+    } else if (latest.id === "submission-v0-6-1" && latest.episodes < 10) {
+      signalTitle = "Accepted, sample pending";
+      signalText = "The current score is seeded by validation self-play; wait for external opponents before comparing strategy quality.";
     } else if (latest.rating != null && previous?.rating != null) {
       const delta = latest.rating - previous.rating;
       signalTitle = `${delta >= 0 ? "+" : ""}${delta.toFixed(1)} rating`;
@@ -571,10 +592,10 @@
       id: "agent-v0-6-1",
       version: "v0.6.1",
       date: "2026-08-15",
-      status: "candidate",
-      evidence: "v0.5 class: 60-0 | worst +8,748",
+      status: "submitted",
+      evidence: "Kaggle accepted · initial 600.0 · rank #2,891",
       model: "Marginal crop/livestock economics, expected-utility strategy grouping, profitable fertilizer use, and bounded global worker routing.",
-      limitation: "Promoted local candidate; unfamiliar Kaggle ladder architectures remain the next generalization test.",
+      limitation: "Only validation self-play was available at the first snapshot; wait for external matches before choosing a v0.7 mechanism.",
     },
   ];
   let agentArchive = readStore(KEYS.agentArchive, seededAgents);

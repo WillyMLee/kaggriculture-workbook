@@ -1,0 +1,15 @@
+{
+  "version": "v0.6.1",
+  "artifact": "kaggriculture-v0.6.1.tar.gz",
+  "sha256": "33c82d70c6875e516e89e06802dbaa9ffa34120c8ae6decd6a9236ee5aaa038d",
+  "submitted_at": "2026-08-16T03:01:00Z",
+  "checked_at": "2026-08-16T03:04:17Z",
+  "status": "complete",
+  "score": 600.0,
+  "rank": 2891,
+  "reviewed_episodes": 1,
+  "episode_type": "validation-self-play",
+  "external_opponent_episodes": 0,
+  "interpretation": "Packaging and runtime acceptance passed. Competitive strength is not yet measurable from validation self-play.",
+  "next_checkpoints": [10, 25, 50]
+}

@@ -104,6 +104,8 @@ Reverse Horizon v0.6 is also a held candidate. Its first checkpoint lost 8-12 to
 
 Reverse Horizon v0.6.1 adds marginal crop/livestock economics, probability-weighted strategy-group utility, profitable fertilizer allocation, and deadline-aware global worker assignment. Its first unbounded router timed out on held-out seed 10; bounding the candidate set to three task alternatives per worker fixed that case at 75.64 ms and was added as a stress regression. The final exact 10,039-byte artifact went 60-0 against the v0.5 class: 20-0 against v0.5.0 (+14,911.6 average), 20-0 against v0.5.1 (+14,072.05), and 20-0 on held-out seeds 10-19 against v0.5.1 (+13,222.8). The combined worst margin was +8,748, with zero runtime failures, zero suspicious fallbacks, and a 319.111 ms maximum local action time. It is promoted locally; unfamiliar Kaggle ladder architectures remain the next test.
 
+v0.6.1 was submitted to Kaggle on August 15 ET / August 16 UTC. The exact frozen artifact was accepted with an initial score of 600.0 and rank #2,891. The only available episode at the first checkpoint was validation self-play, so competitive conclusions are deferred until external matches arrive.
+
 ## Sources
 
 Competition facts were checked against the live Kaggle pages on August 14, 2026:

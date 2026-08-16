@@ -174,7 +174,7 @@
           <article><span>Best rank</span><strong id="submission-best-rank">—</strong><small>lower is better</small></article>
           <article><span>Episodes observed</span><strong id="submission-episodes">0</strong><small>sample size matters</small></article>
         </section>
-        <p class="source-note shell"><strong>Live Kaggle snapshot · August 15:</strong> two uploads today—v0.2.0 failed validation and v0.2.1 is active at 459.2, rank #3,536. No v0.6.1 upload has been made. The rules allow five submissions per day, so plan around three remaining slots today.</p>
+        <p class="source-note shell"><strong>Live Kaggle snapshot · August 15 ET / August 16 UTC:</strong> v0.6.1 is accepted at an initial 600.0 and rank #2,891; v0.2.1 remains active at 459.2 and rank #3,536. One of five slots is used in the current Kaggle reset window.</p>
 
         <section class="section shell" aria-labelledby="submission-analysis-title">
           <div class="section-heading compact"><div><p class="eyebrow">Interpretation</p><h2 id="submission-analysis-title">What the ladder is telling us</h2></div></div>
@@ -377,14 +377,23 @@
           <button class="button button-primary" id="open-agent-form" type="button">Log agent</button>
         </div>
         <section class="section shell" aria-labelledby="current-checkpoint-title">
-          <div class="section-heading"><div><p class="eyebrow">Current checkpoint · August 15</p><h2 id="current-checkpoint-title">One live baseline, one local challenger</h2></div><strong class="qa-verdict" data-state="hold">NO NEW UPLOAD</strong></div>
+          <div class="section-heading"><div><p class="eyebrow">Current checkpoint · August 15</p><h2 id="current-checkpoint-title">v0.6.1 entered the ladder</h2></div><strong class="qa-verdict">ACCEPTED</strong></div>
           <div class="candidate-evidence">
-            <div><span>Kaggle agent</span><strong>v0.2.1 live</strong><small>only accepted submission</small></div>
-            <div><span>Current score</span><strong>459.2</strong><small>up 18.3 since last check</small></div>
-            <div><span>Current rank</span><strong>#3,536</strong><small>up 88 places from #3,624</small></div>
-            <div><span>Local challenger</span><strong>v0.6.1</strong><small>60–0 locally · not submitted</small></div>
+            <div><span>Submitted agent</span><strong>v0.6.1 live</strong><small>exact SHA 33c82d70…038d</small></div>
+            <div><span>Initial score</span><strong>600.0</strong><small>validation seed only</small></div>
+            <div><span>Initial rank</span><strong>#2,891</strong><small>up 645 places from v0.2.1</small></div>
+            <div><span>External matches</span><strong>0 reviewed</strong><small>competitive signal not ready</small></div>
           </div>
-          <p class="source-note"><strong>Read:</strong> the v0.2.1 baseline is still weak, but its live score is moving as Kaggle adds episodes. v0.6.1 is the materially stronger candidate; the remaining gate is opponent-family diversity, not packaging or predecessor performance.</p>
+          <p class="source-note"><strong>Read:</strong> acceptance clears the packaging and runtime gate. The 600.0 score comes from one validation self-play episode, so it is not evidence that v0.6.1 beats unfamiliar ladder agents yet.</p>
+        </section>
+        <section class="section shell" aria-labelledby="v07-notes-title">
+          <div class="section-heading"><div><p class="eyebrow">v0.7 evidence plan</p><h2 id="v07-notes-title">Learn before changing the mechanism</h2></div><p class="section-note">Grade the earliest repeatable failure.</p></div>
+          <ol class="system-flow">
+            <li><span>01</span><div><strong>Wait for external evidence</strong><p>Capture checkpoints at 10, 25, and 50 non-validation episodes. Do not optimize against the self-play seed.</p></div><em>SAMPLE</em></li>
+            <li><span>02</span><div><strong>Trace the first real loss</strong><p>Record opponent family, bank curve, production mix, worker utilization, first irreversible divergence, and terminal inventory.</p></div><em>LOSS LAB</em></li>
+            <li><span>03</span><div><strong>Test a temporal opponent belief</strong><p>If losses come from late recognition, add spending trajectory, structure count, crop and animal age, and production timing to the opponent model.</p></div><em>LIKELY LEVER</em></li>
+            <li><span>04</span><div><strong>Add rollout only on evidence</strong><p>If the same tactical choice fails repeatedly, compare bounded two-to-three-day rollouts. Keep the 319 ms action-time ceiling visible.</p></div><em>CONDITIONAL</em></li>
+          </ol>
         </section>
         <section class="section shell" aria-labelledby="agent-lineage-title">
           <div class="section-heading"><div><p class="eyebrow">Version archive</p><h2 id="agent-lineage-title">Frozen checkpoints</h2></div><p class="section-note">Kaggle and local evidence stay visibly separate.</p></div>
@@ -640,14 +649,14 @@
           </div>
         </section>
         <section class="section shell" aria-labelledby="submission-decision-title">
-          <div class="section-heading"><div><p class="eyebrow">Submission decision</p><h2 id="submission-decision-title">Hold v0.6.1 for one final generalization test</h2></div><strong class="qa-verdict" data-state="hold">LOCAL ONLY</strong></div>
+          <div class="section-heading"><div><p class="eyebrow">Submission decision</p><h2 id="submission-decision-title">v0.6.1 is live; collect ladder evidence</h2></div><strong class="qa-verdict">SUBMITTED</strong></div>
           <div class="candidate-evidence">
-            <div><span>Latest agent</span><strong>v0.6.1</strong><small>promoted local candidate</small></div>
+            <div><span>Latest agent</span><strong>v0.6.1</strong><small>Kaggle accepted</small></div>
             <div><span>Local evidence</span><strong>60 / 60 wins</strong><small>v0.5-class · both seats</small></div>
-            <div><span>Kaggle today</span><strong>2 / 5 used</strong><small>1 active · 1 validation error</small></div>
-            <div><span>Submit trigger</span><strong>Diverse suite passes</strong><small>crop rush · recurring crop · livestock</small></div>
+            <div><span>Kaggle window</span><strong>1 / 5 used</strong><small>4 slots remain after reset</small></div>
+            <div><span>Next checkpoint</span><strong>10 external games</strong><small>first loss gets a full trace</small></div>
           </div>
-          <p class="source-note"><strong>Why hold:</strong> every v0.6.1 victory is against our own v0.5 lineage. Run the opponent-family matrix first; if v0.6.1 clears both seats without a repeated failure pattern, use one of today’s remaining slots. If it exposes a systematic loss, fix that mechanism as v0.6.2 before spending the slot.</p>
+          <p class="source-note"><strong>Interpretation boundary:</strong> score 600.0 and rank #2,891 are the initial validation snapshot. Wait for unfamiliar opponents before attributing the movement to economics, strategy utility, or routing.</p>
         </section>
         <section class="section shell" aria-labelledby="submission-gate-title">
           <div class="section-heading"><div><p class="eyebrow">Release gate</p><h2 id="submission-gate-title">v0.6.1 candidate readiness</h2></div><strong class="progress-label" id="submission-progress">0 / 6 ready</strong></div>
