@@ -174,7 +174,7 @@
           <article><span>Best rank</span><strong id="submission-best-rank">—</strong><small>lower is better</small></article>
           <article><span>Episodes observed</span><strong id="submission-episodes">0</strong><small>sample size matters</small></article>
         </section>
-        <p class="source-note shell"><strong>Live Kaggle snapshot · August 15:</strong> two uploads today—v0.2.0 failed validation and v0.2.1 is active at 440.9, rank #3,624. The rules allow five submissions per day, so plan around three remaining slots today.</p>
+        <p class="source-note shell"><strong>Live Kaggle snapshot · August 15:</strong> two uploads today—v0.2.0 failed validation and v0.2.1 is active at 459.2, rank #3,536. No v0.6.1 upload has been made. The rules allow five submissions per day, so plan around three remaining slots today.</p>
 
         <section class="section shell" aria-labelledby="submission-analysis-title">
           <div class="section-heading compact"><div><p class="eyebrow">Interpretation</p><h2 id="submission-analysis-title">What the ladder is telling us</h2></div></div>
@@ -376,6 +376,16 @@
           <div><p class="eyebrow">Agent lineage</p><h1 id="past-agents-title">Past agents</h1><p>Keep every policy as evidence—what it knew, where it failed, and what replaced it.</p></div>
           <button class="button button-primary" id="open-agent-form" type="button">Log agent</button>
         </div>
+        <section class="section shell" aria-labelledby="current-checkpoint-title">
+          <div class="section-heading"><div><p class="eyebrow">Current checkpoint · August 15</p><h2 id="current-checkpoint-title">One live baseline, one local challenger</h2></div><strong class="qa-verdict" data-state="hold">NO NEW UPLOAD</strong></div>
+          <div class="candidate-evidence">
+            <div><span>Kaggle agent</span><strong>v0.2.1 live</strong><small>only accepted submission</small></div>
+            <div><span>Current score</span><strong>459.2</strong><small>up 18.3 since last check</small></div>
+            <div><span>Current rank</span><strong>#3,536</strong><small>up 88 places from #3,624</small></div>
+            <div><span>Local challenger</span><strong>v0.6.1</strong><small>60–0 locally · not submitted</small></div>
+          </div>
+          <p class="source-note"><strong>Read:</strong> the v0.2.1 baseline is still weak, but its live score is moving as Kaggle adds episodes. v0.6.1 is the materially stronger candidate; the remaining gate is opponent-family diversity, not packaging or predecessor performance.</p>
+        </section>
         <section class="section shell" aria-labelledby="agent-lineage-title">
           <div class="section-heading"><div><p class="eyebrow">Version archive</p><h2 id="agent-lineage-title">Frozen checkpoints</h2></div><p class="section-note">Kaggle and local evidence stay visibly separate.</p></div>
           <div class="agent-lineage" id="agent-lineage"></div>
@@ -630,7 +640,7 @@
           </div>
         </section>
         <section class="section shell" aria-labelledby="submission-decision-title">
-          <div class="section-heading"><div><p class="eyebrow">Submission decision</p><h2 id="submission-decision-title">Hold v0.6.1 for one final generalization test</h2></div><strong class="qa-verdict" data-state="hold">HOLD</strong></div>
+          <div class="section-heading"><div><p class="eyebrow">Submission decision</p><h2 id="submission-decision-title">Hold v0.6.1 for one final generalization test</h2></div><strong class="qa-verdict" data-state="hold">LOCAL ONLY</strong></div>
           <div class="candidate-evidence">
             <div><span>Latest agent</span><strong>v0.6.1</strong><small>promoted local candidate</small></div>
             <div><span>Local evidence</span><strong>60 / 60 wins</strong><small>v0.5-class · both seats</small></div>
