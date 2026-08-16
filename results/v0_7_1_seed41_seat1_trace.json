@@ -1,0 +1,5083 @@
+{
+  "seed": 41,
+  "challenger_seat": 1,
+  "challenger": "agents.balanced_tempo:agent",
+  "baseline": "kaggriculture-v0.7.0.tar.gz",
+  "final_rewards": [
+    50357.0,
+    47927.0
+  ],
+  "statuses": [
+    "DONE",
+    "DONE"
+  ],
+  "days": [
+    {
+      "day": 0,
+      "margin": 20,
+      "opponent_belief": {
+        "archetype": "livestock-compound",
+        "confidence": 0.7688,
+        "recurring_crop": "STRAWBERRY",
+        "recurring_targets": {
+          "STRAWBERRY": 11,
+          "TOMATO": 4
+        },
+        "cash_crop": "MELON",
+        "animal": "SHEEP",
+        "animal_target": 4,
+        "crop_scores": {
+          "WHEAT": 7.33,
+          "CARROT": 9.5,
+          "TOMATO": 7.77,
+          "STRAWBERRY": 13.98,
+          "MELON": 46.95
+        },
+        "animal_scores": {
+          "GOOSE": 34.25,
+          "COW": 80.54,
+          "SHEEP": 99.63
+        },
+        "strategy_utilities": {
+          "cash-engine": 469.51,
+          "recurring-engine": 184.83,
+          "livestock-engine": 398.51
+        },
+        "probabilities": {
+          "wheat-volume": 0.0005,
+          "carrot-volume": 0.0001,
+          "melon-rush": 0.0067,
+          "strawberry-recurring": 0.0019,
+          "tomato-recurring": 0.0002,
+          "livestock-compound": 0.7688,
+          "goose-volume": 0.0001,
+          "cow-milk": 0.0014,
+          "sheep-premium": 0.0001,
+          "labor-swarm": 0.0001,
+          "land-expansion": 0.0002,
+          "mixed": 0.2199
+        },
+        "attention_weights": {
+          "operations": 0.9627,
+          "opponent": 0.0304,
+          "horizon": 0.0069
+        },
+        "asset_threat": 0.4616,
+        "asset_gap": 32.0,
+        "productive_gap": 52.0,
+        "scale_gap": 2,
+        "animal_gap": 0,
+        "own_terminal_value": 4788.0,
+        "opponent_terminal_proxy": 4820.0,
+        "asset_growth": 410.0,
+        "capital_mode": "hold",
+        "opponent_forecast": {
+          "crops": {
+            "WHEAT": 3.5,
+            "CARROT": 0.0,
+            "TOMATO": 0.0,
+            "STRAWBERRY": 0.0,
+            "MELON": 7.0
+          },
+          "animals": {
+            "GOOSE": 0.0,
+            "COW": 0.0,
+            "SHEEP": 0.0
+          },
+          "horizon_days": 3
+        },
+        "prediction_error": 31.0,
+        "prediction_break": true
+      },
+      "ours": {
+        "bank": 2150,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "melon": 10,
+          "wheat": 3
+        },
+        "shed": {},
+        "seeds": {},
+        "actions": {
+          "unit_ops": {
+            "PASS": 87,
+            "NORTH": 27,
+            "WEST": 22,
+            "PLANT": 13,
+            "WATER": 13
+          },
+          "market_ops": {
+            "HIRE": 6,
+            "BUY_SEED": 2
+          },
+          "market_units": {
+            "BUY_SEED:MELON": 10,
+            "BUY_SEED:WHEAT": 3
+          },
+          "labor": {
+            "worker_turns": 162,
+            "productive_turns": 26,
+            "logistics_turns": 49,
+            "idle_turns": 87,
+            "productive_rate": 0.1605,
+            "logistics_rate": 0.3025,
+            "idle_rate": 0.537
+          }
+        }
+      },
+      "opponent": {
+        "bank": 2130,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "melon": 10,
+          "weed": 1,
+          "wheat": 5
+        },
+        "shed": {},
+        "seeds": {},
+        "actions": {
+          "unit_ops": {
+            "PASS": 82,
+            "NORTH": 26,
+            "WEST": 24,
+            "PLANT": 15,
+            "WATER": 15
+          },
+          "market_ops": {
+            "HIRE": 6,
+            "BUY_SEED": 2
+          },
+          "market_units": {
+            "BUY_SEED:MELON": 10,
+            "BUY_SEED:WHEAT": 5
+          },
+          "labor": {
+            "worker_turns": 162,
+            "productive_turns": 30,
+            "logistics_turns": 50,
+            "idle_turns": 82,
+            "productive_rate": 0.1852,
+            "logistics_rate": 0.3086,
+            "idle_rate": 0.5062
+          }
+        }
+      }
+    },
+    {
+      "day": 1,
+      "margin": 20,
+      "opponent_belief": {
+        "archetype": "mixed",
+        "confidence": 0.5201,
+        "recurring_crop": "STRAWBERRY",
+        "recurring_targets": {
+          "STRAWBERRY": 11,
+          "TOMATO": 4
+        },
+        "cash_crop": "MELON",
+        "animal": "SHEEP",
+        "animal_target": 4,
+        "crop_scores": {
+          "WHEAT": 7.33,
+          "CARROT": 9.47,
+          "TOMATO": 7.73,
+          "STRAWBERRY": 14.92,
+          "MELON": 47.52
+        },
+        "animal_scores": {
+          "GOOSE": 34.73,
+          "COW": 84.96,
+          "SHEEP": 101.27
+        },
+        "strategy_utilities": {
+          "cash-engine": 475.16,
+          "recurring-engine": 195.09,
+          "livestock-engine": 405.07
+        },
+        "probabilities": {
+          "wheat-volume": 0.0094,
+          "carrot-volume": 0.0033,
+          "melon-rush": 0.324,
+          "strawberry-recurring": 0.0105,
+          "tomato-recurring": 0.0039,
+          "livestock-compound": 0.1086,
+          "goose-volume": 0.0027,
+          "cow-milk": 0.0075,
+          "sheep-premium": 0.0027,
+          "labor-swarm": 0.0033,
+          "land-expansion": 0.0039,
+          "mixed": 0.5201
+        },
+        "attention_weights": {
+          "operations": 0.9694,
+          "opponent": 0.0236,
+          "horizon": 0.007
+        },
+        "asset_threat": 0.4036,
+        "asset_gap": 32.0,
+        "productive_gap": 52.0,
+        "scale_gap": 2,
+        "animal_gap": 0,
+        "own_terminal_value": 4808.0,
+        "opponent_terminal_proxy": 4840.0,
+        "asset_growth": 40.0,
+        "capital_mode": "hold",
+        "opponent_forecast": {
+          "crops": {
+            "WHEAT": 1.05,
+            "CARROT": 0.0,
+            "TOMATO": 0.0,
+            "STRAWBERRY": 0.0,
+            "MELON": 2.1
+          },
+          "animals": {
+            "GOOSE": 0.0,
+            "COW": 0.0,
+            "SHEEP": 0.0
+          },
+          "horizon_days": 3
+        },
+        "prediction_error": 10.5,
+        "prediction_break": true
+      },
+      "ours": {
+        "bank": 2130,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "melon": 10,
+          "wheat": 3
+        },
+        "shed": {},
+        "seeds": {},
+        "actions": {
+          "unit_ops": {
+            "PASS": 100,
+            "NORTH": 27,
+            "WEST": 22,
+            "WATER": 13
+          },
+          "market_ops": {
+            "HIRE": 6
+          },
+          "market_units": {},
+          "labor": {
+            "worker_turns": 162,
+            "productive_turns": 13,
+            "logistics_turns": 49,
+            "idle_turns": 100,
+            "productive_rate": 0.0802,
+            "logistics_rate": 0.3025,
+            "idle_rate": 0.6173
+          }
+        }
+      },
+      "opponent": {
+        "bank": 2110,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "melon": 10,
+          "weed": 1,
+          "wheat": 5
+        },
+        "shed": {},
+        "seeds": {},
+        "actions": {
+          "unit_ops": {
+            "PASS": 98,
+            "NORTH": 25,
+            "WEST": 24,
+            "WATER": 15
+          },
+          "market_ops": {
+            "HIRE": 6
+          },
+          "market_units": {},
+          "labor": {
+            "worker_turns": 162,
+            "productive_turns": 15,
+            "logistics_turns": 49,
+            "idle_turns": 98,
+            "productive_rate": 0.0926,
+            "logistics_rate": 0.3025,
+            "idle_rate": 0.6049
+          }
+        }
+      }
+    },
+    {
+      "day": 2,
+      "margin": 20,
+      "opponent_belief": {
+        "archetype": "melon-rush",
+        "confidence": 0.6137,
+        "recurring_crop": "STRAWBERRY",
+        "recurring_targets": {
+          "STRAWBERRY": 11,
+          "TOMATO": 4
+        },
+        "cash_crop": "MELON",
+        "animal": "SHEEP",
+        "animal_target": 4,
+        "crop_scores": {
+          "WHEAT": 10.04,
+          "CARROT": 10.17,
+          "TOMATO": 7.75,
+          "STRAWBERRY": 15.76,
+          "MELON": 47.61
+        },
+        "animal_scores": {
+          "GOOSE": 44.5,
+          "COW": 84.9,
+          "SHEEP": 103.02
+        },
+        "strategy_utilities": {
+          "cash-engine": 476.13,
+          "recurring-engine": 204.37,
+          "livestock-engine": 412.09
+        },
+        "probabilities": {
+          "wheat-volume": 0.0127,
+          "carrot-volume": 0.0048,
+          "melon-rush": 0.6137,
+          "strawberry-recurring": 0.0085,
+          "tomato-recurring": 0.0058,
+          "livestock-compound": 0.0216,
+          "goose-volume": 0.004,
+          "cow-milk": 0.006,
+          "sheep-premium": 0.004,
+          "labor-swarm": 0.0048,
+          "land-expansion": 0.0058,
+          "mixed": 0.3082
+        },
+        "attention_weights": {
+          "operations": 0.9677,
+          "opponent": 0.0251,
+          "horizon": 0.0072
+        },
+        "asset_threat": 0.4097,
+        "asset_gap": 88.0,
+        "productive_gap": 108.0,
+        "scale_gap": 2,
+        "animal_gap": 0,
+        "own_terminal_value": 4892.0,
+        "opponent_terminal_proxy": 4980.0,
+        "asset_growth": 160.0,
+        "capital_mode": "hold",
+        "opponent_forecast": {
+          "crops": {
+            "WHEAT": 0.32,
+            "CARROT": 0.0,
+            "TOMATO": 0.0,
+            "STRAWBERRY": 0.0,
+            "MELON": 0.63
+          },
+          "animals": {
+            "GOOSE": 0.0,
+            "COW": 0.0,
+            "SHEEP": 0.0
+          },
+          "horizon_days": 3
+        },
+        "prediction_error": 3.15,
+        "prediction_break": false
+      },
+      "ours": {
+        "bank": 2110,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "melon": 10,
+          "wheat": 3
+        },
+        "shed": {},
+        "seeds": {},
+        "actions": {
+          "unit_ops": {
+            "PASS": 100,
+            "NORTH": 27,
+            "WEST": 22,
+            "WATER": 13
+          },
+          "market_ops": {
+            "HIRE": 6
+          },
+          "market_units": {},
+          "labor": {
+            "worker_turns": 162,
+            "productive_turns": 13,
+            "logistics_turns": 49,
+            "idle_turns": 100,
+            "productive_rate": 0.0802,
+            "logistics_rate": 0.3025,
+            "idle_rate": 0.6173
+          }
+        }
+      },
+      "opponent": {
+        "bank": 2090,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "melon": 10,
+          "weed": 1,
+          "wheat": 5
+        },
+        "shed": {},
+        "seeds": {},
+        "actions": {
+          "unit_ops": {
+            "PASS": 98,
+            "NORTH": 25,
+            "WEST": 24,
+            "WATER": 15
+          },
+          "market_ops": {
+            "HIRE": 6
+          },
+          "market_units": {},
+          "labor": {
+            "worker_turns": 162,
+            "productive_turns": 15,
+            "logistics_turns": 49,
+            "idle_turns": 98,
+            "productive_rate": 0.0926,
+            "logistics_rate": 0.3025,
+            "idle_rate": 0.6049
+          }
+        }
+      }
+    },
+    {
+      "day": 3,
+      "margin": 20,
+      "opponent_belief": {
+        "archetype": "melon-rush",
+        "confidence": 0.7077,
+        "recurring_crop": "STRAWBERRY",
+        "recurring_targets": {
+          "STRAWBERRY": 12,
+          "TOMATO": 3
+        },
+        "cash_crop": "MELON",
+        "animal": "SHEEP",
+        "animal_target": 4,
+        "crop_scores": {
+          "WHEAT": 10.91,
+          "CARROT": 10.18,
+          "TOMATO": 7.76,
+          "STRAWBERRY": 16.32,
+          "MELON": 48.16
+        },
+        "animal_scores": {
+          "GOOSE": 44.63,
+          "COW": 85.7,
+          "SHEEP": 103.78
+        },
+        "strategy_utilities": {
+          "cash-engine": 481.56,
+          "recurring-engine": 219.09,
+          "livestock-engine": 415.12
+        },
+        "probabilities": {
+          "wheat-volume": 0.0129,
+          "carrot-volume": 0.0051,
+          "melon-rush": 0.7077,
+          "strawberry-recurring": 0.0071,
+          "tomato-recurring": 0.0061,
+          "livestock-compound": 0.0104,
+          "goose-volume": 0.0042,
+          "cow-milk": 0.0049,
+          "sheep-premium": 0.0042,
+          "labor-swarm": 0.0051,
+          "land-expansion": 0.0061,
+          "mixed": 0.2263
+        },
+        "attention_weights": {
+          "operations": 0.9664,
+          "opponent": 0.0263,
+          "horizon": 0.0074
+        },
+        "asset_threat": 0.4135,
+        "asset_gap": 148.0,
+        "productive_gap": 168.0,
+        "scale_gap": 2,
+        "animal_gap": 0,
+        "own_terminal_value": 4982.0,
+        "opponent_terminal_proxy": 5130.0,
+        "asset_growth": 170.0,
+        "capital_mode": "hold",
+        "opponent_forecast": {
+          "crops": {
+            "WHEAT": 0.1,
+            "CARROT": 0.0,
+            "TOMATO": 0.0,
+            "STRAWBERRY": 0.0,
+            "MELON": 0.19
+          },
+          "animals": {
+            "GOOSE": 0.0,
+            "COW": 0.0,
+            "SHEEP": 0.0
+          },
+          "horizon_days": 3
+        },
+        "prediction_error": 0.95,
+        "prediction_break": false
+      },
+      "ours": {
+        "bank": 2090,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "melon": 10,
+          "wheat": 3
+        },
+        "shed": {},
+        "seeds": {},
+        "actions": {
+          "unit_ops": {
+            "PASS": 100,
+            "NORTH": 27,
+            "WEST": 22,
+            "WATER": 13
+          },
+          "market_ops": {
+            "HIRE": 6
+          },
+          "market_units": {},
+          "labor": {
+            "worker_turns": 162,
+            "productive_turns": 13,
+            "logistics_turns": 49,
+            "idle_turns": 100,
+            "productive_rate": 0.0802,
+            "logistics_rate": 0.3025,
+            "idle_rate": 0.6173
+          }
+        }
+      },
+      "opponent": {
+        "bank": 2070,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "melon": 10,
+          "weed": 1,
+          "wheat": 5
+        },
+        "shed": {},
+        "seeds": {},
+        "actions": {
+          "unit_ops": {
+            "PASS": 98,
+            "NORTH": 25,
+            "WEST": 24,
+            "WATER": 15
+          },
+          "market_ops": {
+            "HIRE": 6
+          },
+          "market_units": {},
+          "labor": {
+            "worker_turns": 162,
+            "productive_turns": 15,
+            "logistics_turns": 49,
+            "idle_turns": 98,
+            "productive_rate": 0.0926,
+            "logistics_rate": 0.3025,
+            "idle_rate": 0.6049
+          }
+        }
+      }
+    },
+    {
+      "day": 4,
+      "margin": 20,
+      "opponent_belief": {
+        "archetype": "melon-rush",
+        "confidence": 0.7408,
+        "recurring_crop": "STRAWBERRY",
+        "recurring_targets": {
+          "STRAWBERRY": 11,
+          "TOMATO": 4
+        },
+        "cash_crop": "MELON",
+        "animal": "SHEEP",
+        "animal_target": 4,
+        "crop_scores": {
+          "WHEAT": 11.82,
+          "CARROT": 10.18,
+          "TOMATO": 8.08,
+          "STRAWBERRY": 16.87,
+          "MELON": 48.74
+        },
+        "animal_scores": {
+          "GOOSE": 43.88,
+          "COW": 83.93,
+          "SHEEP": 101.05
+        },
+        "strategy_utilities": {
+          "cash-engine": 487.39,
+          "recurring-engine": 217.9,
+          "livestock-engine": 404.19
+        },
+        "probabilities": {
+          "wheat-volume": 0.0128,
+          "carrot-volume": 0.0051,
+          "melon-rush": 0.7408,
+          "strawberry-recurring": 0.0065,
+          "tomato-recurring": 0.0061,
+          "livestock-compound": 0.0076,
+          "goose-volume": 0.0043,
+          "cow-milk": 0.0045,
+          "sheep-premium": 0.0043,
+          "labor-swarm": 0.0051,
+          "land-expansion": 0.0061,
+          "mixed": 0.1967
+        },
+        "attention_weights": {
+          "operations": 0.9671,
+          "opponent": 0.0253,
+          "horizon": 0.0077
+        },
+        "asset_threat": 0.3394,
+        "asset_gap": -310.0,
+        "productive_gap": 0.0,
+        "scale_gap": 0,
+        "animal_gap": 0,
+        "own_terminal_value": 5115.0,
+        "opponent_terminal_proxy": 4805.0,
+        "asset_growth": -255.0,
+        "capital_mode": "hold",
+        "opponent_forecast": {
+          "crops": {
+            "WHEAT": 0.03,
+            "CARROT": 0.0,
+            "TOMATO": 0.0,
+            "STRAWBERRY": 0.0,
+            "MELON": 0.06
+          },
+          "animals": {
+            "GOOSE": 0.0,
+            "COW": 0.0,
+            "SHEEP": 0.0
+          },
+          "horizon_days": 3
+        },
+        "prediction_error": 0.29,
+        "prediction_break": false
+      },
+      "ours": {
+        "bank": 2020,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "melon": 10,
+          "wheat": 5
+        },
+        "shed": {
+          "WHEAT": 10
+        },
+        "seeds": {},
+        "actions": {
+          "unit_ops": {
+            "PASS": 81,
+            "WEST": 26,
+            "NORTH": 24,
+            "WATER": 16,
+            "PLANT": 5,
+            "EAST": 4,
+            "HARVEST": 3,
+            "SOUTH": 3
+          },
+          "market_ops": {
+            "HIRE": 6,
+            "BUY_SEED": 3
+          },
+          "market_units": {
+            "BUY_SEED:WHEAT": 5
+          },
+          "labor": {
+            "worker_turns": 162,
+            "productive_turns": 24,
+            "logistics_turns": 57,
+            "idle_turns": 81,
+            "productive_rate": 0.1481,
+            "logistics_rate": 0.3519,
+            "idle_rate": 0.5
+          }
+        }
+      },
+      "opponent": {
+        "bank": 2000,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "melon": 10,
+          "weed": 1,
+          "wheat": 5
+        },
+        "shed": {
+          "WHEAT": 18
+        },
+        "seeds": {},
+        "actions": {
+          "unit_ops": {
+            "PASS": 76,
+            "WEST": 26,
+            "NORTH": 24,
+            "WATER": 18,
+            "HARVEST": 5,
+            "PLANT": 5,
+            "EAST": 5,
+            "SOUTH": 3
+          },
+          "market_ops": {
+            "HIRE": 6,
+            "BUY_SEED": 5
+          },
+          "market_units": {
+            "BUY_SEED:WHEAT": 5
+          },
+          "labor": {
+            "worker_turns": 162,
+            "productive_turns": 28,
+            "logistics_turns": 58,
+            "idle_turns": 76,
+            "productive_rate": 0.1728,
+            "logistics_rate": 0.358,
+            "idle_rate": 0.4691
+          }
+        }
+      }
+    },
+    {
+      "day": 5,
+      "margin": 20,
+      "opponent_belief": {
+        "archetype": "melon-rush",
+        "confidence": 0.7533,
+        "recurring_crop": "STRAWBERRY",
+        "recurring_targets": {
+          "STRAWBERRY": 12,
+          "TOMATO": 3
+        },
+        "cash_crop": "MELON",
+        "animal": "COW",
+        "animal_target": 4,
+        "crop_scores": {
+          "WHEAT": 14.12,
+          "CARROT": 10.18,
+          "TOMATO": 8.08,
+          "STRAWBERRY": 21.88,
+          "MELON": 49.09
+        },
+        "animal_scores": {
+          "GOOSE": 43.07,
+          "COW": 105.25,
+          "SHEEP": 101.64
+        },
+        "strategy_utilities": {
+          "cash-engine": 490.89,
+          "recurring-engine": 286.8,
+          "livestock-engine": 421.02
+        },
+        "probabilities": {
+          "wheat-volume": 0.0128,
+          "carrot-volume": 0.0051,
+          "melon-rush": 0.7533,
+          "strawberry-recurring": 0.0063,
+          "tomato-recurring": 0.0061,
+          "livestock-compound": 0.0067,
+          "goose-volume": 0.0043,
+          "cow-milk": 0.0044,
+          "sheep-premium": 0.0043,
+          "labor-swarm": 0.0051,
+          "land-expansion": 0.0061,
+          "mixed": 0.1855
+        },
+        "attention_weights": {
+          "operations": 0.9664,
+          "opponent": 0.0256,
+          "horizon": 0.008
+        },
+        "asset_threat": 0.3443,
+        "asset_gap": -320.0,
+        "productive_gap": 0.0,
+        "scale_gap": 0,
+        "animal_gap": 0,
+        "own_terminal_value": 5120.0,
+        "opponent_terminal_proxy": 4800.0,
+        "asset_growth": 15.0,
+        "capital_mode": "hold",
+        "opponent_forecast": {
+          "crops": {
+            "WHEAT": 0.01,
+            "CARROT": 0.0,
+            "TOMATO": 0.0,
+            "STRAWBERRY": 0.0,
+            "MELON": 0.02
+          },
+          "animals": {
+            "GOOSE": 0.0,
+            "COW": 0.0,
+            "SHEEP": 0.0
+          },
+          "horizon_days": 3
+        },
+        "prediction_error": 0.09,
+        "prediction_break": false
+      },
+      "ours": {
+        "bank": 2000,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "melon": 10,
+          "wheat": 5
+        },
+        "shed": {
+          "WHEAT": 10
+        },
+        "seeds": {},
+        "actions": {
+          "unit_ops": {
+            "PASS": 98,
+            "NORTH": 25,
+            "WEST": 24,
+            "WATER": 15
+          },
+          "market_ops": {
+            "HIRE": 6
+          },
+          "market_units": {},
+          "labor": {
+            "worker_turns": 162,
+            "productive_turns": 15,
+            "logistics_turns": 49,
+            "idle_turns": 98,
+            "productive_rate": 0.0926,
+            "logistics_rate": 0.3025,
+            "idle_rate": 0.6049
+          }
+        }
+      },
+      "opponent": {
+        "bank": 1980,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "melon": 10,
+          "weed": 1,
+          "wheat": 5
+        },
+        "shed": {
+          "WHEAT": 18
+        },
+        "seeds": {},
+        "actions": {
+          "unit_ops": {
+            "PASS": 98,
+            "NORTH": 25,
+            "WEST": 24,
+            "WATER": 15
+          },
+          "market_ops": {
+            "HIRE": 6
+          },
+          "market_units": {},
+          "labor": {
+            "worker_turns": 162,
+            "productive_turns": 15,
+            "logistics_turns": 49,
+            "idle_turns": 98,
+            "productive_rate": 0.0926,
+            "logistics_rate": 0.3025,
+            "idle_rate": 0.6049
+          }
+        }
+      }
+    },
+    {
+      "day": 6,
+      "margin": 20,
+      "opponent_belief": {
+        "archetype": "melon-rush",
+        "confidence": 0.7186,
+        "recurring_crop": "STRAWBERRY",
+        "recurring_targets": {
+          "STRAWBERRY": 12,
+          "TOMATO": 3
+        },
+        "cash_crop": "MELON",
+        "animal": "COW",
+        "animal_target": 4,
+        "crop_scores": {
+          "WHEAT": 15.2,
+          "CARROT": 10.18,
+          "TOMATO": 8.08,
+          "STRAWBERRY": 25.14,
+          "MELON": 49.54
+        },
+        "animal_scores": {
+          "GOOSE": 42.94,
+          "COW": 106.94,
+          "SHEEP": 101.67
+        },
+        "strategy_utilities": {
+          "cash-engine": 495.44,
+          "recurring-engine": 325.95,
+          "livestock-engine": 427.76
+        },
+        "probabilities": {
+          "wheat-volume": 0.0121,
+          "carrot-volume": 0.0049,
+          "melon-rush": 0.7186,
+          "strawberry-recurring": 0.0059,
+          "tomato-recurring": 0.0058,
+          "livestock-compound": 0.0088,
+          "goose-volume": 0.0041,
+          "cow-milk": 0.0041,
+          "sheep-premium": 0.0041,
+          "labor-swarm": 0.0049,
+          "land-expansion": 0.0058,
+          "mixed": 0.2211
+        },
+        "attention_weights": {
+          "operations": 0.9653,
+          "opponent": 0.0262,
+          "horizon": 0.0085
+        },
+        "asset_threat": 0.3976,
+        "asset_gap": -330.0,
+        "productive_gap": 0.0,
+        "scale_gap": 0,
+        "animal_gap": 0,
+        "own_terminal_value": 7960.0,
+        "opponent_terminal_proxy": 7630.0,
+        "asset_growth": 2850.0,
+        "capital_mode": "hold",
+        "opponent_forecast": {
+          "crops": {
+            "WHEAT": 0.0,
+            "CARROT": 0.0,
+            "TOMATO": 0.0,
+            "STRAWBERRY": 0.0,
+            "MELON": 0.01
+          },
+          "animals": {
+            "GOOSE": 0.0,
+            "COW": 0.0,
+            "SHEEP": 0.0
+          },
+          "horizon_days": 3
+        },
+        "prediction_error": 0.03,
+        "prediction_break": false
+      },
+      "ours": {
+        "bank": 1980,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "melon": 10,
+          "wheat": 5
+        },
+        "shed": {
+          "WHEAT": 10
+        },
+        "seeds": {},
+        "actions": {
+          "unit_ops": {
+            "PASS": 98,
+            "NORTH": 25,
+            "WEST": 24,
+            "WATER": 15
+          },
+          "market_ops": {
+            "HIRE": 6
+          },
+          "market_units": {},
+          "labor": {
+            "worker_turns": 162,
+            "productive_turns": 15,
+            "logistics_turns": 49,
+            "idle_turns": 98,
+            "productive_rate": 0.0926,
+            "logistics_rate": 0.3025,
+            "idle_rate": 0.6049
+          }
+        }
+      },
+      "opponent": {
+        "bank": 1960,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "melon": 10,
+          "weed": 1,
+          "wheat": 5
+        },
+        "shed": {
+          "WHEAT": 18
+        },
+        "seeds": {},
+        "actions": {
+          "unit_ops": {
+            "PASS": 98,
+            "NORTH": 25,
+            "WEST": 24,
+            "WATER": 15
+          },
+          "market_ops": {
+            "HIRE": 6
+          },
+          "market_units": {},
+          "labor": {
+            "worker_turns": 162,
+            "productive_turns": 15,
+            "logistics_turns": 49,
+            "idle_turns": 98,
+            "productive_rate": 0.0926,
+            "logistics_rate": 0.3025,
+            "idle_rate": 0.6049
+          }
+        }
+      }
+    },
+    {
+      "day": 7,
+      "margin": 20,
+      "opponent_belief": {
+        "archetype": "melon-rush",
+        "confidence": 0.7033,
+        "recurring_crop": "STRAWBERRY",
+        "recurring_targets": {
+          "STRAWBERRY": 12,
+          "TOMATO": 3
+        },
+        "cash_crop": "MELON",
+        "animal": "COW",
+        "animal_target": 4,
+        "crop_scores": {
+          "WHEAT": 16.33,
+          "CARROT": 10.88,
+          "TOMATO": 8.08,
+          "STRAWBERRY": 28.24,
+          "MELON": 49.96
+        },
+        "animal_scores": {
+          "GOOSE": 42.01,
+          "COW": 110.92,
+          "SHEEP": 97.9
+        },
+        "strategy_utilities": {
+          "cash-engine": 499.59,
+          "recurring-engine": 363.07,
+          "livestock-engine": 443.68
+        },
+        "probabilities": {
+          "wheat-volume": 0.0118,
+          "carrot-volume": 0.0047,
+          "melon-rush": 0.7033,
+          "strawberry-recurring": 0.0057,
+          "tomato-recurring": 0.0057,
+          "livestock-compound": 0.0099,
+          "goose-volume": 0.004,
+          "cow-milk": 0.004,
+          "sheep-premium": 0.004,
+          "labor-swarm": 0.0047,
+          "land-expansion": 0.0057,
+          "mixed": 0.2366
+        },
+        "attention_weights": {
+          "operations": 0.9649,
+          "opponent": 0.0261,
+          "horizon": 0.009
+        },
+        "asset_threat": 0.3977,
+        "asset_gap": -340.0,
+        "productive_gap": 0.0,
+        "scale_gap": 0,
+        "animal_gap": 0,
+        "own_terminal_value": 10830.0,
+        "opponent_terminal_proxy": 10490.0,
+        "asset_growth": 2880.0,
+        "capital_mode": "hold",
+        "opponent_forecast": {
+          "crops": {
+            "WHEAT": 0.0,
+            "CARROT": 0.0,
+            "TOMATO": 0.0,
+            "STRAWBERRY": 0.0,
+            "MELON": 0.0
+          },
+          "animals": {
+            "GOOSE": 0.0,
+            "COW": 0.0,
+            "SHEEP": 0.0
+          },
+          "horizon_days": 3
+        },
+        "prediction_error": 0.01,
+        "prediction_break": false
+      },
+      "ours": {
+        "bank": 1960,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "melon": 10,
+          "wheat": 5
+        },
+        "shed": {
+          "WHEAT": 10
+        },
+        "seeds": {},
+        "actions": {
+          "unit_ops": {
+            "PASS": 98,
+            "NORTH": 25,
+            "WEST": 24,
+            "WATER": 15
+          },
+          "market_ops": {
+            "HIRE": 6
+          },
+          "market_units": {},
+          "labor": {
+            "worker_turns": 162,
+            "productive_turns": 15,
+            "logistics_turns": 49,
+            "idle_turns": 98,
+            "productive_rate": 0.0926,
+            "logistics_rate": 0.3025,
+            "idle_rate": 0.6049
+          }
+        }
+      },
+      "opponent": {
+        "bank": 1940,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "melon": 10,
+          "weed": 1,
+          "wheat": 5
+        },
+        "shed": {
+          "WHEAT": 18
+        },
+        "seeds": {},
+        "actions": {
+          "unit_ops": {
+            "PASS": 98,
+            "NORTH": 25,
+            "WEST": 24,
+            "WATER": 15
+          },
+          "market_ops": {
+            "HIRE": 6
+          },
+          "market_units": {},
+          "labor": {
+            "worker_turns": 162,
+            "productive_turns": 15,
+            "logistics_turns": 49,
+            "idle_turns": 98,
+            "productive_rate": 0.0926,
+            "logistics_rate": 0.3025,
+            "idle_rate": 0.6049
+          }
+        }
+      }
+    },
+    {
+      "day": 8,
+      "margin": 20,
+      "opponent_belief": {
+        "archetype": "melon-rush",
+        "confidence": 0.7038,
+        "recurring_crop": "STRAWBERRY",
+        "recurring_targets": {
+          "STRAWBERRY": 12,
+          "TOMATO": 3
+        },
+        "cash_crop": "MELON",
+        "animal": "COW",
+        "animal_target": 4,
+        "crop_scores": {
+          "WHEAT": 17.49,
+          "CARROT": 10.88,
+          "TOMATO": 10.14,
+          "STRAWBERRY": 30.68,
+          "MELON": 50.34
+        },
+        "animal_scores": {
+          "GOOSE": 41.79,
+          "COW": 122.09,
+          "SHEEP": 97.98
+        },
+        "strategy_utilities": {
+          "cash-engine": 503.41,
+          "recurring-engine": 398.54,
+          "livestock-engine": 488.36
+        },
+        "probabilities": {
+          "wheat-volume": 0.0118,
+          "carrot-volume": 0.0047,
+          "melon-rush": 0.7038,
+          "strawberry-recurring": 0.0057,
+          "tomato-recurring": 0.0057,
+          "livestock-compound": 0.0098,
+          "goose-volume": 0.004,
+          "cow-milk": 0.004,
+          "sheep-premium": 0.004,
+          "labor-swarm": 0.0047,
+          "land-expansion": 0.0057,
+          "mixed": 0.2362
+        },
+        "attention_weights": {
+          "operations": 0.9646,
+          "opponent": 0.0257,
+          "horizon": 0.0097
+        },
+        "asset_threat": 0.3805,
+        "asset_gap": -944.0,
+        "productive_gap": 0.0,
+        "scale_gap": 0,
+        "animal_gap": 0,
+        "own_terminal_value": 13779.0,
+        "opponent_terminal_proxy": 12835.0,
+        "asset_growth": 2415.0,
+        "capital_mode": "hold",
+        "opponent_forecast": {
+          "crops": {
+            "WHEAT": 0.0,
+            "CARROT": 0.0,
+            "TOMATO": 0.0,
+            "STRAWBERRY": 0.0,
+            "MELON": 0.0
+          },
+          "animals": {
+            "GOOSE": 0.0,
+            "COW": 0.0,
+            "SHEEP": 0.0
+          },
+          "horizon_days": 3
+        },
+        "prediction_error": 0.0,
+        "prediction_break": false
+      },
+      "ours": {
+        "bank": 1890,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "melon": 10,
+          "wheat": 5
+        },
+        "shed": {
+          "WHEAT": 28
+        },
+        "seeds": {},
+        "actions": {
+          "unit_ops": {
+            "PASS": 76,
+            "WEST": 26,
+            "NORTH": 24,
+            "WATER": 18,
+            "HARVEST": 5,
+            "PLANT": 5,
+            "EAST": 5,
+            "SOUTH": 3
+          },
+          "market_ops": {
+            "HIRE": 6,
+            "BUY_SEED": 5
+          },
+          "market_units": {
+            "BUY_SEED:WHEAT": 5
+          },
+          "labor": {
+            "worker_turns": 162,
+            "productive_turns": 28,
+            "logistics_turns": 58,
+            "idle_turns": 76,
+            "productive_rate": 0.1728,
+            "logistics_rate": 0.358,
+            "idle_rate": 0.4691
+          }
+        }
+      },
+      "opponent": {
+        "bank": 1870,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "melon": 10,
+          "weed": 1,
+          "wheat": 5
+        },
+        "shed": {
+          "WHEAT": 36
+        },
+        "seeds": {},
+        "actions": {
+          "unit_ops": {
+            "PASS": 76,
+            "WEST": 26,
+            "NORTH": 24,
+            "WATER": 18,
+            "HARVEST": 5,
+            "PLANT": 5,
+            "EAST": 5,
+            "SOUTH": 3
+          },
+          "market_ops": {
+            "HIRE": 6,
+            "BUY_SEED": 5
+          },
+          "market_units": {
+            "BUY_SEED:WHEAT": 5
+          },
+          "labor": {
+            "worker_turns": 162,
+            "productive_turns": 28,
+            "logistics_turns": 58,
+            "idle_turns": 76,
+            "productive_rate": 0.1728,
+            "logistics_rate": 0.358,
+            "idle_rate": 0.4691
+          }
+        }
+      }
+    },
+    {
+      "day": 9,
+      "margin": 20,
+      "opponent_belief": {
+        "archetype": "melon-rush",
+        "confidence": 0.6993,
+        "recurring_crop": "STRAWBERRY",
+        "recurring_targets": {
+          "STRAWBERRY": 12,
+          "TOMATO": 3
+        },
+        "cash_crop": "MELON",
+        "animal": "COW",
+        "animal_target": 4,
+        "crop_scores": {
+          "WHEAT": 18.7,
+          "CARROT": 10.88,
+          "TOMATO": 10.54,
+          "STRAWBERRY": 32.79,
+          "MELON": 50.73
+        },
+        "animal_scores": {
+          "GOOSE": 40.74,
+          "COW": 127.53,
+          "SHEEP": 98.05
+        },
+        "strategy_utilities": {
+          "cash-engine": 507.35,
+          "recurring-engine": 425.04,
+          "livestock-engine": 510.12
+        },
+        "probabilities": {
+          "wheat-volume": 0.0117,
+          "carrot-volume": 0.0047,
+          "melon-rush": 0.6993,
+          "strawberry-recurring": 0.0057,
+          "tomato-recurring": 0.0057,
+          "livestock-compound": 0.0101,
+          "goose-volume": 0.0039,
+          "cow-milk": 0.0039,
+          "sheep-premium": 0.0039,
+          "labor-swarm": 0.0047,
+          "land-expansion": 0.0057,
+          "mixed": 0.2407
+        },
+        "attention_weights": {
+          "operations": 0.9638,
+          "opponent": 0.0257,
+          "horizon": 0.0105
+        },
+        "asset_threat": 0.3837,
+        "asset_gap": -972.0,
+        "productive_gap": 0.0,
+        "scale_gap": 0,
+        "animal_gap": 0,
+        "own_terminal_value": 16542.0,
+        "opponent_terminal_proxy": 15570.0,
+        "asset_growth": 2755.0,
+        "capital_mode": "hold",
+        "opponent_forecast": {
+          "crops": {
+            "WHEAT": 0.0,
+            "CARROT": 0.0,
+            "TOMATO": 0.0,
+            "STRAWBERRY": 0.0,
+            "MELON": 0.0
+          },
+          "animals": {
+            "GOOSE": 0.0,
+            "COW": 0.0,
+            "SHEEP": 0.0
+          },
+          "horizon_days": 3
+        },
+        "prediction_error": 0.0,
+        "prediction_break": false
+      },
+      "ours": {
+        "bank": 1870,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "melon": 10,
+          "wheat": 5
+        },
+        "shed": {
+          "WHEAT": 28
+        },
+        "seeds": {},
+        "actions": {
+          "unit_ops": {
+            "PASS": 98,
+            "NORTH": 25,
+            "WEST": 24,
+            "WATER": 15
+          },
+          "market_ops": {
+            "HIRE": 6
+          },
+          "market_units": {},
+          "labor": {
+            "worker_turns": 162,
+            "productive_turns": 15,
+            "logistics_turns": 49,
+            "idle_turns": 98,
+            "productive_rate": 0.0926,
+            "logistics_rate": 0.3025,
+            "idle_rate": 0.6049
+          }
+        }
+      },
+      "opponent": {
+        "bank": 1850,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "melon": 10,
+          "weed": 1,
+          "wheat": 5
+        },
+        "shed": {
+          "WHEAT": 36
+        },
+        "seeds": {},
+        "actions": {
+          "unit_ops": {
+            "PASS": 98,
+            "NORTH": 25,
+            "WEST": 24,
+            "WATER": 15
+          },
+          "market_ops": {
+            "HIRE": 6
+          },
+          "market_units": {},
+          "labor": {
+            "worker_turns": 162,
+            "productive_turns": 15,
+            "logistics_turns": 49,
+            "idle_turns": 98,
+            "productive_rate": 0.0926,
+            "logistics_rate": 0.3025,
+            "idle_rate": 0.6049
+          }
+        }
+      }
+    },
+    {
+      "day": 10,
+      "margin": 20,
+      "opponent_belief": {
+        "archetype": "melon-rush",
+        "confidence": 0.6945,
+        "recurring_crop": "STRAWBERRY",
+        "recurring_targets": {
+          "STRAWBERRY": 12,
+          "TOMATO": 3
+        },
+        "cash_crop": "MELON",
+        "animal": "COW",
+        "animal_target": 4,
+        "crop_scores": {
+          "WHEAT": 19.94,
+          "CARROT": 10.88,
+          "TOMATO": 10.94,
+          "STRAWBERRY": 34.96,
+          "MELON": 51.13
+        },
+        "animal_scores": {
+          "GOOSE": 40.36,
+          "COW": 125.38,
+          "SHEEP": 92.37
+        },
+        "strategy_utilities": {
+          "cash-engine": 511.32,
+          "recurring-engine": 452.4,
+          "livestock-engine": 501.53
+        },
+        "probabilities": {
+          "wheat-volume": 0.0116,
+          "carrot-volume": 0.0047,
+          "melon-rush": 0.6945,
+          "strawberry-recurring": 0.0056,
+          "tomato-recurring": 0.0056,
+          "livestock-compound": 0.0105,
+          "goose-volume": 0.0039,
+          "cow-milk": 0.0039,
+          "sheep-premium": 0.0039,
+          "labor-swarm": 0.0047,
+          "land-expansion": 0.0056,
+          "mixed": 0.2455
+        },
+        "attention_weights": {
+          "operations": 0.9629,
+          "opponent": 0.0257,
+          "horizon": 0.0114
+        },
+        "asset_threat": 0.3856,
+        "asset_gap": -1000.0,
+        "productive_gap": 0.0,
+        "scale_gap": 0,
+        "animal_gap": 0,
+        "own_terminal_value": 19500.0,
+        "opponent_terminal_proxy": 18500.0,
+        "asset_growth": 2950.0,
+        "capital_mode": "hold",
+        "opponent_forecast": {
+          "crops": {
+            "WHEAT": 0.0,
+            "CARROT": 0.0,
+            "TOMATO": 0.0,
+            "STRAWBERRY": 0.0,
+            "MELON": 0.0
+          },
+          "animals": {
+            "GOOSE": 0.0,
+            "COW": 0.0,
+            "SHEEP": 0.0
+          },
+          "horizon_days": 3
+        },
+        "prediction_error": 0.0,
+        "prediction_break": false
+      },
+      "ours": {
+        "bank": 1850,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "melon": 10,
+          "wheat": 5
+        },
+        "shed": {
+          "WHEAT": 28
+        },
+        "seeds": {},
+        "actions": {
+          "unit_ops": {
+            "PASS": 98,
+            "NORTH": 25,
+            "WEST": 24,
+            "WATER": 15
+          },
+          "market_ops": {
+            "HIRE": 6
+          },
+          "market_units": {},
+          "labor": {
+            "worker_turns": 162,
+            "productive_turns": 15,
+            "logistics_turns": 49,
+            "idle_turns": 98,
+            "productive_rate": 0.0926,
+            "logistics_rate": 0.3025,
+            "idle_rate": 0.6049
+          }
+        }
+      },
+      "opponent": {
+        "bank": 1830,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "melon": 10,
+          "weed": 1,
+          "wheat": 5
+        },
+        "shed": {
+          "WHEAT": 36
+        },
+        "seeds": {},
+        "actions": {
+          "unit_ops": {
+            "PASS": 98,
+            "NORTH": 25,
+            "WEST": 24,
+            "WATER": 15
+          },
+          "market_ops": {
+            "HIRE": 6
+          },
+          "market_units": {},
+          "labor": {
+            "worker_turns": 162,
+            "productive_turns": 15,
+            "logistics_turns": 49,
+            "idle_turns": 98,
+            "productive_rate": 0.0926,
+            "logistics_rate": 0.3025,
+            "idle_rate": 0.6049
+          }
+        }
+      }
+    },
+    {
+      "day": 11,
+      "margin": 20,
+      "opponent_belief": {
+        "archetype": "melon-rush",
+        "confidence": 0.7345,
+        "recurring_crop": "STRAWBERRY",
+        "recurring_targets": {
+          "STRAWBERRY": 12,
+          "TOMATO": 3
+        },
+        "cash_crop": "MELON",
+        "animal": "COW",
+        "animal_target": 4,
+        "crop_scores": {
+          "WHEAT": 21.22,
+          "CARROT": 15.11,
+          "TOMATO": 11.37,
+          "STRAWBERRY": 36.78,
+          "MELON": 51.04
+        },
+        "animal_scores": {
+          "GOOSE": 39.17,
+          "COW": 129.6,
+          "SHEEP": 92.5
+        },
+        "strategy_utilities": {
+          "cash-engine": 510.41,
+          "recurring-engine": 475.43,
+          "livestock-engine": 518.4
+        },
+        "probabilities": {
+          "wheat-volume": 0.0123,
+          "carrot-volume": 0.0049,
+          "melon-rush": 0.7345,
+          "strawberry-recurring": 0.0059,
+          "tomato-recurring": 0.0059,
+          "livestock-compound": 0.0078,
+          "goose-volume": 0.0041,
+          "cow-milk": 0.0041,
+          "sheep-premium": 0.0041,
+          "labor-swarm": 0.0049,
+          "land-expansion": 0.0059,
+          "mixed": 0.2053
+        },
+        "attention_weights": {
+          "operations": 0.9534,
+          "opponent": 0.0342,
+          "horizon": 0.0125
+        },
+        "asset_threat": 0.3344,
+        "asset_gap": -1028.0,
+        "productive_gap": 0.0,
+        "scale_gap": 0,
+        "animal_gap": 0,
+        "own_terminal_value": 19698.0,
+        "opponent_terminal_proxy": 18670.0,
+        "asset_growth": 190.0,
+        "capital_mode": "hold",
+        "opponent_forecast": {
+          "crops": {
+            "WHEAT": 0.0,
+            "CARROT": 0.0,
+            "TOMATO": 0.0,
+            "STRAWBERRY": 0.0,
+            "MELON": 0.0
+          },
+          "animals": {
+            "GOOSE": 0.0,
+            "COW": 0.0,
+            "SHEEP": 0.0
+          },
+          "horizon_days": 3
+        },
+        "prediction_error": 0.0,
+        "prediction_break": false
+      },
+      "ours": {
+        "bank": 1830,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "melon": 10,
+          "wheat": 5
+        },
+        "shed": {
+          "WHEAT": 28
+        },
+        "seeds": {},
+        "actions": {
+          "unit_ops": {
+            "PASS": 98,
+            "NORTH": 25,
+            "WEST": 24,
+            "WATER": 15
+          },
+          "market_ops": {
+            "HIRE": 6
+          },
+          "market_units": {},
+          "labor": {
+            "worker_turns": 162,
+            "productive_turns": 15,
+            "logistics_turns": 49,
+            "idle_turns": 98,
+            "productive_rate": 0.0926,
+            "logistics_rate": 0.3025,
+            "idle_rate": 0.6049
+          }
+        }
+      },
+      "opponent": {
+        "bank": 1810,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "melon": 10,
+          "weed": 1,
+          "wheat": 5
+        },
+        "shed": {
+          "WHEAT": 36
+        },
+        "seeds": {},
+        "actions": {
+          "unit_ops": {
+            "PASS": 98,
+            "NORTH": 25,
+            "WEST": 24,
+            "WATER": 15
+          },
+          "market_ops": {
+            "HIRE": 6
+          },
+          "market_units": {},
+          "labor": {
+            "worker_turns": 162,
+            "productive_turns": 15,
+            "logistics_turns": 49,
+            "idle_turns": 98,
+            "productive_rate": 0.0926,
+            "logistics_rate": 0.3025,
+            "idle_rate": 0.6049
+          }
+        }
+      }
+    },
+    {
+      "day": 12,
+      "margin": -2309,
+      "opponent_belief": {
+        "archetype": "livestock-compound",
+        "confidence": 0.5769,
+        "recurring_crop": "STRAWBERRY",
+        "recurring_targets": {
+          "STRAWBERRY": 12,
+          "TOMATO": 3
+        },
+        "cash_crop": "MELON",
+        "animal": "COW",
+        "animal_target": 4,
+        "crop_scores": {
+          "WHEAT": 23.2,
+          "CARROT": 16.13,
+          "TOMATO": 10.1,
+          "STRAWBERRY": 30.66,
+          "MELON": 67.41
+        },
+        "animal_scores": {
+          "GOOSE": 37.23,
+          "COW": 107.88,
+          "SHEEP": 90.61
+        },
+        "strategy_utilities": {
+          "cash-engine": 674.06,
+          "recurring-engine": 398.18,
+          "livestock-engine": 431.54
+        },
+        "probabilities": {
+          "wheat-volume": 0.0055,
+          "carrot-volume": 0.0028,
+          "melon-rush": 0.0148,
+          "strawberry-recurring": 0.0578,
+          "tomato-recurring": 0.0149,
+          "livestock-compound": 0.5769,
+          "goose-volume": 0.0023,
+          "cow-milk": 0.1854,
+          "sheep-premium": 0.0023,
+          "labor-swarm": 0.0028,
+          "land-expansion": 0.0033,
+          "mixed": 0.131
+        },
+        "attention_weights": {
+          "operations": 0.9606,
+          "opponent": 0.0254,
+          "horizon": 0.014
+        },
+        "asset_threat": 0.2612,
+        "asset_gap": -12226.6,
+        "productive_gap": 2048.4,
+        "scale_gap": -1,
+        "animal_gap": 1,
+        "own_terminal_value": 28390.2,
+        "opponent_terminal_proxy": 16163.6,
+        "asset_growth": -3266.4,
+        "capital_mode": "hold",
+        "opponent_forecast": {
+          "crops": {
+            "WHEAT": 0.0,
+            "CARROT": 0.0,
+            "TOMATO": 2.1,
+            "STRAWBERRY": 4.2,
+            "MELON": 0.0
+          },
+          "animals": {
+            "GOOSE": 0.0,
+            "COW": 1.4,
+            "SHEEP": 0.0
+          },
+          "horizon_days": 3
+        },
+        "prediction_error": 23.0,
+        "prediction_break": true
+      },
+      "ours": {
+        "bank": 261,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "cow": 1,
+          "pasture": 3,
+          "strawberry": 6,
+          "tomato": 3,
+          "weed": 1,
+          "wheat": 5
+        },
+        "shed": {
+          "WHEAT": 34,
+          "MELON": 60
+        },
+        "seeds": {
+          "STRAWBERRY": 5
+        },
+        "actions": {
+          "unit_ops": {
+            "NORTH": 46,
+            "WEST": 44,
+            "EAST": 33,
+            "SOUTH": 27,
+            "WATER": 18,
+            "HARVEST": 15,
+            "PLANT": 15,
+            "BUILD_PASTURE": 4,
+            "PASS": 2,
+            "PICKUP": 1,
+            "PLACE": 1,
+            "FEED": 1,
+            "CARE": 1
+          },
+          "market_ops": {
+            "BUY_ANIMAL": 23,
+            "HIRE": 8,
+            "BUY_SEED": 7,
+            "SELL": 2
+          },
+          "market_units": {
+            "BUY_ANIMAL:COW": 70,
+            "BUY_SEED:STRAWBERRY": 12,
+            "SELL:WHEAT": 8,
+            "BUY_SEED:WHEAT": 5,
+            "BUY_SEED:TOMATO": 3
+          },
+          "labor": {
+            "worker_turns": 208,
+            "productive_turns": 55,
+            "logistics_turns": 151,
+            "idle_turns": 2,
+            "productive_rate": 0.2644,
+            "logistics_rate": 0.726,
+            "idle_rate": 0.0096
+          }
+        }
+      },
+      "opponent": {
+        "bank": 2570,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "cow": 2,
+          "pasture": 2,
+          "strawberry": 6,
+          "tomato": 3,
+          "weed": 2,
+          "wheat": 3
+        },
+        "shed": {
+          "WHEAT": 32,
+          "MELON": 48,
+          "COW": 2
+        },
+        "seeds": {
+          "WHEAT": 1,
+          "STRAWBERRY": 5
+        },
+        "actions": {
+          "unit_ops": {
+            "WEST": 46,
+            "NORTH": 43,
+            "EAST": 33,
+            "SOUTH": 26,
+            "WATER": 16,
+            "HARVEST": 15,
+            "PLANT": 14,
+            "BUILD_PASTURE": 4,
+            "PICKUP": 3,
+            "PLACE": 2,
+            "FEED": 2,
+            "CARE": 2,
+            "DIG": 1,
+            "DROP": 1
+          },
+          "market_ops": {
+            "BUY_ANIMAL": 23,
+            "HIRE": 8,
+            "BUY_SEED": 7,
+            "SELL": 3
+          },
+          "market_units": {
+            "BUY_ANIMAL:COW": 48,
+            "SELL:WHEAT": 17,
+            "BUY_SEED:STRAWBERRY": 12,
+            "SELL:MELON": 12,
+            "BUY_SEED:WHEAT": 5,
+            "BUY_SEED:TOMATO": 3
+          },
+          "labor": {
+            "worker_turns": 208,
+            "productive_turns": 56,
+            "logistics_turns": 152,
+            "idle_turns": 0,
+            "productive_rate": 0.2692,
+            "logistics_rate": 0.7308,
+            "idle_rate": 0.0
+          }
+        }
+      }
+    },
+    {
+      "day": 13,
+      "margin": -1711,
+      "opponent_belief": {
+        "archetype": "livestock-compound",
+        "confidence": 0.9484,
+        "recurring_crop": "STRAWBERRY",
+        "recurring_targets": {
+          "STRAWBERRY": 11,
+          "TOMATO": 4
+        },
+        "cash_crop": "MELON",
+        "animal": "COW",
+        "animal_target": 4,
+        "crop_scores": {
+          "WHEAT": 22.01,
+          "CARROT": 16.16,
+          "TOMATO": 10.42,
+          "STRAWBERRY": 21.51,
+          "MELON": 18.5
+        },
+        "animal_scores": {
+          "GOOSE": 35.94,
+          "COW": 102.1,
+          "SHEEP": 81.28
+        },
+        "strategy_utilities": {
+          "cash-engine": 184.99,
+          "recurring-engine": 278.32,
+          "livestock-engine": 408.38
+        },
+        "probabilities": {
+          "wheat-volume": 0.0,
+          "carrot-volume": 0.0,
+          "melon-rush": 0.0,
+          "strawberry-recurring": 0.0068,
+          "tomato-recurring": 0.0001,
+          "livestock-compound": 0.9484,
+          "goose-volume": 0.0,
+          "cow-milk": 0.0414,
+          "sheep-premium": 0.0,
+          "labor-swarm": 0.0,
+          "land-expansion": 0.0,
+          "mixed": 0.0032
+        },
+        "attention_weights": {
+          "operations": 0.9324,
+          "opponent": 0.0524,
+          "horizon": 0.0152
+        },
+        "asset_threat": 0.4693,
+        "asset_gap": 996.72,
+        "productive_gap": 495.72,
+        "scale_gap": 0,
+        "animal_gap": 0,
+        "own_terminal_value": 37478.04,
+        "opponent_terminal_proxy": 38474.76,
+        "asset_growth": 11849.16,
+        "capital_mode": "hold",
+        "opponent_forecast": {
+          "crops": {
+            "WHEAT": 1.4,
+            "CARROT": 0.0,
+            "TOMATO": 0.63,
+            "STRAWBERRY": 5.46,
+            "MELON": 0.0
+          },
+          "animals": {
+            "GOOSE": 0.0,
+            "COW": 1.82,
+            "SHEEP": 0.0
+          },
+          "horizon_days": 3
+        },
+        "prediction_error": 6.5,
+        "prediction_break": false
+      },
+      "ours": {
+        "bank": 11321,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "cow": 4,
+          "strawberry": 12,
+          "tomato": 3,
+          "wheat": 5
+        },
+        "shed": {
+          "WHEAT": 30,
+          "FERTILIZER": 1
+        },
+        "seeds": {},
+        "actions": {
+          "unit_ops": {
+            "PASS": 64,
+            "WEST": 36,
+            "NORTH": 25,
+            "EAST": 22,
+            "WATER": 20,
+            "PICKUP": 19,
+            "PLANT": 6,
+            "FEED": 4,
+            "CARE": 4,
+            "PLACE": 3,
+            "SOUTH": 2,
+            "COLLECT_FERTILIZER": 1,
+            "DIG": 1,
+            "DROP": 1
+          },
+          "market_ops": {
+            "HIRE": 8,
+            "SELL": 1,
+            "BUY_SEED": 1,
+            "BUY_ANIMAL": 1
+          },
+          "market_units": {
+            "SELL:MELON": 60,
+            "BUY_ANIMAL:COW": 3,
+            "BUY_SEED:STRAWBERRY": 1
+          },
+          "labor": {
+            "worker_turns": 208,
+            "productive_turns": 39,
+            "logistics_turns": 105,
+            "idle_turns": 64,
+            "productive_rate": 0.1875,
+            "logistics_rate": 0.5048,
+            "idle_rate": 0.3077
+          }
+        }
+      },
+      "opponent": {
+        "bank": 13032,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "cow": 4,
+          "strawberry": 12,
+          "tomato": 3,
+          "wheat": 5
+        },
+        "shed": {
+          "WHEAT": 28,
+          "FERTILIZER": 2
+        },
+        "seeds": {},
+        "actions": {
+          "unit_ops": {
+            "PASS": 50,
+            "WEST": 36,
+            "NORTH": 30,
+            "EAST": 23,
+            "PICKUP": 20,
+            "WATER": 20,
+            "PLANT": 8,
+            "FEED": 5,
+            "SOUTH": 5,
+            "CARE": 4,
+            "PLACE": 2,
+            "COLLECT_FERTILIZER": 2,
+            "DIG": 2,
+            "DROP": 1
+          },
+          "market_ops": {
+            "HIRE": 8,
+            "BUY_SEED": 2,
+            "SELL": 1
+          },
+          "market_units": {
+            "SELL:MELON": 48,
+            "BUY_SEED:WHEAT": 1,
+            "BUY_SEED:STRAWBERRY": 1
+          },
+          "labor": {
+            "worker_turns": 208,
+            "productive_turns": 43,
+            "logistics_turns": 115,
+            "idle_turns": 50,
+            "productive_rate": 0.2067,
+            "logistics_rate": 0.5529,
+            "idle_rate": 0.2404
+          }
+        }
+      }
+    },
+    {
+      "day": 14,
+      "margin": -2158,
+      "opponent_belief": {
+        "archetype": "livestock-compound",
+        "confidence": 0.8106,
+        "recurring_crop": "STRAWBERRY",
+        "recurring_targets": {
+          "STRAWBERRY": 11,
+          "TOMATO": 4
+        },
+        "cash_crop": "MELON",
+        "animal": "COW",
+        "animal_target": 4,
+        "crop_scores": {
+          "WHEAT": 22.01,
+          "CARROT": 17.2,
+          "TOMATO": 11.95,
+          "STRAWBERRY": 22.5,
+          "MELON": 19.07
+        },
+        "animal_scores": {
+          "GOOSE": 34.69,
+          "COW": 94.29,
+          "SHEEP": 82.04
+        },
+        "strategy_utilities": {
+          "cash-engine": 190.73,
+          "recurring-engine": 295.25,
+          "livestock-engine": 377.16
+        },
+        "probabilities": {
+          "wheat-volume": 0.0003,
+          "carrot-volume": 0.0001,
+          "melon-rush": 0.0001,
+          "strawberry-recurring": 0.0629,
+          "tomato-recurring": 0.0006,
+          "livestock-compound": 0.8106,
+          "goose-volume": 0.0001,
+          "cow-milk": 0.1109,
+          "sheep-premium": 0.0001,
+          "labor-swarm": 0.0001,
+          "land-expansion": 0.0001,
+          "mixed": 0.0142
+        },
+        "attention_weights": {
+          "operations": 0.9427,
+          "opponent": 0.0399,
+          "horizon": 0.0174
+        },
+        "asset_threat": 0.4092,
+        "asset_gap": 1233.96,
+        "productive_gap": 433.96,
+        "scale_gap": 0,
+        "animal_gap": 0,
+        "own_terminal_value": 38463.72,
+        "opponent_terminal_proxy": 39697.68,
+        "asset_growth": 779.92,
+        "capital_mode": "hold",
+        "opponent_forecast": {
+          "crops": {
+            "WHEAT": 0.42,
+            "CARROT": 0.0,
+            "TOMATO": 0.19,
+            "STRAWBERRY": 1.64,
+            "MELON": 0.0
+          },
+          "animals": {
+            "GOOSE": 0.0,
+            "COW": 0.55,
+            "SHEEP": 0.0
+          },
+          "horizon_days": 3
+        },
+        "prediction_error": 9.31,
+        "prediction_break": true
+      },
+      "ours": {
+        "bank": 11317,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "cow": 4,
+          "strawberry": 12,
+          "tomato": 3,
+          "wheat": 5
+        },
+        "shed": {
+          "WHEAT": 26,
+          "FERTILIZER": 4
+        },
+        "seeds": {
+          "TOMATO": 1
+        },
+        "actions": {
+          "unit_ops": {
+            "PASS": 87,
+            "WEST": 32,
+            "NORTH": 29,
+            "WATER": 20,
+            "PICKUP": 10,
+            "SOUTH": 9,
+            "EAST": 8,
+            "FEED": 4,
+            "COLLECT_FERTILIZER": 4,
+            "CARE": 4,
+            "DROP": 1
+          },
+          "market_ops": {
+            "HIRE": 8,
+            "SELL": 1,
+            "BUY_SEED": 1
+          },
+          "market_units": {
+            "SELL:FERTILIZER": 1,
+            "BUY_SEED:TOMATO": 1
+          },
+          "labor": {
+            "worker_turns": 208,
+            "productive_turns": 32,
+            "logistics_turns": 89,
+            "idle_turns": 87,
+            "productive_rate": 0.1538,
+            "logistics_rate": 0.4279,
+            "idle_rate": 0.4183
+          }
+        }
+      },
+      "opponent": {
+        "bank": 13475,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "cow": 4,
+          "strawberry": 12,
+          "tomato": 3,
+          "wheat": 5
+        },
+        "shed": {
+          "WHEAT": 24,
+          "FERTILIZER": 1
+        },
+        "seeds": {},
+        "actions": {
+          "unit_ops": {
+            "PASS": 87,
+            "WEST": 34,
+            "NORTH": 28,
+            "WATER": 20,
+            "SOUTH": 10,
+            "EAST": 9,
+            "PICKUP": 7,
+            "FEED": 4,
+            "COLLECT_FERTILIZER": 4,
+            "CARE": 4,
+            "DROP": 1
+          },
+          "market_ops": {
+            "HIRE": 8,
+            "SELL": 2
+          },
+          "market_units": {
+            "SELL:FERTILIZER": 5
+          },
+          "labor": {
+            "worker_turns": 208,
+            "productive_turns": 32,
+            "logistics_turns": 89,
+            "idle_turns": 87,
+            "productive_rate": 0.1538,
+            "logistics_rate": 0.4279,
+            "idle_rate": 0.4183
+          }
+        }
+      }
+    },
+    {
+      "day": 15,
+      "margin": -1814,
+      "opponent_belief": {
+        "archetype": "livestock-compound",
+        "confidence": 0.6935,
+        "recurring_crop": "STRAWBERRY",
+        "recurring_targets": {
+          "STRAWBERRY": 9,
+          "TOMATO": 6
+        },
+        "cash_crop": "MELON",
+        "animal": "COW",
+        "animal_target": 4,
+        "crop_scores": {
+          "WHEAT": 23.36,
+          "CARROT": 17.2,
+          "TOMATO": 12.81,
+          "STRAWBERRY": 15.92,
+          "MELON": 19.66
+        },
+        "animal_scores": {
+          "GOOSE": 33.29,
+          "COW": 96.94,
+          "SHEEP": 81.71
+        },
+        "strategy_utilities": {
+          "cash-engine": 196.56,
+          "recurring-engine": 220.13,
+          "livestock-engine": 387.77
+        },
+        "probabilities": {
+          "wheat-volume": 0.0005,
+          "carrot-volume": 0.0002,
+          "melon-rush": 0.0001,
+          "strawberry-recurring": 0.1344,
+          "tomato-recurring": 0.0011,
+          "livestock-compound": 0.6935,
+          "goose-volume": 0.0001,
+          "cow-milk": 0.1467,
+          "sheep-premium": 0.0001,
+          "labor-swarm": 0.0002,
+          "land-expansion": 0.0002,
+          "mixed": 0.0229
+        },
+        "attention_weights": {
+          "operations": 0.9452,
+          "opponent": 0.0349,
+          "horizon": 0.0199
+        },
+        "asset_threat": 0.4131,
+        "asset_gap": 1329.28,
+        "productive_gap": 448.28,
+        "scale_gap": 0,
+        "animal_gap": 0,
+        "own_terminal_value": 39504.56,
+        "opponent_terminal_proxy": 40833.84,
+        "asset_growth": 849.16,
+        "capital_mode": "hold",
+        "opponent_forecast": {
+          "crops": {
+            "WHEAT": 0.13,
+            "CARROT": 0.0,
+            "TOMATO": 0.06,
+            "STRAWBERRY": 0.49,
+            "MELON": 0.0
+          },
+          "animals": {
+            "GOOSE": 0.0,
+            "COW": 0.17,
+            "SHEEP": 0.0
+          },
+          "horizon_days": 3
+        },
+        "prediction_error": 2.8,
+        "prediction_break": false
+      },
+      "ours": {
+        "bank": 11948,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "cow": 4,
+          "strawberry": 12,
+          "tomato": 3,
+          "wheat": 5
+        },
+        "shed": {
+          "WHEAT": 22,
+          "FERTILIZER": 1
+        },
+        "seeds": {
+          "TOMATO": 1
+        },
+        "actions": {
+          "unit_ops": {
+            "PASS": 87,
+            "WEST": 34,
+            "NORTH": 28,
+            "WATER": 20,
+            "SOUTH": 10,
+            "EAST": 9,
+            "PICKUP": 7,
+            "FEED": 4,
+            "COLLECT_FERTILIZER": 4,
+            "CARE": 4,
+            "DROP": 1
+          },
+          "market_ops": {
+            "HIRE": 8,
+            "SELL": 2
+          },
+          "market_units": {
+            "SELL:FERTILIZER": 7
+          },
+          "labor": {
+            "worker_turns": 208,
+            "productive_turns": 32,
+            "logistics_turns": 89,
+            "idle_turns": 87,
+            "productive_rate": 0.1538,
+            "logistics_rate": 0.4279,
+            "idle_rate": 0.4183
+          }
+        }
+      },
+      "opponent": {
+        "bank": 13762,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "cow": 4,
+          "strawberry": 12,
+          "tomato": 3,
+          "wheat": 5
+        },
+        "shed": {
+          "WHEAT": 20,
+          "FERTILIZER": 1
+        },
+        "seeds": {
+          "TOMATO": 1
+        },
+        "actions": {
+          "unit_ops": {
+            "PASS": 87,
+            "WEST": 34,
+            "NORTH": 28,
+            "WATER": 20,
+            "SOUTH": 10,
+            "EAST": 9,
+            "PICKUP": 7,
+            "FEED": 4,
+            "COLLECT_FERTILIZER": 4,
+            "CARE": 4,
+            "DROP": 1
+          },
+          "market_ops": {
+            "HIRE": 8,
+            "SELL": 2,
+            "BUY_SEED": 1
+          },
+          "market_units": {
+            "SELL:FERTILIZER": 4,
+            "BUY_SEED:TOMATO": 1
+          },
+          "labor": {
+            "worker_turns": 208,
+            "productive_turns": 32,
+            "logistics_turns": 89,
+            "idle_turns": 87,
+            "productive_rate": 0.1538,
+            "logistics_rate": 0.4279,
+            "idle_rate": 0.4183
+          }
+        }
+      }
+    },
+    {
+      "day": 16,
+      "margin": -1692,
+      "opponent_belief": {
+        "archetype": "livestock-compound",
+        "confidence": 0.6271,
+        "recurring_crop": "STRAWBERRY",
+        "recurring_targets": {
+          "STRAWBERRY": 9,
+          "TOMATO": 6
+        },
+        "cash_crop": "MELON",
+        "animal": "COW",
+        "animal_target": 4,
+        "crop_scores": {
+          "WHEAT": 24.75,
+          "CARROT": 17.2,
+          "TOMATO": 13.25,
+          "STRAWBERRY": 16.68,
+          "MELON": 20.25
+        },
+        "animal_scores": {
+          "GOOSE": 31.09,
+          "COW": 84.77,
+          "SHEEP": 69.6
+        },
+        "strategy_utilities": {
+          "cash-engine": 202.49,
+          "recurring-engine": 229.66,
+          "livestock-engine": 339.06
+        },
+        "probabilities": {
+          "wheat-volume": 0.0006,
+          "carrot-volume": 0.0002,
+          "melon-rush": 0.0001,
+          "strawberry-recurring": 0.1799,
+          "tomato-recurring": 0.0014,
+          "livestock-compound": 0.6271,
+          "goose-volume": 0.0002,
+          "cow-milk": 0.1629,
+          "sheep-premium": 0.0002,
+          "labor-swarm": 0.0002,
+          "land-expansion": 0.0003,
+          "mixed": 0.0268
+        },
+        "attention_weights": {
+          "operations": 0.9444,
+          "opponent": 0.0327,
+          "horizon": 0.0228
+        },
+        "asset_threat": 0.4086,
+        "asset_gap": 907.56,
+        "productive_gap": 694.56,
+        "scale_gap": 0,
+        "animal_gap": 0,
+        "own_terminal_value": 40429.92,
+        "opponent_terminal_proxy": 41337.48,
+        "asset_growth": 540.64,
+        "capital_mode": "hold",
+        "opponent_forecast": {
+          "crops": {
+            "WHEAT": 0.04,
+            "CARROT": 0.0,
+            "TOMATO": 0.02,
+            "STRAWBERRY": 0.15,
+            "MELON": 0.0
+          },
+          "animals": {
+            "GOOSE": 0.0,
+            "COW": 0.05,
+            "SHEEP": 0.0
+          },
+          "horizon_days": 3
+        },
+        "prediction_error": 0.85,
+        "prediction_break": false
+      },
+      "ours": {
+        "bank": 12033,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "cow": 4,
+          "strawberry": 12,
+          "tomato": 3,
+          "wheat": 5
+        },
+        "shed": {
+          "WHEAT": 33,
+          "FERTILIZER": 2
+        },
+        "seeds": {
+          "TOMATO": 3
+        },
+        "actions": {
+          "unit_ops": {
+            "PASS": 58,
+            "NORTH": 34,
+            "WEST": 34,
+            "WATER": 20,
+            "SOUTH": 17,
+            "EAST": 16,
+            "PICKUP": 6,
+            "HARVEST": 5,
+            "PLANT": 5,
+            "FEED": 4,
+            "COLLECT_FERTILIZER": 4,
+            "CARE": 4,
+            "DROP": 1
+          },
+          "market_ops": {
+            "HIRE": 8,
+            "BUY_SEED": 6,
+            "SELL": 2
+          },
+          "market_units": {
+            "BUY_SEED:WHEAT": 5,
+            "SELL:FERTILIZER": 3,
+            "BUY_SEED:TOMATO": 2
+          },
+          "labor": {
+            "worker_turns": 208,
+            "productive_turns": 42,
+            "logistics_turns": 108,
+            "idle_turns": 58,
+            "productive_rate": 0.2019,
+            "logistics_rate": 0.5192,
+            "idle_rate": 0.2788
+          }
+        }
+      },
+      "opponent": {
+        "bank": 13725,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "cow": 4,
+          "strawberry": 12,
+          "tomato": 3,
+          "wheat": 5
+        },
+        "shed": {
+          "WHEAT": 25,
+          "FERTILIZER": 4
+        },
+        "seeds": {
+          "TOMATO": 2
+        },
+        "actions": {
+          "unit_ops": {
+            "PASS": 60,
+            "WEST": 35,
+            "NORTH": 31,
+            "WATER": 21,
+            "SOUTH": 20,
+            "EAST": 16,
+            "PICKUP": 6,
+            "FEED": 4,
+            "COLLECT_FERTILIZER": 4,
+            "CARE": 4,
+            "HARVEST": 3,
+            "PLANT": 3,
+            "DROP": 1
+          },
+          "market_ops": {
+            "HIRE": 8,
+            "BUY_SEED": 4,
+            "SELL": 1
+          },
+          "market_units": {
+            "BUY_SEED:WHEAT": 3,
+            "SELL:FERTILIZER": 1,
+            "BUY_SEED:TOMATO": 1
+          },
+          "labor": {
+            "worker_turns": 208,
+            "productive_turns": 39,
+            "logistics_turns": 109,
+            "idle_turns": 60,
+            "productive_rate": 0.1875,
+            "logistics_rate": 0.524,
+            "idle_rate": 0.2885
+          }
+        }
+      }
+    },
+    {
+      "day": 17,
+      "margin": -2095,
+      "opponent_belief": {
+        "archetype": "livestock-compound",
+        "confidence": 0.596,
+        "recurring_crop": "TOMATO",
+        "recurring_targets": {
+          "TOMATO": 12,
+          "STRAWBERRY": 3
+        },
+        "cash_crop": "MELON",
+        "animal": "COW",
+        "animal_target": 4,
+        "crop_scores": {
+          "WHEAT": 26.18,
+          "CARROT": 17.2,
+          "TOMATO": 14.16,
+          "STRAWBERRY": 6.35,
+          "MELON": 20.85
+        },
+        "animal_scores": {
+          "GOOSE": 28.92,
+          "COW": 86.57,
+          "SHEEP": 102.19
+        },
+        "strategy_utilities": {
+          "cash-engine": 208.51,
+          "recurring-engine": 188.97,
+          "livestock-engine": 346.3
+        },
+        "probabilities": {
+          "wheat-volume": 0.0006,
+          "carrot-volume": 0.0002,
+          "melon-rush": 0.0002,
+          "strawberry-recurring": 0.202,
+          "tomato-recurring": 0.0015,
+          "livestock-compound": 0.596,
+          "goose-volume": 0.0002,
+          "cow-milk": 0.1701,
+          "sheep-premium": 0.0002,
+          "labor-swarm": 0.0002,
+          "land-expansion": 0.0003,
+          "mixed": 0.0283
+        },
+        "attention_weights": {
+          "operations": 0.9418,
+          "opponent": 0.0318,
+          "horizon": 0.0264
+        },
+        "asset_threat": 0.4047,
+        "asset_gap": 1111.84,
+        "productive_gap": 552.84,
+        "scale_gap": 0,
+        "animal_gap": 0,
+        "own_terminal_value": 41237.88,
+        "opponent_terminal_proxy": 42349.72,
+        "asset_growth": 472.24,
+        "capital_mode": "hold",
+        "opponent_forecast": {
+          "crops": {
+            "WHEAT": 0.01,
+            "CARROT": 0.0,
+            "TOMATO": 0.01,
+            "STRAWBERRY": 0.04,
+            "MELON": 0.0
+          },
+          "animals": {
+            "GOOSE": 0.0,
+            "COW": 0.01,
+            "SHEEP": 0.0
+          },
+          "horizon_days": 3
+        },
+        "prediction_error": 0.26,
+        "prediction_break": false
+      },
+      "ours": {
+        "bank": 12170,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "cow": 4,
+          "strawberry": 12,
+          "tomato": 3,
+          "wheat": 5
+        },
+        "shed": {
+          "WHEAT": 29,
+          "FERTILIZER": 4
+        },
+        "seeds": {
+          "TOMATO": 3
+        },
+        "actions": {
+          "unit_ops": {
+            "PASS": 87,
+            "WEST": 32,
+            "NORTH": 29,
+            "WATER": 20,
+            "PICKUP": 10,
+            "SOUTH": 9,
+            "EAST": 8,
+            "FEED": 4,
+            "COLLECT_FERTILIZER": 4,
+            "CARE": 4,
+            "DROP": 1
+          },
+          "market_ops": {
+            "HIRE": 8,
+            "SELL": 1
+          },
+          "market_units": {
+            "SELL:FERTILIZER": 2
+          },
+          "labor": {
+            "worker_turns": 208,
+            "productive_turns": 32,
+            "logistics_turns": 89,
+            "idle_turns": 87,
+            "productive_rate": 0.1538,
+            "logistics_rate": 0.4279,
+            "idle_rate": 0.4183
+          }
+        }
+      },
+      "opponent": {
+        "bank": 14265,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "cow": 4,
+          "strawberry": 12,
+          "tomato": 3,
+          "wheat": 5
+        },
+        "shed": {
+          "WHEAT": 27,
+          "FERTILIZER": 1
+        },
+        "seeds": {
+          "TOMATO": 3
+        },
+        "actions": {
+          "unit_ops": {
+            "PASS": 67,
+            "NORTH": 34,
+            "WEST": 32,
+            "WATER": 20,
+            "SOUTH": 17,
+            "EAST": 13,
+            "PICKUP": 8,
+            "FEED": 4,
+            "COLLECT_FERTILIZER": 4,
+            "CARE": 4,
+            "HARVEST": 2,
+            "PLANT": 2,
+            "DROP": 1
+          },
+          "market_ops": {
+            "HIRE": 8,
+            "BUY_SEED": 3,
+            "SELL": 2
+          },
+          "market_units": {
+            "SELL:FERTILIZER": 7,
+            "BUY_SEED:WHEAT": 2,
+            "BUY_SEED:TOMATO": 1
+          },
+          "labor": {
+            "worker_turns": 208,
+            "productive_turns": 36,
+            "logistics_turns": 105,
+            "idle_turns": 67,
+            "productive_rate": 0.1731,
+            "logistics_rate": 0.5048,
+            "idle_rate": 0.3221
+          }
+        }
+      }
+    },
+    {
+      "day": 18,
+      "margin": -2251,
+      "opponent_belief": {
+        "archetype": "livestock-compound",
+        "confidence": 0.5938,
+        "recurring_crop": "STRAWBERRY",
+        "recurring_targets": {
+          "STRAWBERRY": 8,
+          "TOMATO": 7
+        },
+        "cash_crop": "MELON",
+        "animal": "COW",
+        "animal_target": 4,
+        "crop_scores": {
+          "WHEAT": 27.64,
+          "CARROT": 17.2,
+          "TOMATO": 10.93,
+          "STRAWBERRY": 6.67,
+          "MELON": 21.46
+        },
+        "animal_scores": {
+          "GOOSE": 26.06,
+          "COW": 66.23,
+          "SHEEP": 104.41
+        },
+        "strategy_utilities": {
+          "cash-engine": 214.63,
+          "recurring-engine": 129.83,
+          "livestock-engine": 264.94
+        },
+        "probabilities": {
+          "wheat-volume": 0.0006,
+          "carrot-volume": 0.0002,
+          "melon-rush": 0.0002,
+          "strawberry-recurring": 0.2055,
+          "tomato-recurring": 0.0015,
+          "livestock-compound": 0.5938,
+          "goose-volume": 0.0002,
+          "cow-milk": 0.1682,
+          "sheep-premium": 0.0002,
+          "labor-swarm": 0.0002,
+          "land-expansion": 0.0003,
+          "mixed": 0.029
+        },
+        "attention_weights": {
+          "operations": 0.9375,
+          "opponent": 0.0318,
+          "horizon": 0.0307
+        },
+        "asset_threat": 0.4133,
+        "asset_gap": 1333.08,
+        "productive_gap": 483.08,
+        "scale_gap": 0,
+        "animal_gap": 0,
+        "own_terminal_value": 41609.96,
+        "opponent_terminal_proxy": 42943.04,
+        "asset_growth": 697.32,
+        "capital_mode": "hold",
+        "opponent_forecast": {
+          "crops": {
+            "WHEAT": 0.0,
+            "CARROT": 0.0,
+            "TOMATO": 0.0,
+            "STRAWBERRY": 0.01,
+            "MELON": 0.0
+          },
+          "animals": {
+            "GOOSE": 0.0,
+            "COW": 0.0,
+            "SHEEP": 0.0
+          },
+          "horizon_days": 3
+        },
+        "prediction_error": 0.07,
+        "prediction_break": false
+      },
+      "ours": {
+        "bank": 11910,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "cow": 4,
+          "strawberry": 12,
+          "tomato": 3,
+          "wheat": 5
+        },
+        "shed": {
+          "WHEAT": 25,
+          "FERTILIZER": 4
+        },
+        "seeds": {
+          "TOMATO": 9
+        },
+        "actions": {
+          "unit_ops": {
+            "WEST": 41,
+            "NORTH": 33,
+            "PASS": 33,
+            "EAST": 26,
+            "SOUTH": 26,
+            "WATER": 20,
+            "PICKUP": 13,
+            "FEED": 4,
+            "COLLECT_FERTILIZER": 4,
+            "CARE": 4,
+            "FERTILIZE": 3,
+            "DROP": 1
+          },
+          "market_ops": {
+            "HIRE": 8,
+            "SELL": 1,
+            "BUY_SEED": 1
+          },
+          "market_units": {
+            "BUY_SEED:TOMATO": 6,
+            "SELL:FERTILIZER": 1
+          },
+          "labor": {
+            "worker_turns": 208,
+            "productive_turns": 35,
+            "logistics_turns": 140,
+            "idle_turns": 33,
+            "productive_rate": 0.1683,
+            "logistics_rate": 0.6731,
+            "idle_rate": 0.1587
+          }
+        }
+      },
+      "opponent": {
+        "bank": 14161,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "cow": 4,
+          "strawberry": 12,
+          "tomato": 3,
+          "wheat": 5
+        },
+        "shed": {
+          "WHEAT": 23,
+          "FERTILIZER": 2
+        },
+        "seeds": {
+          "TOMATO": 4
+        },
+        "actions": {
+          "unit_ops": {
+            "PASS": 48,
+            "WEST": 38,
+            "NORTH": 34,
+            "SOUTH": 27,
+            "WATER": 20,
+            "EAST": 18,
+            "PICKUP": 8,
+            "FEED": 4,
+            "COLLECT_FERTILIZER": 4,
+            "CARE": 4,
+            "FERTILIZE": 3
+          },
+          "market_ops": {
+            "HIRE": 8,
+            "BUY_SEED": 1
+          },
+          "market_units": {
+            "BUY_SEED:TOMATO": 1
+          },
+          "labor": {
+            "worker_turns": 208,
+            "productive_turns": 35,
+            "logistics_turns": 125,
+            "idle_turns": 48,
+            "productive_rate": 0.1683,
+            "logistics_rate": 0.601,
+            "idle_rate": 0.2308
+          }
+        }
+      }
+    },
+    {
+      "day": 19,
+      "margin": -2251,
+      "opponent_belief": {
+        "archetype": "livestock-compound",
+        "confidence": 0.6621,
+        "recurring_crop": "TOMATO",
+        "recurring_targets": {
+          "TOMATO": 12,
+          "STRAWBERRY": 3
+        },
+        "cash_crop": "CARROT",
+        "animal": "COW",
+        "animal_target": 4,
+        "crop_scores": {
+          "WHEAT": 29.15,
+          "CARROT": 17.2,
+          "TOMATO": 6.83,
+          "STRAWBERRY": -1000000.0,
+          "MELON": -1000000.0
+        },
+        "animal_scores": {
+          "GOOSE": 22.5,
+          "COW": 67.65,
+          "SHEEP": 77.84
+        },
+        "strategy_utilities": {
+          "cash-engine": 171.96,
+          "recurring-engine": -2999918.05,
+          "livestock-engine": 270.61
+        },
+        "probabilities": {
+          "wheat-volume": 0.0005,
+          "carrot-volume": 0.0002,
+          "melon-rush": 0.0001,
+          "strawberry-recurring": 0.1689,
+          "tomato-recurring": 0.0012,
+          "livestock-compound": 0.6621,
+          "goose-volume": 0.0002,
+          "cow-milk": 0.1367,
+          "sheep-premium": 0.0002,
+          "labor-swarm": 0.0002,
+          "land-expansion": 0.0002,
+          "mixed": 0.0294
+        },
+        "attention_weights": {
+          "operations": 0.9282,
+          "opponent": 0.036,
+          "horizon": 0.0359
+        },
+        "asset_threat": 0.5177,
+        "asset_gap": 2513.0,
+        "productive_gap": 1614.0,
+        "scale_gap": 0,
+        "animal_gap": 0,
+        "own_terminal_value": 43475.12,
+        "opponent_terminal_proxy": 45988.12,
+        "asset_growth": 3099.08,
+        "capital_mode": "hold",
+        "opponent_forecast": {
+          "crops": {
+            "WHEAT": 0.0,
+            "CARROT": 0.0,
+            "TOMATO": 0.0,
+            "STRAWBERRY": 0.0,
+            "MELON": 0.0
+          },
+          "animals": {
+            "GOOSE": 0.0,
+            "COW": 0.0,
+            "SHEEP": 0.0
+          },
+          "horizon_days": 3
+        },
+        "prediction_error": 0.01,
+        "prediction_break": false
+      },
+      "ours": {
+        "bank": 11856,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "cow": 4,
+          "strawberry": 12,
+          "tomato": 3,
+          "wheat": 5
+        },
+        "shed": {
+          "WHEAT": 21,
+          "FERTILIZER": 5
+        },
+        "seeds": {
+          "TOMATO": 9
+        },
+        "actions": {
+          "unit_ops": {
+            "WEST": 59,
+            "NORTH": 43,
+            "EAST": 31,
+            "SOUTH": 30,
+            "WATER": 20,
+            "PICKUP": 11,
+            "FEED": 4,
+            "COLLECT_FERTILIZER": 4,
+            "FERTILIZE": 3,
+            "CARE": 2,
+            "PASS": 1
+          },
+          "market_ops": {
+            "HIRE": 8
+          },
+          "market_units": {},
+          "labor": {
+            "worker_turns": 208,
+            "productive_turns": 33,
+            "logistics_turns": 174,
+            "idle_turns": 1,
+            "productive_rate": 0.1587,
+            "logistics_rate": 0.8365,
+            "idle_rate": 0.0048
+          }
+        }
+      },
+      "opponent": {
+        "bank": 14107,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "cow": 4,
+          "strawberry": 12,
+          "tomato": 3,
+          "wheat": 5
+        },
+        "shed": {
+          "WHEAT": 19,
+          "FERTILIZER": 3
+        },
+        "seeds": {
+          "TOMATO": 4
+        },
+        "actions": {
+          "unit_ops": {
+            "WEST": 46,
+            "NORTH": 46,
+            "SOUTH": 30,
+            "PASS": 22,
+            "WATER": 20,
+            "EAST": 19,
+            "PICKUP": 10,
+            "FEED": 4,
+            "COLLECT_FERTILIZER": 4,
+            "CARE": 4,
+            "FERTILIZE": 3
+          },
+          "market_ops": {
+            "HIRE": 8
+          },
+          "market_units": {},
+          "labor": {
+            "worker_turns": 208,
+            "productive_turns": 35,
+            "logistics_turns": 151,
+            "idle_turns": 22,
+            "productive_rate": 0.1683,
+            "logistics_rate": 0.726,
+            "idle_rate": 0.1058
+          }
+        }
+      }
+    },
+    {
+      "day": 20,
+      "margin": -2327,
+      "opponent_belief": {
+        "archetype": "livestock-compound",
+        "confidence": 0.5988,
+        "recurring_crop": "TOMATO",
+        "recurring_targets": {
+          "TOMATO": 12,
+          "STRAWBERRY": 3
+        },
+        "cash_crop": "CARROT",
+        "animal": "COW",
+        "animal_target": 0,
+        "crop_scores": {
+          "WHEAT": 32.76,
+          "CARROT": 18.27,
+          "TOMATO": 0.69,
+          "STRAWBERRY": -1000000.0,
+          "MELON": -1000000.0
+        },
+        "animal_scores": {
+          "GOOSE": 24.31,
+          "COW": -1000000.0,
+          "SHEEP": 79.02
+        },
+        "strategy_utilities": {
+          "cash-engine": 182.71,
+          "recurring-engine": -2999991.7,
+          "livestock-engine": -0.0
+        },
+        "probabilities": {
+          "wheat-volume": 0.0004,
+          "carrot-volume": 0.0002,
+          "melon-rush": 0.0002,
+          "strawberry-recurring": 0.2065,
+          "tomato-recurring": 0.0015,
+          "livestock-compound": 0.5988,
+          "goose-volume": 0.0002,
+          "cow-milk": 0.1665,
+          "sheep-premium": 0.0002,
+          "labor-swarm": 0.0002,
+          "land-expansion": 0.0003,
+          "mixed": 0.025
+        },
+        "attention_weights": {
+          "operations": 0.9283,
+          "opponent": 0.029,
+          "horizon": 0.0427
+        },
+        "asset_threat": 0.2961,
+        "asset_gap": -2037.44,
+        "productive_gap": -892.44,
+        "scale_gap": 2,
+        "animal_gap": 0,
+        "own_terminal_value": 46918.68,
+        "opponent_terminal_proxy": 44881.24,
+        "asset_growth": -1322.88,
+        "capital_mode": "hold",
+        "opponent_forecast": {
+          "crops": {
+            "WHEAT": 0.0,
+            "CARROT": 0.0,
+            "TOMATO": 0.0,
+            "STRAWBERRY": 0.0,
+            "MELON": 0.0
+          },
+          "animals": {
+            "GOOSE": 0.0,
+            "COW": 0.0,
+            "SHEEP": 0.0
+          },
+          "horizon_days": 3
+        },
+        "prediction_error": 3.0,
+        "prediction_break": false
+      },
+      "ours": {
+        "bank": 11996,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "cow": 4,
+          "strawberry": 12,
+          "tomato": 3
+        },
+        "shed": {
+          "WHEAT": 32,
+          "TOMATO": 4,
+          "MILK": 6,
+          "FERTILIZER": 1
+        },
+        "seeds": {
+          "WHEAT": 5,
+          "TOMATO": 9
+        },
+        "actions": {
+          "unit_ops": {
+            "NORTH": 51,
+            "WEST": 51,
+            "SOUTH": 32,
+            "EAST": 27,
+            "WATER": 16,
+            "HARVEST": 9,
+            "PICKUP": 8,
+            "FERTILIZE": 5,
+            "FEED": 4,
+            "COLLECT_FERTILIZER": 2,
+            "DROP": 2,
+            "CARE": 1
+          },
+          "market_ops": {
+            "HIRE": 8,
+            "BUY_SEED": 3,
+            "SELL": 2
+          },
+          "market_units": {
+            "BUY_SEED:WHEAT": 5,
+            "SELL:TOMATO": 2,
+            "SELL:FERTILIZER": 1
+          },
+          "labor": {
+            "worker_turns": 208,
+            "productive_turns": 37,
+            "logistics_turns": 171,
+            "idle_turns": 0,
+            "productive_rate": 0.1779,
+            "logistics_rate": 0.8221,
+            "idle_rate": 0.0
+          }
+        }
+      },
+      "opponent": {
+        "bank": 14323,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "cow": 4,
+          "strawberry": 12,
+          "tomato": 3,
+          "weed": 1,
+          "wheat": 2
+        },
+        "shed": {
+          "WHEAT": 24,
+          "TOMATO": 2,
+          "MILK": 12,
+          "FERTILIZER": 2
+        },
+        "seeds": {
+          "WHEAT": 2,
+          "TOMATO": 4
+        },
+        "actions": {
+          "unit_ops": {
+            "NORTH": 54,
+            "WEST": 43,
+            "SOUTH": 34,
+            "EAST": 23,
+            "WATER": 17,
+            "HARVEST": 8,
+            "PICKUP": 6,
+            "FERTILIZE": 5,
+            "FEED": 4,
+            "COLLECT_FERTILIZER": 4,
+            "CARE": 4,
+            "PASS": 4,
+            "DROP": 1,
+            "PLANT": 1
+          },
+          "market_ops": {
+            "HIRE": 8,
+            "BUY_SEED": 3,
+            "SELL": 1
+          },
+          "market_units": {
+            "SELL:TOMATO": 4,
+            "BUY_SEED:WHEAT": 3
+          },
+          "labor": {
+            "worker_turns": 208,
+            "productive_turns": 43,
+            "logistics_turns": 161,
+            "idle_turns": 4,
+            "productive_rate": 0.2067,
+            "logistics_rate": 0.774,
+            "idle_rate": 0.0192
+          }
+        }
+      }
+    },
+    {
+      "day": 21,
+      "margin": -2148,
+      "opponent_belief": {
+        "archetype": "livestock-compound",
+        "confidence": 0.5733,
+        "recurring_crop": "STRAWBERRY",
+        "recurring_targets": {
+          "STRAWBERRY": 8,
+          "TOMATO": 7
+        },
+        "cash_crop": "CARROT",
+        "animal": "COW",
+        "animal_target": 0,
+        "crop_scores": {
+          "WHEAT": 35.99,
+          "CARROT": 18.27,
+          "TOMATO": -1000000.0,
+          "STRAWBERRY": -1000000.0,
+          "MELON": -1000000.0
+        },
+        "animal_scores": {
+          "GOOSE": 19.19,
+          "COW": -1000000.0,
+          "SHEEP": 79.64
+        },
+        "strategy_utilities": {
+          "cash-engine": 182.72,
+          "recurring-engine": -15000000.0,
+          "livestock-engine": -0.0
+        },
+        "probabilities": {
+          "wheat-volume": 0.0004,
+          "carrot-volume": 0.0003,
+          "melon-rush": 0.0002,
+          "strawberry-recurring": 0.2223,
+          "tomato-recurring": 0.0016,
+          "livestock-compound": 0.5733,
+          "goose-volume": 0.0002,
+          "cow-milk": 0.1789,
+          "sheep-premium": 0.0002,
+          "labor-swarm": 0.0003,
+          "land-expansion": 0.0003,
+          "mixed": 0.022
+        },
+        "attention_weights": {
+          "operations": 0.9267,
+          "opponent": 0.0222,
+          "horizon": 0.0511
+        },
+        "asset_threat": 0.226,
+        "asset_gap": -722.0,
+        "productive_gap": 588.0,
+        "scale_gap": -3,
+        "animal_gap": 0,
+        "own_terminal_value": 47459.72,
+        "opponent_terminal_proxy": 46737.72,
+        "asset_growth": -3363.52,
+        "capital_mode": "hold",
+        "opponent_forecast": {
+          "crops": {
+            "WHEAT": 0.0,
+            "CARROT": 0.0,
+            "TOMATO": 0.0,
+            "STRAWBERRY": 0.0,
+            "MELON": 0.0
+          },
+          "animals": {
+            "GOOSE": 0.0,
+            "COW": 0.0,
+            "SHEEP": 0.0
+          },
+          "horizon_days": 3
+        },
+        "prediction_error": 1.0,
+        "prediction_break": false
+      },
+      "ours": {
+        "bank": 17395,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "cow": 4,
+          "strawberry": 12,
+          "tomato": 3,
+          "wheat": 4
+        },
+        "shed": {
+          "WHEAT": 28,
+          "TOMATO": 6,
+          "MILK": 6,
+          "FERTILIZER": 1
+        },
+        "seeds": {
+          "WHEAT": 1,
+          "TOMATO": 9
+        },
+        "actions": {
+          "unit_ops": {
+            "NORTH": 48,
+            "WEST": 41,
+            "EAST": 28,
+            "SOUTH": 23,
+            "WATER": 19,
+            "PASS": 16,
+            "HARVEST": 6,
+            "PICKUP": 6,
+            "FEED": 4,
+            "CARE": 4,
+            "COLLECT_FERTILIZER": 4,
+            "PLANT": 4,
+            "FERTILIZE": 4,
+            "DROP": 1
+          },
+          "market_ops": {
+            "HIRE": 8,
+            "SELL": 3
+          },
+          "market_units": {
+            "SELL:MILK": 18,
+            "SELL:TOMATO": 4
+          },
+          "labor": {
+            "worker_turns": 208,
+            "productive_turns": 45,
+            "logistics_turns": 147,
+            "idle_turns": 16,
+            "productive_rate": 0.2163,
+            "logistics_rate": 0.7067,
+            "idle_rate": 0.0769
+          }
+        }
+      },
+      "opponent": {
+        "bank": 19543,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "cow": 4,
+          "strawberry": 12,
+          "tomato": 3,
+          "weed": 2,
+          "wheat": 1
+        },
+        "shed": {
+          "WHEAT": 26,
+          "TOMATO": 6,
+          "MILK": 6,
+          "FERTILIZER": 3
+        },
+        "seeds": {
+          "WHEAT": 2,
+          "TOMATO": 4
+        },
+        "actions": {
+          "unit_ops": {
+            "NORTH": 52,
+            "WEST": 47,
+            "SOUTH": 29,
+            "EAST": 27,
+            "WATER": 18,
+            "PICKUP": 8,
+            "HARVEST": 7,
+            "FEED": 4,
+            "COLLECT_FERTILIZER": 4,
+            "CARE": 4,
+            "FERTILIZE": 3,
+            "PLANT": 3,
+            "DIG": 1,
+            "DROP": 1
+          },
+          "market_ops": {
+            "HIRE": 8,
+            "SELL": 3,
+            "BUY_SEED": 3
+          },
+          "market_units": {
+            "SELL:MILK": 18,
+            "BUY_SEED:WHEAT": 3,
+            "SELL:TOMATO": 2
+          },
+          "labor": {
+            "worker_turns": 208,
+            "productive_turns": 44,
+            "logistics_turns": 164,
+            "idle_turns": 0,
+            "productive_rate": 0.2115,
+            "logistics_rate": 0.7885,
+            "idle_rate": 0.0
+          }
+        }
+      }
+    },
+    {
+      "day": 22,
+      "margin": -2128,
+      "opponent_belief": {
+        "archetype": "livestock-compound",
+        "confidence": 0.5655,
+        "recurring_crop": "STRAWBERRY",
+        "recurring_targets": {
+          "STRAWBERRY": 8,
+          "TOMATO": 7
+        },
+        "cash_crop": "CARROT",
+        "animal": "COW",
+        "animal_target": 0,
+        "crop_scores": {
+          "WHEAT": 37.85,
+          "CARROT": 18.27,
+          "TOMATO": -1000000.0,
+          "STRAWBERRY": -1000000.0,
+          "MELON": -1000000.0
+        },
+        "animal_scores": {
+          "GOOSE": 10.55,
+          "COW": -1000000.0,
+          "SHEEP": -1000000.0
+        },
+        "strategy_utilities": {
+          "cash-engine": 182.72,
+          "recurring-engine": -15000000.0,
+          "livestock-engine": -0.0
+        },
+        "probabilities": {
+          "wheat-volume": 0.0003,
+          "carrot-volume": 0.0003,
+          "melon-rush": 0.0002,
+          "strawberry-recurring": 0.2272,
+          "tomato-recurring": 0.0017,
+          "livestock-compound": 0.5655,
+          "goose-volume": 0.0002,
+          "cow-milk": 0.1828,
+          "sheep-premium": 0.0002,
+          "labor-swarm": 0.0003,
+          "land-expansion": 0.0003,
+          "mixed": 0.021
+        },
+        "attention_weights": {
+          "operations": 0.9177,
+          "opponent": 0.0211,
+          "horizon": 0.0612
+        },
+        "asset_threat": 0.1784,
+        "asset_gap": -4181.44,
+        "productive_gap": 823.56,
+        "scale_gap": -3,
+        "animal_gap": 0,
+        "own_terminal_value": 47446.24,
+        "opponent_terminal_proxy": 43264.8,
+        "asset_growth": -3398.92,
+        "capital_mode": "hold",
+        "opponent_forecast": {
+          "crops": {
+            "WHEAT": 0.0,
+            "CARROT": 0.0,
+            "TOMATO": 0.0,
+            "STRAWBERRY": 0.0,
+            "MELON": 0.0
+          },
+          "animals": {
+            "GOOSE": 0.0,
+            "COW": 0.0,
+            "SHEEP": 0.0
+          },
+          "horizon_days": 3
+        },
+        "prediction_error": 0.0,
+        "prediction_break": false
+      },
+      "ours": {
+        "bank": 17341,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "cow": 4,
+          "strawberry": 12,
+          "tomato": 3,
+          "wheat": 4
+        },
+        "shed": {
+          "WHEAT": 25,
+          "TOMATO": 10,
+          "STRAWBERRY": 12,
+          "MILK": 9,
+          "FERTILIZER": 1
+        },
+        "seeds": {
+          "WHEAT": 1,
+          "TOMATO": 9
+        },
+        "actions": {
+          "unit_ops": {
+            "WEST": 46,
+            "NORTH": 41,
+            "SOUTH": 36,
+            "EAST": 35,
+            "WATER": 19,
+            "FEED": 12,
+            "HARVEST": 10,
+            "PICKUP": 8,
+            "DROP": 1
+          },
+          "market_ops": {
+            "HIRE": 8
+          },
+          "market_units": {},
+          "labor": {
+            "worker_turns": 208,
+            "productive_turns": 41,
+            "logistics_turns": 167,
+            "idle_turns": 0,
+            "productive_rate": 0.1971,
+            "logistics_rate": 0.8029,
+            "idle_rate": 0.0
+          }
+        }
+      },
+      "opponent": {
+        "bank": 19469,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "cow": 4,
+          "strawberry": 12,
+          "tomato": 3,
+          "weed": 2,
+          "wheat": 1
+        },
+        "shed": {
+          "WHEAT": 23,
+          "TOMATO": 11,
+          "STRAWBERRY": 11,
+          "MILK": 12,
+          "FERTILIZER": 2
+        },
+        "seeds": {
+          "WHEAT": 4,
+          "TOMATO": 4
+        },
+        "actions": {
+          "unit_ops": {
+            "WEST": 47,
+            "NORTH": 41,
+            "SOUTH": 37,
+            "EAST": 34,
+            "WATER": 16,
+            "HARVEST": 11,
+            "FEED": 11,
+            "PICKUP": 9,
+            "DROP": 1,
+            "FERTILIZE": 1
+          },
+          "market_ops": {
+            "HIRE": 8,
+            "BUY_SEED": 1
+          },
+          "market_units": {
+            "BUY_SEED:WHEAT": 2
+          },
+          "labor": {
+            "worker_turns": 208,
+            "productive_turns": 39,
+            "logistics_turns": 169,
+            "idle_turns": 0,
+            "productive_rate": 0.1875,
+            "logistics_rate": 0.8125,
+            "idle_rate": 0.0
+          }
+        }
+      }
+    },
+    {
+      "day": 23,
+      "margin": -2128,
+      "opponent_belief": {
+        "archetype": "livestock-compound",
+        "confidence": 0.5618,
+        "recurring_crop": "STRAWBERRY",
+        "recurring_targets": {
+          "STRAWBERRY": 8,
+          "TOMATO": 7
+        },
+        "cash_crop": "CARROT",
+        "animal": "COW",
+        "animal_target": 0,
+        "crop_scores": {
+          "WHEAT": 39.75,
+          "CARROT": 18.06,
+          "TOMATO": -1000000.0,
+          "STRAWBERRY": -1000000.0,
+          "MELON": -1000000.0
+        },
+        "animal_scores": {
+          "GOOSE": -1.59,
+          "COW": -1000000.0,
+          "SHEEP": -1000000.0
+        },
+        "strategy_utilities": {
+          "cash-engine": 180.62,
+          "recurring-engine": -15000000.0,
+          "livestock-engine": -0.0
+        },
+        "probabilities": {
+          "wheat-volume": 0.0003,
+          "carrot-volume": 0.0003,
+          "melon-rush": 0.0002,
+          "strawberry-recurring": 0.2295,
+          "tomato-recurring": 0.0017,
+          "livestock-compound": 0.5618,
+          "goose-volume": 0.0002,
+          "cow-milk": 0.1846,
+          "sheep-premium": 0.0002,
+          "labor-swarm": 0.0003,
+          "land-expansion": 0.0003,
+          "mixed": 0.0206
+        },
+        "attention_weights": {
+          "operations": 0.9066,
+          "opponent": 0.0197,
+          "horizon": 0.0737
+        },
+        "asset_threat": 0.1023,
+        "asset_gap": -9035.0,
+        "productive_gap": 103.0,
+        "scale_gap": -3,
+        "animal_gap": 0,
+        "own_terminal_value": 47375.4,
+        "opponent_terminal_proxy": 38340.4,
+        "asset_growth": -4870.4,
+        "capital_mode": "hold",
+        "opponent_forecast": {
+          "crops": {
+            "WHEAT": 0.0,
+            "CARROT": 0.0,
+            "TOMATO": 0.0,
+            "STRAWBERRY": 0.0,
+            "MELON": 0.0
+          },
+          "animals": {
+            "GOOSE": 0.0,
+            "COW": 0.0,
+            "SHEEP": 0.0
+          },
+          "horizon_days": 3
+        },
+        "prediction_error": 0.0,
+        "prediction_break": false
+      },
+      "ours": {
+        "bank": 17287,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "cow": 4,
+          "strawberry": 12,
+          "tomato": 3,
+          "wheat": 4
+        },
+        "shed": {
+          "WHEAT": 21,
+          "TOMATO": 14,
+          "STRAWBERRY": 23,
+          "MILK": 14,
+          "FERTILIZER": 1
+        },
+        "seeds": {
+          "WHEAT": 1,
+          "TOMATO": 9
+        },
+        "actions": {
+          "unit_ops": {
+            "WEST": 53,
+            "EAST": 34,
+            "NORTH": 31,
+            "SOUTH": 28,
+            "WATER": 19,
+            "FEED": 18,
+            "HARVEST": 12,
+            "PICKUP": 11,
+            "DROP": 2
+          },
+          "market_ops": {
+            "HIRE": 8
+          },
+          "market_units": {},
+          "labor": {
+            "worker_turns": 208,
+            "productive_turns": 49,
+            "logistics_turns": 159,
+            "idle_turns": 0,
+            "productive_rate": 0.2356,
+            "logistics_rate": 0.7644,
+            "idle_rate": 0.0
+          }
+        }
+      },
+      "opponent": {
+        "bank": 19415,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "cow": 4,
+          "strawberry": 12,
+          "tomato": 3,
+          "weed": 2,
+          "wheat": 1
+        },
+        "shed": {
+          "WHEAT": 19,
+          "TOMATO": 16,
+          "STRAWBERRY": 22,
+          "MILK": 18,
+          "FERTILIZER": 4
+        },
+        "seeds": {
+          "WHEAT": 4,
+          "TOMATO": 4
+        },
+        "actions": {
+          "unit_ops": {
+            "WEST": 50,
+            "NORTH": 33,
+            "EAST": 31,
+            "SOUTH": 30,
+            "FEED": 21,
+            "WATER": 16,
+            "PICKUP": 12,
+            "HARVEST": 11,
+            "DROP": 2,
+            "COLLECT_FERTILIZER": 2
+          },
+          "market_ops": {
+            "HIRE": 8
+          },
+          "market_units": {},
+          "labor": {
+            "worker_turns": 208,
+            "productive_turns": 50,
+            "logistics_turns": 158,
+            "idle_turns": 0,
+            "productive_rate": 0.2404,
+            "logistics_rate": 0.7596,
+            "idle_rate": 0.0
+          }
+        }
+      }
+    },
+    {
+      "day": 24,
+      "margin": -2128,
+      "opponent_belief": {
+        "archetype": "livestock-compound",
+        "confidence": 0.5627,
+        "recurring_crop": "STRAWBERRY",
+        "recurring_targets": {
+          "STRAWBERRY": 8,
+          "TOMATO": 7
+        },
+        "cash_crop": "CARROT",
+        "animal": "COW",
+        "animal_target": 0,
+        "crop_scores": {
+          "WHEAT": 41.7,
+          "CARROT": 17.15,
+          "TOMATO": -1000000.0,
+          "STRAWBERRY": -1000000.0,
+          "MELON": -1000000.0
+        },
+        "animal_scores": {
+          "GOOSE": -1000000.0,
+          "COW": -1000000.0,
+          "SHEEP": -1000000.0
+        },
+        "strategy_utilities": {
+          "cash-engine": 171.52,
+          "recurring-engine": -15000000.0,
+          "livestock-engine": -0.0
+        },
+        "probabilities": {
+          "wheat-volume": 0.0003,
+          "carrot-volume": 0.0003,
+          "melon-rush": 0.0002,
+          "strawberry-recurring": 0.2314,
+          "tomato-recurring": 0.0006,
+          "livestock-compound": 0.5627,
+          "goose-volume": 0.0002,
+          "cow-milk": 0.186,
+          "sheep-premium": 0.0002,
+          "labor-swarm": 0.0003,
+          "land-expansion": 0.0003,
+          "mixed": 0.0174
+        },
+        "attention_weights": {
+          "operations": 0.8922,
+          "opponent": 0.0186,
+          "horizon": 0.0893
+        },
+        "asset_threat": 0.043,
+        "asset_gap": -12089.0,
+        "productive_gap": -460.0,
+        "scale_gap": -4,
+        "animal_gap": 0,
+        "own_terminal_value": 43124.2,
+        "opponent_terminal_proxy": 31035.2,
+        "asset_growth": -7251.2,
+        "capital_mode": "hold",
+        "opponent_forecast": {
+          "crops": {
+            "WHEAT": 0.0,
+            "CARROT": 0.0,
+            "TOMATO": 0.0,
+            "STRAWBERRY": 0.0,
+            "MELON": 0.0
+          },
+          "animals": {
+            "GOOSE": 0.0,
+            "COW": 0.0,
+            "SHEEP": 0.0
+          },
+          "horizon_days": 3
+        },
+        "prediction_error": 3.0,
+        "prediction_break": false
+      },
+      "ours": {
+        "bank": 17233,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "cow": 4,
+          "strawberry": 12,
+          "weed": 3,
+          "wheat": 5
+        },
+        "shed": {
+          "WHEAT": 17,
+          "TOMATO": 14,
+          "STRAWBERRY": 31,
+          "MILK": 16,
+          "FERTILIZER": 2
+        },
+        "seeds": {
+          "TOMATO": 9
+        },
+        "actions": {
+          "unit_ops": {
+            "WEST": 51,
+            "NORTH": 44,
+            "EAST": 34,
+            "SOUTH": 24,
+            "WATER": 17,
+            "PASS": 9,
+            "HARVEST": 7,
+            "PICKUP": 5,
+            "FEED": 4,
+            "COLLECT_FERTILIZER": 4,
+            "CARE": 4,
+            "FERTILIZE": 3,
+            "DROP": 1,
+            "PLANT": 1
+          },
+          "market_ops": {
+            "HIRE": 8
+          },
+          "market_units": {},
+          "labor": {
+            "worker_turns": 208,
+            "productive_turns": 40,
+            "logistics_turns": 159,
+            "idle_turns": 9,
+            "productive_rate": 0.1923,
+            "logistics_rate": 0.7644,
+            "idle_rate": 0.0433
+          }
+        }
+      },
+      "opponent": {
+        "bank": 19361,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "cow": 4,
+          "strawberry": 12,
+          "weed": 5,
+          "wheat": 1
+        },
+        "shed": {
+          "WHEAT": 15,
+          "TOMATO": 16,
+          "STRAWBERRY": 29,
+          "MILK": 22,
+          "FERTILIZER": 3
+        },
+        "seeds": {
+          "WHEAT": 4,
+          "TOMATO": 4
+        },
+        "actions": {
+          "unit_ops": {
+            "WEST": 57,
+            "NORTH": 46,
+            "EAST": 37,
+            "SOUTH": 31,
+            "WATER": 13,
+            "HARVEST": 8,
+            "PICKUP": 6,
+            "FEED": 4,
+            "FERTILIZE": 2,
+            "CARE": 2,
+            "COLLECT_FERTILIZER": 1,
+            "DROP": 1
+          },
+          "market_ops": {
+            "HIRE": 8
+          },
+          "market_units": {},
+          "labor": {
+            "worker_turns": 208,
+            "productive_turns": 30,
+            "logistics_turns": 178,
+            "idle_turns": 0,
+            "productive_rate": 0.1442,
+            "logistics_rate": 0.8558,
+            "idle_rate": 0.0
+          }
+        }
+      }
+    },
+    {
+      "day": 25,
+      "margin": -2067,
+      "opponent_belief": {
+        "archetype": "livestock-compound",
+        "confidence": 0.5616,
+        "recurring_crop": "STRAWBERRY",
+        "recurring_targets": {
+          "STRAWBERRY": 8,
+          "TOMATO": 7
+        },
+        "cash_crop": "CARROT",
+        "animal": "COW",
+        "animal_target": 0,
+        "crop_scores": {
+          "WHEAT": 43.58,
+          "CARROT": 16.24,
+          "TOMATO": -1000000.0,
+          "STRAWBERRY": -1000000.0,
+          "MELON": -1000000.0
+        },
+        "animal_scores": {
+          "GOOSE": -1000000.0,
+          "COW": -1000000.0,
+          "SHEEP": -1000000.0
+        },
+        "strategy_utilities": {
+          "cash-engine": 162.42,
+          "recurring-engine": -15000000.0,
+          "livestock-engine": -0.0
+        },
+        "probabilities": {
+          "wheat-volume": 0.0003,
+          "carrot-volume": 0.0003,
+          "melon-rush": 0.0002,
+          "strawberry-recurring": 0.2332,
+          "tomato-recurring": 0.0004,
+          "livestock-compound": 0.5616,
+          "goose-volume": 0.0002,
+          "cow-milk": 0.1875,
+          "sheep-premium": 0.0002,
+          "labor-swarm": 0.0003,
+          "land-expansion": 0.0003,
+          "mixed": 0.0154
+        },
+        "attention_weights": {
+          "operations": 0.8725,
+          "opponent": 0.0192,
+          "horizon": 0.1083
+        },
+        "asset_threat": 0.1105,
+        "asset_gap": -13933.0,
+        "productive_gap": -138.0,
+        "scale_gap": -3,
+        "animal_gap": 0,
+        "own_terminal_value": 44206.4,
+        "opponent_terminal_proxy": 30273.4,
+        "asset_growth": -2091.8,
+        "capital_mode": "hold",
+        "opponent_forecast": {
+          "crops": {
+            "WHEAT": 0.0,
+            "CARROT": 0.0,
+            "TOMATO": 0.0,
+            "STRAWBERRY": 0.0,
+            "MELON": 0.0
+          },
+          "animals": {
+            "GOOSE": 0.0,
+            "COW": 0.0,
+            "SHEEP": 0.0
+          },
+          "horizon_days": 3
+        },
+        "prediction_error": 1.0,
+        "prediction_break": false
+      },
+      "ours": {
+        "bank": 18624,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "cow": 4,
+          "strawberry": 12,
+          "weed": 3,
+          "wheat": 3
+        },
+        "shed": {
+          "WHEAT": 17,
+          "STRAWBERRY": 40,
+          "MILK": 19,
+          "FERTILIZER": 2
+        },
+        "seeds": {
+          "TOMATO": 9
+        },
+        "actions": {
+          "unit_ops": {
+            "WEST": 49,
+            "NORTH": 49,
+            "SOUTH": 32,
+            "EAST": 25,
+            "WATER": 15,
+            "HARVEST": 13,
+            "FEED": 4,
+            "COLLECT_FERTILIZER": 4,
+            "FERTILIZE": 4,
+            "PASS": 4,
+            "CARE": 3,
+            "PICKUP": 2,
+            "PLANT": 2,
+            "DROP": 2
+          },
+          "market_ops": {
+            "HIRE": 8,
+            "SELL": 2,
+            "BUY_SEED": 2
+          },
+          "market_units": {
+            "SELL:TOMATO": 14,
+            "SELL:WHEAT": 8,
+            "BUY_SEED:WHEAT": 2
+          },
+          "labor": {
+            "worker_turns": 208,
+            "productive_turns": 45,
+            "logistics_turns": 159,
+            "idle_turns": 4,
+            "productive_rate": 0.2163,
+            "logistics_rate": 0.7644,
+            "idle_rate": 0.0192
+          }
+        }
+      },
+      "opponent": {
+        "bank": 20691,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "cow": 4,
+          "strawberry": 12,
+          "weed": 3
+        },
+        "shed": {
+          "WHEAT": 11,
+          "STRAWBERRY": 38,
+          "MILK": 24,
+          "FERTILIZER": 3
+        },
+        "seeds": {
+          "WHEAT": 5,
+          "TOMATO": 4
+        },
+        "actions": {
+          "unit_ops": {
+            "WEST": 55,
+            "NORTH": 51,
+            "EAST": 32,
+            "SOUTH": 27,
+            "WATER": 12,
+            "HARVEST": 9,
+            "PICKUP": 4,
+            "FEED": 4,
+            "COLLECT_FERTILIZER": 4,
+            "FERTILIZE": 4,
+            "CARE": 3,
+            "DIG": 2,
+            "DROP": 1
+          },
+          "market_ops": {
+            "HIRE": 8,
+            "SELL": 2,
+            "BUY_SEED": 1
+          },
+          "market_units": {
+            "SELL:TOMATO": 16,
+            "SELL:WHEAT": 3,
+            "BUY_SEED:WHEAT": 1
+          },
+          "labor": {
+            "worker_turns": 208,
+            "productive_turns": 38,
+            "logistics_turns": 170,
+            "idle_turns": 0,
+            "productive_rate": 0.1827,
+            "logistics_rate": 0.8173,
+            "idle_rate": 0.0
+          }
+        }
+      }
+    },
+    {
+      "day": 26,
+      "margin": -2067,
+      "opponent_belief": {
+        "archetype": "livestock-compound",
+        "confidence": 0.5629,
+        "recurring_crop": "STRAWBERRY",
+        "recurring_targets": {
+          "STRAWBERRY": 8,
+          "TOMATO": 7
+        },
+        "cash_crop": "CARROT",
+        "animal": "COW",
+        "animal_target": 0,
+        "crop_scores": {
+          "WHEAT": 45.67,
+          "CARROT": 15.33,
+          "TOMATO": -1000000.0,
+          "STRAWBERRY": -1000000.0,
+          "MELON": -1000000.0
+        },
+        "animal_scores": {
+          "GOOSE": -1000000.0,
+          "COW": -1000000.0,
+          "SHEEP": -1000000.0
+        },
+        "strategy_utilities": {
+          "cash-engine": 153.32,
+          "recurring-engine": -15000000.0,
+          "livestock-engine": -0.0
+        },
+        "probabilities": {
+          "wheat-volume": 0.0003,
+          "carrot-volume": 0.0003,
+          "melon-rush": 0.0002,
+          "strawberry-recurring": 0.2329,
+          "tomato-recurring": 0.0004,
+          "livestock-compound": 0.5629,
+          "goose-volume": 0.0002,
+          "cow-milk": 0.1873,
+          "sheep-premium": 0.0002,
+          "labor-swarm": 0.0003,
+          "land-expansion": 0.0003,
+          "mixed": 0.0147
+        },
+        "attention_weights": {
+          "operations": 0.8492,
+          "opponent": 0.0189,
+          "horizon": 0.1319
+        },
+        "asset_threat": 0.1213,
+        "asset_gap": -16878.0,
+        "productive_gap": 42.0,
+        "scale_gap": -3,
+        "animal_gap": 0,
+        "own_terminal_value": 45243.0,
+        "opponent_terminal_proxy": 28365.0,
+        "asset_growth": -1854.4,
+        "capital_mode": "hold",
+        "opponent_forecast": {
+          "crops": {
+            "WHEAT": 0.0,
+            "CARROT": 0.0,
+            "TOMATO": 0.0,
+            "STRAWBERRY": 0.0,
+            "MELON": 0.0
+          },
+          "animals": {
+            "GOOSE": 0.0,
+            "COW": 0.0,
+            "SHEEP": 0.0
+          },
+          "horizon_days": 3
+        },
+        "prediction_error": 0.0,
+        "prediction_break": false
+      },
+      "ours": {
+        "bank": 18570,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "cow": 4,
+          "strawberry": 12,
+          "weed": 3,
+          "wheat": 3
+        },
+        "shed": {
+          "WHEAT": 13,
+          "STRAWBERRY": 50,
+          "MILK": 21,
+          "FERTILIZER": 3
+        },
+        "seeds": {
+          "TOMATO": 9
+        },
+        "actions": {
+          "unit_ops": {
+            "WEST": 58,
+            "NORTH": 41,
+            "EAST": 38,
+            "SOUTH": 26,
+            "WATER": 15,
+            "HARVEST": 7,
+            "PICKUP": 5,
+            "PASS": 5,
+            "FEED": 4,
+            "COLLECT_FERTILIZER": 3,
+            "CARE": 3,
+            "FERTILIZE": 2,
+            "DROP": 1
+          },
+          "market_ops": {
+            "HIRE": 8
+          },
+          "market_units": {},
+          "labor": {
+            "worker_turns": 208,
+            "productive_turns": 34,
+            "logistics_turns": 169,
+            "idle_turns": 5,
+            "productive_rate": 0.1635,
+            "logistics_rate": 0.8125,
+            "idle_rate": 0.024
+          }
+        }
+      },
+      "opponent": {
+        "bank": 20637,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "cow": 4,
+          "strawberry": 12,
+          "weed": 3
+        },
+        "shed": {
+          "WHEAT": 7,
+          "STRAWBERRY": 48,
+          "MILK": 26
+        },
+        "seeds": {
+          "WHEAT": 5,
+          "TOMATO": 4
+        },
+        "actions": {
+          "unit_ops": {
+            "WEST": 57,
+            "NORTH": 46,
+            "EAST": 39,
+            "SOUTH": 27,
+            "WATER": 12,
+            "HARVEST": 8,
+            "PICKUP": 6,
+            "FEED": 4,
+            "FERTILIZE": 4,
+            "DROP": 2,
+            "CARE": 2,
+            "COLLECT_FERTILIZER": 1
+          },
+          "market_ops": {
+            "HIRE": 8
+          },
+          "market_units": {},
+          "labor": {
+            "worker_turns": 208,
+            "productive_turns": 31,
+            "logistics_turns": 177,
+            "idle_turns": 0,
+            "productive_rate": 0.149,
+            "logistics_rate": 0.851,
+            "idle_rate": 0.0
+          }
+        }
+      }
+    },
+    {
+      "day": 27,
+      "margin": -10422,
+      "opponent_belief": {
+        "archetype": "livestock-compound",
+        "confidence": 0.5617,
+        "recurring_crop": "STRAWBERRY",
+        "recurring_targets": {
+          "STRAWBERRY": 8,
+          "TOMATO": 7
+        },
+        "cash_crop": "MELON",
+        "animal": "COW",
+        "animal_target": 0,
+        "crop_scores": {
+          "WHEAT": -1000000.0,
+          "CARROT": -1000000.0,
+          "TOMATO": -1000000.0,
+          "STRAWBERRY": -1000000.0,
+          "MELON": -1000000.0
+        },
+        "animal_scores": {
+          "GOOSE": -1000000.0,
+          "COW": -1000000.0,
+          "SHEEP": -1000000.0
+        },
+        "strategy_utilities": {
+          "cash-engine": -10000000.0,
+          "recurring-engine": -15000000.0,
+          "livestock-engine": -0.0
+        },
+        "probabilities": {
+          "wheat-volume": 0.0003,
+          "carrot-volume": 0.0003,
+          "melon-rush": 0.0002,
+          "strawberry-recurring": 0.2338,
+          "tomato-recurring": 0.0003,
+          "livestock-compound": 0.5617,
+          "goose-volume": 0.0002,
+          "cow-milk": 0.188,
+          "sheep-premium": 0.0002,
+          "labor-swarm": 0.0003,
+          "land-expansion": 0.0003,
+          "mixed": 0.0144
+        },
+        "attention_weights": {
+          "operations": 0.5146,
+          "opponent": 0.0077,
+          "horizon": 0.4777
+        },
+        "asset_threat": 0.1846,
+        "asset_gap": -1463.0,
+        "productive_gap": -131.0,
+        "scale_gap": -3,
+        "animal_gap": 0,
+        "own_terminal_value": 45306.4,
+        "opponent_terminal_proxy": 43843.4,
+        "asset_growth": -3213.6,
+        "capital_mode": "hold",
+        "opponent_forecast": {
+          "crops": {
+            "WHEAT": 0.0,
+            "CARROT": 0.0,
+            "TOMATO": 0.0,
+            "STRAWBERRY": 0.0,
+            "MELON": 0.0
+          },
+          "animals": {
+            "GOOSE": 0.0,
+            "COW": 0.0,
+            "SHEEP": 0.0
+          },
+          "horizon_days": 3
+        },
+        "prediction_error": 0.0,
+        "prediction_break": false
+      },
+      "ours": {
+        "bank": 28907,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "cow": 4,
+          "strawberry": 12,
+          "weed": 3,
+          "wheat": 3
+        },
+        "shed": {
+          "WHEAT": 4,
+          "STRAWBERRY": 11,
+          "MILK": 29,
+          "FERTILIZER": 3
+        },
+        "seeds": {
+          "TOMATO": 9
+        },
+        "actions": {
+          "unit_ops": {
+            "NORTH": 48,
+            "WEST": 46,
+            "EAST": 32,
+            "SOUTH": 32,
+            "WATER": 15,
+            "HARVEST": 9,
+            "PICKUP": 6,
+            "FEED": 4,
+            "COLLECT_FERTILIZER": 4,
+            "FERTILIZE": 4,
+            "CARE": 3,
+            "PASS": 3,
+            "DROP": 2
+          },
+          "market_ops": {
+            "HIRE": 8,
+            "SELL": 2
+          },
+          "market_units": {
+            "SELL:STRAWBERRY": 50,
+            "SELL:WHEAT": 5
+          },
+          "labor": {
+            "worker_turns": 208,
+            "productive_turns": 39,
+            "logistics_turns": 166,
+            "idle_turns": 3,
+            "productive_rate": 0.1875,
+            "logistics_rate": 0.7981,
+            "idle_rate": 0.0144
+          }
+        }
+      },
+      "opponent": {
+        "bank": 39329,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "cow": 4,
+          "strawberry": 12,
+          "weed": 3
+        },
+        "shed": {
+          "WHEAT": 3,
+          "STRAWBERRY": 12,
+          "MILK": 6
+        },
+        "seeds": {
+          "WHEAT": 5,
+          "TOMATO": 4
+        },
+        "actions": {
+          "unit_ops": {
+            "PASS": 51,
+            "NORTH": 41,
+            "WEST": 34,
+            "EAST": 22,
+            "SOUTH": 20,
+            "WATER": 12,
+            "HARVEST": 8,
+            "FEED": 4,
+            "COLLECT_FERTILIZER": 4,
+            "CARE": 4,
+            "FERTILIZE": 4,
+            "PICKUP": 2,
+            "DROP": 2
+          },
+          "market_ops": {
+            "HIRE": 8,
+            "SELL": 2
+          },
+          "market_units": {
+            "SELL:STRAWBERRY": 48,
+            "SELL:MILK": 26
+          },
+          "labor": {
+            "worker_turns": 208,
+            "productive_turns": 36,
+            "logistics_turns": 121,
+            "idle_turns": 51,
+            "productive_rate": 0.1731,
+            "logistics_rate": 0.5817,
+            "idle_rate": 0.2452
+          }
+        }
+      }
+    },
+    {
+      "day": 28,
+      "margin": -2103,
+      "opponent_belief": {
+        "archetype": "livestock-compound",
+        "confidence": 0.5612,
+        "recurring_crop": "STRAWBERRY",
+        "recurring_targets": {
+          "STRAWBERRY": 8,
+          "TOMATO": 7
+        },
+        "cash_crop": "MELON",
+        "animal": "COW",
+        "animal_target": 0,
+        "crop_scores": {
+          "WHEAT": -1000000.0,
+          "CARROT": -1000000.0,
+          "TOMATO": -1000000.0,
+          "STRAWBERRY": -1000000.0,
+          "MELON": -1000000.0
+        },
+        "animal_scores": {
+          "GOOSE": -1000000.0,
+          "COW": -1000000.0,
+          "SHEEP": -1000000.0
+        },
+        "strategy_utilities": {
+          "cash-engine": -10000000.0,
+          "recurring-engine": -15000000.0,
+          "livestock-engine": -0.0
+        },
+        "probabilities": {
+          "wheat-volume": 0.0003,
+          "carrot-volume": 0.0003,
+          "melon-rush": 0.0002,
+          "strawberry-recurring": 0.2341,
+          "tomato-recurring": 0.0003,
+          "livestock-compound": 0.5612,
+          "goose-volume": 0.0002,
+          "cow-milk": 0.1882,
+          "sheep-premium": 0.0002,
+          "labor-swarm": 0.0003,
+          "land-expansion": 0.0003,
+          "mixed": 0.0143
+        },
+        "attention_weights": {
+          "operations": 0.4551,
+          "opponent": 0.0072,
+          "horizon": 0.5377
+        },
+        "asset_threat": 0.2469,
+        "asset_gap": 155.0,
+        "productive_gap": -288.0,
+        "scale_gap": -2,
+        "animal_gap": 0,
+        "own_terminal_value": 46156.0,
+        "opponent_terminal_proxy": 46311.0,
+        "asset_growth": -2234.4,
+        "capital_mode": "hold",
+        "opponent_forecast": {
+          "crops": {
+            "WHEAT": 0.0,
+            "CARROT": 0.0,
+            "TOMATO": 0.0,
+            "STRAWBERRY": 0.0,
+            "MELON": 0.0
+          },
+          "animals": {
+            "GOOSE": 0.0,
+            "COW": 0.0,
+            "SHEEP": 0.0
+          },
+          "horizon_days": 3
+        },
+        "prediction_error": 0.0,
+        "prediction_break": false
+      },
+      "ours": {
+        "bank": 41928,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "cow": 4,
+          "strawberry": 12,
+          "weed": 3,
+          "wheat": 2
+        },
+        "shed": {
+          "WHEAT": 3,
+          "STRAWBERRY": 7,
+          "FERTILIZER": 2
+        },
+        "seeds": {
+          "TOMATO": 9
+        },
+        "actions": {
+          "unit_ops": {
+            "WEST": 57,
+            "EAST": 44,
+            "NORTH": 36,
+            "SOUTH": 29,
+            "WATER": 14,
+            "HARVEST": 8,
+            "FEED": 4,
+            "CARE": 4,
+            "COLLECT_FERTILIZER": 3,
+            "PASS": 3,
+            "DROP": 3,
+            "PICKUP": 2,
+            "FERTILIZE": 1
+          },
+          "market_ops": {
+            "HIRE": 8,
+            "SELL": 7
+          },
+          "market_units": {
+            "SELL:MILK": 32,
+            "SELL:STRAWBERRY": 15,
+            "SELL:FERTILIZER": 3,
+            "SELL:WHEAT": 1
+          },
+          "labor": {
+            "worker_turns": 208,
+            "productive_turns": 34,
+            "logistics_turns": 171,
+            "idle_turns": 3,
+            "productive_rate": 0.1635,
+            "logistics_rate": 0.8221,
+            "idle_rate": 0.0144
+          }
+        }
+      },
+      "opponent": {
+        "bank": 44031,
+        "hands": 0,
+        "quadrants": 1,
+        "assets": {
+          "cow": 4,
+          "strawberry": 12,
+          "weed": 3
+        },
+        "shed": {
+          "STRAWBERRY": 10,
+          "MILK": 4,
+          "FERTILIZER": 2
+        },
+        "seeds": {
+          "WHEAT": 5,
+          "TOMATO": 4
+        },
+        "actions": {
+          "unit_ops": {
+            "PASS": 41,
+            "WEST": 35,
+            "NORTH": 34,
+            "SOUTH": 26,
+            "EAST": 24,
+            "FEED": 13,
+            "WATER": 12,
+            "HARVEST": 8,
+            "DROP": 6,
+            "COLLECT_FERTILIZER": 4,
+            "CARE": 4,
+            "PICKUP": 1
+          },
+          "market_ops": {
+            "HIRE": 8,
+            "SELL": 5
+          },
+          "market_units": {
+            "SELL:STRAWBERRY": 14,
+            "SELL:MILK": 6,
+            "SELL:FERTILIZER": 2,
+            "SELL:WHEAT": 1
+          },
+          "labor": {
+            "worker_turns": 208,
+            "productive_turns": 41,
+            "logistics_turns": 126,
+            "idle_turns": 41,
+            "productive_rate": 0.1971,
+            "logistics_rate": 0.6058,
+            "idle_rate": 0.1971
+          }
+        }
+      }
+    },
+    {
+      "day": 29,
+      "margin": -2430,
+      "opponent_belief": {
+        "archetype": "livestock-compound",
+        "confidence": 0.5612,
+        "recurring_crop": "STRAWBERRY",
+        "recurring_targets": {
+          "STRAWBERRY": 8,
+          "TOMATO": 7
+        },
+        "cash_crop": "MELON",
+        "animal": "COW",
+        "animal_target": 0,
+        "crop_scores": {
+          "WHEAT": -1000000.0,
+          "CARROT": -1000000.0,
+          "TOMATO": -1000000.0,
+          "STRAWBERRY": -1000000.0,
+          "MELON": -1000000.0
+        },
+        "animal_scores": {
+          "GOOSE": -1000000.0,
+          "COW": -1000000.0,
+          "SHEEP": -1000000.0
+        },
+        "strategy_utilities": {
+          "cash-engine": -10000000.0,
+          "recurring-engine": -15000000.0,
+          "livestock-engine": -0.0
+        },
+        "probabilities": {
+          "wheat-volume": 0.0003,
+          "carrot-volume": 0.0003,
+          "melon-rush": 0.0002,
+          "strawberry-recurring": 0.2341,
+          "tomato-recurring": 0.0003,
+          "livestock-compound": 0.5612,
+          "goose-volume": 0.0002,
+          "cow-milk": 0.1882,
+          "sheep-premium": 0.0002,
+          "labor-swarm": 0.0003,
+          "land-expansion": 0.0003,
+          "mixed": 0.0143
+        },
+        "attention_weights": {
+          "operations": 0.4549,
+          "opponent": 0.0078,
+          "horizon": 0.5374
+        },
+        "asset_threat": 0.3476,
+        "asset_gap": 2234.0,
+        "productive_gap": 0.0,
+        "scale_gap": 0,
+        "animal_gap": 0,
+        "own_terminal_value": 48123.0,
+        "opponent_terminal_proxy": 50357.0,
+        "asset_growth": -2234.4,
+        "capital_mode": "hold",
+        "opponent_forecast": {
+          "crops": {
+            "WHEAT": 0.0,
+            "CARROT": 0.0,
+            "TOMATO": 0.0,
+            "STRAWBERRY": 0.0,
+            "MELON": 0.0
+          },
+          "animals": {
+            "GOOSE": 0.0,
+            "COW": 0.0,
+            "SHEEP": 0.0
+          },
+          "horizon_days": 3
+        },
+        "prediction_error": 0.0,
+        "prediction_break": false
+      },
+      "ours": {
+        "bank": 47927,
+        "hands": 8,
+        "quadrants": 1,
+        "assets": {
+          "cow": 4,
+          "strawberry": 6,
+          "weed": 9
+        },
+        "shed": {},
+        "seeds": {
+          "TOMATO": 9
+        },
+        "actions": {
+          "unit_ops": {
+            "PASS": 60,
+            "NORTH": 28,
+            "SOUTH": 26,
+            "WEST": 25,
+            "EAST": 23,
+            "DROP": 14,
+            "PICKUP": 12,
+            "HARVEST": 11
+          },
+          "market_ops": {
+            "SELL": 15,
+            "HIRE": 8
+          },
+          "market_units": {
+            "SELL:WHEAT": 21,
+            "SELL:STRAWBERRY": 19,
+            "SELL:MILK": 7,
+            "SELL:FERTILIZER": 2
+          },
+          "labor": {
+            "worker_turns": 199,
+            "productive_turns": 11,
+            "logistics_turns": 128,
+            "idle_turns": 60,
+            "productive_rate": 0.0553,
+            "logistics_rate": 0.6432,
+            "idle_rate": 0.3015
+          }
+        }
+      },
+      "opponent": {
+        "bank": 50357,
+        "hands": 8,
+        "quadrants": 1,
+        "assets": {
+          "cow": 4,
+          "strawberry": 6,
+          "weed": 9
+        },
+        "shed": {},
+        "seeds": {
+          "WHEAT": 5,
+          "TOMATO": 4
+        },
+        "actions": {
+          "unit_ops": {
+            "PASS": 113,
+            "NORTH": 23,
+            "SOUTH": 20,
+            "WEST": 15,
+            "EAST": 12,
+            "HARVEST": 8,
+            "DROP": 8
+          },
+          "market_ops": {
+            "SELL": 10,
+            "HIRE": 8
+          },
+          "market_units": {
+            "SELL:STRAWBERRY": 22,
+            "SELL:MILK": 7,
+            "SELL:FERTILIZER": 2
+          },
+          "labor": {
+            "worker_turns": 199,
+            "productive_turns": 8,
+            "logistics_turns": 78,
+            "idle_turns": 113,
+            "productive_rate": 0.0402,
+            "logistics_rate": 0.392,
+            "idle_rate": 0.5678
+          }
+        }
+      }
+    }
+  ]
+}

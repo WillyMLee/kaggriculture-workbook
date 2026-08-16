@@ -1,0 +1,53 @@
+{
+  "objective": "Improve v0.7.1 labor, engine-combination, and adaptation decisions; then test 20 games against exact v0.7.0.",
+  "bounds": {
+    "candidate_iterations": 3,
+    "arena_wall_seconds_per_run": 600,
+    "action_target_ms": 250,
+    "action_failure_ms": 700,
+    "promotion_gate": "20 wins in 20 games against frozen v0.7.0, both seats",
+    "external_side_effects": "No Kaggle submission, push, or deployment"
+  },
+  "current_evidence": {
+    "ladder_sample": "22 matches, 11 teams, every tenth rank from 100 through 200",
+    "heldout_v0_7_1_vs_v0_7_0": "3-3, +2381.33 average, -2430 worst, 180.759 ms max",
+    "seat_pattern": "3-0 from seat 0; 0-3 from seat 1",
+    "earliest_material_failure": "Day-12 engine conversion and labor routing",
+    "labor_findings": [
+      "47-62% early idle worker turns under fixed hiring",
+      "60-82% mid/late logistics turns",
+      "Routes are recomputed each turn without persistence",
+      "Repeated animal purchase intent can consume market-order slots"
+    ]
+  },
+  "planned_personas": [
+    "strawberry-cow-fertilizer",
+    "strawberry-sheep-volume",
+    "strawberry-mixed-conversion"
+  ],
+  "unknowns": [
+    "Whether route persistence improves both seats without missing urgent work",
+    "Whether dynamic hiring saves cash without reducing completed chores",
+    "Whether the converged ladder sample generalizes beyond one visible meta"
+  ],
+  "iteration_results": {
+    "iteration_1_labor": "Known seed 41 improved to 2-0, +7044.5 average; persona arena 2-4, -1521.83 average.",
+    "iteration_2_universal_early_engine": "Rejected: persona arena 3-3 but -3711 average and -21814 worst.",
+    "iteration_3_conditional_early_response": "Rejected early: cow persona lost both seats by -26050; arena stopped at 4/6.",
+    "final_exact_gate": "Stopped at 8/20 after first loss; 7-1 on fresh seeds 500-503, seed 503 seat 1 margin -6."
+  },
+  "next_regression": {
+    "seed": 503,
+    "seat": 1,
+    "failure": "A +11472 bank lead on day 24 compressed to -6 at the terminal score.",
+    "hypothesis": "Late holding and logistics timing, not engine construction: 79-82% logistics on days 26-27 and no sales until day 28.",
+    "status": "Preserved for the next bounded loop; no fourth iteration in this run."
+  },
+  "evidence_paths": [
+    "results/kaggle_rank_100_200_midgame_sample.json",
+    "results/v0_7_1_vs_v0_7_0_heldout.json",
+    "results/v0_7_1_seed41_seat0_trace.json",
+    "results/v0_7_1_seed41_seat1_trace.json"
+    ,"results/v0_7_1_seed503_seat1_regression.json"
+  ]
+}

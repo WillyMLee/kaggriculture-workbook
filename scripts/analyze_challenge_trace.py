@@ -53,10 +53,28 @@ def action_summary(steps, seat, start, end):
             market_ops[order[0]] += 1
             if len(order) >= 3 and isinstance(order[2], (int, float)):
                 market_units[f"{order[0]}:{order[1]}"] += int(order[2])
+    total_unit_actions = sum(unit_ops.values())
+    movement = sum(unit_ops[name] for name in ("NORTH", "SOUTH", "EAST", "WEST"))
+    logistics = movement + unit_ops["PICKUP"] + unit_ops["DROP"]
+    productive = sum(
+        count
+        for name, count in unit_ops.items()
+        if name not in {"PASS", "NORTH", "SOUTH", "EAST", "WEST", "PICKUP", "DROP"}
+    )
+    idle = unit_ops["PASS"]
     return {
         "unit_ops": dict(unit_ops.most_common()),
         "market_ops": dict(market_ops.most_common()),
         "market_units": dict(market_units.most_common()),
+        "labor": {
+            "worker_turns": total_unit_actions,
+            "productive_turns": productive,
+            "logistics_turns": logistics,
+            "idle_turns": idle,
+            "productive_rate": round(productive / max(1, total_unit_actions), 4),
+            "logistics_rate": round(logistics / max(1, total_unit_actions), 4),
+            "idle_rate": round(idle / max(1, total_unit_actions), 4),
+        },
     }
 
 

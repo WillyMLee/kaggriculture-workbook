@@ -1,0 +1,152 @@
+{
+  "complete": true,
+  "expected_episodes": 6,
+  "candidate_artifact": "kaggriculture-v0.7.1-i1.tar.gz",
+  "candidate_sha256": "38ccac2a5552323b9a1bce2a370f2dfd80949d3d5433bcd8f6b61cb874cabb0c",
+  "personas_are_inferred": true,
+  "persona_caveat": "Public commitment emulations, not reconstructions of private code.",
+  "summary": {
+    "episodes": 6,
+    "wins": 2,
+    "losses": 4,
+    "ties": 0,
+    "average_margin": -1521.83,
+    "minimum_margin": -13402.0,
+    "runtime_failures": 0,
+    "suspicious_fallback_turns": 0,
+    "maximum_action_ms": 417.594
+  },
+  "by_persona": {
+    "strawberry-cow-fertilizer": {
+      "episodes": 2,
+      "wins": 0,
+      "losses": 2,
+      "ties": 0,
+      "average_margin": -9454.0,
+      "minimum_margin": -9454.0,
+      "runtime_failures": 0,
+      "suspicious_fallback_turns": 0,
+      "maximum_action_ms": 316.15
+    },
+    "strawberry-sheep-volume": {
+      "episodes": 2,
+      "wins": 2,
+      "losses": 0,
+      "ties": 0,
+      "average_margin": 18258.0,
+      "minimum_margin": 11057.0,
+      "runtime_failures": 0,
+      "suspicious_fallback_turns": 0,
+      "maximum_action_ms": 417.594
+    },
+    "strawberry-mixed-conversion": {
+      "episodes": 2,
+      "wins": 0,
+      "losses": 2,
+      "ties": 0,
+      "average_margin": -13369.5,
+      "minimum_margin": -13402.0,
+      "runtime_failures": 0,
+      "suspicious_fallback_turns": 0,
+      "maximum_action_ms": 411.531
+    }
+  },
+  "games": [
+    {
+      "persona": "strawberry-cow-fertilizer",
+      "seed": 100,
+      "seat": 0,
+      "result": "loss",
+      "candidate_reward": 55116.0,
+      "persona_reward": 64570.0,
+      "margin": -9454.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "suspicious_fallback_turns": 0,
+      "max_action_ms": 316.15,
+      "average_action_ms": 7.113
+    },
+    {
+      "persona": "strawberry-cow-fertilizer",
+      "seed": 100,
+      "seat": 1,
+      "result": "loss",
+      "candidate_reward": 55116.0,
+      "persona_reward": 64570.0,
+      "margin": -9454.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "suspicious_fallback_turns": 0,
+      "max_action_ms": 273.951,
+      "average_action_ms": 6.758
+    },
+    {
+      "persona": "strawberry-sheep-volume",
+      "seed": 200,
+      "seat": 0,
+      "result": "win",
+      "candidate_reward": 68784.0,
+      "persona_reward": 43325.0,
+      "margin": 25459.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "suspicious_fallback_turns": 0,
+      "max_action_ms": 280.405,
+      "average_action_ms": 6.156
+    },
+    {
+      "persona": "strawberry-sheep-volume",
+      "seed": 200,
+      "seat": 1,
+      "result": "win",
+      "candidate_reward": 64944.0,
+      "persona_reward": 53887.0,
+      "margin": 11057.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "suspicious_fallback_turns": 0,
+      "max_action_ms": 417.594,
+      "average_action_ms": 8.629
+    },
+    {
+      "persona": "strawberry-mixed-conversion",
+      "seed": 300,
+      "seat": 0,
+      "result": "loss",
+      "candidate_reward": 57871.0,
+      "persona_reward": 71273.0,
+      "margin": -13402.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "suspicious_fallback_turns": 0,
+      "max_action_ms": 411.531,
+      "average_action_ms": 8.135
+    },
+    {
+      "persona": "strawberry-mixed-conversion",
+      "seed": 300,
+      "seat": 1,
+      "result": "loss",
+      "candidate_reward": 57538.0,
+      "persona_reward": 70875.0,
+      "margin": -13337.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "suspicious_fallback_turns": 0,
+      "max_action_ms": 274.606,
+      "average_action_ms": 6.044
+    }
+  ]
+}

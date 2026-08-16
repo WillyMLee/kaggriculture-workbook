@@ -1,11 +1,11 @@
 {
   "artifact": "kaggriculture-v0.7.1.tar.gz",
-  "sha256": "a42208eb3f1c0794b61c30d6a2a364326b673193996e2e97f429ce109deceba2",
-  "compressed_bytes": 13970,
-  "uncompressed_main_bytes": 59543,
+  "sha256": "da3fceaba23b163201ca804bd6c64dd733451aa0f3790fa2358ea0fac828f7b2",
+  "compressed_bytes": 15330,
+  "uncompressed_main_bytes": 66628,
   "size_limit_bytes": 104857600,
   "size_limit_mib": 100.0,
-  "limit_used_percent": 0.013323,
+  "limit_used_percent": 0.01462,
   "members": [
     "main.py"
   ],

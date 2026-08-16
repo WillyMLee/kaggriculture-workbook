@@ -14,7 +14,9 @@ from agents.balanced_tempo import (
     _assign_tasks,
     _demand_forecast,
     _dynamic_wheat_plan,
+    _engine_combo_model,
     _fertilizer_targets,
+    _labor_plan,
     _market_plan,
     _operations_attention,
     _opponent_attention,
@@ -71,11 +73,13 @@ def test_closeout_keeps_labor_and_feed():
     signal = {"recurring_crop": "STRAWBERRY"}
 
     day_28 = _market_plan({"day": 28, "hour": 0}, farm, private, signal, _phase_attention({"day": 28}))
-    assert sum(order == ["HIRE"] for order in day_28) == 8
+    expected_hires = _labor_plan({"day": 28}, farm, _phase_attention({"day": 28}))["target"]
+    assert sum(order == ["HIRE"] for order in day_28) == expected_hires
     assert ["SELL", "WHEAT", 2] in day_28
 
     day_29 = _market_plan({"day": 29, "hour": 0}, farm, private, signal, _phase_attention({"day": 29}))
-    assert sum(order == ["HIRE"] for order in day_29) == 8
+    expected_hires = _labor_plan({"day": 29}, farm, _phase_attention({"day": 29}))["target"]
+    assert sum(order == ["HIRE"] for order in day_29) == expected_hires
     assert ["SELL", "WHEAT", 6] in day_29
 
     for x in range(4):
@@ -116,7 +120,7 @@ def test_execute_phase_does_not_fall_back_to_no_op():
         },
     })
     assert len(action["market"]) > 0
-    assert sum(order == ["HIRE"] for order in action["market"]) == 8
+    assert sum(order == ["HIRE"] for order in action["market"]) >= 7
     assert any(order[:2] == ["SELL", "MILK"] for order in action["market"])
 
 
@@ -365,6 +369,27 @@ def test_opponent_prediction_breaks_on_material_deviation():
     assert signal["prediction_error"] >= 8
 
 
+def test_engine_combo_is_available_without_forcing_a_switch():
+    _EPISODE_MEMORY.clear()
+    ours = make_farm()
+    ours["money"] = 3000
+    opponent = make_farm()
+    add_cows(opponent, 2, fed=True)
+    obs = {
+        "day": 3,
+        "hour": 0,
+        "player": 0,
+        "farms": [ours, opponent],
+        "market": {"prices": {}},
+        "town": {"unlocked_shops": []},
+        "private": {"shed": {}, "seeds": {}, "inventories": [{}]},
+    }
+    signal = _opponent_attention(obs, 0)
+    assert len(signal["engine_combo"]["scores"]) == 6
+    action = agent(obs)
+    assert not any(order[0] == "BUY_ANIMAL" for order in action["market"])
+
+
 if __name__ == "__main__":
     test_phase_boundaries()
     test_closeout_keeps_labor_and_feed()
@@ -383,4 +408,5 @@ if __name__ == "__main__":
     test_high_threat_fifth_animal_has_a_real_slot()
     test_wheat_is_a_dynamic_reserve_not_a_fixed_commitment()
     test_opponent_prediction_breaks_on_material_deviation()
-    print("phase policy regressions: 17 passed")
+    test_engine_combo_is_available_without_forcing_a_switch()
+    print("phase policy regressions: 18 passed")

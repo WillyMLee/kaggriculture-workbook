@@ -616,9 +616,9 @@
       version: "v0.7.1",
       date: "2026-08-16",
       status: "candidate",
-      evidence: "v0.7.0 held-out: 3–3 · +2,381 avg · 180.8 ms max",
-      model: "Dynamic wheat reserve, environment-first crowding weights, three-day opponent commitment forecast, and softmax strategy-switch hysteresis.",
-      limitation: "Six games show parity, not superiority. The rank-100–200 sample converges on one archetype, so a diverse arena is still required before forest fitting or submission.",
+      evidence: "v0.7.0 exact gate: 7–1 of 20 · +5,292 avg · worst −6",
+      model: "Dynamic wheat and labor reserves, sticky hand routes, bounded purchases, three-day opponent forecast, and crop×livestock combination diagnostics.",
+      limitation: "Failed the required 20 / 20 gate on seed 503 seat 1 after a day-24 lead; late conversion and logistics timing remain unresolved.",
     },
   ];
   let agentArchive = readStore(KEYS.agentArchive, seededAgents);

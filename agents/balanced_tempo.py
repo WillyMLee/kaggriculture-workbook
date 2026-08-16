@@ -116,6 +116,8 @@ def _episode_memory(obs, player):
             "predicted_delta": None,
             "prediction_error": 0.0,
             "prediction_break": False,
+            "route_day": -1,
+            "routes": {},
             "trace_days": set(),
             "last_seen_step": step,
         }
@@ -416,6 +418,45 @@ def _dynamic_wheat_plan(obs, farm, private):
     }
 
 
+def _labor_plan(obs, farm, phase):
+    """Hire for today's work and travel footprint, not a fixed phase quota."""
+    day = int(obs.get("day", 0))
+    work_units = 0
+    active_positions = []
+    for y, row in enumerate(farm.get("tiles", [])):
+        for x, tile in enumerate(row):
+            if not isinstance(tile, dict):
+                continue
+            if tile.get("kind") == "PLANT":
+                active_positions.append((x, y))
+                work_units += int(not tile.get("watered_today", False))
+                work_units += int(int(tile.get("yield_units", 0)) > 0)
+            if tile.get("animal"):
+                active_positions.append((x, y))
+                work_units += int(not tile.get("fed_today", False))
+                work_units += int(not tile.get("cared_today", False))
+                work_units += int(tile.get("fertilizer_available", False))
+                work_units += int(int(tile.get("yield_units", 0)) > 0)
+    if phase.get("allow_animals"):
+        work_units += 4
+    if phase.get("allow_recurring"):
+        work_units += 6
+    if active_positions:
+        route_span = max(_distance(position, _nearest_shed(position)) for position in active_positions)
+    else:
+        route_span = 0
+    target = 2 + int(math.ceil(work_units / 8.0)) + int(route_span >= 5)
+    if day == 0:
+        target = max(target, 5)
+    if phase.get("late_mode") == "execute":
+        target = max(target, 7)
+    return {
+        "target": max(2, min(10, target)),
+        "work_units": work_units,
+        "route_span": route_span,
+    }
+
+
 def _expected_supply_pressure(probabilities, product):
     """Expected opponent supply for a product across all live archetypes."""
     return sum(
@@ -533,6 +574,53 @@ def _animal_portfolio_model(obs, farm, opponent, probabilities=None):
     return {"scores": scores, "animal": choice, "details": details}
 
 
+def _engine_combo_model(obs, farm, crop_model, animal_model):
+    """Score crop×livestock engines with shared labor, feed, and town effects."""
+    day = int(obs.get("day", 0))
+    remaining = max(0, 29 - day)
+    shops = (obs.get("town") or {}).get("unlocked_shops", [])
+    prices = (obs.get("market") or {}).get("prices", {})
+    wheat_price = float(prices.get("WHEAT", BASE_PRICES["WHEAT"]))
+    existing_animals = {
+        animal: _count_tiles(
+            farm, lambda tile, animal=animal: isinstance(tile, dict) and tile.get("animal") == animal
+        )
+        for animal in ANIMAL_ECONOMICS
+    }
+    combinations = {}
+    for crop in ("TOMATO", "STRAWBERRY"):
+        for animal, animal_data in ANIMAL_ECONOMICS.items():
+            product = animal_data["product"]
+            crop_target = 15
+            animal_target = 4
+            shop_synergy = sum(
+                1 for shop in shops if crop in SHOP_PRODUCTS.get(shop, ()) and product in SHOP_PRODUCTS.get(shop, ())
+            )
+            fertilizer_synergy = min(4, animal_target) * max(0.0, crop_model["scores"][crop]) * 0.18
+            feed_burden = animal_target * min(8, remaining) * wheat_price * 0.10
+            labor_burden = (crop_target + animal_target * 3) * 1.8
+            incumbent_bonus = existing_animals[animal] * 12.0
+            score = (
+                crop_model["scores"][crop] * crop_target
+                + animal_model["scores"][animal] * animal_target
+                + shop_synergy * 90.0
+                + fertilizer_synergy
+                + incumbent_bonus
+                - feed_burden
+                - labor_burden
+            )
+            combinations[f"{crop}+{animal}"] = score
+    choice, score = max(combinations.items(), key=lambda item: (item[1], item[0]))
+    crop, animal = choice.split("+", 1)
+    return {
+        "choice": choice,
+        "crop": crop,
+        "animal": animal,
+        "score": round(score, 2),
+        "scores": {key: round(value, 2) for key, value in combinations.items()},
+    }
+
+
 def _attention_weights(obs, player, strategy_probabilities, asset_threat=0.0):
     """Allocate attention among operations, opponent inference, and horizon."""
     day = int(obs.get("day", 0))
@@ -633,6 +721,7 @@ def _opponent_attention(obs, player):
     phase = _phase_attention(obs)
     portfolio = _portfolio_model(obs, own_farm, opponent, phase, probabilities)
     animal_portfolio = _animal_portfolio_model(obs, own_farm, opponent, probabilities)
+    combo = _engine_combo_model(obs, own_farm, portfolio, animal_portfolio)
     own_crop_counts = {
         crop: _count_tiles(own_farm, lambda tile, crop=crop: isinstance(tile, dict) and tile.get("crop") == crop)
         for crop in ("CARROT", "MELON", "TOMATO", "STRAWBERRY")
@@ -703,6 +792,7 @@ def _opponent_attention(obs, player):
         "animal_target": animal_target,
         "crop_scores": {key: round(value, 2) for key, value in portfolio["scores"].items()},
         "animal_scores": {key: round(value, 2) for key, value in animal_portfolio["scores"].items()},
+        "engine_combo": combo,
         "strategy_utilities": {key: round(value, 2) for key, value in strategy_utilities.items()},
         "probabilities": {key: round(value, 4) for key, value in probabilities.items()},
         "attention_weights": {key: round(value, 4) for key, value in attention.items()},
@@ -882,6 +972,7 @@ def _market_plan(obs, farm, private, opponent_signal, phase, terminal=None):
     animals = _count_tiles(farm, lambda tile: isinstance(tile, dict) and "animal" in tile)
     fertilizer_targets = _fertilizer_targets(obs, farm)
     wheat_plan = _dynamic_wheat_plan(obs, farm, private)
+    labor_plan = _labor_plan(obs, farm, phase)
 
     # Shed overflow discards end-of-day output. Forecast harvest already visible
     # on mature crops and clear low-value wheat before it displaces melon or
@@ -912,8 +1003,7 @@ def _market_plan(obs, farm, private, opponent_signal, phase, terminal=None):
     # Labor is operating capacity, not an investment. Keep it through the last
     # day so feeding and harvesting are not abandoned during liquidation.
     if hour == 0:
-        hire_target = 6 if phase["phase"] == "early" else 8
-        orders.extend([["HIRE"] for _ in range(hire_target)])
+        orders.extend([["HIRE"] for _ in range(labor_plan["target"])])
 
     # Convert completed output continuously. Wheat remains feed until late
     # execution, when only the amount above the remaining feed reserve is sold.
@@ -954,10 +1044,16 @@ def _market_plan(obs, farm, private, opponent_signal, phase, terminal=None):
             secondary = "TOMATO" if opponent_signal["recurring_crop"] == "STRAWBERRY" else "STRAWBERRY"
             desired[secondary] = max(0, desired.get(secondary, 0) - 1)
 
-    for crop, target in desired.items():
-        shortfall = max(0, target - planted.get(crop, 0) - int(seeds.get(crop, 0)))
-        if shortfall:
-            orders.append(["BUY_SEED", crop, shortfall])
+    purchase_window = hour <= 2 or hour in (6, 12, 18)
+    if purchase_window:
+        seed_budget = max(0, int(farm.get("money", 0)) - 80)
+        for crop, target in desired.items():
+            shortfall = max(0, target - planted.get(crop, 0) - int(seeds.get(crop, 0)))
+            affordable = seed_budget // CROPS[crop]["seed"]
+            quantity = min(shortfall, affordable)
+            if quantity:
+                orders.append(["BUY_SEED", crop, quantity])
+                seed_budget -= quantity * CROPS[crop]["seed"]
 
     animal_choice = opponent_signal.get("animal", "COW")
     structure = "COOP" if animal_choice == "GOOSE" else "PASTURE"
@@ -968,15 +1064,21 @@ def _market_plan(obs, farm, private, opponent_signal, phase, terminal=None):
         farm, lambda tile: isinstance(tile, dict) and tile.get("kind") == structure and "animal" not in tile
     )
     carried_animals = sum(int(inv.get(animal_choice, 0)) for inv in inventories)
-    if 12 <= day <= 20 and phase["allow_animals"]:
+    if phase["allow_animals"]:
         target = int(opponent_signal.get("animal_target", 4))
         animal_shortfall = max(0, target - selected_animals - int(shed.get(animal_choice, 0)) - carried_animals)
-        if animal_shortfall:
-            orders.append(["BUY_ANIMAL", animal_choice, animal_shortfall])
+        animal_cost = ANIMAL_ECONOMICS[animal_choice]["cost"]
+        affordable_animals = max(0, int(farm.get("money", 0)) - 120) // animal_cost
+        animal_quantity = min(animal_shortfall, affordable_animals) if purchase_window else 0
+        if animal_quantity:
+            orders.append(["BUY_ANIMAL", animal_choice, animal_quantity])
         feed_on_hand = int(shed.get("WHEAT", 0)) + sum(int(inv.get("WHEAT", 0)) for inv in inventories)
         feed_target = max(8, wheat_plan["feed_reserve"], (animals + empty_structures) * 2)
-        if feed_on_hand < feed_target:
-            orders.append(["BUY_PRODUCT", "WHEAT", feed_target - feed_on_hand])
+        wheat_price = max(1, int((obs.get("market") or {}).get("prices", {}).get("WHEAT", BASE_PRICES["WHEAT"])))
+        affordable_feed = max(0, int(farm.get("money", 0)) - 80) // wheat_price
+        feed_quantity = min(max(0, feed_target - feed_on_hand), affordable_feed) if purchase_window else 0
+        if feed_quantity:
+            orders.append(["BUY_PRODUCT", "WHEAT", feed_quantity])
 
     return orders[:10]
 
@@ -1018,7 +1120,7 @@ def _operations_attention(obs, farm, private, opponent_signal, phase, terminal=N
                 if int(tile.get("yield_units", 0)) > 0:
                     tasks.append((0, position, ["HARVEST"]))
 
-    if 12 <= day <= 20 and phase["allow_animals"]:
+    if phase["allow_animals"]:
         pasture_cells = PASTURE_CELLS
         if int(opponent_signal.get("animal_target", 4)) > len(PASTURE_CELLS):
             pasture_cells += ADAPTIVE_PASTURE_CELL
@@ -1160,7 +1262,7 @@ def _emit_day_trace(obs, player, opponent_signal, phase, result):
     print("KAGG_TRACE " + json.dumps(payload, separators=(",", ":"), sort_keys=True))
 
 
-def _policy(obs):
+def _policy(obs, persona=None):
     farms = obs.get("farms", [])
     player = int(obs.get("player", 0))
     day = int(obs.get("day", 0))
@@ -1172,6 +1274,26 @@ def _policy(obs):
     farm = farms[player]
     opponent_signal = _opponent_attention(obs, player)
     phase = _phase_attention(obs)
+    if persona:
+        phase = dict(phase)
+        recurring_start = int(persona.get("recurring_start", 5))
+        phase["allow_animals"] = day <= int(persona.get("animal_end", 18))
+        if recurring_start <= day <= int(persona.get("recurring_end", 18)):
+            phase["phase"] = "middle"
+            phase["allow_recurring"] = True
+        opponent_signal = {
+            **opponent_signal,
+            "cash_crop": persona.get("cash_crop", "MELON"),
+            "recurring_crop": persona.get("recurring_crop", "STRAWBERRY"),
+            "recurring_targets": dict(persona.get("recurring_targets", {"STRAWBERRY": 12, "TOMATO": 3})),
+            "animal": persona.get("animal", "COW"),
+            "animal_target": int(persona.get("animal_target", 4)),
+            "capital_mode": persona.get("capital_mode", "compound"),
+        }
+    memory = _episode_memory(obs, player)
+    if int(memory.get("route_day", -1)) != day:
+        memory["route_day"] = day
+        memory["routes"] = {}
     terminal = _reverse_terminal_plan(obs, farm, private)
     positions = [tuple(farm["farmer"])] + [tuple(position) for position in farm.get("hands", [])]
     inventories = list(private.get("inventories", []))
@@ -1238,11 +1360,41 @@ def _policy(obs):
                 actions[index] = ["DROP"] if position == target else _step_toward(position, target)
                 available.discard(index)
 
+    # Keep a worker on the same route while its target remains valid. Urgent
+    # work can still preempt a route that is more than one priority tier lower.
+    next_routes = {}
+    task_lookup = {
+        (tuple(target), tuple(operation)): (task_index, priority, target, operation)
+        for task_index, (priority, target, operation) in enumerate(tasks)
+    }
+    minimum_priority = min((task[0] for task in tasks), default=99)
+    for raw_index, route in (memory.get("routes") or {}).items():
+        index = int(raw_index)
+        if index not in available:
+            continue
+        key = (tuple(route.get("target", ())), tuple(route.get("operation", ())))
+        matched = task_lookup.get(key)
+        if not matched:
+            continue
+        _, priority, target, operation = matched
+        if priority > minimum_priority + 1 or target in reserved_targets:
+            continue
+        actions[index] = operation if positions[index] == target else _step_toward(positions[index], target)
+        available.discard(index)
+        reserved_targets.add(target)
+        if positions[index] != target:
+            next_routes[index] = {"target": target, "operation": operation, "priority": priority}
+
     # Assign the remaining workers together so one locally cheap choice cannot
     # force another worker into a long, deadline-missing route.
-    for index, task_index in _assign_tasks(positions, available, tasks, hour):
-        _, target, operation = tasks[task_index]
+    assignable_tasks = [task for task in tasks if task[1] not in reserved_targets]
+    for index, task_index in _assign_tasks(positions, available, assignable_tasks, hour):
+        priority, target, operation = assignable_tasks[task_index]
         actions[index] = operation if positions[index] == target else _step_toward(positions[index], target)
+        available.discard(index)
+        if positions[index] != target:
+            next_routes[index] = {"target": target, "operation": operation, "priority": priority}
+    memory["routes"] = next_routes
 
     # Late in the day, idle carriers return output to the shed for sale.
     if int(obs.get("hour", 0)) >= 20:
