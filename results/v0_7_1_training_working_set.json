@@ -34,20 +34,23 @@
     "iteration_1_labor": "Known seed 41 improved to 2-0, +7044.5 average; persona arena 2-4, -1521.83 average.",
     "iteration_2_universal_early_engine": "Rejected: persona arena 3-3 but -3711 average and -21814 worst.",
     "iteration_3_conditional_early_response": "Rejected early: cow persona lost both seats by -26050; arena stopped at 4/6.",
-    "final_exact_gate": "Stopped at 8/20 after first loss; 7-1 on fresh seeds 500-503, seed 503 seat 1 margin -6."
+    "final_exact_gate": "Superseded by iteration 5: 20-0 on fresh seeds 500-509, +5685.2 average, +380 worst, 334.716 ms max action."
   },
   "next_regression": {
     "seed": 503,
     "seat": 1,
     "failure": "A +11472 bank lead on day 24 compressed to -6 at the terminal score.",
-    "hypothesis": "Late holding and logistics timing, not engine construction: 79-82% logistics on days 26-27 and no sales until day 28.",
-    "status": "Preserved for the next bounded loop; no fourth iteration in this run."
+    "hypothesis": "Confirmed terminal inconsistency: the reverse planner removed final feed obligations, but the pickup queue still withdrew wheat and raced liquidation.",
+    "status": "Resolved in iteration 5; both seats won (+1349 and +380)."
   },
   "evidence_paths": [
     "results/kaggle_rank_100_200_midgame_sample.json",
     "results/v0_7_1_vs_v0_7_0_heldout.json",
     "results/v0_7_1_seed41_seat0_trace.json",
     "results/v0_7_1_seed41_seat1_trace.json"
-    ,"results/v0_7_1_seed503_seat1_regression.json"
+    ,"results/v0_7_1_seed503_seat1_regression.json",
+    "results/v0_7_1_i5_seed503_vs_v0_7_0.json",
+    "results/v0_7_1_i5_vs_v0_7_0_exact_20.json",
+    "results/v0_7_1_i5_persona_sanity.json"
   ]
 }

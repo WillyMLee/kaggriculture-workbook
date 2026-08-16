@@ -613,12 +613,12 @@
     },
     {
       id: "agent-v0-7-1",
-      version: "v0.7.1",
+      version: "v0.7.1-i5",
       date: "2026-08-16",
-      status: "candidate",
-      evidence: "v0.7.0 exact gate: 7–1 of 20 · +5,292 avg · worst −6",
-      model: "Dynamic wheat and labor reserves, sticky hand routes, bounded purchases, three-day opponent forecast, and crop×livestock combination diagnostics.",
-      limitation: "Failed the required 20 / 20 gate on seed 503 seat 1 after a day-24 lead; late conversion and logistics timing remain unresolved.",
+      status: "frozen",
+      evidence: "v0.7.0 exact gate: 20–0 · +5,685 avg · worst +380",
+      model: "Dynamic wheat and labor reserves, sticky hand routes, bounded purchases, three-day opponent forecast, crop×livestock diagnostics, and terminal-aware resource pickup.",
+      limitation: "Locally promoted over v0.7.0, but the mixed-conversion persona still wins both seats by 13,434; hold the Kaggle submission until that strategy family is understood.",
     },
   ];
   let agentArchive = readStore(KEYS.agentArchive, seededAgents);

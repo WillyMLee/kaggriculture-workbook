@@ -110,6 +110,8 @@ Adaptive Horizon v0.7.0 turns that replay into `results/kaggle_v0_6_1_pq_marz_re
 
 The final exact both-seat suite against frozen v0.6.1 finished 7–7–6 across 20 games, with a +103.8 average margin, −4,621 minimum margin, zero runtime failures, zero suspicious fallbacks, and 123.095 ms maximum action time. This is a non-regression result with one improved asymmetric seed, not evidence of superiority. The local 12,785-byte artifact passed the single-file packaging contract with SHA-256 `0c1c5cbbd21f7f094173a2b8dd2cc1f51f853df6c64d8bef52b7a43590588ab7`; it should remain on hold until broader opponent-family tests justify a ladder submission.
 
+Adaptive Horizon v0.7.1-i5 fixes the seed-503 terminal regression by making wheat pickup honor the reverse planner's remaining feed obligations. The known failure flipped from −6 to +380, and the bounded exact suite finished 20–0 against frozen v0.7.0 across seeds 500–509 and both seats, with a +5,685.2 average margin, +380 minimum margin, zero failures or suspicious fallbacks, and a 334.716 ms maximum local action time. The 15,356-byte artifact is locally promoted over v0.7.0. A six-game persona sanity check finished 4–2; both −13,434 losses came from the mixed-conversion persona, so this is not yet a Kaggle submission recommendation.
+
 ## Sources
 
 Competition facts were checked against the live Kaggle pages on August 14, 2026:

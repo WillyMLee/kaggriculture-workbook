@@ -388,14 +388,14 @@
           <button class="button button-primary" id="open-agent-form" type="button">Log agent</button>
         </div>
         <section class="section shell" aria-labelledby="current-checkpoint-title">
-          <div class="section-heading"><div><p class="eyebrow">Current checkpoint · August 16</p><h2 id="current-checkpoint-title">v0.7.1 is a bounded local experiment</h2></div><strong class="qa-verdict" data-state="hold">HOLD</strong></div>
+          <div class="section-heading"><div><p class="eyebrow">Current checkpoint · August 16</p><h2 id="current-checkpoint-title">v0.7.1-i5 clears the predecessor gate</h2></div><strong class="qa-verdict">LOCAL PASS</strong></div>
           <div class="candidate-evidence">
             <div><span>Ladder sample</span><strong>22 matches</strong><small>11 agents · ranks 100–200</small></div>
-            <div><span>Exact gate</span><strong>7–1 of 20</strong><small>stopped after first loss · gate failed</small></div>
-            <div><span>Average margin</span><strong>+5,292</strong><small>worst −6 · fresh seeds 500–503</small></div>
-            <div><span>Turn runtime</span><strong>473.9 ms max</strong><small>1 s action limit · zero failures</small></div>
+            <div><span>Exact gate</span><strong>20 / 20</strong><small>v0.7.0 · 10 seeds · both seats</small></div>
+            <div><span>Average margin</span><strong>+5,685</strong><small>worst +380 · fresh seeds 500–509</small></div>
+            <div><span>Persona sanity</span><strong>4 / 6</strong><small>mixed-conversion remains 0–2</small></div>
           </div>
-          <p class="source-note"><strong>Read:</strong> labor routing improved the previous seat-1 failure, but v0.7.1 missed the required 20 / 20 gate by six coins on seed 503, seat 1. No Kaggle submission was made.</p>
+          <p class="source-note"><strong>Read:</strong> terminal pickup now honors the reverse plan, so hands no longer withdraw wheat after the final feed obligation. The seed-503 regression flipped from −6 to +380 and the full gate finished 20–0. This is a local promotion over v0.7.0, not yet a Kaggle release recommendation.</p>
         </section>
         <section class="section shell" aria-labelledby="ladder-study-title">
           <div class="section-heading"><div><p class="eyebrow">Public ladder field study</p><h2 id="ladder-study-title">The rank-100–200 band converges on one engine</h2></div><p class="section-note">Every tenth rank · two recent matches each</p></div>
@@ -408,7 +408,7 @@
           <p class="source-note">Compact evidence: <code>results/kaggle_rank_100_200_midgame_sample.json</code>. Labels describe visible commitments, not private code or intent.</p>
         </section>
         <section class="section shell" aria-labelledby="v07-notes-title">
-          <div class="section-heading"><div><p class="eyebrow">v0.7.1 candidate</p><h2 id="v07-notes-title">Adapt without letting the opponent own the plan</h2></div><p class="section-note">14.1 KB artifact packaged locally · no Kaggle submission</p></div>
+          <div class="section-heading"><div><p class="eyebrow">v0.7.1-i5 checkpoint</p><h2 id="v07-notes-title">Adapt without letting the opponent own the plan</h2></div><p class="section-note">15.4 KB artifact packaged locally · no Kaggle submission</p></div>
           <ol class="system-flow">
             <li><span>01</span><div><strong>Keep within-match memory</strong><p>Carry the previous posterior, bank movement, asset growth, crop mix, animal mix, labor, and unlocked land from one day to the next.</p></div><em>IMPLEMENTED</em></li>
             <li><span>02</span><div><strong>Estimate productive threat</strong><p>Compare terminal value, productive value, occupied scale, animals, and land—not just the visible bank.</p></div><em>IMPLEMENTED</em></li>
@@ -424,9 +424,10 @@
             <li><span>HIRE</span><div><strong>Size labor from chores + route span</strong><p>Replace fixed six/eight-hand quotas with daily work volume, travel footprint, and terminal transport demand.</p></div><em>IMPLEMENTED</em></li>
             <li><span>ROUTE</span><div><strong>Keep valid assignments sticky</strong><p>A hand stays on its target unless the task disappears or urgent work preempts it; assigned workers are no longer mistaken for idle carriers.</p></div><em>IMPLEMENTED</em></li>
             <li><span>COMBO</span><div><strong>Simulate crop × livestock dependencies</strong><p>Score six recurring-crop/livestock pairs with feed, town synergy, fertilizer, labor, and incumbent investment. The score informs analysis without forcing a switch.</p></div><em>DIAGNOSTIC</em></li>
-            <li><span>REGRESSION</span><div><strong>Seed 503 · seat 1 · −6</strong><p>A +11,472 lead on day 24 disappeared while logistics consumed 79–82% of hand turns on days 26–27 and sales waited until day 28.</p></div><em>NEXT LOOP</em></li>
+            <li><span>FIX</span><div><strong>Seed 503 · seat 1 · +380</strong><p>The terminal planner stopped feeding, but pickup tasks still withdrew wheat and raced liquidation. Making pickup honor the same obligation set recovered the final inventory.</p></div><em>2 / 2 REGRESSION</em></li>
+            <li><span>NEXT</span><div><strong>Mixed-conversion persona · 0 / 2</strong><p>The promoted checkpoint still loses by 13,434 in both seats to the deliberately diversified conversion engine.</p></div><em>ROBUSTNESS GAP</em></li>
           </ol>
-          <p class="source-note">Evidence: <code>results/v0_7_1_training_working_set.json</code>, <code>results/v0_7_1_seed503_seat1_regression.json</code>, and the capped persona-arena results.</p>
+          <p class="source-note">Evidence: <code>results/v0_7_1_i5_seed503_vs_v0_7_0.json</code>, <code>results/v0_7_1_i5_vs_v0_7_0_exact_20.json</code>, and <code>results/v0_7_1_i5_persona_sanity.json</code>.</p>
         </section>
         <section class="section shell" aria-labelledby="agent-lineage-title">
           <div class="section-heading"><div><p class="eyebrow">Version archive</p><h2 id="agent-lineage-title">Frozen checkpoints</h2></div><p class="section-note">Kaggle and local evidence stay visibly separate.</p></div>
@@ -687,12 +688,12 @@
           </div>
         </section>
         <section class="section shell" aria-labelledby="submission-decision-title">
-          <div class="section-heading"><div><p class="eyebrow">Submission decision</p><h2 id="submission-decision-title">Hold v0.7.1 until the diverse-arena gate</h2></div><strong class="qa-verdict" data-state="hold">HOLD</strong></div>
+          <div class="section-heading"><div><p class="eyebrow">Submission decision</p><h2 id="submission-decision-title">Promote locally; hold for diverse-arena work</h2></div><strong class="qa-verdict" data-state="hold">HOLD KAGGLE</strong></div>
           <div class="candidate-evidence">
             <div><span>Live agent</span><strong>v0.6.1</strong><small>562.2 · 9–9 external</small></div>
-            <div><span>Local candidate</span><strong>v0.7.1</strong><small>7–1 partial gate · dynamic labor</small></div>
-            <div><span>Rejected branch</span><strong>Land expansion 0–4</strong><small>−10,982 average margin</small></div>
-            <div><span>Exact predecessor</span><strong>7–7–6</strong><small>+104 average · both seats</small></div>
+            <div><span>Local checkpoint</span><strong>v0.7.1-i5</strong><small>20–0 predecessor gate</small></div>
+            <div><span>Persona arena</span><strong>4–2</strong><small>mixed-conversion 0–2</small></div>
+            <div><span>Artifact</span><strong>15,356 bytes</strong><small>packaging ready · no upload</small></div>
           </div>
           <p class="source-note"><strong>Interpretation boundary:</strong> the replay test proves the new model notices the missed compounding signals. It does not prove that the response wins more games; that requires the completed benchmark and later ladder evidence.</p>
         </section>
@@ -700,9 +701,9 @@
           <div class="section-heading"><div><p class="eyebrow">Release gate</p><h2 id="submission-gate-title">v0.7.1 candidate readiness</h2></div><strong class="progress-label" id="submission-progress">0 / 6 ready</strong></div>
           <div class="candidate-evidence" aria-label="Validated candidate evidence">
             <div><span>Real-loss regression</span><strong>6 checkpoints</strong><small>D00 · D09 · D12 · D15 · D21 · D27</small></div>
-            <div><span>Predecessor challenge</span><strong>7–1 / 20</strong><small>stopped when 20 / 20 became impossible</small></div>
-            <div><span>Average margin</span><strong>+5,292</strong><small>worst −6 · fresh seeds 500–503</small></div>
-            <div><span>Runtime failures</span><strong>0</strong><small>0 fallbacks · max local action 473.9 ms</small></div>
+            <div><span>Predecessor challenge</span><strong>20 / 20</strong><small>v0.7.0 · seeds 500–509 · both seats</small></div>
+            <div><span>Average margin</span><strong>+5,685</strong><small>worst +380</small></div>
+            <div><span>Runtime failures</span><strong>0</strong><small>0 fallbacks · max local action 334.7 ms</small></div>
           </div>
           <div class="progress-track" aria-hidden="true"><span id="submission-progress-bar"></span></div>
           <div class="checklist submission-checklist">

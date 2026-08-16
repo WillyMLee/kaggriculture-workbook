@@ -251,6 +251,7 @@ def test_reverse_terminal_plan_removes_stranded_work():
     assert ["SELL", "WHEAT", 10] in orders
     tasks = _operations_attention(day_29_obs, farm, private, signal, _phase_attention(day_29_obs), day_29)
     assert not any(action[0] in ("FEED", "CARE", "WATER") for _, _, action in tasks)
+    assert not any(action[:2] == ["PICKUP", "WHEAT"] for _, _, action in tasks)
 
 
 def test_reverse_terminal_plan_times_scarce_market_sales():

@@ -1161,6 +1161,11 @@ def _operations_attention(obs, farm, private, opponent_signal, phase, terminal=N
         for y, row in enumerate(farm["tiles"])
         for x, tile in enumerate(row)
         if isinstance(tile, dict) and "animal" in tile and not tile.get("fed_today", False)
+        and (
+            not terminal
+            or terminal["remaining_turns"] > 24
+            or (x, y) in terminal["feed_positions"]
+        )
     ]
     empty_pastures = [
         (x, y)
