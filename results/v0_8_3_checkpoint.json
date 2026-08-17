@@ -1,0 +1,82 @@
+{
+  "version": "v0.8.3",
+  "status": "held_local_improvement",
+  "artifact": {
+    "name": "kaggriculture-v0.8.3.tar.gz",
+    "bytes": 22937,
+    "sha256": "819fe1d22f1d6d8526772970147b394ceb05e2c15cf2ed2ba6d991231808e96c",
+    "size_limit_used_percent": 0.021874
+  },
+  "historical_context": {
+    "v0.8.0_vs_v0.7.1_fixed_control": "1-1 with zero average margin",
+    "matched_persona_average_margin": {
+      "v0.8.0": -4187.0,
+      "v0.7.1": -4936.0,
+      "v0.8.0_improvement": 749.0
+    },
+    "runtime_ms": {
+      "v0.8.0": 767.159,
+      "v0.7.1": 3599.713
+    },
+    "v0.7.2_frontier_verdict": "held after 1-7 persona arena and two fixed expansion losses"
+  },
+  "change": {
+    "name": "commitment-safe temporal density",
+    "problem": "v0.8.2 overwrote the day-12 crop commitment after livestock deployment, reacted to a temporary tomato vote, and stranded paid seeds when the vote returned to strawberry.",
+    "solution": "Preserve the committed crop and commitment day after deployment while continuing to update daily attention and softmax probabilities diagnostically.",
+    "v0.7_inspiration": [
+      "temporal commitment memory",
+      "reverse terminal inventory reasoning",
+      "stable response unless a material break is proven"
+    ]
+  },
+  "diagnostic_8_games": {
+    "v0.8.2": {
+      "wins": 3,
+      "losses": 3,
+      "ties": 2,
+      "average_margin": 1137.5,
+      "minimum_margin": -1265.0
+    },
+    "v0.8.3": {
+      "wins": 3,
+      "losses": 1,
+      "ties": 4,
+      "average_margin": 1237.5,
+      "minimum_margin": -1215.0
+    }
+  },
+  "holdout_12_games": {
+    "wins": 1,
+    "losses": 1,
+    "ties": 10,
+    "average_margin": 0.0,
+    "minimum_margin": -631.0,
+    "maximum_action_ms": 91.346,
+    "runtime_failures": 0,
+    "suspicious_fallback_turns": 0
+  },
+  "comparable_20_game_summary": {
+    "v0.8.2": {
+      "wins": 4,
+      "losses": 10,
+      "ties": 6,
+      "average_margin": 440.0
+    },
+    "v0.8.3": {
+      "wins": 4,
+      "losses": 2,
+      "ties": 14,
+      "average_margin": 495.0
+    },
+    "required_for_submission": "20-0-0",
+    "passed": false
+  },
+  "validation": {
+    "deterministic_policy_regressions": 22,
+    "artifact_self_play_seeds": 2,
+    "packaging_ready": true,
+    "single_file": true
+  },
+  "verdict": "v0.8.3 is a reliability improvement over v0.8.2 and should replace it as the local density experiment. Do not submit: fourteen ties and two losses against v0.8.0 fail the 20-0 promotion rule."
+}

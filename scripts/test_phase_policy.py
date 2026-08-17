@@ -13,6 +13,7 @@ from agents.balanced_tempo import (
     _animal_portfolio_model,
     _assign_tasks,
     _demand_forecast,
+    _density_specialist_plan,
     _dynamic_wheat_plan,
     _engine_combo_model,
     _fertilizer_targets,
@@ -402,6 +403,44 @@ def test_engine_combo_and_lean_bootstrap_are_available():
     assert not any(order[:2] == ["BUY_SEED", "MELON"] and order[2] == 12 for order in action["market"])
 
 
+def test_deployed_engine_preserves_committed_crop_family():
+    farm = make_farm()
+    add_cows(farm, 1, fed=True)
+    memory = {
+        "density_vote_day": 12,
+        "density_vote_history": [],
+        "density_commitment": {
+            "animal": "COW",
+            "crop": "STRAWBERRY",
+            "day": 12,
+            "source": "engine-ensemble",
+        },
+    }
+    signal = {
+        "engine_combo": {
+            "scores": {
+                "TOMATO+COW": 900,
+                "TOMATO+GOOSE": 500,
+                "TOMATO+SHEEP": 700,
+                "STRAWBERRY+COW": 300,
+                "STRAWBERRY+GOOSE": 100,
+                "STRAWBERRY+SHEEP": 200,
+            }
+        },
+        "strategy_plan": {"choice": "recurring-engine", "probabilities": {"recurring-engine": 0.6}},
+        "attention_weights": {"operations": 0.8},
+        "animal": "COW",
+        "animal_target": 4,
+        "recurring_crop": "TOMATO",
+        "recurring_targets": {"TOMATO": 12, "STRAWBERRY": 3},
+    }
+    result = _density_specialist_plan(
+        {"day": 16}, farm, {"shed": {}, "inventories": []}, signal, memory
+    )
+    assert result["recurring_crop"] == "STRAWBERRY"
+    assert result["density_specialist"]["commitment"]["day"] == 12
+
+
 def test_macro_selector_stays_lean_then_matches_verified_land_density():
     ours = make_farm()
     ours["money"] = 1800
@@ -509,6 +548,7 @@ if __name__ == "__main__":
     test_wheat_is_a_dynamic_reserve_not_a_fixed_commitment()
     test_opponent_prediction_breaks_on_material_deviation()
     test_engine_combo_and_lean_bootstrap_are_available()
+    test_deployed_engine_preserves_committed_crop_family()
     test_macro_selector_stays_lean_then_matches_verified_land_density()
     test_frontier_land_purchase_requires_saturation_and_payback()
-    print("phase policy regressions: 21 passed")
+    print("phase policy regressions: 22 passed")

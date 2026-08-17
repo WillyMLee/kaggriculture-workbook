@@ -388,14 +388,24 @@
           <button class="button button-primary" id="open-agent-form" type="button">Log agent</button>
         </div>
         <section class="section shell" aria-labelledby="current-checkpoint-title">
-          <div class="section-heading"><div><p class="eyebrow">Current checkpoint · August 16</p><h2 id="current-checkpoint-title">v0.8.2 adds attention; the 20–0 gate rejects it</h2></div><strong class="qa-verdict" data-state="hold">HOLD</strong></div>
+          <div class="section-heading"><div><p class="eyebrow">Current checkpoint · August 16</p><h2 id="current-checkpoint-title">v0.8.3 improves reliability; superiority stays unproven</h2></div><strong class="qa-verdict" data-state="hold">HOLD</strong></div>
           <div class="candidate-evidence">
-            <div><span>Promotion gate</span><strong>4–10–6</strong><small>required 20–0–0</small></div>
-            <div><span>Average margin</span><strong>+440</strong><small>driven by one large seed</small></div>
-            <div><span>Worst loss</span><strong>−1,265</strong><small>reliability gate failed</small></div>
-            <div><span>Runtime</span><strong>121 ms</strong><small>zero failures or fallbacks</small></div>
+            <div><span>Comparable gate</span><strong>4–2–14</strong><small>v0.8.2 was 4–10–6</small></div>
+            <div><span>Average margin</span><strong>+495</strong><small>up from +440</small></div>
+            <div><span>Holdout</span><strong>1–1–10</strong><small>neutral across 12 games</small></div>
+            <div><span>Runtime</span><strong>98 ms</strong><small>zero failures or fallbacks</small></div>
           </div>
-          <p class="source-note"><strong>Read:</strong> v0.8.2 turns operations, opponent, and horizon attention into a daily softmax over cash, recurring, livestock, and liquidity strategies. The exact 20-game comparison against v0.8.0 is profitable on average but unreliable: ten losses and six ties fail the explicit promotion rule. Keep the artifact for analysis; do not submit.</p>
+          <p class="source-note"><strong>Read:</strong> v0.8.3 restores the useful temporal density from v0.7: once the day-12 crop×livestock engine is committed, deployment confirms the animal family without reopening the crop choice. This removes stranded-seed losses and cuts comparable losses from ten to two. Fourteen ties still fail the explicit 20–0 promotion rule. Keep locally; do not submit.</p>
+        </section>
+        <section class="section shell" aria-labelledby="v083-checkpoint-title">
+          <div class="section-heading"><div><p class="eyebrow">v0.8.3 checkpoint</p><h2 id="v083-checkpoint-title">Restore temporal density, not frontier bulk</h2></div><p class="section-note">22.9 KB artifact · 22 regressions · not submitted</p></div>
+          <ol class="system-flow">
+            <li><span>HISTORY</span><div><strong>v0.8.0 modestly improved v0.7.1</strong><p>The fixed control was 1–1 with zero average margin. On six matched persona games, v0.8.0 improved average margin by 749 and reduced worst measured latency from 3.60 seconds to 767 ms.</p></div><em>LEANER · BETTER</em></li>
+            <li><span>REJECT</span><div><strong>Do not restore v0.7.2 frontier bulk</strong><p>The full frontier candidate finished 1–7 and lost both fixed expansion seats. More land, livestock, and labor were not automatically productive.</p></div><em>STILL CLOSED</em></li>
+            <li><span>TRACE</span><div><strong>Find the stranded-seed failure</strong><p>v0.8.2 overwrote its locked crop after animals deployed. A temporary tomato vote purchased seeds; the next strawberry vote abandoned them, creating repeat −50 losses.</p></div><em>EARLIEST FAILURE</em></li>
+            <li><span>FIX</span><div><strong>Keep the engine commitment stable</strong><p>Attention and softmax continue updating, but only a proven material break may reopen the crop family. The diagnostic improves from 3–3–2 to 3–1–4 and the 12-game holdout finishes 1–1–10.</p></div><em>BETTER · HELD</em></li>
+          </ol>
+          <p class="source-note">Evidence: <code>results/v0_8_3_checkpoint.json</code>, <code>results/v0_8_2_vs_v0_8_0_density_diagnostic.json</code>, <code>results/v0_8_3_vs_v0_8_0_diagnostic_8.json</code>, and <code>results/v0_8_3_vs_v0_8_0_holdout_12.json</code>.</p>
         </section>
         <section class="section shell" aria-labelledby="v082-checkpoint-title">
           <div class="section-heading"><div><p class="eyebrow">v0.8.2 checkpoint</p><h2 id="v082-checkpoint-title">Attention is useful only when its branch is reliable</h2></div><p class="section-note">22.8 KB artifact · 20 fresh games · not submitted</p></div>

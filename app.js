@@ -656,6 +656,15 @@
       model: "Operative operations/opponent/horizon attention, daily four-strategy softmax, corrected pre-hire service pressure, and stable day-12 engine-family commitment.",
       limitation: "Do not submit: it failed the required 20–0 gate. One +4,650 seed drives the positive average while ten episodes lose and six tie.",
     },
+    {
+      id: "agent-v0-8-3",
+      version: "v0.8.3",
+      date: "2026-08-16",
+      status: "candidate",
+      evidence: "v0.8.0 comparable gate: 4–2–14 · +495 avg · worst −1,215",
+      model: "v0.8.2 attention and softmax plus commitment-safe crop memory that prevents temporary midgame votes from creating stranded seed inventory.",
+      limitation: "More reliable than v0.8.2, but not submission-ready: fourteen ties and two losses still fail the required 20–0 gate.",
+    },
   ];
   let agentArchive = readStore(KEYS.agentArchive, seededAgents);
   if (!Array.isArray(agentArchive)) agentArchive = [...seededAgents];

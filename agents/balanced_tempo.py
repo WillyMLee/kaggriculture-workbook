@@ -1,4 +1,4 @@
-"""Lean Horizon v0.8.2: attention-weighted softmax strategy over the lean core."""
+"""Lean Horizon v0.8.3: commitment-safe attention density over the lean core."""
 
 from __future__ import annotations
 
@@ -1057,7 +1057,16 @@ def _density_specialist_plan(obs, farm, private, signal, memory):
     incumbent = max(owned_animals, key=lambda name: (owned_animals[name], name))
     commitment = memory.get("density_commitment")
     if sum(owned_animals.values()):
-        commitment = {"animal": incumbent, "crop": voted_crop, "day": day, "source": "incumbent"}
+        # Deployment confirms the livestock family; it does not reopen the
+        # crop decision. v0.8.2 replaced the committed crop with each day's
+        # vote, briefly flipped to tomato, bought unusable seeds, then flipped
+        # back. Preserve the day-12 crop while attention keeps observing.
+        commitment = {
+            "animal": incumbent,
+            "crop": (commitment or {}).get("crop", voted_crop),
+            "day": (commitment or {}).get("day", day),
+            "source": "incumbent-confirmed",
+        }
         memory["density_commitment"] = commitment
     elif commitment is None and day >= 12:
         recent = list(memory.get("density_vote_history") or [])[-3:]
