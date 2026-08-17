@@ -1,0 +1,70 @@
+{
+  "version": "v0.8.2",
+  "status": "held_not_submission_ready",
+  "artifact": {
+    "name": "kaggriculture-v0.8.2.tar.gz",
+    "bytes": 22778,
+    "sha256": "854d2995889afa27c92b809c023cb6fa0d04fc17ec8ee0063278518a15883f92",
+    "size_limit_used_percent": 0.021723
+  },
+  "attention_optimizer": {
+    "modules": [
+      "operations and service pressure",
+      "opponent commitments and prediction breaks",
+      "terminal horizon and liquidity"
+    ],
+    "softmax_strategies": [
+      "cash-engine",
+      "recurring-engine",
+      "livestock-engine",
+      "liquidity"
+    ],
+    "activation": "cached once per day; influences the day-12 engine-family vote without overriding mandatory chores",
+    "guardrails": [
+      "multi-day engine vote history",
+      "minimum vote edge",
+      "locked livestock commitment",
+      "v0.8.0 asset-count preservation"
+    ]
+  },
+  "five_match_training": {
+    "candidate": {
+      "wins": 1,
+      "losses": 4,
+      "average_margin": -2445.4,
+      "minimum_margin": -16197.0,
+      "maximum_action_ms": 125.344
+    },
+    "v0.8.0_matched_control": {
+      "wins": 1,
+      "losses": 4,
+      "average_margin": -2425.4,
+      "minimum_margin": -16197.0,
+      "maximum_action_ms": 98.249
+    },
+    "paired_average_delta": -20.0,
+    "learning": "A universal four-cow cap and a frontier-specific four-cow split were both rejected. The retained tree lets softmax choose the family but preserves the lean asset count."
+  },
+  "fresh_v0.8.0_promotion_gate": {
+    "seed_start": 1600,
+    "seeds": 10,
+    "episodes": 20,
+    "wins": 4,
+    "losses": 10,
+    "ties": 6,
+    "average_margin": 440.0,
+    "minimum_margin": -1265.0,
+    "maximum_action_ms": 120.845,
+    "runtime_failures": 0,
+    "suspicious_fallback_turns": 0,
+    "required_record": "20-0-0",
+    "passed": false
+  },
+  "validation": {
+    "deterministic_policy_regressions": 21,
+    "artifact_self_play_seeds": 2,
+    "packaging_ready": true,
+    "single_file": true
+  },
+  "verdict": "Do not submit v0.8.2. It produces one large two-seat gain and a positive average margin, but fails the reliability gate with ten losses and six ties. Keep v0.8.0 frozen and treat the new softmax plan as experimental evidence."
+}

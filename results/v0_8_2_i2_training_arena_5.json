@@ -1,0 +1,480 @@
+{
+  "complete": true,
+  "expected_episodes": 5,
+  "candidate_artifact": "kaggriculture-v0.8.2.tar.gz",
+  "candidate_sha256": "567afb389fbfe0bb87b4e83e5e77767f897c0402a70082aba7d253bb18c3919a",
+  "personas_are_inferred": true,
+  "persona_caveat": "Public commitment emulations, not reconstructions of private code.",
+  "training_method": "Bounded offline policy improvement: seeded games produce win/loss and trajectory milestone signals; code changes occur only between arena runs.",
+  "summary": {
+    "episodes": 5,
+    "wins": 1,
+    "losses": 4,
+    "ties": 0,
+    "average_margin": -3488.2,
+    "minimum_margin": -16197.0,
+    "runtime_failures": 0,
+    "suspicious_fallback_turns": 0,
+    "maximum_action_ms": 106.622,
+    "training_milestones": {
+      "second_quadrant_by_day_7_rate": 0.0,
+      "third_quadrant_by_day_12_rate": 0.0,
+      "day_15_recurring_15_plus_rate": 0.0,
+      "day_15_livestock_8_plus_rate": 0.0,
+      "day_24_bank_60000_plus_rate": 0.0
+    }
+  },
+  "by_persona": {
+    "strawberry-cow-fertilizer": {
+      "episodes": 2,
+      "wins": 0,
+      "losses": 2,
+      "ties": 0,
+      "average_margin": -6146.0,
+      "minimum_margin": -6146.0,
+      "runtime_failures": 0,
+      "suspicious_fallback_turns": 0,
+      "maximum_action_ms": 86.266,
+      "training_milestones": {
+        "second_quadrant_by_day_7_rate": 0.0,
+        "third_quadrant_by_day_12_rate": 0.0,
+        "day_15_recurring_15_plus_rate": 0.0,
+        "day_15_livestock_8_plus_rate": 0.0,
+        "day_24_bank_60000_plus_rate": 0.0
+      }
+    },
+    "strawberry-sheep-volume": {
+      "episodes": 1,
+      "wins": 1,
+      "losses": 0,
+      "ties": 0,
+      "average_margin": 21264.0,
+      "minimum_margin": 21264.0,
+      "runtime_failures": 0,
+      "suspicious_fallback_turns": 0,
+      "maximum_action_ms": 106.622,
+      "training_milestones": {
+        "second_quadrant_by_day_7_rate": 0.0,
+        "third_quadrant_by_day_12_rate": 0.0,
+        "day_15_recurring_15_plus_rate": 0.0,
+        "day_15_livestock_8_plus_rate": 0.0,
+        "day_24_bank_60000_plus_rate": 0.0
+      }
+    },
+    "strawberry-mixed-conversion": {
+      "episodes": 1,
+      "wins": 0,
+      "losses": 1,
+      "ties": 0,
+      "average_margin": -16197.0,
+      "minimum_margin": -16197.0,
+      "runtime_failures": 0,
+      "suspicious_fallback_turns": 0,
+      "maximum_action_ms": 79.235,
+      "training_milestones": {
+        "second_quadrant_by_day_7_rate": 0.0,
+        "third_quadrant_by_day_12_rate": 0.0,
+        "day_15_recurring_15_plus_rate": 0.0,
+        "day_15_livestock_8_plus_rate": 0.0,
+        "day_24_bank_60000_plus_rate": 0.0
+      }
+    },
+    "top-frontier-compound": {
+      "episodes": 1,
+      "wins": 0,
+      "losses": 1,
+      "ties": 0,
+      "average_margin": -10216.0,
+      "minimum_margin": -10216.0,
+      "runtime_failures": 0,
+      "suspicious_fallback_turns": 0,
+      "maximum_action_ms": 35.747,
+      "training_milestones": {
+        "second_quadrant_by_day_7_rate": 0.0,
+        "third_quadrant_by_day_12_rate": 0.0,
+        "day_15_recurring_15_plus_rate": 0.0,
+        "day_15_livestock_8_plus_rate": 0.0,
+        "day_24_bank_60000_plus_rate": 0.0
+      }
+    }
+  },
+  "games": [
+    {
+      "persona": "strawberry-cow-fertilizer",
+      "seed": 1200,
+      "seat": 0,
+      "result": "loss",
+      "candidate_reward": 61003.0,
+      "persona_reward": 67149.0,
+      "margin": -6146.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "suspicious_fallback_turns": 0,
+      "max_action_ms": 83.668,
+      "average_action_ms": 3.061,
+      "trajectory": {
+        "7": {
+          "bank": 1903.0,
+          "quadrants": 1,
+          "peak_hands": 7,
+          "crops": {
+            "MELON": 10,
+            "WHEAT": 5
+          },
+          "animals": {}
+        },
+        "12": {
+          "bank": 1688.0,
+          "quadrants": 1,
+          "peak_hands": 8,
+          "crops": {
+            "MELON": 10,
+            "WHEAT": 5
+          },
+          "animals": {}
+        },
+        "15": {
+          "bank": 13035.0,
+          "quadrants": 1,
+          "peak_hands": 10,
+          "crops": {
+            "STRAWBERRY": 12,
+            "WHEAT": 5,
+            "TOMATO": 2
+          },
+          "animals": {
+            "COW": 5
+          }
+        },
+        "24": {
+          "bank": 29799.0,
+          "quadrants": 1,
+          "peak_hands": 10,
+          "crops": {
+            "STRAWBERRY": 12,
+            "WHEAT": 5,
+            "TOMATO": 2
+          },
+          "animals": {
+            "COW": 5
+          }
+        },
+        "29": {
+          "bank": 54780.0,
+          "quadrants": 1,
+          "peak_hands": 8,
+          "crops": {
+            "STRAWBERRY": 12,
+            "WHEAT": 2
+          },
+          "animals": {
+            "COW": 5
+          }
+        }
+      }
+    },
+    {
+      "persona": "strawberry-sheep-volume",
+      "seed": 1300,
+      "seat": 0,
+      "result": "win",
+      "candidate_reward": 62687.0,
+      "persona_reward": 41423.0,
+      "margin": 21264.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "suspicious_fallback_turns": 0,
+      "max_action_ms": 106.622,
+      "average_action_ms": 3.009,
+      "trajectory": {
+        "7": {
+          "bank": 1916.0,
+          "quadrants": 1,
+          "peak_hands": 7,
+          "crops": {
+            "MELON": 10,
+            "WHEAT": 5
+          },
+          "animals": {}
+        },
+        "12": {
+          "bank": 1701.0,
+          "quadrants": 1,
+          "peak_hands": 8,
+          "crops": {
+            "MELON": 10,
+            "WHEAT": 5
+          },
+          "animals": {}
+        },
+        "15": {
+          "bank": 12937.0,
+          "quadrants": 1,
+          "peak_hands": 10,
+          "crops": {
+            "STRAWBERRY": 12,
+            "WHEAT": 5,
+            "TOMATO": 2
+          },
+          "animals": {
+            "COW": 5
+          }
+        },
+        "24": {
+          "bank": 29127.0,
+          "quadrants": 1,
+          "peak_hands": 9,
+          "crops": {
+            "STRAWBERRY": 12,
+            "WHEAT": 2,
+            "TOMATO": 2
+          },
+          "animals": {
+            "COW": 5
+          }
+        },
+        "29": {
+          "bank": 54785.0,
+          "quadrants": 1,
+          "peak_hands": 7,
+          "crops": {
+            "STRAWBERRY": 12
+          },
+          "animals": {
+            "COW": 5
+          }
+        }
+      }
+    },
+    {
+      "persona": "strawberry-mixed-conversion",
+      "seed": 1400,
+      "seat": 0,
+      "result": "loss",
+      "candidate_reward": 48426.0,
+      "persona_reward": 64623.0,
+      "margin": -16197.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "suspicious_fallback_turns": 0,
+      "max_action_ms": 79.235,
+      "average_action_ms": 2.919,
+      "trajectory": {
+        "7": {
+          "bank": 1916.0,
+          "quadrants": 1,
+          "peak_hands": 7,
+          "crops": {
+            "MELON": 10,
+            "WHEAT": 5
+          },
+          "animals": {}
+        },
+        "12": {
+          "bank": 1701.0,
+          "quadrants": 1,
+          "peak_hands": 8,
+          "crops": {
+            "MELON": 10,
+            "WHEAT": 5
+          },
+          "animals": {}
+        },
+        "15": {
+          "bank": 12387.0,
+          "quadrants": 1,
+          "peak_hands": 10,
+          "crops": {
+            "STRAWBERRY": 12,
+            "WHEAT": 5,
+            "TOMATO": 2
+          },
+          "animals": {
+            "SHEEP": 5
+          }
+        },
+        "24": {
+          "bank": 22948.0,
+          "quadrants": 1,
+          "peak_hands": 9,
+          "crops": {
+            "STRAWBERRY": 12,
+            "WHEAT": 2,
+            "TOMATO": 2
+          },
+          "animals": {
+            "SHEEP": 5
+          }
+        },
+        "29": {
+          "bank": 45440.0,
+          "quadrants": 1,
+          "peak_hands": 7,
+          "crops": {
+            "STRAWBERRY": 12
+          },
+          "animals": {
+            "SHEEP": 5
+          }
+        }
+      }
+    },
+    {
+      "persona": "top-frontier-compound",
+      "seed": 1500,
+      "seat": 0,
+      "result": "loss",
+      "candidate_reward": 50176.0,
+      "persona_reward": 60392.0,
+      "margin": -10216.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "suspicious_fallback_turns": 0,
+      "max_action_ms": 35.747,
+      "average_action_ms": 2.326,
+      "trajectory": {
+        "7": {
+          "bank": 1916.0,
+          "quadrants": 1,
+          "peak_hands": 7,
+          "crops": {
+            "MELON": 10,
+            "WHEAT": 5
+          },
+          "animals": {}
+        },
+        "12": {
+          "bank": 1701.0,
+          "quadrants": 1,
+          "peak_hands": 8,
+          "crops": {
+            "MELON": 10,
+            "WHEAT": 5
+          },
+          "animals": {}
+        },
+        "15": {
+          "bank": 12857.0,
+          "quadrants": 1,
+          "peak_hands": 9,
+          "crops": {
+            "STRAWBERRY": 12,
+            "WHEAT": 3,
+            "TOMATO": 2
+          },
+          "animals": {
+            "COW": 4
+          }
+        },
+        "24": {
+          "bank": 14381.0,
+          "quadrants": 1,
+          "peak_hands": 8,
+          "crops": {
+            "STRAWBERRY": 12,
+            "WHEAT": 1,
+            "TOMATO": 2
+          },
+          "animals": {
+            "COW": 4
+          }
+        },
+        "29": {
+          "bank": 43744.0,
+          "quadrants": 1,
+          "peak_hands": 7,
+          "crops": {
+            "STRAWBERRY": 12
+          },
+          "animals": {
+            "COW": 4
+          }
+        }
+      }
+    },
+    {
+      "persona": "strawberry-cow-fertilizer",
+      "seed": 1200,
+      "seat": 1,
+      "result": "loss",
+      "candidate_reward": 61003.0,
+      "persona_reward": 67149.0,
+      "margin": -6146.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "suspicious_fallback_turns": 0,
+      "max_action_ms": 86.266,
+      "average_action_ms": 2.884,
+      "trajectory": {
+        "7": {
+          "bank": 1903.0,
+          "quadrants": 1,
+          "peak_hands": 7,
+          "crops": {
+            "MELON": 10,
+            "WHEAT": 5
+          },
+          "animals": {}
+        },
+        "12": {
+          "bank": 1688.0,
+          "quadrants": 1,
+          "peak_hands": 8,
+          "crops": {
+            "MELON": 10,
+            "WHEAT": 5
+          },
+          "animals": {}
+        },
+        "15": {
+          "bank": 13035.0,
+          "quadrants": 1,
+          "peak_hands": 10,
+          "crops": {
+            "STRAWBERRY": 12,
+            "WHEAT": 5,
+            "TOMATO": 2
+          },
+          "animals": {
+            "COW": 5
+          }
+        },
+        "24": {
+          "bank": 29799.0,
+          "quadrants": 1,
+          "peak_hands": 10,
+          "crops": {
+            "STRAWBERRY": 12,
+            "WHEAT": 5,
+            "TOMATO": 2
+          },
+          "animals": {
+            "COW": 5
+          }
+        },
+        "29": {
+          "bank": 54780.0,
+          "quadrants": 1,
+          "peak_hands": 8,
+          "crops": {
+            "STRAWBERRY": 12,
+            "WHEAT": 2
+          },
+          "animals": {
+            "COW": 5
+          }
+        }
+      }
+    }
+  ]
+}

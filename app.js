@@ -647,6 +647,15 @@
       model: "Lean v0.8 core plus a day-12 six-path crop×livestock ensemble, three-day vote stability, locked engine commitment, and animal-family service caps.",
       limitation: "Held: the paired arena still finishes 1–7, no run reaches the 60k milestone, and one combined suite hit the environment deadline before its isolated rerun completed normally.",
     },
+    {
+      id: "agent-v0-8-2",
+      version: "v0.8.2",
+      date: "2026-08-16",
+      status: "candidate",
+      evidence: "v0.8.0 exact gate: 4–10–6 · +440 avg · worst −1,265",
+      model: "Operative operations/opponent/horizon attention, daily four-strategy softmax, corrected pre-hire service pressure, and stable day-12 engine-family commitment.",
+      limitation: "Do not submit: it failed the required 20–0 gate. One +4,650 seed drives the positive average while ten episodes lose and six tie.",
+    },
   ];
   let agentArchive = readStore(KEYS.agentArchive, seededAgents);
   if (!Array.isArray(agentArchive)) agentArchive = [...seededAgents];

@@ -140,6 +140,7 @@ def main():
     parser.add_argument("--seed-start", type=int, default=100)
     parser.add_argument("--seeds-per-persona", type=int, default=1)
     parser.add_argument("--persona", action="append", choices=sorted(PERSONAS))
+    parser.add_argument("--episode-limit", type=int, help="Run a stratified prefix of the arena schedule.")
     parser.add_argument("--max-wall-seconds", type=float, default=600.0)
     parser.add_argument("--action-failure-ms", type=float, default=700.0)
     parser.add_argument("--output", type=Path, required=True)
@@ -148,63 +149,71 @@ def main():
     artifact = args.candidate_artifact.resolve()
     persona_names = args.persona or list(PERSONAS)
     selected_personas = [(name, PERSONAS[name]) for name in persona_names]
-    expected = len(selected_personas) * args.seeds_per_persona * 2
+    schedule = []
+    # One seat from every persona is observed before the second-seat pass. This
+    # makes small training budgets representative instead of spending the first
+    # episodes on one opponent family.
+    for seed_offset in range(args.seeds_per_persona):
+        for seat in (0, 1):
+            for persona_index, (persona_name, persona) in enumerate(selected_personas):
+                seed = args.seed_start + persona_index * 100 + seed_offset
+                schedule.append((persona_name, persona, seed, seat))
+    if args.episode_limit is not None:
+        schedule = schedule[: max(0, args.episode_limit)]
+    expected = len(schedule)
     started = time.perf_counter()
     games = []
     kaggle, _ = load_environment()
     with tempfile.TemporaryDirectory(prefix="kaggriculture-persona-arena-") as temp_dir:
         candidate = load_artifact_agent(artifact, Path(temp_dir) / "candidate")
-        for persona_index, (persona_name, persona) in enumerate(selected_personas):
-            for seed_offset in range(args.seeds_per_persona):
-                seed = args.seed_start + persona_index * 100 + seed_offset
-                for seat in (0, 1):
-                    elapsed = time.perf_counter() - started
-                    if elapsed >= args.max_wall_seconds:
-                        write_result(args.output, artifact, games, expected, complete=False, persona_names=persona_names)
-                        print(json.dumps({"stopped": "wall_clock_cap", "checkpoint": f"{len(games)}/{expected}"}), flush=True)
-                        return
-                    action_times = []
+        for persona_name, persona, seed, seat in schedule:
+            elapsed = time.perf_counter() - started
+            if elapsed >= args.max_wall_seconds:
+                write_result(args.output, artifact, games, expected, complete=False, persona_names=persona_names)
+                print(json.dumps({"stopped": "wall_clock_cap", "checkpoint": f"{len(games)}/{expected}"}), flush=True)
+                return
+            action_times = []
 
-                    def timed_candidate(obs):
-                        action_started = time.perf_counter()
-                        action = candidate(obs)
-                        action_times.append((time.perf_counter() - action_started) * 1000)
-                        return action
+            def timed_candidate(obs):
+                action_started = time.perf_counter()
+                action = candidate(obs)
+                action_times.append((time.perf_counter() - action_started) * 1000)
+                return action
 
-                    agents = [persona, persona]
-                    agents[seat] = timed_candidate
-                    env = kaggle.make(ENV_NAME, configuration={"seed": seed}, debug=False)
-                    env.run(agents)
-                    final = env.steps[-1]
-                    rewards = [float(state["reward"]) for state in final]
-                    margin = rewards[seat] - rewards[1 - seat]
-                    game = {
-                        "persona": persona_name,
-                        "seed": seed,
-                        "seat": seat,
-                        "result": "win" if margin > 0 else ("loss" if margin < 0 else "tie"),
-                        "candidate_reward": rewards[seat],
-                        "persona_reward": rewards[1 - seat],
-                        "margin": margin,
-                        "statuses": [state["status"] for state in final],
-                        "suspicious_fallback_turns": suspicious_fallback_turns(env.steps, seat),
-                        "max_action_ms": round(max(action_times, default=0), 3),
-                        "average_action_ms": round(statistics.mean(action_times), 3) if action_times else 0,
-                        "trajectory": trajectory_checkpoints(env.steps, seat),
-                    }
-                    if game["max_action_ms"] > args.action_failure_ms:
-                        game["latency_gate"] = "fail"
-                    games.append(game)
-                    write_result(args.output, artifact, games, expected, complete=False, persona_names=persona_names)
-                    print(json.dumps({
-                        "checkpoint": f"{len(games)}/{expected}",
-                        "persona": persona_name,
-                        "seed": seed,
-                        "seat": seat,
-                        "result": game["result"],
-                        "margin": margin,
-                        "max_action_ms": game["max_action_ms"],
-                    }), flush=True)
+            agents = [persona, persona]
+            agents[seat] = timed_candidate
+            env = kaggle.make(ENV_NAME, configuration={"seed": seed}, debug=False)
+            env.run(agents)
+            final = env.steps[-1]
+            rewards = [float(state["reward"]) for state in final]
+            margin = rewards[seat] - rewards[1 - seat]
+            game = {
+                "persona": persona_name,
+                "seed": seed,
+                "seat": seat,
+                "result": "win" if margin > 0 else ("loss" if margin < 0 else "tie"),
+                "candidate_reward": rewards[seat],
+                "persona_reward": rewards[1 - seat],
+                "margin": margin,
+                "statuses": [state["status"] for state in final],
+                "suspicious_fallback_turns": suspicious_fallback_turns(env.steps, seat),
+                "max_action_ms": round(max(action_times, default=0), 3),
+                "average_action_ms": round(statistics.mean(action_times), 3) if action_times else 0,
+                "trajectory": trajectory_checkpoints(env.steps, seat),
+            }
+            if game["max_action_ms"] > args.action_failure_ms:
+                game["latency_gate"] = "fail"
+            games.append(game)
+            write_result(args.output, artifact, games, expected, complete=False, persona_names=persona_names)
+            print(json.dumps({
+                "checkpoint": f"{len(games)}/{expected}",
+                "persona": persona_name,
+                "seed": seed,
+                "seat": seat,
+                "result": game["result"],
+                "margin": margin,
+                "max_action_ms": game["max_action_ms"],
+            }), flush=True)
 
     write_result(args.output, artifact, games, expected, complete=True, persona_names=persona_names)
     print(json.dumps(summary(games), indent=2))

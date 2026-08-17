@@ -388,14 +388,24 @@
           <button class="button button-primary" id="open-agent-form" type="button">Log agent</button>
         </div>
         <section class="section shell" aria-labelledby="current-checkpoint-title">
-          <div class="section-heading"><div><p class="eyebrow">Current checkpoint · August 16</p><h2 id="current-checkpoint-title">v0.8.1 adds selective depth; promotion stays closed</h2></div><strong class="qa-verdict" data-state="hold">HOLD</strong></div>
+          <div class="section-heading"><div><p class="eyebrow">Current checkpoint · August 16</p><h2 id="current-checkpoint-title">v0.8.2 adds attention; the 20–0 gate rejects it</h2></div><strong class="qa-verdict" data-state="hold">HOLD</strong></div>
           <div class="candidate-evidence">
-            <div><span>Matched arena</span><strong>+482</strong><small>average-margin lift over v0.8.0</small></div>
-            <div><span>Pairwise safety</span><strong>3 / 5 / 0</strong><small>improved / unchanged / regressed</small></div>
-            <div><span>Cow engine</span><strong>+1,187</strong><small>average deficit recovered</small></div>
-            <div><span>Persona gate</span><strong>1–7</strong><small>still below promotion quality</small></div>
+            <div><span>Promotion gate</span><strong>4–10–6</strong><small>required 20–0–0</small></div>
+            <div><span>Average margin</span><strong>+440</strong><small>driven by one large seed</small></div>
+            <div><span>Worst loss</span><strong>−1,265</strong><small>reliability gate failed</small></div>
+            <div><span>Runtime</span><strong>121 ms</strong><small>zero failures or fallbacks</small></div>
           </div>
-          <p class="source-note"><strong>Read:</strong> v0.8.1 activates richer reasoning only before the day-13 livestock purchase. Six crop×livestock paths vote using town, feed, labor, fertilizer, incumbent, and opponent-pressure signals; three-day stability and a locked commitment prevent thrashing. It improves all affected paired games, but the hard persona arena remains 1–7. Package locally; do not submit.</p>
+          <p class="source-note"><strong>Read:</strong> v0.8.2 turns operations, opponent, and horizon attention into a daily softmax over cash, recurring, livestock, and liquidity strategies. The exact 20-game comparison against v0.8.0 is profitable on average but unreliable: ten losses and six ties fail the explicit promotion rule. Keep the artifact for analysis; do not submit.</p>
+        </section>
+        <section class="section shell" aria-labelledby="v082-checkpoint-title">
+          <div class="section-heading"><div><p class="eyebrow">v0.8.2 checkpoint</p><h2 id="v082-checkpoint-title">Attention is useful only when its branch is reliable</h2></div><p class="section-note">22.8 KB artifact · 20 fresh games · not submitted</p></div>
+          <ol class="system-flow">
+            <li><span>ATTEND</span><div><strong>Make the three modules operative</strong><p>Operations protects service work, opponent attention reacts to commitments and prediction breaks, and horizon attention increases liquidity pressure near the terminal state.</p></div><em>IMPLEMENTED</em></li>
+            <li><span>SOFTMAX</span><div><strong>Blend four strategies once per day</strong><p>Cash, recurring crops, livestock, and liquidity receive normalized utilities and phase-aware probabilities. The mixture changes engine-family decisiveness without suppressing mandatory chores.</p></div><em>BOUNDED</em></li>
+            <li><span>TRAIN</span><div><strong>Reject unstable density branches</strong><p>Five matched persona cases showed that both a universal four-cow cap and a frontier-only cap were brittle. The final tree preserves v0.8.0 asset counts and limits softmax to family selection.</p></div><em>2 BRANCHES REJECTED</em></li>
+            <li><span>GATE</span><div><strong>Positive average is not enough</strong><p>Fresh seeds 1600–1609 finish 4–10–6 versus exact v0.8.0. One seed wins both seats by 4,650, but the −1,265 worst loss and ten total losses make submission unsafe.</p></div><em>FAILED 20–0</em></li>
+          </ol>
+          <p class="source-note">Evidence: <code>results/v0_8_2_checkpoint.json</code>, <code>results/v0_8_2_i3_training_arena_5.json</code>, <code>results/v0_8_2_vs_v0_8_0_gate_part1.json</code>, and <code>results/v0_8_2_vs_v0_8_0_gate_part2.json</code>.</p>
         </section>
         <section class="section shell" aria-labelledby="v081-checkpoint-title">
           <div class="section-heading"><div><p class="eyebrow">v0.8.1 checkpoint</p><h2 id="v081-checkpoint-title">Add reasoning density at one reversible boundary</h2></div><p class="section-note">21.1 KB artifact · six engine paths · not submitted</p></div>

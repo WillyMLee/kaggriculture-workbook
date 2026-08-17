@@ -1,4 +1,4 @@
-"""Lean Horizon v0.8.1: event-triggered specialist density over the lean core."""
+"""Lean Horizon v0.8.2: attention-weighted softmax strategy over the lean core."""
 
 from __future__ import annotations
 
@@ -146,6 +146,9 @@ def _episode_memory(obs, player):
             "density_vote_day": -1,
             "density_vote_history": [],
             "density_commitment": None,
+            "strategy_plan_day": -1,
+            "strategy_plan_cache": None,
+            "strategy_plan_history": [],
             "last_seen_step": step,
         }
     else:
@@ -885,6 +888,110 @@ def _engine_combo_model(obs, farm, crop_model, animal_model):
     }
 
 
+def _softmax_strategy_plan(obs, farm, private, signal, memory):
+    """Turn the attention modules into one bounded, daily strategy mixture.
+
+    Operations protects service quality, opponent attention controls how much
+    public commitments can move the plan, and horizon attention increases the
+    value of liquidity as the terminal state approaches. The result influences
+    irreversible portfolio decisions but never suppresses mandatory chores.
+    """
+    day = int(obs.get("day", 0))
+    cached = memory.get("strategy_plan_cache")
+    if int(memory.get("strategy_plan_day", -1)) == day and cached:
+        return {**signal, "strategy_plan": cached}
+
+    attention = signal.get("attention_weights") or {
+        "operations": 1.0,
+        "opponent": 0.0,
+        "horizon": 0.0,
+    }
+    utilities = signal.get("strategy_utilities") or {}
+    utility_scale = max(1.0, *(abs(float(value)) for value in utilities.values()))
+    normalized = {
+        key: float(value) / utility_scale
+        for key, value in utilities.items()
+    }
+    phase = _phase_attention(obs)
+    urgent_tiles = _count_tiles(
+        farm,
+        lambda tile: isinstance(tile, dict)
+        and (
+            (tile.get("kind") == "PLANT" and not tile.get("watered_today", False))
+            or (tile.get("animal") and not tile.get("fed_today", False))
+            or int(tile.get("yield_units", 0)) > 0
+        ),
+    )
+    labor_plan = _labor_plan(obs, farm, phase)
+    # At hour zero, daily hands have not been hired yet. Grade service against
+    # the hands the policy is about to request, not the misleading pre-hire
+    # snapshot that made every middle-game engine look overloaded.
+    workers = max(1 + len(farm.get("hands", [])), 1 + int(labor_plan["target"]))
+    service_pressure = min(
+        1.0,
+        max(
+            urgent_tiles / max(1.0, workers * 0.85),
+            int(labor_plan["work_units"]) / max(1.0, workers * 8.0),
+        ),
+    )
+    liquid_units = sum(int(value) for value in (private.get("shed") or {}).values()) + sum(
+        sum(int(value) for value in inventory.values())
+        for inventory in (private.get("inventories") or [])
+    )
+    remaining = max(0, 29 - day)
+    early = max(0.0, (11 - day) / 11.0)
+    middle = max(0.0, 1.0 - abs(day - 16) / 8.0)
+    terminal = max(0.0, (day - 21) / 8.0)
+    threat = float(signal.get("asset_threat", 0.0))
+    prediction_break = 1.0 if signal.get("prediction_break") else 0.0
+
+    scores = {
+        "cash-engine": (
+            normalized.get("cash-engine", 0.0)
+            + 0.80 * early
+            + 0.16 * float(attention.get("operations", 0.0))
+        ),
+        "recurring-engine": (
+            normalized.get("recurring-engine", 0.0)
+            + 0.72 * middle
+            + 0.20 * float(attention.get("opponent", 0.0)) * prediction_break
+        ),
+        "livestock-engine": (
+            normalized.get("livestock-engine", 0.0)
+            + 0.62 * middle
+            + 0.26 * threat * float(attention.get("opponent", 0.0))
+            - 0.38 * service_pressure
+        ),
+        "liquidity": (
+            0.95 * terminal
+            + 0.55 * float(attention.get("horizon", 0.0))
+            + min(0.28, liquid_units / 220.0)
+            - 0.30 * min(1.0, remaining / 10.0)
+        ),
+    }
+    # High operations attention keeps alternatives alive; when opponent and
+    # horizon signals dominate, the distribution may become more decisive.
+    temperature = 0.62 + 0.42 * float(attention.get("operations", 0.0))
+    probabilities = _softmax(scores, temperature=temperature)
+    choice = max(probabilities, key=lambda key: (probabilities[key], key))
+    ordered = sorted(probabilities.values(), reverse=True)
+    plan = {
+        "choice": choice,
+        "probabilities": {key: round(value, 4) for key, value in probabilities.items()},
+        "scores": {key: round(value, 4) for key, value in scores.items()},
+        "temperature": round(temperature, 4),
+        "service_pressure": round(service_pressure, 4),
+        "confidence_edge": round(ordered[0] - ordered[1], 4),
+        "phase": phase["phase"],
+    }
+    memory["strategy_plan_day"] = day
+    memory["strategy_plan_cache"] = plan
+    history = list(memory.get("strategy_plan_history") or [])
+    history.append({"day": day, "choice": choice, "probabilities": plan["probabilities"]})
+    memory["strategy_plan_history"] = history[-12:]
+    return {**signal, "strategy_plan": plan}
+
+
 def _density_specialist_plan(obs, farm, private, signal, memory):
     """Promote the rich engine ensemble only at the irreversible buy window.
 
@@ -903,7 +1010,14 @@ def _density_specialist_plan(obs, farm, private, signal, memory):
     # leaf. Softmax temperature grows with score scale so close alternatives
     # retain a meaningful vote while clearly dominated engines disappear.
     peak = max(float(value) for value in combo_scores.values())
-    temperature = max(45.0, abs(peak) * 0.14)
+    strategy_plan = signal.get("strategy_plan") or {}
+    strategy_probabilities = strategy_plan.get("probabilities") or {}
+    operations_weight = float((signal.get("attention_weights") or {}).get("operations", 0.0))
+    decisiveness = max(
+        float(strategy_probabilities.get("recurring-engine", 0.0)),
+        float(strategy_probabilities.get("livestock-engine", 0.0)),
+    )
+    temperature = max(45.0, abs(peak) * (0.17 + 0.08 * operations_weight - 0.07 * decisiveness))
     weights = {
         key: math.exp(max(-30.0, min(0.0, (float(value) - peak) / temperature)))
         for key, value in combo_scores.items()
@@ -973,7 +1087,11 @@ def _density_specialist_plan(obs, farm, private, signal, memory):
     # The arena shows sheep can profitably retain the lean core's fifth slot;
     # do not impose one physical-density rule on unlike production cycles.
     raw_target = int(signal.get("animal_target", 0))
-    target = min(4, raw_target) if chosen_animal in ("COW", "GOOSE") else raw_target
+    # The five-match training set rejected a physical-density split: reducing
+    # cows against a frontier persona was not stable after the service-pressure
+    # observation was corrected. Softmax may select the engine family, but the
+    # proven lean asset count remains the guarded default.
+    target = raw_target
     specialist = {
         "active": commitment is not None,
         "candidate": f"{voted_crop}+{voted_animal}",
@@ -981,7 +1099,10 @@ def _density_specialist_plan(obs, farm, private, signal, memory):
         "crop_votes": {key: round(value, 4) for key, value in crop_votes.items()},
         "vote_edge": round(vote_edge, 4),
         "commitment": dict(commitment) if commitment else None,
-        "physical_cap": 4 if chosen_animal in ("COW", "GOOSE") else 5,
+        "physical_cap": raw_target,
+        "density_rule": "softmax-family-with-lean-count",
+        "strategy_choice": strategy_plan.get("choice", "unknown"),
+        "strategy_probabilities": strategy_probabilities,
     }
     return {
         **signal,
@@ -1741,6 +1862,7 @@ def _emit_day_trace(obs, player, opponent_signal, phase, result):
         "crop": [opponent_signal.get("cash_crop"), opponent_signal.get("recurring_crop")],
         "animal": [opponent_signal.get("animal"), opponent_signal.get("animal_target", 0)],
         "attention": opponent_signal.get("attention_weights", {}),
+        "strategy": opponent_signal.get("strategy_plan", {}),
         "macro": opponent_signal.get("macro_plan", {}),
         "market_orders": len(result.get("market", [])),
     }
@@ -1802,6 +1924,7 @@ def _policy(obs, persona=None):
         macro = _macro_strategy_plan(obs, farm, private, opponent_signal, memory)
         opponent_signal = {**opponent_signal, "macro_plan": {key: value for key, value in macro.items() if key != "frontier"}}
         if macro["branch"] == "lean":
+            opponent_signal = _softmax_strategy_plan(obs, farm, private, opponent_signal, memory)
             opponent_signal = _density_specialist_plan(obs, farm, private, opponent_signal, memory)
         else:
             frontier = macro["frontier"]
