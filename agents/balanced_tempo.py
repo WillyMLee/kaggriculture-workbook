@@ -1,4 +1,4 @@
-"""Frontier Horizon v0.7.2: coupled expansion and engine-payback planning."""
+"""Lean Horizon v0.8.0: gated density over the promoted lean engine."""
 
 from __future__ import annotations
 
@@ -138,6 +138,11 @@ def _episode_memory(obs, player):
             "route_day": -1,
             "routes": {},
             "trace_days": set(),
+            "macro_branch": "lean",
+            "macro_branch_day": -1,
+            "macro_branch_since": 0,
+            "macro_branch_history": [],
+            "macro_plan_cache": None,
             "last_seen_step": step,
         }
     else:
@@ -593,6 +598,124 @@ def _frontier_growth_plan(obs, farm, private, opponent_signal):
             ),
         ),
     }
+
+
+def _macro_strategy_plan(obs, farm, private, opponent_signal, memory):
+    """Choose lean, selective expansion, or frontier with sticky service gates."""
+    day = int(obs.get("day", 0))
+    cached = memory.get("macro_plan_cache")
+    if int(memory.get("macro_branch_day", -1)) == day and cached:
+        return cached
+    player = int(obs.get("player", 0))
+    farms = obs.get("farms", []) or []
+    opponent = farms[1 - player] if len(farms) == 2 else {"unlocked_quadrants": ["NW"]}
+    own_quadrants = len(farm.get("unlocked_quadrants", []))
+    opponent_quadrants = len(opponent.get("unlocked_quadrants", []))
+    frontier = _frontier_growth_plan(obs, farm, private, opponent_signal)
+    phase = _phase_attention(obs)
+    labor = _labor_plan(obs, farm, phase)
+    service_capacity = int(labor["target"]) * 8
+    service_slack = service_capacity - int(labor["work_units"])
+    probabilities = opponent_signal.get("probabilities", {}) or {}
+    land_probability = float(probabilities.get("land-expansion", 0.0))
+
+    prices = (obs.get("market") or {}).get("prices", {}) or {}
+    recurring_edge = float(prices.get("STRAWBERRY", BASE_PRICES["STRAWBERRY"])) / BASE_PRICES["STRAWBERRY"] - 1.0
+    livestock_edge = max(
+        float(prices.get("MILK", BASE_PRICES["MILK"])) / BASE_PRICES["MILK"],
+        float(prices.get("WOOL", BASE_PRICES["WOOL"])) / BASE_PRICES["WOOL"],
+    ) - 1.0
+    unlocked_shops = set((obs.get("town") or {}).get("unlocked_shops", []))
+    town_edge = 0.08 * len(unlocked_shops & {"BRUNCH_SPOT", "ICE_CREAM_SHOP", "SMOOTHIE_SHOP", "YARN_STORE"})
+    opportunity = recurring_edge * 0.55 + livestock_edge * 0.30 + town_edge
+
+    first_ready = (
+        6 <= day <= 8
+        and frontier["utilization"] >= 0.64
+        and frontier["deployed_animals"] >= 4
+        and frontier["held_animals"] <= 2
+        and frontier["payback_ratio"] >= 1.35
+        and service_slack >= 6
+        and int(farm.get("money", 0)) >= frontier["next_land_cost"] + 20
+    )
+    third_ready = (
+        11 <= day <= 13
+        and frontier["utilization"] >= 0.64
+        and frontier["deployed_animals"] >= 8
+        and frontier["held_animals"] <= 2
+        and frontier["recurring_tiles"] >= 10
+        and frontier["payback_ratio"] >= 1.15
+        and service_slack >= 2
+        and int(farm.get("money", 0)) >= frontier["next_land_cost"] + 20
+    )
+    # Market strength can improve the economics of a cleared expansion, but it
+    # cannot trigger density alone. The first arena showed that this shortcut
+    # abandoned the lean control against one-quadrant engines. v0.8 therefore
+    # requires a visible opponent land commitment; later versions can relearn
+    # an independent opportunity trigger from counterfactual arena labels.
+    selective_trigger = opponent_quadrants >= 2
+    frontier_trigger = opponent_quadrants >= 3
+
+    incumbent = str(memory.get("macro_branch", "lean"))
+    since = int(memory.get("macro_branch_since", day))
+    branch = incumbent
+    if own_quadrants >= 3:
+        branch = "frontier"
+    elif own_quadrants == 2:
+        branch = "frontier" if third_ready and frontier_trigger else "selective"
+    elif day < 6:
+        branch = "lean"
+    elif first_ready and selective_trigger:
+        branch = "selective"
+    elif incumbent in ("selective", "frontier") and day <= 8 and day - since <= 2:
+        # Give a cleared land decision two days to execute before bailing out.
+        branch = "selective"
+    else:
+        branch = "lean"
+
+    if int(memory.get("macro_branch_day", -1)) != day:
+        if branch != incumbent:
+            memory["macro_branch_since"] = day
+        memory["macro_branch"] = branch
+        memory["macro_branch_day"] = day
+        memory["macro_branch_history"].append({
+            "day": day,
+            "branch": branch,
+            "opponent_quadrants": opponent_quadrants,
+            "land_probability": round(land_probability, 4),
+            "opportunity": round(opportunity, 4),
+            "service_slack": service_slack,
+            "payback_ratio": frontier["payback_ratio"],
+        })
+        memory["macro_branch_history"] = memory["macro_branch_history"][-12:]
+
+    result = {
+        "branch": branch,
+        "opponent_quadrants": opponent_quadrants,
+        "land_probability": round(land_probability, 4),
+        "opportunity": round(opportunity, 4),
+        "service_slack": service_slack,
+        "first_ready": first_ready,
+        "third_ready": third_ready,
+        "frontier": frontier,
+    }
+    memory["macro_plan_cache"] = result
+    return result
+
+
+def _selective_frontier_plan(plan):
+    """Cap the first expansion so density can prove itself before quadrant three."""
+    plan = dict(plan)
+    quadrants = int(plan["quadrants"])
+    animal_total = 6 if quadrants <= 1 else 9
+    plan["animal_target"] = animal_total
+    plan["animal_targets"] = {"COW": animal_total - 3, "SHEEP": 3}
+    plan["wheat_target"] = 3 if quadrants <= 1 else 7
+    plan["recurring_target"] = 4 if quadrants <= 1 else 19
+    plan["labor_target"] = min(10, max(7, int(plan["labor_target"])))
+    if quadrants > 1:
+        plan["buy_land"] = False
+    return plan
 
 
 def _expected_supply_pressure(probabilities, product):
@@ -1143,9 +1266,11 @@ def _market_plan(obs, farm, private, opponent_signal, phase, terminal=None):
 
     # Labor is operating capacity, not an investment. Keep it through the last
     # day so feeding and harvesting are not abandoned during liquidation.
-    if hour <= 1:
+    if frontier.get("active") and hour <= 1:
         hire_shortfall = max(0, labor_plan["target"] - len(farm.get("hands", [])))
         orders.extend([["HIRE"] for _ in range(hire_shortfall)])
+    elif not frontier.get("active") and hour == 0:
+        orders.extend([["HIRE"] for _ in range(labor_plan["target"])])
 
     # Convert completed output continuously. Wheat remains feed until late
     # execution, when only the amount above the remaining feed reserve is sold.
@@ -1195,19 +1320,28 @@ def _market_plan(obs, farm, private, opponent_signal, phase, terminal=None):
             desired[secondary] = max(0, desired.get(secondary, 0) - 1)
 
     purchase_window = hour <= 2 or hour in (6, 12, 18)
-    cash_reserve = 20 if frontier.get("active") else 80
-    available_cash = max(0, int(farm.get("money", 0)) - cash_reserve)
-    if purchase_window and frontier.get("buy_land") and available_cash >= int(frontier["next_land_cost"]):
-        orders.append(["BUY_LAND"])
-        available_cash -= int(frontier["next_land_cost"])
-    if purchase_window:
+    if frontier.get("active"):
+        available_cash = max(0, int(farm.get("money", 0)) - 20)
+        if purchase_window and frontier.get("buy_land") and available_cash >= int(frontier["next_land_cost"]):
+            orders.append(["BUY_LAND"])
+            available_cash -= int(frontier["next_land_cost"])
+        if purchase_window:
+            for crop, target in desired.items():
+                shortfall = max(0, target - planted.get(crop, 0) - int(seeds.get(crop, 0)))
+                affordable = available_cash // CROPS[crop]["seed"]
+                quantity = min(shortfall, affordable)
+                if quantity:
+                    orders.append(["BUY_SEED", crop, quantity])
+                    available_cash -= quantity * CROPS[crop]["seed"]
+    elif purchase_window:
+        seed_budget = max(0, int(farm.get("money", 0)) - 80)
         for crop, target in desired.items():
             shortfall = max(0, target - planted.get(crop, 0) - int(seeds.get(crop, 0)))
-            affordable = available_cash // CROPS[crop]["seed"]
+            affordable = seed_budget // CROPS[crop]["seed"]
             quantity = min(shortfall, affordable)
             if quantity:
                 orders.append(["BUY_SEED", crop, quantity])
-                available_cash -= quantity * CROPS[crop]["seed"]
+                seed_budget -= quantity * CROPS[crop]["seed"]
 
     animal_choice = opponent_signal.get("animal", "COW")
     structure = "COOP" if animal_choice == "GOOSE" else "PASTURE"
@@ -1215,30 +1349,49 @@ def _market_plan(obs, farm, private, opponent_signal, phase, terminal=None):
         farm, lambda tile: isinstance(tile, dict) and tile.get("kind") == structure and "animal" not in tile
     )
     if phase["allow_animals"]:
-        animal_targets = frontier.get("animal_targets") or {
-            animal_choice: int(opponent_signal.get("animal_target", 4))
-        }
-        for target_animal, target in animal_targets.items():
+        if frontier.get("active"):
+            animal_targets = frontier.get("animal_targets") or {
+                animal_choice: int(opponent_signal.get("animal_target", 4))
+            }
+            for target_animal, target in animal_targets.items():
+                selected_animals = _count_tiles(
+                    farm,
+                    lambda tile, target_animal=target_animal: isinstance(tile, dict)
+                    and tile.get("animal") == target_animal,
+                )
+                carried_animals = sum(int(inv.get(target_animal, 0)) for inv in inventories)
+                animal_shortfall = max(
+                    0,
+                    int(target) - selected_animals - int(shed.get(target_animal, 0)) - carried_animals,
+                )
+                animal_cost = ANIMAL_ECONOMICS[target_animal]["cost"]
+                affordable_animals = available_cash // animal_cost
+                animal_quantity = min(animal_shortfall, affordable_animals) if purchase_window else 0
+                if animal_quantity:
+                    orders.append(["BUY_ANIMAL", target_animal, animal_quantity])
+                    available_cash -= animal_quantity * animal_cost
+        else:
             selected_animals = _count_tiles(
-                farm,
-                lambda tile, target_animal=target_animal: isinstance(tile, dict)
-                and tile.get("animal") == target_animal,
+                farm, lambda tile: isinstance(tile, dict) and tile.get("animal") == animal_choice
             )
-            carried_animals = sum(int(inv.get(target_animal, 0)) for inv in inventories)
+            carried_animals = sum(int(inv.get(animal_choice, 0)) for inv in inventories)
+            target = int(opponent_signal.get("animal_target", 4))
             animal_shortfall = max(
-                0,
-                int(target) - selected_animals - int(shed.get(target_animal, 0)) - carried_animals,
+                0, target - selected_animals - int(shed.get(animal_choice, 0)) - carried_animals
             )
-            animal_cost = ANIMAL_ECONOMICS[target_animal]["cost"]
-            affordable_animals = available_cash // animal_cost
+            animal_cost = ANIMAL_ECONOMICS[animal_choice]["cost"]
+            affordable_animals = max(0, int(farm.get("money", 0)) - 120) // animal_cost
             animal_quantity = min(animal_shortfall, affordable_animals) if purchase_window else 0
             if animal_quantity:
-                orders.append(["BUY_ANIMAL", target_animal, animal_quantity])
-                available_cash -= animal_quantity * animal_cost
+                orders.append(["BUY_ANIMAL", animal_choice, animal_quantity])
         feed_on_hand = int(shed.get("WHEAT", 0)) + sum(int(inv.get("WHEAT", 0)) for inv in inventories)
         feed_target = max(8, wheat_plan["feed_reserve"], (animals + empty_structures) * 2)
         wheat_price = max(1, int((obs.get("market") or {}).get("prices", {}).get("WHEAT", BASE_PRICES["WHEAT"])))
-        affordable_feed = available_cash // wheat_price
+        affordable_feed = (
+            available_cash // wheat_price
+            if frontier.get("active")
+            else max(0, int(farm.get("money", 0)) - 80) // wheat_price
+        )
         feed_quantity = min(max(0, feed_target - feed_on_hand), affordable_feed) if purchase_window else 0
         if feed_quantity:
             orders.append(["BUY_PRODUCT", "WHEAT", feed_quantity])
@@ -1335,9 +1488,15 @@ def _operations_attention(obs, farm, private, opponent_signal, phase, terminal=N
     remaining_seeds = {crop: int(quantity) for crop, quantity in seeds.items()}
     for position, crop in crop_cells:
         tile = _tile(farm, position)
-        if tile is None and remaining_seeds.get(crop, 0) > 0:
+        seed_available = (
+            remaining_seeds.get(crop, 0) > 0
+            if frontier.get("active")
+            else int(seeds.get(crop, 0)) > 0
+        )
+        if tile is None and seed_available:
             tasks.append((6, position, ["PLANT", crop]))
-            remaining_seeds[crop] -= 1
+            if frontier.get("active"):
+                remaining_seeds[crop] -= 1
         elif isinstance(tile, dict) and tile.get("kind") == "WEED":
             tasks.append((5, position, ["DIG"]))
 
@@ -1403,6 +1562,7 @@ def _assign_tasks(positions, available, tasks, hour):
     # The complete queue can grow with every plant, animal, pickup point, and
     # weed; bounding it prevents an unusual board from consuming the 1s action
     # budget while preserving several alternatives per worker.
+    task_limit = max(18, len(workers) * (2 if len(workers) > 8 else 3))
     ranked_tasks = sorted(
         enumerate(tasks),
         key=lambda item: (
@@ -1411,7 +1571,7 @@ def _assign_tasks(positions, available, tasks, hour):
             item[1][1],
             item[0],
         ),
-    )[: max(18, len(workers) * 3)]
+    )[:task_limit]
     # Dynamic programming is tiny here: at most eight workers, so 2^8 states.
     # It avoids the old first-worker-first choice that stranded another worker
     # with a long route to an equally urgent task.
@@ -1470,6 +1630,7 @@ def _emit_day_trace(obs, player, opponent_signal, phase, result):
         "crop": [opponent_signal.get("cash_crop"), opponent_signal.get("recurring_crop")],
         "animal": [opponent_signal.get("animal"), opponent_signal.get("animal_target", 0)],
         "attention": opponent_signal.get("attention_weights", {}),
+        "macro": opponent_signal.get("macro_plan", {}),
         "market_orders": len(result.get("market", [])),
     }
     print("KAGG_TRACE " + json.dumps(payload, separators=(",", ":"), sort_keys=True))
@@ -1487,6 +1648,7 @@ def _policy(obs, persona=None):
     farm = farms[player]
     opponent_signal = _opponent_attention(obs, player)
     phase = _phase_attention(obs)
+    memory = _episode_memory(obs, player)
     if persona:
         phase = dict(phase)
         recurring_start = int(persona.get("recurring_start", 5))
@@ -1526,24 +1688,29 @@ def _policy(obs, persona=None):
                 "allow_recurring": 5 <= day <= 21,
             }
     else:
-        frontier = _frontier_growth_plan(obs, farm, private, opponent_signal)
-        opponent_signal = {
-            **opponent_signal,
-            "frontier_plan": frontier,
-            "animal": "COW",
-            "animal_target": int(frontier["animal_target"]),
-            "animal_targets": dict(frontier["animal_targets"]),
-            "recurring_targets": {
-                opponent_signal.get("recurring_crop", "STRAWBERRY"): int(frontier["recurring_target"])
-            },
-        }
-        if frontier["active"]:
+        macro = _macro_strategy_plan(obs, farm, private, opponent_signal, memory)
+        opponent_signal = {**opponent_signal, "macro_plan": {key: value for key, value in macro.items() if key != "frontier"}}
+        if macro["branch"] != "lean":
+            frontier = macro["frontier"]
+            if macro["branch"] == "selective":
+                frontier = _selective_frontier_plan(frontier)
+                if int(frontier["quadrants"]) <= 1:
+                    frontier["buy_land"] = bool(macro["first_ready"])
+            opponent_signal = {
+                **opponent_signal,
+                "frontier_plan": frontier,
+                "animal": "COW",
+                "animal_target": int(frontier["animal_target"]),
+                "animal_targets": dict(frontier["animal_targets"]),
+                "recurring_targets": {
+                    opponent_signal.get("recurring_crop", "STRAWBERRY"): int(frontier["recurring_target"])
+                },
+            }
             phase = {
                 **phase,
                 "allow_animals": day <= 15,
                 "allow_recurring": 5 <= day <= 21,
             }
-    memory = _episode_memory(obs, player)
     if int(memory.get("route_day", -1)) != day:
         memory["route_day"] = day
         memory["routes"] = {}

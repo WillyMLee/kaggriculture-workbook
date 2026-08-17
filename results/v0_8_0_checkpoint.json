@@ -1,0 +1,59 @@
+{
+  "version": "v0.8.0",
+  "status": "held_local_candidate",
+  "artifact": {
+    "name": "kaggriculture-v0.8.0.tar.gz",
+    "bytes": 19962,
+    "sha256": "e202c8e41de144eac67e26ccb7641bde88e0cdd5599d5c67c3a04a36ab0a3390"
+  },
+  "fixed_control": {
+    "baseline": "v0.7.1-i5",
+    "seed": 620,
+    "episodes": 2,
+    "wins": 1,
+    "losses": 1,
+    "average_margin": 0.0,
+    "minimum_margin": -631.0,
+    "maximum_action_ms": 456.815
+  },
+  "matched_targeted_arena": {
+    "candidate": {
+      "episodes": 6,
+      "wins": 1,
+      "losses": 5,
+      "average_margin": -4187.0,
+      "minimum_margin": -13677.0,
+      "maximum_action_ms": 767.159
+    },
+    "v0.7.1_i5_baseline": {
+      "episodes": 6,
+      "wins": 1,
+      "losses": 5,
+      "average_margin": -4936.0,
+      "minimum_margin": -13677.0,
+      "maximum_action_ms": 3599.713
+    },
+    "average_margin_improvement": 749.0,
+    "cow_fertilizer_average_improvement": 2247.0
+  },
+  "rejected_experiment": {
+    "change": "Allow selective expansion after visible opponent land without four deployed animals.",
+    "top_frontier_average_margin": -6569.0,
+    "control_average_margin": -4364.5,
+    "decision": "reverted"
+  },
+  "passed": [
+    "21 deterministic policy regressions",
+    "single-seed exact artifact self-play validation",
+    "zero runtime failures",
+    "zero suspicious fallback turns",
+    "lean fixed-seed non-regression"
+  ],
+  "failed": [
+    "targeted persona win-rate gate",
+    "700 ms local action gate",
+    "60,000-plus terminal-bank milestone",
+    "frontier branch superiority"
+  ],
+  "recommendation": "Hold locally. Train the branch selector from counterfactual branch outcomes before adding more density or submitting to Kaggle."
+}

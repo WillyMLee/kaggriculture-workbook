@@ -1,0 +1,13 @@
+{
+  "version": "v0.8.0-i4",
+  "created_at": "2026-08-17T00:21:44.870923+00:00",
+  "artifact": "kaggriculture-v0.8.0-i4.tar.gz",
+  "sha256": "7324683e96b3480ab88e2def2a284d122542b24ce22f47c76377f1062ddb1fae",
+  "files": [
+    {
+      "source": "agents/balanced_tempo.py",
+      "archive": "main.py"
+    }
+  ],
+  "entry_point": "main.py:agent"
+}

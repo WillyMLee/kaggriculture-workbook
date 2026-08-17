@@ -629,6 +629,15 @@
       model: "Replay-derived frontier cascade, land payback gates, mixed livestock targets, protected expansion crew, twelve-hand service cap, and trajectory milestone training signals.",
       limitation: "Experimental only: the high-cap branch approaches the frontier proxy but loses broadly to lean engines and never reaches 60k by day 24. Keep v0.7.1-i5 as control.",
     },
+    {
+      id: "agent-v0-8-0",
+      version: "v0.8.0",
+      date: "2026-08-16",
+      status: "candidate",
+      evidence: "matched arena: +749 avg lift | fixed control: 1–1, zero avg",
+      model: "Promoted lean core plus a cached daily lean/selective/frontier selector, service and payback gates, hysteresis, and bounded dense-worker routing.",
+      limitation: "Held: targeted arena remains 1–5, frontier response does not outperform the lean control, and the 767 ms worst action misses the 700 ms gate.",
+    },
   ];
   let agentArchive = readStore(KEYS.agentArchive, seededAgents);
   if (!Array.isArray(agentArchive)) agentArchive = [...seededAgents];

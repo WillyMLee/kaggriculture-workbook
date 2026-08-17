@@ -17,6 +17,7 @@ from agents.balanced_tempo import (
     _engine_combo_model,
     _fertilizer_targets,
     _frontier_growth_plan,
+    _macro_strategy_plan,
     _labor_plan,
     _market_plan,
     _operations_attention,
@@ -329,6 +330,14 @@ def test_deadline_router_assigns_workers_globally():
     assert len(bounded) == 9
 
 
+def test_dense_workforce_uses_bounded_assignment():
+    positions = [(index, 0) for index in range(11)]
+    tasks = [(index % 4, (index, 1), ["WATER"]) for index in range(11)]
+    assignment = _assign_tasks(positions, set(range(11)), tasks, hour=8)
+    assert len(assignment) == 11
+    assert len({worker for worker, _ in assignment}) == 11
+
+
 def test_high_threat_fifth_animal_has_a_real_slot():
     farm = make_farm()
     signal = {
@@ -371,7 +380,7 @@ def test_opponent_prediction_breaks_on_material_deviation():
     assert signal["prediction_error"] >= 8
 
 
-def test_engine_combo_and_frontier_bootstrap_are_available():
+def test_engine_combo_and_lean_bootstrap_are_available():
     _EPISODE_MEMORY.clear()
     ours = make_farm()
     ours["money"] = 3000
@@ -389,10 +398,63 @@ def test_engine_combo_and_frontier_bootstrap_are_available():
     signal = _opponent_attention(obs, 0)
     assert len(signal["engine_combo"]["scores"]) == 6
     action = agent(obs)
-    assert ["BUY_SEED", "MELON", 12] in action["market"]
-    assert ["BUY_SEED", "WHEAT", 7] in action["market"]
-    assert ["BUY_ANIMAL", "COW", 2] in action["market"]
-    assert ["BUY_ANIMAL", "SHEEP", 2] in action["market"]
+    assert not any(order[:2] == ["BUY_LAND"] for order in action["market"])
+    assert not any(order[:2] == ["BUY_SEED", "MELON"] and order[2] == 12 for order in action["market"])
+
+
+def test_macro_selector_stays_lean_then_matches_verified_land_density():
+    ours = make_farm()
+    ours["money"] = 1800
+    opponent = make_farm()
+    private = {"shed": {}, "seeds": {}, "inventories": []}
+    for index in range(17):
+        ours["tiles"][index // 5][index % 5] = {"kind": "PLANT", "crop": "STRAWBERRY"}
+    for index in range(4):
+        ours["tiles"][4][index] = {"kind": "PASTURE", "animal": "COW"}
+    signal = {"probabilities": {"land-expansion": 0.05}, "animal_scores": {"COW": 10, "SHEEP": 8}}
+    memory = {"macro_branch": "lean", "macro_branch_day": -1, "macro_branch_since": 0, "macro_branch_history": []}
+
+    lean = _macro_strategy_plan(
+        {"day": 7, "player": 0, "farms": [ours, opponent], "market": {"prices": {}}, "town": {}},
+        ours, private, signal, memory,
+    )
+    assert lean["branch"] == "lean"
+
+    memory["macro_branch_day"] = -1
+    rich_market = _macro_strategy_plan(
+        {
+            "day": 7,
+            "player": 0,
+            "farms": [ours, opponent],
+            "market": {"prices": {"STRAWBERRY": 180, "MILK": 220, "WOOL": 280}},
+            "town": {"unlocked_shops": ["ICE_CREAM_SHOP", "YARN_STORE"]},
+        },
+        ours, private, signal, memory,
+    )
+    assert rich_market["branch"] == "lean"
+
+    opponent["unlocked_quadrants"] = ["NW", "NE"]
+    memory["macro_branch_day"] = -1
+    selective = _macro_strategy_plan(
+        {"day": 7, "player": 0, "farms": [ours, opponent], "market": {"prices": {}}, "town": {}},
+        ours, private, signal, memory,
+    )
+    assert selective["branch"] == "selective"
+
+    ours["unlocked_quadrants"] = ["NW", "NE"]
+    ours["money"] = 2400
+    opponent["unlocked_quadrants"] = ["NW", "NE", "SW"]
+    for y in range(5):
+        for x in range(5, 9):
+            ours["tiles"][y][x] = {"kind": "PLANT", "crop": "STRAWBERRY"}
+    for x in range(5, 9):
+        ours["tiles"][4][x] = {"kind": "PASTURE", "animal": "COW"}
+    memory["macro_branch_day"] = -1
+    frontier = _macro_strategy_plan(
+        {"day": 12, "player": 0, "farms": [ours, opponent], "market": {"prices": {}}, "town": {}},
+        ours, private, signal, memory,
+    )
+    assert frontier["branch"] == "frontier"
 
 
 def test_frontier_land_purchase_requires_saturation_and_payback():
@@ -442,9 +504,11 @@ if __name__ == "__main__":
     test_marginal_economics_prices_livestock_and_fertilizer()
     test_expected_utility_counters_concentrated_recurring_supply()
     test_deadline_router_assigns_workers_globally()
+    test_dense_workforce_uses_bounded_assignment()
     test_high_threat_fifth_animal_has_a_real_slot()
     test_wheat_is_a_dynamic_reserve_not_a_fixed_commitment()
     test_opponent_prediction_breaks_on_material_deviation()
-    test_engine_combo_and_frontier_bootstrap_are_available()
+    test_engine_combo_and_lean_bootstrap_are_available()
+    test_macro_selector_stays_lean_then_matches_verified_land_density()
     test_frontier_land_purchase_requires_saturation_and_payback()
-    print("phase policy regressions: 19 passed")
+    print("phase policy regressions: 21 passed")

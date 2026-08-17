@@ -388,14 +388,24 @@
           <button class="button button-primary" id="open-agent-form" type="button">Log agent</button>
         </div>
         <section class="section shell" aria-labelledby="current-checkpoint-title">
-          <div class="section-heading"><div><p class="eyebrow">Experimental checkpoint · August 16</p><h2 id="current-checkpoint-title">v0.7.2 reaches the frontier, but does not clear promotion</h2></div><strong class="qa-verdict" data-state="hold">HOLD</strong></div>
+          <div class="section-heading"><div><p class="eyebrow">Current checkpoint · August 16</p><h2 id="current-checkpoint-title">v0.8 improves the lean core; frontier promotion stays closed</h2></div><strong class="qa-verdict" data-state="hold">HOLD</strong></div>
           <div class="candidate-evidence">
-            <div><span>Leader evidence</span><strong>2 replays</strong><small>current #1 vs #2 / #3</small></div>
-            <div><span>Leader timing</span><strong>D07 / D12</strong><small>observed second / third quadrant target</small></div>
-            <div><span>Control gate</span><strong>0 / 2</strong><small>average −1,755 vs v0.7.1-i5</small></div>
-            <div><span>Training arena</span><strong>1 / 8</strong><small>max action 289 ms · no fallbacks</small></div>
+            <div><span>Lean control</span><strong>1–1</strong><small>zero average margin vs v0.7.1-i5</small></div>
+            <div><span>Matched arena</span><strong>+749</strong><small>average-margin lift over v0.7.1</small></div>
+            <div><span>Cow engine</span><strong>+2,247</strong><small>average deficit recovered</small></div>
+            <div><span>Runtime</span><strong>767 ms</strong><small>v0.7.1 worst was 3,600 ms</small></div>
           </div>
-          <p class="source-note"><strong>Read:</strong> the replay-derived opener now converts into land, 14 livestock, and 30 recurring plots instead of buying idle inventory. Extra service labor cut the fixed-seed deficit from about 13k to 1.8k, but the candidate still loses broadly to leaner engines. Keep v0.7.1-i5 as the promoted control.</p>
+          <p class="source-note"><strong>Read:</strong> v0.8 preserves the lean economy, caches its daily macro decision, and bounds dense worker routing. It is faster and modestly stronger than v0.7.1 on identical arena seeds, but still finishes only 1–5 and misses the 700 ms latency gate by 67 ms. Package locally; do not submit.</p>
+        </section>
+        <section class="section shell" aria-labelledby="v080-checkpoint-title">
+          <div class="section-heading"><div><p class="eyebrow">v0.8.0 checkpoint</p><h2 id="v080-checkpoint-title">Lean by default; density must prove readiness</h2></div><p class="section-note">19.5 KB artifact · 21 regressions · not submitted</p></div>
+          <ol class="system-flow">
+            <li><span>CORE</span><div><strong>Preserve the promoted lean behavior</strong><p>The fixed both-seat comparison averages exactly zero against v0.7.1-i5, with no failures or suspicious fallbacks.</p></div><em>NON-REGRESSION</em></li>
+            <li><span>SELECT</span><div><strong>Evaluate one macro branch per day</strong><p>The selector records lean, selective, or frontier intent with payback, service slack, opportunity, opponent land, and hysteresis evidence.</p></div><em>IMPLEMENTED</em></li>
+            <li><span>ARENA</span><div><strong>Improve the baseline without claiming promotion</strong><p>On six identical persona games, v0.8 and v0.7.1 both finish 1–5; v0.8 improves average margin from −4,936 to −4,187 and cuts the worst measured action from 3.60 seconds to 767 ms.</p></div><em>BETTER · HELD</em></li>
+            <li><span>REJECT</span><div><strong>Do not force a late frontier catch-up</strong><p>Relaxing readiness improved one frontier seat but worsened the other enough to produce a −6,569 average. The experiment was reverted.</p></div><em>FAILED BRANCH</em></li>
+          </ol>
+          <p class="source-note">Evidence: <code>results/v0_8_0_checkpoint.json</code>, <code>results/v0_8_0_i5_targeted_arena.json</code>, <code>results/v0_7_1_i5_targeted_v0_8_baseline.json</code>, and <code>results/v0_8_0_i6_top_frontier_arena.json</code>.</p>
         </section>
         <section class="section shell" aria-labelledby="frontier-v072-title">
           <div class="section-heading"><div><p class="eyebrow">v0.7.2 frontier lab</p><h2 id="frontier-v072-title">Train on outcomes, not imitation</h2></div><p class="section-note">18.3 KB artifact · packaged locally · not submitted</p></div>
