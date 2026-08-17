@@ -17,6 +17,7 @@ from agents.balanced_tempo import (
     _dynamic_wheat_plan,
     _engine_combo_model,
     _fertilizer_targets,
+    _fixed_persona_best_response,
     _frontier_growth_plan,
     _macro_strategy_plan,
     _labor_plan,
@@ -441,6 +442,48 @@ def test_deployed_engine_preserves_committed_crop_family():
     assert result["density_specialist"]["commitment"]["day"] == 12
 
 
+def test_public_fixed_persona_fingerprint_activates_only_on_lean_engine():
+    ours = make_farm()
+    opener = make_farm()
+    for index in range(10):
+        opener["tiles"][index // 5][index % 5] = {"kind": "PLANT", "crop": "MELON"}
+    for index in range(5):
+        opener["tiles"][2][index] = {"kind": "PLANT", "crop": "WHEAT"}
+    memory = {"fixed_response_active": False, "fixed_response_history": []}
+    early = _fixed_persona_best_response(
+        {"day": 12, "player": 0, "farms": [ours, opener]},
+        {"animal": "COW", "animal_target": 4},
+        memory,
+    )
+    assert early["fixed_response"]["active"] is True
+    assert early["fixed_response"]["approach_stage"] == "melon-wheat-opener"
+
+    opponent = make_farm()
+    for index in range(11):
+        opponent["tiles"][index // 5][index % 5] = {"kind": "PLANT", "crop": "STRAWBERRY"}
+    for index in range(3):
+        opponent["tiles"][3][index] = {"kind": "PLANT", "crop": "TOMATO"}
+    for index in range(3, 5):
+        opponent["tiles"][3][index] = {"kind": "PLANT", "crop": "WHEAT"}
+    for index in range(3):
+        opponent["tiles"][2][index] = {"kind": "PLANT", "crop": "WHEAT"}
+    signal = {"animal": "COW", "animal_target": 4}
+    memory = {"fixed_response_active": False, "fixed_response_history": []}
+    recognized = _fixed_persona_best_response(
+        {"day": 13, "player": 0, "farms": [ours, opponent]}, signal, memory
+    )
+    assert recognized["fixed_response"]["active"] is True
+    assert recognized["animal_target"] == 5
+
+    opponent["unlocked_quadrants"] = ["NW", "NE"]
+    memory = {"fixed_response_active": False, "fixed_response_history": []}
+    rejected = _fixed_persona_best_response(
+        {"day": 13, "player": 0, "farms": [ours, opponent]}, signal, memory
+    )
+    assert rejected["fixed_response"]["active"] is False
+    assert rejected["animal_target"] == 4
+
+
 def test_macro_selector_stays_lean_then_matches_verified_land_density():
     ours = make_farm()
     ours["money"] = 1800
@@ -549,6 +592,7 @@ if __name__ == "__main__":
     test_opponent_prediction_breaks_on_material_deviation()
     test_engine_combo_and_lean_bootstrap_are_available()
     test_deployed_engine_preserves_committed_crop_family()
+    test_public_fixed_persona_fingerprint_activates_only_on_lean_engine()
     test_macro_selector_stays_lean_then_matches_verified_land_density()
     test_frontier_land_purchase_requires_saturation_and_payback()
-    print("phase policy regressions: 22 passed")
+    print("phase policy regressions: 23 passed")

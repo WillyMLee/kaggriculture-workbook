@@ -1,0 +1,11 @@
+{
+  "competition": "kaggriculture",
+  "account": "William Lee",
+  "artifact": "kaggriculture-v0.8.4.tar.gz",
+  "sha256": "c49e4fd8e640612dddad5235991b1be6abeb0bc0a83d405d719685dbbdd37a81",
+  "submitted_at": "2026-08-16T23:14:35-04:00",
+  "observed_status": "Pending",
+  "observed_at": "2026-08-16T23:14:35-04:00",
+  "description": "Lean Horizon v0.8.4: public-state fixed-engine recognition plus commitment-safe attention and a sticky fifth-cow best response. Exact 24,192-byte artifact passed 23 regressions and 3-seed self-play; fresh v0.7.1-i5 gate: 13-3-4, +1,170.6 average, zero failures/fallbacks. Exploratory upload; not yet an internal 20-0 promotion.",
+  "daily_submissions_remaining_before_upload": 5
+}

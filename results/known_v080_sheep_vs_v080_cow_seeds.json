@@ -1,0 +1,85 @@
+{
+  "complete": true,
+  "expected_episodes": 4,
+  "baseline": "kaggriculture-v0.8.0.tar.gz",
+  "challenger": "agents.balanced_tempo:known_v080_sheep_agent",
+  "configuration": {
+    "seed_start": 1600,
+    "seeds": 2,
+    "seat_orders": 2
+  },
+  "artifact": null,
+  "summary": {
+    "episodes": 4,
+    "wins": 0,
+    "losses": 4,
+    "ties": 0,
+    "average_margin": -4086.0,
+    "minimum_margin": -7937.0,
+    "runtime_failures": 0,
+    "suspicious_fallback_turns": 0,
+    "maximum_action_ms": 81.194
+  },
+  "games": [
+    {
+      "seed": 1600,
+      "seat": 0,
+      "result": "loss",
+      "challenger_bank": 52844.0,
+      "baseline_bank": 54359.0,
+      "margin": -1515.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "suspicious_fallback_turns": 0,
+      "max_action_ms": 81.194,
+      "average_action_ms": 2.563
+    },
+    {
+      "seed": 1600,
+      "seat": 1,
+      "result": "loss",
+      "challenger_bank": 52844.0,
+      "baseline_bank": 54359.0,
+      "margin": -1515.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "suspicious_fallback_turns": 0,
+      "max_action_ms": 79.131,
+      "average_action_ms": 2.431
+    },
+    {
+      "seed": 1601,
+      "seat": 0,
+      "result": "loss",
+      "challenger_bank": 52428.0,
+      "baseline_bank": 60365.0,
+      "margin": -7937.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "suspicious_fallback_turns": 0,
+      "max_action_ms": 78.961,
+      "average_action_ms": 2.534
+    },
+    {
+      "seed": 1601,
+      "seat": 1,
+      "result": "loss",
+      "challenger_bank": 53773.0,
+      "baseline_bank": 59150.0,
+      "margin": -5377.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "suspicious_fallback_turns": 0,
+      "max_action_ms": 78.102,
+      "average_action_ms": 2.413
+    }
+  ]
+}

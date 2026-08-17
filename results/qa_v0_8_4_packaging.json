@@ -1,0 +1,25 @@
+{
+  "artifact": "kaggriculture-v0.8.4.tar.gz",
+  "sha256": "c49e4fd8e640612dddad5235991b1be6abeb0bc0a83d405d719685dbbdd37a81",
+  "compressed_bytes": 24192,
+  "uncompressed_main_bytes": 105307,
+  "size_limit_bytes": 104857600,
+  "size_limit_mib": 100.0,
+  "limit_used_percent": 0.023071,
+  "members": [
+    "main.py"
+  ],
+  "imports": [
+    "__future__",
+    "json",
+    "math"
+  ],
+  "checks": {
+    "under_size_limit": true,
+    "main_at_root": true,
+    "safe_members": true,
+    "python_compiles": true,
+    "single_file": true
+  },
+  "ready": true
+}

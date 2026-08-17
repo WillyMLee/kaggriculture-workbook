@@ -665,6 +665,15 @@
       model: "v0.8.2 attention and softmax plus commitment-safe crop memory that prevents temporary midgame votes from creating stranded seed inventory.",
       limitation: "More reliable than v0.8.2, but not submission-ready: fourteen ties and two losses still fail the required 20–0 gate.",
     },
+    {
+      id: "agent-v0-8-4",
+      version: "v0.8.4",
+      date: "2026-08-16",
+      status: "submitted",
+      evidence: "v0.7.1-i5 fresh gate: 13–3–4 · +1,171 avg · worst −2,253",
+      model: "Public-state fixed-engine recognition, commitment-safe attention, and a sticky fifth-cow best response learned from crop and livestock counterfactuals.",
+      limitation: "Submitted to Kaggle and pending evaluation. Treat it as exploratory: three losses and four ties still fail the internal 20–0 promotion rule.",
+    },
   ];
   let agentArchive = readStore(KEYS.agentArchive, seededAgents);
   if (!Array.isArray(agentArchive)) agentArchive = [...seededAgents];

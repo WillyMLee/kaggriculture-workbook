@@ -1,0 +1,119 @@
+{
+  "complete": true,
+  "expected_episodes": 6,
+  "baseline": "kaggriculture-v0.7.1-i5.tar.gz",
+  "challenger": "kaggriculture-v0.8.4.tar.gz",
+  "configuration": {
+    "seed_start": 1700,
+    "seeds": 3,
+    "seat_orders": 2
+  },
+  "artifact": {
+    "bytes": 24192,
+    "sha256": "c49e4fd8e640612dddad5235991b1be6abeb0bc0a83d405d719685dbbdd37a81",
+    "load_ms": 34.394
+  },
+  "summary": {
+    "episodes": 6,
+    "wins": 6,
+    "losses": 0,
+    "ties": 0,
+    "average_margin": 2991.67,
+    "minimum_margin": 150.0,
+    "runtime_failures": 0,
+    "suspicious_fallback_turns": 0,
+    "maximum_action_ms": 96.858
+  },
+  "games": [
+    {
+      "seed": 1700,
+      "seat": 0,
+      "result": "win",
+      "challenger_bank": 60521.0,
+      "baseline_bank": 57668.0,
+      "margin": 2853.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "suspicious_fallback_turns": 0,
+      "max_action_ms": 90.59,
+      "average_action_ms": 3.057
+    },
+    {
+      "seed": 1700,
+      "seat": 1,
+      "result": "win",
+      "challenger_bank": 60462.0,
+      "baseline_bank": 57730.0,
+      "margin": 2732.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "suspicious_fallback_turns": 0,
+      "max_action_ms": 80.334,
+      "average_action_ms": 2.861
+    },
+    {
+      "seed": 1701,
+      "seat": 0,
+      "result": "win",
+      "challenger_bank": 64029.0,
+      "baseline_bank": 58579.0,
+      "margin": 5450.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "suspicious_fallback_turns": 0,
+      "max_action_ms": 96.858,
+      "average_action_ms": 3.106
+    },
+    {
+      "seed": 1701,
+      "seat": 1,
+      "result": "win",
+      "challenger_bank": 64623.0,
+      "baseline_bank": 58008.0,
+      "margin": 6615.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "suspicious_fallback_turns": 0,
+      "max_action_ms": 80.192,
+      "average_action_ms": 2.873
+    },
+    {
+      "seed": 1702,
+      "seat": 0,
+      "result": "win",
+      "challenger_bank": 50531.0,
+      "baseline_bank": 50381.0,
+      "margin": 150.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "suspicious_fallback_turns": 0,
+      "max_action_ms": 78.249,
+      "average_action_ms": 2.534
+    },
+    {
+      "seed": 1702,
+      "seat": 1,
+      "result": "win",
+      "challenger_bank": 50531.0,
+      "baseline_bank": 50381.0,
+      "margin": 150.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "suspicious_fallback_turns": 0,
+      "max_action_ms": 79.139,
+      "average_action_ms": 2.536
+    }
+  ]
+}

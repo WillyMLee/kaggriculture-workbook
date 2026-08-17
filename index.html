@@ -388,14 +388,24 @@
           <button class="button button-primary" id="open-agent-form" type="button">Log agent</button>
         </div>
         <section class="section shell" aria-labelledby="current-checkpoint-title">
-          <div class="section-heading"><div><p class="eyebrow">Current checkpoint · August 16</p><h2 id="current-checkpoint-title">v0.8.3 improves reliability; superiority stays unproven</h2></div><strong class="qa-verdict" data-state="hold">HOLD</strong></div>
+          <div class="section-heading"><div><p class="eyebrow">Current checkpoint · August 16</p><h2 id="current-checkpoint-title">v0.8.4 recognizes the plan, then changes the response</h2></div><strong class="qa-verdict" data-state="pass">SUBMITTED · PENDING</strong></div>
           <div class="candidate-evidence">
-            <div><span>Comparable gate</span><strong>4–2–14</strong><small>v0.8.2 was 4–10–6</small></div>
-            <div><span>Average margin</span><strong>+495</strong><small>up from +440</small></div>
-            <div><span>Holdout</span><strong>1–1–10</strong><small>neutral across 12 games</small></div>
-            <div><span>Runtime</span><strong>98 ms</strong><small>zero failures or fallbacks</small></div>
+            <div><span>Fresh v0.7.1 gate</span><strong>13–3–4</strong><small>20 games · both seats</small></div>
+            <div><span>Average margin</span><strong>+1,171</strong><small>worst −2,253</small></div>
+            <div><span>Known lean plan</span><strong>4–0</strong><small>+2,503 average vs v0.8.0</small></div>
+            <div><span>Runtime</span><strong>111 ms</strong><small>zero failures or fallbacks</small></div>
           </div>
-          <p class="source-note"><strong>Read:</strong> v0.8.3 restores the useful temporal density from v0.7: once the day-12 crop×livestock engine is committed, deployment confirms the animal family without reopening the crop choice. This removes stranded-seed losses and cuts comparable losses from ten to two. Fourteen ties still fail the explicit 20–0 promotion rule. Keep locally; do not submit.</p>
+          <p class="source-note"><strong>Read:</strong> v0.8.4 infers a recognizable lean engine from public crop, land, and livestock commitments—never from opponent identity. Counterfactual tests reject sheep and goose pivots; the useful response keeps the lean engine and adds a fifth cow. Kaggle accepted the exact archive on August 16 and currently shows it as pending. The fresh 13–3–4 gate makes this an exploratory submission, not a 20–0 promotion.</p>
+        </section>
+        <section class="section shell" aria-labelledby="v084-checkpoint-title">
+          <div class="section-heading"><div><p class="eyebrow">v0.8.4 checkpoint</p><h2 id="v084-checkpoint-title">Identify the fixed engine before countering it</h2></div><p class="section-note">24.2 KB artifact · 23 regressions · Kaggle pending</p></div>
+          <ol class="system-flow">
+            <li><span>QUESTION</span><div><strong>Does knowing the plan actually help?</strong><p>Forced sheep and goose counters lose all eight trials. A fifth cow wins all four trials against the exact v0.8.0 cow engine, averaging +2,503 with a +652 worst margin.</p></div><em>COUNTERFACTUAL</em></li>
+            <li><span>RECOGNIZE</span><div><strong>Infer the plan from public commitments</strong><p>Days 10–12 identify the one-quadrant melon/wheat launchpad, then later evidence confirms its crop conversion and livestock family. A two-quadrant frontier opener does not trigger the response.</p></div><em>NO IDENTITY ORACLE</em></li>
+            <li><span>RESPOND</span><div><strong>Stay lean and add one productive edge</strong><p>The response preserves v0.8.3 crop memory and activates a sticky fifth-cow target instead of abandoning the working engine for a dramatic species pivot.</p></div><em>4–0 VS v0.8.0</em></li>
+            <li><span>GATE</span><div><strong>Separate upload readiness from promotion</strong><p>The fresh v0.7.1-i5 gate finishes 13–3–4 with a +1,171 average, zero failures, and 111 ms maximum action time. It is safe to upload, but it has not earned the 20–0 promotion label.</p></div><em>EXPLORATORY</em></li>
+          </ol>
+          <p class="source-note">Evidence: <code>results/v0_8_4_checkpoint.json</code>, <code>results/known_v080_cow5_vs_v080_cow_seeds.json</code>, <code>results/v0_8_4_i2_vs_v0_8_0_classifier_smoke.json</code>, and <code>results/v0_8_4_vs_v0_7_1_i5_gate_part1.json</code> + <code>part2.json</code>.</p>
         </section>
         <section class="section shell" aria-labelledby="v083-checkpoint-title">
           <div class="section-heading"><div><p class="eyebrow">v0.8.3 checkpoint</p><h2 id="v083-checkpoint-title">Restore temporal density, not frontier bulk</h2></div><p class="section-note">22.9 KB artifact · 22 regressions · not submitted</p></div>

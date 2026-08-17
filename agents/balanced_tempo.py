@@ -1,4 +1,4 @@
-"""Lean Horizon v0.8.3: commitment-safe attention density over the lean core."""
+"""Lean Horizon v0.8.4: inferred fixed-persona best response over the lean core."""
 
 from __future__ import annotations
 
@@ -149,6 +149,8 @@ def _episode_memory(obs, player):
             "strategy_plan_day": -1,
             "strategy_plan_cache": None,
             "strategy_plan_history": [],
+            "fixed_response_active": False,
+            "fixed_response_history": [],
             "last_seen_step": step,
         }
     else:
@@ -1123,6 +1125,116 @@ def _density_specialist_plan(obs, farm, private, signal, memory):
     }
 
 
+def _fixed_persona_best_response(obs, signal, memory):
+    """Exploit a stable one-quadrant recurring engine using public evidence.
+
+    This is not an opponent identity check. It recognizes the public decision
+    path used by v0.8.0 and similar lean personas: one quadrant, a dense
+    strawberry/tomato conversion, feed wheat, and no incompatible livestock.
+    The oracle arena showed that changing species loses, while one additional
+    cow clears the fixed four-cow engine. Once capital is committed the response
+    remains sticky, matching the temporal guardrails used elsewhere.
+    """
+    day = int(obs.get("day", 0))
+    player = int(obs.get("player", 0))
+    farms = obs.get("farms") or []
+    opponents = [farm for index, farm in enumerate(farms) if index != player]
+    if not opponents:
+        return signal
+    opponent = opponents[0]
+    crop_counts = {
+        crop: _count_tiles(
+            opponent,
+            lambda tile, crop=crop: isinstance(tile, dict) and tile.get("crop") == crop,
+        )
+        for crop in ("WHEAT", "MELON", "TOMATO", "STRAWBERRY")
+    }
+    animal_counts = {
+        animal: _count_tiles(
+            opponent,
+            lambda tile, animal=animal: isinstance(tile, dict) and tile.get("animal") == animal,
+        )
+        for animal in ANIMAL_ECONOMICS
+    }
+    conversion_evidence = {
+        "single_quadrant": 1.0 if len(opponent.get("unlocked_quadrants", [])) == 1 else 0.0,
+        "strawberry_core": min(1.0, crop_counts["STRAWBERRY"] / 11.0),
+        "tomato_support": 1.0 if 2 <= crop_counts["TOMATO"] <= 5 else 0.0,
+        "feed_wheat": 1.0 if 3 <= crop_counts["WHEAT"] <= 5 else 0.0,
+        "cow_compatible": 1.0 if animal_counts["GOOSE"] == 0 and animal_counts["SHEEP"] == 0 else 0.0,
+    }
+    conversion_confidence = (
+        0.25 * conversion_evidence["single_quadrant"]
+        + 0.30 * conversion_evidence["strawberry_core"]
+        + 0.15 * conversion_evidence["tomato_support"]
+        + 0.15 * conversion_evidence["feed_wheat"]
+        + 0.15 * conversion_evidence["cow_compatible"]
+    )
+    opening_evidence = {
+        "single_quadrant": conversion_evidence["single_quadrant"],
+        "melon_bootstrap": min(1.0, crop_counts["MELON"] / 9.0),
+        "feed_wheat": conversion_evidence["feed_wheat"],
+        "conversion_not_started": 1.0
+        if crop_counts["STRAWBERRY"] + crop_counts["TOMATO"] <= 1
+        else 0.0,
+        "no_livestock": 1.0 if sum(animal_counts.values()) == 0 else 0.0,
+    }
+    opening_confidence = (
+        0.25 * opening_evidence["single_quadrant"]
+        + 0.30 * opening_evidence["melon_bootstrap"]
+        + 0.20 * opening_evidence["feed_wheat"]
+        + 0.10 * opening_evidence["conversion_not_started"]
+        + 0.15 * opening_evidence["no_livestock"]
+    )
+    if opening_confidence >= conversion_confidence:
+        confidence = opening_confidence
+        approach_stage = "melon-wheat-opener"
+        evidence = opening_evidence
+    else:
+        confidence = conversion_confidence
+        approach_stage = "recurring-conversion"
+        evidence = conversion_evidence
+    activated = bool(memory.get("fixed_response_active", False))
+    if (
+        not activated
+        and 10 <= day <= 16
+        and confidence >= 0.88
+        and signal.get("animal") == "COW"
+    ):
+        activated = True
+        memory["fixed_response_active"] = True
+        history = list(memory.get("fixed_response_history") or [])
+        history.append({
+            "day": day,
+            "confidence": round(confidence, 4),
+            "approach_stage": approach_stage,
+            "response": "fifth-cow",
+        })
+        memory["fixed_response_history"] = history[-4:]
+    if not activated:
+        return {
+            **signal,
+            "fixed_response": {
+                "active": False,
+                "confidence": round(confidence, 4),
+                "approach_stage": approach_stage,
+                "evidence": evidence,
+            },
+        }
+    return {
+        **signal,
+        "animal": "COW",
+        "animal_target": max(5, int(signal.get("animal_target", 0))),
+        "fixed_response": {
+            "active": True,
+            "confidence": round(confidence, 4),
+            "approach_stage": approach_stage,
+            "evidence": evidence,
+            "response": "fifth-cow",
+        },
+    }
+
+
 def _attention_weights(obs, player, strategy_probabilities, asset_threat=0.0):
     """Allocate attention among operations, opponent inference, and horizon."""
     day = int(obs.get("day", 0))
@@ -1872,13 +1984,14 @@ def _emit_day_trace(obs, player, opponent_signal, phase, result):
         "animal": [opponent_signal.get("animal"), opponent_signal.get("animal_target", 0)],
         "attention": opponent_signal.get("attention_weights", {}),
         "strategy": opponent_signal.get("strategy_plan", {}),
+        "fixed_response": opponent_signal.get("fixed_response", {}),
         "macro": opponent_signal.get("macro_plan", {}),
         "market_orders": len(result.get("market", [])),
     }
     print("KAGG_TRACE " + json.dumps(payload, separators=(",", ":"), sort_keys=True))
 
 
-def _policy(obs, persona=None):
+def _policy(obs, persona=None, engine_override=None):
     farms = obs.get("farms", [])
     player = int(obs.get("player", 0))
     day = int(obs.get("day", 0))
@@ -1935,6 +2048,19 @@ def _policy(obs, persona=None):
         if macro["branch"] == "lean":
             opponent_signal = _softmax_strategy_plan(obs, farm, private, opponent_signal, memory)
             opponent_signal = _density_specialist_plan(obs, farm, private, opponent_signal, memory)
+            opponent_signal = _fixed_persona_best_response(obs, opponent_signal, memory)
+            if engine_override and day >= 12:
+                forced_animal = str(engine_override.get("animal", opponent_signal.get("animal", "COW")))
+                opponent_signal = {
+                    **opponent_signal,
+                    "animal": forced_animal,
+                    "animal_target": int(engine_override.get("animal_target", opponent_signal.get("animal_target", 4))),
+                    "known_response": {
+                        "opponent": "v0.8.0",
+                        "forced_animal": forced_animal,
+                        "test_only": True,
+                    },
+                }
         else:
             frontier = macro["frontier"]
             if macro["branch"] == "selective":
@@ -2137,3 +2263,23 @@ def agent(obs):
 
 
 balanced_tempo_agent = agent
+
+
+def known_v080_cow_agent(obs):
+    """Test-only oracle arm: preserve policy execution and force a cow engine."""
+    return _policy(obs, engine_override={"animal": "COW", "animal_target": 4})
+
+
+def known_v080_cow_dense_agent(obs):
+    """Test-only oracle arm: challenge the fixed cow engine with one extra cow."""
+    return _policy(obs, engine_override={"animal": "COW", "animal_target": 5})
+
+
+def known_v080_sheep_agent(obs):
+    """Test-only oracle arm: preserve policy execution and force a sheep engine."""
+    return _policy(obs, engine_override={"animal": "SHEEP", "animal_target": 4})
+
+
+def known_v080_goose_agent(obs):
+    """Test-only oracle arm: preserve policy execution and force a goose engine."""
+    return _policy(obs, engine_override={"animal": "GOOSE", "animal_target": 4})

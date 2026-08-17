@@ -1,0 +1,43 @@
+{
+  "version": "v0.8.4",
+  "date": "2026-08-16",
+  "objective": "Recognize a fixed lean engine from public play, then apply a learned best response without using opponent identity.",
+  "change": {
+    "recognizer": "A sticky public-state fingerprint detects the one-quadrant melon/wheat opener during days 10-12 and confirms later crop and livestock commitments.",
+    "response": "Keep the lean engine and add a fifth cow when the recognized engine remains cow-compatible.",
+    "guardrail": "Do not activate against a two-quadrant frontier opener; preserve the v0.8.3 commitment-safe crop memory."
+  },
+  "counterfactuals": {
+    "known_sheep_vs_v0_8_0": { "wins": 0, "losses": 4, "ties": 0, "average_margin": -4086.0 },
+    "known_goose_vs_v0_8_0": { "wins": 0, "losses": 4, "ties": 0, "average_margin": -12687.5 },
+    "known_fifth_cow_vs_v0_8_0": { "wins": 4, "losses": 0, "ties": 0, "average_margin": 2502.5, "worst_margin": 652 }
+  },
+  "screens": {
+    "v0_8_0": { "wins": 4, "losses": 0, "ties": 0, "average_margin": 2502.5, "worst_margin": 652 },
+    "v0_7_0": { "wins": 6, "losses": 0, "ties": 0, "average_margin": 6641.5, "worst_margin": 2273 },
+    "v0_7_1_i5": { "wins": 6, "losses": 0, "ties": 0, "average_margin": 2991.666667, "worst_margin": 150 },
+    "v0_7_2": { "wins": 6, "losses": 0, "ties": 0, "average_margin": 5795.5, "worst_margin": 1413 }
+  },
+  "fresh_v0_7_1_i5_gate": {
+    "episodes": 20,
+    "wins": 13,
+    "losses": 3,
+    "ties": 4,
+    "average_margin": 1170.6,
+    "worst_margin": -2253,
+    "failures": 0,
+    "fallbacks": 0,
+    "maximum_action_ms": 111.336
+  },
+  "packaging": {
+    "artifact": "artifacts/kaggriculture-v0.8.4.tar.gz",
+    "sha256": "c49e4fd8e640612dddad5235991b1be6abeb0bc0a83d405d719685dbbdd37a81",
+    "compressed_bytes": 24192,
+    "policy_regressions": 23,
+    "self_play_seeds": 3,
+    "ready": true
+  },
+  "verdict": "Exploratory submission authorized by the user. The exact artifact is valid and improves the average, but it does not satisfy the project's stricter 20-0 promotion rule.",
+  "submission_status": "submitted_pending",
+  "submission_observed_at": "2026-08-16T23:14:35-04:00"
+}
