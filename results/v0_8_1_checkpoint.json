@@ -1,0 +1,64 @@
+{
+  "version": "v0.8.1",
+  "status": "held_local_candidate",
+  "artifact": {
+    "name": "kaggriculture-v0.8.1.tar.gz",
+    "bytes": 21594,
+    "sha256": "b946b3985d971cd53a44ae5d8d975233de082de93bab0246d460a557bce84649",
+    "size_limit_used_percent": 0.020594
+  },
+  "change": {
+    "name": "event-triggered engine specialist",
+    "activation_day": 12,
+    "paths_voted": 6,
+    "signals": [
+      "crop return",
+      "livestock return",
+      "town-shop synergy",
+      "feed burden",
+      "labor burden",
+      "fertilizer value",
+      "incumbent investment",
+      "opponent supply pressure"
+    ],
+    "stability_controls": [
+      "three-day vote history",
+      "minimum vote edge",
+      "locked livestock commitment",
+      "animal-family-specific physical cap"
+    ]
+  },
+  "matched_persona_arena": {
+    "personas": 4,
+    "episodes": 8,
+    "candidate": {
+      "wins": 1,
+      "losses": 7,
+      "average_margin": -5833.375,
+      "minimum_margin": -14343.0,
+      "maximum_completed_action_ms": 178.273
+    },
+    "v0.8.0_baseline": {
+      "wins": 1,
+      "losses": 7,
+      "average_margin": -6315.125,
+      "minimum_margin": -14343.0,
+      "maximum_action_ms": 111.631
+    },
+    "average_margin_improvement": 481.75,
+    "cow_fertilizer_average_improvement": 1187.0,
+    "games_improved": 3,
+    "games_unchanged": 5,
+    "games_regressed": 0,
+    "day_24_bank_60000_plus_rate": 0.0
+  },
+  "runtime_note": "The combined refinement run completed seven games before Kaggle's environment raised its cumulative deadline. The missing top-frontier seat was rerun in an isolated two-seat check and completed at 88.145 ms maximum action time; the other seat reproduced its exact margin. Treat the interruption as a harness/load warning, not a passed stress gate.",
+  "validation": {
+    "deterministic_policy_regressions": 21,
+    "self_play_seeds": 2,
+    "packaging_ready": true,
+    "single_file": true,
+    "unexpected_imports": false
+  },
+  "recommendation": "Keep v0.8.1 as the stronger local v0.8 candidate, but do not submit. It improves matched margin without a paired regression, yet still loses seven of eight persona games and does not demonstrate a 60,000-plus bank path."
+}

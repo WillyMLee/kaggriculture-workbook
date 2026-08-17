@@ -1,0 +1,199 @@
+{
+  "complete": true,
+  "expected_episodes": 2,
+  "candidate_artifact": "kaggriculture-v0.8.1.tar.gz",
+  "candidate_sha256": "b946b3985d971cd53a44ae5d8d975233de082de93bab0246d460a557bce84649",
+  "personas_are_inferred": true,
+  "persona_caveat": "Public commitment emulations, not reconstructions of private code.",
+  "training_method": "Bounded offline policy improvement: seeded games produce win/loss and trajectory milestone signals; code changes occur only between arena runs.",
+  "summary": {
+    "episodes": 2,
+    "wins": 0,
+    "losses": 2,
+    "ties": 0,
+    "average_margin": -5435.0,
+    "minimum_margin": -5959.0,
+    "runtime_failures": 0,
+    "suspicious_fallback_turns": 0,
+    "maximum_action_ms": 100.357,
+    "training_milestones": {
+      "second_quadrant_by_day_7_rate": 0.0,
+      "third_quadrant_by_day_12_rate": 0.0,
+      "day_15_recurring_15_plus_rate": 0.0,
+      "day_15_livestock_8_plus_rate": 0.0,
+      "day_24_bank_60000_plus_rate": 0.0
+    }
+  },
+  "by_persona": {
+    "top-frontier-compound": {
+      "episodes": 2,
+      "wins": 0,
+      "losses": 2,
+      "ties": 0,
+      "average_margin": -5435.0,
+      "minimum_margin": -5959.0,
+      "runtime_failures": 0,
+      "suspicious_fallback_turns": 0,
+      "maximum_action_ms": 100.357,
+      "training_milestones": {
+        "second_quadrant_by_day_7_rate": 0.0,
+        "third_quadrant_by_day_12_rate": 0.0,
+        "day_15_recurring_15_plus_rate": 0.0,
+        "day_15_livestock_8_plus_rate": 0.0,
+        "day_24_bank_60000_plus_rate": 0.0
+      }
+    }
+  },
+  "games": [
+    {
+      "persona": "top-frontier-compound",
+      "seed": 1030,
+      "seat": 0,
+      "result": "loss",
+      "candidate_reward": 56948.0,
+      "persona_reward": 61859.0,
+      "margin": -4911.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "suspicious_fallback_turns": 0,
+      "max_action_ms": 100.357,
+      "average_action_ms": 3.4,
+      "trajectory": {
+        "7": {
+          "bank": 1916.0,
+          "quadrants": 1,
+          "peak_hands": 7,
+          "crops": {
+            "MELON": 10,
+            "WHEAT": 5
+          },
+          "animals": {}
+        },
+        "12": {
+          "bank": 1701.0,
+          "quadrants": 1,
+          "peak_hands": 8,
+          "crops": {
+            "MELON": 10,
+            "WHEAT": 5
+          },
+          "animals": {}
+        },
+        "15": {
+          "bank": 12437.0,
+          "quadrants": 1,
+          "peak_hands": 10,
+          "crops": {
+            "STRAWBERRY": 12,
+            "WHEAT": 5,
+            "TOMATO": 2
+          },
+          "animals": {
+            "SHEEP": 5
+          }
+        },
+        "24": {
+          "bank": 19725.0,
+          "quadrants": 1,
+          "peak_hands": 9,
+          "crops": {
+            "STRAWBERRY": 12,
+            "WHEAT": 2,
+            "TOMATO": 2
+          },
+          "animals": {
+            "SHEEP": 5
+          }
+        },
+        "29": {
+          "bank": 53452.0,
+          "quadrants": 1,
+          "peak_hands": 7,
+          "crops": {
+            "STRAWBERRY": 12
+          },
+          "animals": {
+            "SHEEP": 5
+          }
+        }
+      }
+    },
+    {
+      "persona": "top-frontier-compound",
+      "seed": 1030,
+      "seat": 1,
+      "result": "loss",
+      "candidate_reward": 58110.0,
+      "persona_reward": 64069.0,
+      "margin": -5959.0,
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "suspicious_fallback_turns": 0,
+      "max_action_ms": 88.145,
+      "average_action_ms": 3.074,
+      "trajectory": {
+        "7": {
+          "bank": 1916.0,
+          "quadrants": 1,
+          "peak_hands": 7,
+          "crops": {
+            "MELON": 10,
+            "WHEAT": 5
+          },
+          "animals": {}
+        },
+        "12": {
+          "bank": 1701.0,
+          "quadrants": 1,
+          "peak_hands": 8,
+          "crops": {
+            "MELON": 10,
+            "WHEAT": 5
+          },
+          "animals": {}
+        },
+        "15": {
+          "bank": 12437.0,
+          "quadrants": 1,
+          "peak_hands": 10,
+          "crops": {
+            "STRAWBERRY": 12,
+            "WHEAT": 5,
+            "TOMATO": 2
+          },
+          "animals": {
+            "SHEEP": 5
+          }
+        },
+        "24": {
+          "bank": 19724.0,
+          "quadrants": 1,
+          "peak_hands": 9,
+          "crops": {
+            "STRAWBERRY": 12,
+            "WHEAT": 2,
+            "TOMATO": 2
+          },
+          "animals": {
+            "SHEEP": 5
+          }
+        },
+        "29": {
+          "bank": 54422.0,
+          "quadrants": 1,
+          "peak_hands": 7,
+          "crops": {
+            "STRAWBERRY": 12
+          },
+          "animals": {
+            "SHEEP": 5
+          }
+        }
+      }
+    }
+  ]
+}

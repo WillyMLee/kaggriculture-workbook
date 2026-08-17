@@ -1,4 +1,4 @@
-"""Lean Horizon v0.8.0: gated density over the promoted lean engine."""
+"""Lean Horizon v0.8.1: event-triggered specialist density over the lean core."""
 
 from __future__ import annotations
 
@@ -143,6 +143,9 @@ def _episode_memory(obs, player):
             "macro_branch_since": 0,
             "macro_branch_history": [],
             "macro_plan_cache": None,
+            "density_vote_day": -1,
+            "density_vote_history": [],
+            "density_commitment": None,
             "last_seen_step": step,
         }
     else:
@@ -879,6 +882,114 @@ def _engine_combo_model(obs, farm, crop_model, animal_model):
         "animal": animal,
         "score": round(score, 2),
         "scores": {key: round(value, 2) for key, value in combinations.items()},
+    }
+
+
+def _density_specialist_plan(obs, farm, private, signal, memory):
+    """Promote the rich engine ensemble only at the irreversible buy window.
+
+    The lean policy remains in charge of movement, survival work, and capital.
+    This specialist adds back crop×livestock, town, feed, labor, incumbent, and
+    opponent-pressure reasoning once per day, then uses a short vote history
+    and a locked commitment so noisy hourly prices cannot thrash the engine.
+    """
+    day = int(obs.get("day", 0))
+    combo = signal.get("engine_combo") or {}
+    combo_scores = combo.get("scores") or {}
+    if not combo_scores:
+        return {**signal, "density_specialist": {"active": False, "reason": "no-combo-scores"}}
+
+    # Aggregate all six crop×livestock paths instead of trusting only the top
+    # leaf. Softmax temperature grows with score scale so close alternatives
+    # retain a meaningful vote while clearly dominated engines disappear.
+    peak = max(float(value) for value in combo_scores.values())
+    temperature = max(45.0, abs(peak) * 0.14)
+    weights = {
+        key: math.exp(max(-30.0, min(0.0, (float(value) - peak) / temperature)))
+        for key, value in combo_scores.items()
+    }
+    total_weight = max(1e-9, sum(weights.values()))
+    animal_votes = {animal: 0.0 for animal in ANIMAL_ECONOMICS}
+    crop_votes = {crop: 0.0 for crop in ("TOMATO", "STRAWBERRY")}
+    for key, weight in weights.items():
+        crop, animal = key.split("+", 1)
+        animal_votes[animal] += weight / total_weight
+        crop_votes[crop] += weight / total_weight
+    voted_animal = max(animal_votes, key=lambda name: (animal_votes[name], name))
+    voted_crop = max(crop_votes, key=lambda name: (crop_votes[name], name))
+    ordered_animals = sorted(animal_votes.values(), reverse=True)
+    vote_edge = ordered_animals[0] - ordered_animals[1]
+
+    if int(memory.get("density_vote_day", -1)) != day:
+        memory["density_vote_day"] = day
+        history = list(memory.get("density_vote_history") or [])
+        history.append({
+            "day": day,
+            "animal": voted_animal,
+            "crop": voted_crop,
+            "edge": round(vote_edge, 4),
+        })
+        memory["density_vote_history"] = history[-5:]
+
+    owned_animals = {
+        animal: _count_tiles(
+            farm,
+            lambda tile, animal=animal: isinstance(tile, dict) and tile.get("animal") == animal,
+        )
+        + int((private.get("shed") or {}).get(animal, 0))
+        + sum(int(inventory.get(animal, 0)) for inventory in (private.get("inventories") or []))
+        for animal in ANIMAL_ECONOMICS
+    }
+    incumbent = max(owned_animals, key=lambda name: (owned_animals[name], name))
+    commitment = memory.get("density_commitment")
+    if sum(owned_animals.values()):
+        commitment = {"animal": incumbent, "crop": voted_crop, "day": day, "source": "incumbent"}
+        memory["density_commitment"] = commitment
+    elif commitment is None and day >= 12:
+        recent = list(memory.get("density_vote_history") or [])[-3:]
+        stable_votes = sum(row["animal"] == voted_animal for row in recent)
+        # Three daily observations are ideal; a strong two-day agreement is
+        # enough because livestock must be selected before the middle-game buy.
+        stable = stable_votes >= min(2, len(recent))
+        selected = voted_animal if stable and vote_edge >= 0.045 else signal.get("animal", voted_animal)
+        commitment = {
+            "animal": selected,
+            "crop": voted_crop,
+            "day": day,
+            "source": "engine-ensemble" if selected == voted_animal else "marginal-fallback",
+        }
+        memory["density_commitment"] = commitment
+
+    chosen_animal = commitment["animal"] if commitment else signal.get("animal", voted_animal)
+    chosen_crop = commitment["crop"] if commitment else signal.get("recurring_crop", voted_crop)
+    targets = dict(signal.get("recurring_targets") or {})
+    if chosen_crop != signal.get("recurring_crop"):
+        other = "TOMATO" if chosen_crop == "STRAWBERRY" else "STRAWBERRY"
+        previous_primary = max(targets.values(), default=11)
+        targets = {chosen_crop: previous_primary, other: max(0, 15 - previous_primary)}
+
+    # Cow/goose engines have denser daily service and collection paths, so they
+    # keep the ensemble's four-animal calibration and all 15 recurring plots.
+    # The arena shows sheep can profitably retain the lean core's fifth slot;
+    # do not impose one physical-density rule on unlike production cycles.
+    raw_target = int(signal.get("animal_target", 0))
+    target = min(4, raw_target) if chosen_animal in ("COW", "GOOSE") else raw_target
+    specialist = {
+        "active": commitment is not None,
+        "candidate": f"{voted_crop}+{voted_animal}",
+        "animal_votes": {key: round(value, 4) for key, value in animal_votes.items()},
+        "crop_votes": {key: round(value, 4) for key, value in crop_votes.items()},
+        "vote_edge": round(vote_edge, 4),
+        "commitment": dict(commitment) if commitment else None,
+        "physical_cap": 4 if chosen_animal in ("COW", "GOOSE") else 5,
+    }
+    return {
+        **signal,
+        "recurring_crop": chosen_crop,
+        "recurring_targets": targets,
+        "animal": chosen_animal,
+        "animal_target": target,
+        "density_specialist": specialist,
     }
 
 
@@ -1690,7 +1801,9 @@ def _policy(obs, persona=None):
     else:
         macro = _macro_strategy_plan(obs, farm, private, opponent_signal, memory)
         opponent_signal = {**opponent_signal, "macro_plan": {key: value for key, value in macro.items() if key != "frontier"}}
-        if macro["branch"] != "lean":
+        if macro["branch"] == "lean":
+            opponent_signal = _density_specialist_plan(obs, farm, private, opponent_signal, memory)
+        else:
             frontier = macro["frontier"]
             if macro["branch"] == "selective":
                 frontier = _selective_frontier_plan(frontier)

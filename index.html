@@ -388,14 +388,24 @@
           <button class="button button-primary" id="open-agent-form" type="button">Log agent</button>
         </div>
         <section class="section shell" aria-labelledby="current-checkpoint-title">
-          <div class="section-heading"><div><p class="eyebrow">Current checkpoint · August 16</p><h2 id="current-checkpoint-title">v0.8 improves the lean core; frontier promotion stays closed</h2></div><strong class="qa-verdict" data-state="hold">HOLD</strong></div>
+          <div class="section-heading"><div><p class="eyebrow">Current checkpoint · August 16</p><h2 id="current-checkpoint-title">v0.8.1 adds selective depth; promotion stays closed</h2></div><strong class="qa-verdict" data-state="hold">HOLD</strong></div>
           <div class="candidate-evidence">
-            <div><span>Lean control</span><strong>1–1</strong><small>zero average margin vs v0.7.1-i5</small></div>
-            <div><span>Matched arena</span><strong>+749</strong><small>average-margin lift over v0.7.1</small></div>
-            <div><span>Cow engine</span><strong>+2,247</strong><small>average deficit recovered</small></div>
-            <div><span>Runtime</span><strong>767 ms</strong><small>v0.7.1 worst was 3,600 ms</small></div>
+            <div><span>Matched arena</span><strong>+482</strong><small>average-margin lift over v0.8.0</small></div>
+            <div><span>Pairwise safety</span><strong>3 / 5 / 0</strong><small>improved / unchanged / regressed</small></div>
+            <div><span>Cow engine</span><strong>+1,187</strong><small>average deficit recovered</small></div>
+            <div><span>Persona gate</span><strong>1–7</strong><small>still below promotion quality</small></div>
           </div>
-          <p class="source-note"><strong>Read:</strong> v0.8 preserves the lean economy, caches its daily macro decision, and bounds dense worker routing. It is faster and modestly stronger than v0.7.1 on identical arena seeds, but still finishes only 1–5 and misses the 700 ms latency gate by 67 ms. Package locally; do not submit.</p>
+          <p class="source-note"><strong>Read:</strong> v0.8.1 activates richer reasoning only before the day-13 livestock purchase. Six crop×livestock paths vote using town, feed, labor, fertilizer, incumbent, and opponent-pressure signals; three-day stability and a locked commitment prevent thrashing. It improves all affected paired games, but the hard persona arena remains 1–7. Package locally; do not submit.</p>
+        </section>
+        <section class="section shell" aria-labelledby="v081-checkpoint-title">
+          <div class="section-heading"><div><p class="eyebrow">v0.8.1 checkpoint</p><h2 id="v081-checkpoint-title">Add reasoning density at one reversible boundary</h2></div><p class="section-note">21.1 KB artifact · six engine paths · not submitted</p></div>
+          <ol class="system-flow">
+            <li><span>OBSERVE</span><div><strong>Wait for evidence before buying livestock</strong><p>The agent makes no livestock purchase until day 13, so the specialist gathers daily crop, town, market, and opponent evidence through day 12.</p></div><em>EVENT DRIVEN</em></li>
+            <li><span>VOTE</span><div><strong>Let the whole engine portfolio vote</strong><p>Tomato and strawberry are crossed with goose, cow, and sheep. A soft ensemble keeps close alternatives visible instead of trusting one noisy top score.</p></div><em>6 PATHS</em></li>
+            <li><span>LOCK</span><div><strong>Require stability, then stop thrashing</strong><p>A short daily history and minimum vote edge select the family once. Cow and goose stay at four animals; sheep may retain the lean engine's proven fifth slot.</p></div><em>BOUNDED</em></li>
+            <li><span>RESULT</span><div><strong>Improve the paired control without claiming readiness</strong><p>Against four inferred personas in both seats, v0.8.1 gains 482 coins per game over v0.8.0: three games improve and five are unchanged. The overall record is still 1–7.</p></div><em>BETTER · HELD</em></li>
+          </ol>
+          <p class="source-note">Evidence: <code>results/v0_8_1_checkpoint.json</code>, <code>results/v0_8_0_matched_v0_8_1_persona_arena.json</code>, <code>results/v0_8_1_i2_persona_arena.json</code>, and <code>results/v0_8_1_i2_top_frontier_runtime_check.json</code>.</p>
         </section>
         <section class="section shell" aria-labelledby="v080-checkpoint-title">
           <div class="section-heading"><div><p class="eyebrow">v0.8.0 checkpoint</p><h2 id="v080-checkpoint-title">Lean by default; density must prove readiness</h2></div><p class="section-note">19.5 KB artifact · 21 regressions · not submitted</p></div>

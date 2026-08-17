@@ -638,6 +638,15 @@
       model: "Promoted lean core plus a cached daily lean/selective/frontier selector, service and payback gates, hysteresis, and bounded dense-worker routing.",
       limitation: "Held: targeted arena remains 1–5, frontier response does not outperform the lean control, and the 767 ms worst action misses the 700 ms gate.",
     },
+    {
+      id: "agent-v0-8-1",
+      version: "v0.8.1",
+      date: "2026-08-16",
+      status: "candidate",
+      evidence: "matched v0.8.0 arena: +482 avg · 3 improved · 5 unchanged",
+      model: "Lean v0.8 core plus a day-12 six-path crop×livestock ensemble, three-day vote stability, locked engine commitment, and animal-family service caps.",
+      limitation: "Held: the paired arena still finishes 1–7, no run reaches the 60k milestone, and one combined suite hit the environment deadline before its isolated rerun completed normally.",
+    },
   ];
   let agentArchive = readStore(KEYS.agentArchive, seededAgents);
   if (!Array.isArray(agentArchive)) agentArchive = [...seededAgents];
