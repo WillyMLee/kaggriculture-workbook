@@ -42,7 +42,7 @@
   }
 
   // Navigation
-  const viewIds = ["brief", "mechanics", "tensions", "opponent", "balanced", "simulator", "attention", "past-agents", "submission", "submissions", "experiments", "roadmap"];
+  const viewIds = ["brief", "mechanics", "tensions", "opponent", "balanced", "simulator", "attention", "architecture", "past-agents", "research-models", "human-arena", "submission", "submissions", "experiments", "roadmap"];
 
   function showView(viewId, updateHash = true) {
     const safeId = viewIds.includes(viewId) ? viewId : "brief";
@@ -68,6 +68,154 @@
   });
   window.addEventListener("hashchange", () => showView(location.hash.slice(1), false));
   showView(location.hash.slice(1), false);
+
+  // Layperson architecture explainer
+  const architectureLab = $("#architecture-lab");
+  if (architectureLab) {
+    const architectureScenarios = {
+      capacity: {
+        attention: { operations: 0.25, opponent: 0.75, horizon: 0.95 },
+        options: { compact: 0.5, expand: 1.9, repair: 0.25, liquidate: -0.7 },
+        factors: { capacity: "ceiling", service: "ready", capital: "funded", runway: "15 days", trajectory: "cash lead" },
+        title: "A cash lead can still hide a capacity ceiling.",
+        copy: "Day 15: our farm has cash but one plot; the opponent already operates three.",
+        decision: "Expand is preferred, then permitted only if the full land + production + labor bundle passes every gate.",
+      },
+      balanced: {
+        attention: { operations: 1.0, opponent: 0.3, horizon: 0.55 },
+        options: { compact: 1.5, expand: 0.1, repair: 0.6, liquidate: -0.8 },
+        factors: { capacity: "open", service: "steady", capital: "useful", runway: "22 days", trajectory: "ahead" },
+        title: "The current plot still has productive room.",
+        copy: "Early game: both farms are compact, work is current, and another plot would dilute the engine.",
+        decision: "Compact wins because existing capacity can still compound without adding service debt.",
+      },
+      service: {
+        attention: { operations: 2.0, opponent: 0.0, horizon: 0.5 },
+        options: { compact: 0.2, expand: -0.9, repair: 2.1, liquidate: -0.6 },
+        factors: { capacity: "unused", service: "overdue", capital: "protected", runway: "16 days", trajectory: "at risk" },
+        title: "Urgent work interrupts the strategy plan.",
+        copy: "Care, harvest, or weeds are behind. Growth pauses until the farm can reliably operate what it owns.",
+        decision: "Repair wins. Mandatory work can veto every growth preference.",
+      },
+      terminal: {
+        attention: { operations: 0.35, opponent: 0.1, horizon: 1.65 },
+        options: { compact: -0.1, expand: -1.4, repair: 0.1, liquidate: 2.0 },
+        factors: { capacity: "irrelevant", service: "finish only", capital: "convert", runway: "2 days", trajectory: "realize" },
+        title: "Only value reachable before the finish counts.",
+        copy: "Day 28: new growth cannot repay. Hands route inventory to town and stop speculative reinvestment.",
+        decision: "Liquidate wins because terminal cash, not unfinished productive potential, decides the match.",
+      },
+    };
+    const architectureSteps = [
+      ["Observe", "Compress the visible farm, town, opponent, and remaining clock."],
+      ["Protect", "Reserve work that becomes irreversible if delayed."],
+      ["Focus", "Allocate attention across operations, opponent evidence, and the horizon."],
+      ["Propose", "Turn safe strategy scores into a probability distribution over four capital branches."],
+      ["Judge", "Reprice each branch through capacity, service, capital, runway, and trajectory."],
+      ["Execute", "Commit one safe action; rejected land cannot pull its dependent purchases through."],
+      ["Reobserve", "Read the new state and recompute instead of blindly finishing an old forecast."],
+    ];
+    let architectureScenario = "capacity";
+    let architectureStep = 0;
+    let architectureTimer = null;
+
+    function softmaxPercentages(values) {
+      const entries = Object.entries(values);
+      const maximum = Math.max(...entries.map(([, value]) => value));
+      const weights = entries.map(([key, value]) => [key, Math.exp(value - maximum)]);
+      const total = weights.reduce((sum, [, value]) => sum + value, 0);
+      const result = Object.fromEntries(weights.map(([key, value]) => [key, Math.round((value / total) * 100)]));
+      const difference = 100 - Object.values(result).reduce((sum, value) => sum + value, 0);
+      const largest = weights.sort((a, b) => b[1] - a[1])[0][0];
+      result[largest] += difference;
+      return result;
+    }
+
+    function renderProbabilityGroup(kind, values) {
+      const percentages = softmaxPercentages(values);
+      Object.entries(percentages).forEach(([name, value]) => {
+        const bar = $(`[data-${kind}-bar="${name}"]`, architectureLab);
+        const label = $(`[data-${kind}-value="${name}"]`, architectureLab);
+        if (bar) bar.style.width = `${value}%`;
+        if (label) label.textContent = `${value}%`;
+        if (bar?.parentElement) {
+          bar.parentElement.setAttribute("role", "progressbar");
+          bar.parentElement.setAttribute("aria-label", `${name} ${value} percent`);
+          bar.parentElement.setAttribute("aria-valuemin", "0");
+          bar.parentElement.setAttribute("aria-valuemax", "100");
+          bar.parentElement.setAttribute("aria-valuenow", String(value));
+        }
+      });
+      return percentages;
+    }
+
+    function renderArchitecture() {
+      const scenario = architectureScenarios[architectureScenario];
+      const step = architectureSteps[architectureStep];
+      const optionProbabilities = renderProbabilityGroup("attention", scenario.attention);
+      renderProbabilityGroup("option", scenario.options);
+      $$('[data-architecture-step]', architectureLab).forEach((item) => {
+        const index = Number(item.dataset.architectureStep);
+        item.classList.toggle("is-active", index === architectureStep);
+        item.classList.toggle("is-complete", index < architectureStep);
+      });
+      Object.entries(scenario.factors).forEach(([name, value]) => {
+        const target = $(`[data-factor="${name}"]`, architectureLab);
+        if (target) target.textContent = value;
+      });
+      $("#architecture-step-label").textContent = `Step ${String(architectureStep + 1).padStart(2, "0")} · ${step[0]}`;
+      $("#architecture-state-title").textContent = architectureStep === 0 ? scenario.title : step[0];
+      $("#architecture-state-copy").textContent = architectureStep === 0 ? scenario.copy : step[1];
+      $("#architecture-decision").textContent = scenario.decision;
+      architectureLab.dataset.step = String(architectureStep);
+      architectureLab.dataset.dominantAttention = Object.entries(optionProbabilities).sort((a, b) => b[1] - a[1])[0][0];
+    }
+
+    function stopArchitecturePlayback() {
+      if (architectureTimer) window.clearInterval(architectureTimer);
+      architectureTimer = null;
+      $("#architecture-play").textContent = architectureStep === architectureSteps.length - 1 ? "Replay decision" : "Play decision";
+    }
+
+    function playArchitecture() {
+      stopArchitecturePlayback();
+      architectureStep = 0;
+      renderArchitecture();
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        architectureStep = architectureSteps.length - 1;
+        renderArchitecture();
+        stopArchitecturePlayback();
+        return;
+      }
+      $("#architecture-play").textContent = "Playing…";
+      architectureTimer = window.setInterval(() => {
+        architectureStep += 1;
+        renderArchitecture();
+        if (architectureStep >= architectureSteps.length - 1) stopArchitecturePlayback();
+      }, 720);
+    }
+
+    $$('[data-architecture-scenario]', architectureLab).forEach((button) => {
+      button.addEventListener("click", () => {
+        stopArchitecturePlayback();
+        architectureScenario = button.dataset.architectureScenario;
+        architectureStep = 0;
+        $$('[data-architecture-scenario]', architectureLab).forEach((item) => {
+          const active = item === button;
+          item.classList.toggle("is-active", active);
+          item.setAttribute("aria-pressed", String(active));
+        });
+        renderArchitecture();
+      });
+    });
+    $("#architecture-play").addEventListener("click", playArchitecture);
+    $("#architecture-next").addEventListener("click", () => {
+      stopArchitecturePlayback();
+      architectureStep = (architectureStep + 1) % architectureSteps.length;
+      renderArchitecture();
+    });
+    renderArchitecture();
+  }
 
   // Balanced Tempo notebook
   const notebookTabs = $$('[data-notebook-tab]');
@@ -413,6 +561,40 @@
       change: "Economics, strategy utility, and bounded global routing",
       notes: "18 external matches: 9 wins and 9 losses. PQ_Marz loss exposed a cash-only blind spot while the opponent compounded productive assets.",
     },
+    {
+      id: "submission-v0-8-4",
+      version: "v0.8.4",
+      date: "2026-08-16",
+      status: "complete",
+      episodes: 0,
+      rating: 609.7,
+      rank: null,
+      change: "Fixed-engine recognition and commitment-safe attention",
+      notes: "The current highest public score among the recent submitted family; retained as evidence that a leaner engine still has useful ceiling.",
+    },
+    {
+      id: "submission-v0-9-1-i4",
+      version: "v0.9.1-i4",
+      date: "2026-08-17",
+      status: "active",
+      episodes: 4,
+      rating: 605.2,
+      rank: null,
+      change: "Sunk-capital-aware livestock allocation and survival-first service queue",
+      notes: "Current Kaggle score is 605.2. The reviewed BeyondAnalytics loss had a −14,332 engine gap by day 22, followed by stranded seed capital and late wheat churn.",
+    },
+    {
+      id: "submission-v1-0-0-alpha9",
+      version: "v1.0.0-alpha9",
+      date: "2026-08-17T00:01:00",
+      status: "active",
+      episodes: 4,
+      rating: 647.3,
+      rank: null,
+      peakRank: null,
+      change: "Four-day scenario MPC at the capital junction",
+      notes: "Reviewed live snapshot: public score 647.3. The newest four visible games finished 1–3; Alpha9 stayed on one plot with six animals in every replay and lost to both one-plot density and funded land compounding.",
+    },
   ];
   let submissions = readStore(KEYS.submissions, firstLadderEntries);
   if (!Array.isArray(submissions)) submissions = [];
@@ -420,7 +602,8 @@
     if (item.id === "submission-v0-2-1") {
       return { ...item, rating: 459.2, rank: 3536, episodes: Math.max(item.episodes || 0, 4) };
     }
-    if (item.id === "submission-v0-6-1") return { ...item, ...firstLadderEntries[2] };
+    const seeded = firstLadderEntries.find((entry) => entry.id === item.id);
+    if (seeded) return { ...item, ...seeded };
     return item;
   });
   firstLadderEntries.forEach((seeded) => {
@@ -670,9 +853,135 @@
       version: "v0.8.4",
       date: "2026-08-16",
       status: "submitted",
-      evidence: "v0.7.1-i5 fresh gate: 13–3–4 · +1,171 avg · worst −2,253",
+      evidence: "Kaggle live: 590.5 · rank 3,095 · visible recent record 3–2",
       model: "Public-state fixed-engine recognition, commitment-safe attention, and a sticky fifth-cow best response learned from crop and livestock counterfactuals.",
-      limitation: "Submitted to Kaggle and pending evaluation. Treat it as exploratory: three losses and four ties still fail the internal 20–0 promotion rule.",
+      limitation: "Live evaluation confirms volatility. A recent loss to Vignesh's early livestock engine ended 43,351–77,597; the delayed day-10 recognition is too late against immediate compounding.",
+    },
+    {
+      id: "agent-v0-8-5",
+      version: "v0.8.5",
+      date: "2026-08-17",
+      status: "candidate",
+      evidence: "Sarthak proxy 2–0 · Vignesh proxy 0–2 · v0.8.4 control 2–4",
+      model: "Animal-first compound opener: four cows, compact wheat/melon support, day-5 staged land, dynamic livestock scoring, and bounded worker routing.",
+      limitation: "Held. It improves the Vignesh deficit by 3,053 and beats the Sarthak proxy, but averages −3,146 against exact v0.8.4 and still loses both Vignesh seats.",
+    },
+    {
+      id: "agent-v0-9-0",
+      version: "v0.9.0",
+      date: "2026-08-17",
+      status: "candidate",
+      evidence: "v0.7.1-i5: 20–0 · v0.8.4: 20–0 · +9,119 weakest-gate avg",
+      model: "Top-ladder mixed opener, staged three-quadrant core, environment-driven cow/sheep tilt, market-cap-safe land execution, persistent late feed, and bounded routing.",
+      limitation: "Locally promoted, not submitted. The narrowest control wins are +235 and +335, and public top-ladder evidence covers ten ranked-team perspectives rather than every strategy family.",
+    },
+    {
+      id: "agent-v0-9-1",
+      version: "v0.9.1-i4",
+      date: "2026-08-17",
+      status: "submitted",
+      evidence: "Kaggle latest window: 3–1 · score 625.7 | Beyond loss −20,738",
+      model: "v0.9 core plus sunk-capital-aware livestock allocation and a survival-first service queue that protects feed and care before routine watering.",
+      limitation: "Beyond led by 14,332 on day 22 with a larger strawberry/sheep engine; terminal stranded seeds and late wheat churn widened the final loss. Core growth remains the primary gap.",
+    },
+    {
+      id: "agent-v0-9-2-i1",
+      version: "v0.9.2-i1",
+      date: "2026-08-17",
+      status: "candidate",
+      evidence: "seed 2200: 2–0 · preregistered weighted arena: 12–0 · +24,466 avg",
+      model: "Remembered recurring-density milestones, bounded additive town-schema restructuring, and an RL-ready weighted random-seed training harness.",
+      limitation: "Keep frozen while the corrected all-style curriculum runs. The seed-2200 seat-1 margin remains only +64, and the first weighted draw covered five of eight styles.",
+    },
+    {
+      id: "agent-v1-0-0-alpha3",
+      version: "v1.0.0-alpha3",
+      date: "2026-08-17",
+      status: "candidate",
+      evidence: "v0.9 series: 14–6 · +13,772 avg · worst −8,666",
+      model: "Proven mixed opener plus a daily compact/expand/repair/liquidate softmax over bundle funding, productive utilization, service slack, weeds, town support, opponent land, and horizon.",
+      limitation: "Held. It sweeps v0.9.0 but goes 4–4 against submitted v0.9.1-i4 and 2–2 against v0.9.2-i1; seeds 2700 and 2703 require junction-trace calibration before submission.",
+    },
+    {
+      id: "agent-v1-0-0-alpha4",
+      version: "v1.0.0-alpha4",
+      date: "2026-08-17",
+      status: "candidate",
+      evidence: "v0.9.2-i1: 6–4 · +7,395 avg | mini arena: 8–0 · 0 failures",
+      model: "Alpha3 junction controller plus terminal reachability for seed purchases, planting, inventory holds, and finish/convert/liquidate diagnostics.",
+      limitation: "Held. It improves the exact Beyond seed by 137, but slightly trails alpha3 on their shared 2700–2701 panel and still loses both seats on seeds 2700 and 2703.",
+    },
+    {
+      id: "agent-v1-0-0-alpha5",
+      version: "v1.0.0-alpha5",
+      date: "2026-08-17",
+      status: "candidate",
+      evidence: "v0.9.2-i1: 10–0 · +7,830 avg · +2,075 worst | arena: 8–0",
+      model: "Alpha4 plus a scored midgame expansion confirmation: 64% productive density or repeated town demand before another capital bundle can win.",
+      limitation: "Local front runner, held for a fresh 20-game release gate. It ties alpha4 directly in 12 paired games and is not yet evidence of universal dominance.",
+    },
+    {
+      id: "agent-v1-0-0-alpha6",
+      version: "v1.0.0-alpha6",
+      date: "2026-08-17",
+      status: "candidate",
+      evidence: "v0.9.2 + Beyond: 10–0 · +7,830 avg | six-style arena: 12–0 · 360 rows",
+      model: "Alpha5 plus a constant-time favorable/base/adverse option-value head for the daily compact, expand, repair, and liquidate junction.",
+      limitation: "Held. Direct alpha5 evidence is neutral (1–1–2 at zero average); the decision-tree dataset is prepared but no learned scorer has been fitted or promoted.",
+    },
+    {
+      id: "agent-v1-0-0-alpha7",
+      version: "v1.0.0-alpha7",
+      date: "2026-08-17",
+      status: "candidate",
+      evidence: "v0.9.2 + Beyond: 10–0 · +7,830 avg · +2,075 worst | arena: 12–0",
+      model: "Alpha6 plus an asymmetric counterfactual-regret veto that can release a stale expansion commitment before service damage appears.",
+      limitation: "Held. Fresh direct panels net to zero versus Alpha6 and Alpha5; the broader all-commitment break was rejected after losing the Beyond control.",
+    },
+    {
+      id: "agent-v1-0-0-alpha9",
+      version: "v1.0.0-alpha9",
+      date: "2026-08-17",
+      status: "submitted",
+      evidence: "Kaggle snapshot: score 647.3 · newest visible games 1–3 | local release gate 20–0",
+      model: "Four-day scenario MPC compares compact, expand, repair, and liquidate under funding, density, service, weed, and payback constraints.",
+      limitation: "Latest losses show two capacity ceilings: a denser one-plot livestock engine and funded three-to-four-plot compounding can both overtake an apparent cash lead.",
+    },
+    {
+      id: "agent-v1-1-0-alpha2",
+      version: "v1.1.0-alpha2",
+      date: "2026-08-17",
+      status: "candidate",
+      evidence: "Alpha9 short gate 8–0 · fresh gate 11–0–6 partial · observed-loss proxies 4–0 · 53 tests",
+      model: "Interruptible engine options plus a constant-time auxiliary value head for capacity, service, capital, runway, and trajectory.",
+      limitation: "Promising local candidate, not submitted. The fresh Alpha9 panel stopped at 17/20 with six ties, so it cannot satisfy the strict 20–0 promotion rule.",
+    },
+    {
+      id: "agent-v1-1-0-alpha3-i2",
+      version: "v1.1.0-alpha3-i2",
+      date: "2026-08-17",
+      status: "candidate",
+      evidence: "Alpha9 16–4 · v0.9.2 8–0 · five-style arena 10–0 · 55 tests",
+      model: "Alpha2 plus a parity-gated proactive saturation permit that releases a stale compact commitment only when density, funding, service, runway, value, and MPC agree.",
+      limitation: "Held. The mean improves, but seeds 3302 and 3304 lose both seats; the current four-day MPC does not price enough downstream variance after early land.",
+    },
+    {
+      id: "agent-v1-1-0-alpha4",
+      version: "v1.1.0-alpha4",
+      date: "2026-08-17",
+      status: "candidate",
+      evidence: "Alpha9 12–0–8 · eight-style arena 8–0 · 58 tests",
+      model: "Alpha3's proactive saturation path is staged for one observation, with a cash reserve and distributional expected, lower-tail, adverse, and spread checks before expansion commits.",
+      limitation: "Held. It removes Alpha3's four direct losses but leaves eight ties; the persona arena never triggers early expansion or a day-24 60k bank, so coverage is not yet representative.",
+    },
+    {
+      id: "agent-v1-1-0-alpha5",
+      version: "v1.1.0-alpha5",
+      date: "2026-08-17",
+      status: "candidate",
+      evidence: "Alpha9 20–0 · Alpha4 8–2 · eight-style arena 8–0 · 62 tests",
+      model: "Risk-adjusted mixture of lean liquidity, dense one-plot livestock, and staged land compounding, with a baseline confidence shield and path-specific farm geometry.",
+      limitation: "Submission-qualified against Alpha9, locally held. Alpha4 still wins seed 3304 in both seats by 221 because Alpha5 buys livestock faster than it converts shed inventory into productive slots.",
     },
   ];
   let agentArchive = readStore(KEYS.agentArchive, seededAgents);
@@ -889,6 +1198,19 @@
 
   // Roadmap
   const starterRoadmap = [
+    { id: "v2-core-economy", title: "v2.0 opponent-light economy core", description: "v2d pairs an own-economy land gate with a selective recurring-density handoff. The first pressure shard improved both tested families; freeze those seeds and validate on a new holdout.", impact: 5, confidence: 4, effort: 3, status: "testing" },
+    { id: "v2-staggered-close", title: "Stagger the late production cohort", description: "Replace expiring recurring crops around days 18–21 only when projected terminal value clears the labor, weed, harvest, and liquidation cost. The forced day-22 wheat wave was rejected.", impact: 5, confidence: 4, effort: 3, status: "planned" },
+    { id: "v2-productive-slot", title: "v2.0 productive-slot scheduler", description: "The core mode now authorizes land from our own utilization, service slack, payback, and market conditions. Add day-15 density and weed gates before promotion.", impact: 5, confidence: 5, effort: 3, status: "testing" },
+    { id: "v2-counterfactual-teacher", title: "v2.0 counterfactual search teacher", description: "The first 1,821-junction, 81-episode replay corpus is seed-split and prioritized. Exact 32–128 rollout labels are the next step; logged returns alone cannot promote a policy.", impact: 5, confidence: 4, effort: 4, status: "testing" },
+    { id: "v2-human-arena", title: "Human reinforcement arena", description: "Play the exact environment against frozen Alpha5, annotate high-value deviations, and save transition-complete episodes for offline replay without mutating the live opponent.", impact: 4, confidence: 4, effort: 3, status: "testing" },
+    { id: "v2-distilled-tree", title: "v2.0 distilled junction tree", description: "Export a shallow tree ensemble for option value, downside, deployment lag, and closing conversion behind the Alpha5 confidence shield.", impact: 5, confidence: 4, effort: 4, status: "planned" },
+    { id: "v2-residual-model", title: "v2.0 residual value model", description: "Keep game rules explicit and learn only persistent four-day errors in cash, service debt, productive density, and terminal value.", impact: 4, confidence: 3, effort: 4, status: "planned" },
+    { id: "v2-adversarial-league", title: "v2.0 adversarial league", description: "Run a capped holdout against Alpha4, Alpha5, Alpha9, and lean, dense, land-rush, town, weed, and closing specialists; persist every live loss as a regression cell.", impact: 5, confidence: 4, effort: 3, status: "planned" },
+    { id: "v1-transition-data", title: "Transition-complete training data", description: "Record daily branch, planned labor, capital quantities, next state, terminal boundary, and outcome; guarantee every selected style appears before weighted repeats.", impact: 5, confidence: 5, effort: 2, status: "testing" },
+    { id: "v092-town-restructure", title: "Bounded town-schema restructuring", description: "Fix seed 2200: remember the recurring milestone, open serviceable third land, add the favored engine, and liquidate declining products without discarding productive assets.", impact: 5, confidence: 5, effort: 2, status: "testing" },
+    { id: "v093-capital-mpc", title: "Finite-horizon capital allocator", description: "Compare the next coin across land, livestock, crops, hands, feed, and liquidity using service-adjusted terminal value.", impact: 5, confidence: 4, effort: 5, status: "planned" },
+    { id: "v094-dense-routing", title: "Prove productive density", description: "Add zone ownership, urgent min-cost matching, and completion telemetry before testing 24, 32, and 42 serviceable plots.", impact: 5, confidence: 4, effort: 4, status: "planned" },
+    { id: "v095-learned-selector", title: "Offline learned branch scorer", description: "Train a compact tree ensemble on arena outcomes to rank simulator-approved branches, then export deterministic thresholds into the agent.", impact: 4, confidence: 3, effort: 5, status: "planned" },
     { id: "first-submission", title: "Ship interpretable v0.2", description: "Freeze the artifact, pass self-play, and enter the ladder.", impact: 5, confidence: 5, effort: 2, status: "testing" },
     { id: "liquidation", title: "Late-game liquidation", description: "Sell everything before turn 720.", impact: 5, confidence: 4, effort: 2, status: "testing" },
     { id: "opponent-model", title: "Opponent archetype classifier", description: "Infer commitments from visible farms and market signals.", impact: 5, confidence: 3, effort: 3, status: "testing" },
@@ -900,7 +1222,9 @@
   if (!Array.isArray(roadmap)) roadmap = [...starterRoadmap];
   roadmap = roadmap.map((item) => {
     const starter = starterRoadmap.find((candidate) => candidate.id === item.id);
-    return starter ? { ...starter, status: item.status || starter.status } : item;
+    if (!starter) return item;
+    const foundationIds = new Set(["v2-productive-slot", "v2-counterfactual-teacher", "v2-human-arena"]);
+    return { ...starter, status: foundationIds.has(item.id) ? starter.status : (item.status || starter.status) };
   });
   starterRoadmap.forEach((starter) => {
     if (!roadmap.some((item) => item.id === starter.id)) roadmap.push({ ...starter });

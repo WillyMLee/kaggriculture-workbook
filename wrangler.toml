@@ -1,0 +1,9 @@
+name = "kaggriculture-workbook"
+pages_build_output_dir = "./dist"
+compatibility_date = "2026-08-18"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "kaggriculture-fieldbook"
+database_id = "e9d5546c-8619-4a6c-9fcd-ac1af860a543"
+

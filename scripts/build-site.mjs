@@ -8,6 +8,8 @@ const assets = [
   "index.html",
   "styles.css",
   "app.js",
+  "strategy-lab.js",
+  "human-arena.js",
   "results/balanced_tempo_best_run.js",
 ];
 

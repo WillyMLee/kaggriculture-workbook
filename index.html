@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css?v=20260817-alpha5" />
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to content</a>
@@ -44,7 +44,10 @@
           <button class="nav-link" data-view-target="balanced" type="button"><span>B</span>Strategy library</button>
           <button class="nav-link" data-view-target="simulator" type="button"><span>C</span>Lookahead simulator</button>
           <button class="nav-link" data-view-target="attention" type="button"><span>D</span>Attention controller</button>
-          <button class="nav-link" data-view-target="past-agents" type="button"><span>E</span>Past agents</button>
+          <button class="nav-link" data-view-target="architecture" type="button"><span>E</span>Architecture</button>
+          <button class="nav-link" data-view-target="past-agents" type="button"><span>F</span>Past agents</button>
+          <button class="nav-link" data-view-target="research-models" type="button"><span>G</span>Research models</button>
+          <button class="nav-link" data-view-target="human-arena" type="button"><span>H</span>Human arena</button>
         </div>
         <div class="nav-group">
           <span class="nav-label">Submit</span>
@@ -382,23 +385,577 @@
         </section>
       </section>
 
+      <section class="view" id="architecture" aria-labelledby="architecture-title" hidden>
+        <div class="page-intro shell">
+          <div>
+            <p class="eyebrow">Agent system E</p>
+            <h1 id="architecture-title">How the agent decides</h1>
+            <p>Watch one farm state move from observation to a safe, executable choice.</p>
+          </div>
+          <p class="architecture-release"><span>Current candidate</span><strong>v1.1-alpha5</strong><small>43.2 KB · Alpha9 gate passed</small></p>
+        </div>
+
+        <section class="section shell architecture-lab" id="architecture-lab" aria-labelledby="architecture-lab-title">
+          <div class="section-heading architecture-heading">
+            <div><p class="eyebrow">Interactive explainer</p><h2 id="architecture-lab-title">Three spotlights, one capital jury</h2></div>
+            <p class="section-note">Probabilities describe preference—not permission.</p>
+          </div>
+
+          <div class="architecture-scenarios" role="group" aria-label="Example farm states">
+            <button class="architecture-scenario is-active" type="button" data-architecture-scenario="capacity" aria-pressed="true">Capacity gap</button>
+            <button class="architecture-scenario" type="button" data-architecture-scenario="balanced" aria-pressed="false">Balanced farm</button>
+            <button class="architecture-scenario" type="button" data-architecture-scenario="service" aria-pressed="false">Service crisis</button>
+            <button class="architecture-scenario" type="button" data-architecture-scenario="terminal" aria-pressed="false">Final days</button>
+          </div>
+
+          <div class="architecture-stage">
+            <div class="architecture-pipeline" aria-label="Current agent decision pipeline">
+              <ol class="architecture-flow">
+                <li data-architecture-step="0"><span>01</span><div><strong>Observe</strong><small>Farm · town · opponent · clock</small></div></li>
+                <li data-architecture-step="1"><span>02</span><div><strong>Protect</strong><small>Harvest · feed · care · overflow</small></div></li>
+                <li data-architecture-step="2"><span>03</span><div><strong>Focus</strong><small>Operations · opponent · horizon</small></div></li>
+                <li data-architecture-step="3"><span>04</span><div><strong>Propose</strong><small>Compact · expand · repair · close</small></div></li>
+                <li data-architecture-step="4"><span>05</span><div><strong>Judge</strong><small>Expected value · lower tail · runway</small></div></li>
+                <li data-architecture-step="5"><span>06</span><div><strong>Stage or execute</strong><small>Reserve once · then commit or release</small></div></li>
+                <li data-architecture-step="6"><span>07</span><div><strong>Reobserve</strong><small>Update tomorrow</small></div></li>
+              </ol>
+              <div class="architecture-controls">
+                <button class="button button-primary" id="architecture-play" type="button">Play decision</button>
+                <button class="button button-secondary" id="architecture-next" type="button">Next step</button>
+              </div>
+            </div>
+
+            <div class="architecture-readout">
+              <div class="architecture-state" aria-live="polite">
+                <span id="architecture-step-label">Step 01 · Observe</span>
+                <strong id="architecture-state-title">A cash lead can still hide a capacity ceiling.</strong>
+                <p id="architecture-state-copy">Day 15: our farm has cash but one plot; the opponent already operates three.</p>
+              </div>
+
+              <div class="architecture-panel" aria-labelledby="attention-probability-title">
+                <div class="architecture-panel-heading"><strong id="attention-probability-title">Attention probability</strong><small>where the agent looks</small></div>
+                <div class="probability-list">
+                  <div><span>Operations</span><i><b data-attention-bar="operations"></b></i><strong data-attention-value="operations">0%</strong></div>
+                  <div><span>Opponent</span><i><b data-attention-bar="opponent"></b></i><strong data-attention-value="opponent">0%</strong></div>
+                  <div><span>Horizon</span><i><b data-attention-bar="horizon"></b></i><strong data-attention-value="horizon">0%</strong></div>
+                </div>
+              </div>
+
+              <div class="architecture-panel" aria-labelledby="option-probability-title">
+                <div class="architecture-panel-heading"><strong id="option-probability-title">Capital preference</strong><small>softmax over safe options</small></div>
+                <div class="probability-list option-probabilities">
+                  <div><span>Compact</span><i><b data-option-bar="compact"></b></i><strong data-option-value="compact">0%</strong></div>
+                  <div><span>Expand</span><i><b data-option-bar="expand"></b></i><strong data-option-value="expand">0%</strong></div>
+                  <div><span>Repair</span><i><b data-option-bar="repair"></b></i><strong data-option-value="repair">0%</strong></div>
+                  <div><span>Liquidate</span><i><b data-option-bar="liquidate"></b></i><strong data-option-value="liquidate">0%</strong></div>
+                </div>
+              </div>
+
+              <div class="architecture-factors" aria-label="Value factors">
+                <div><span>Capacity</span><strong data-factor="capacity">—</strong></div>
+                <div><span>Service</span><strong data-factor="service">—</strong></div>
+                <div><span>Capital</span><strong data-factor="capital">—</strong></div>
+                <div><span>Runway</span><strong data-factor="runway">—</strong></div>
+                <div><span>Trajectory</span><strong data-factor="trajectory">—</strong></div>
+              </div>
+              <p class="architecture-decision" id="architecture-decision">Decision pending.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section shell" aria-labelledby="architecture-guardrails-title">
+          <div class="section-heading"><div><p class="eyebrow">What probability cannot override</p><h2 id="architecture-guardrails-title">A preference still passes hard gates</h2></div><p class="section-note">The safety floor stays deterministic.</p></div>
+          <div class="architecture-guardrails">
+            <article><span>01</span><strong>Can we fund the full bundle?</strong><p>Land without crops, animals, feed, and labor is not useful capacity.</p></article>
+            <article><span>02</span><strong>Can the hands operate it?</strong><p>Negative service slack blocks growth before weeds and missed care compound.</p></article>
+            <article><span>03</span><strong>Can it repay before day 30?</strong><p>Late growth loses to reachable conversion and liquidation.</p></article>
+            <article><span>04</span><strong>Is the downside still better tomorrow?</strong><p>Alpha4 can reserve cash for one observation, then commit or release after the lower tail is repriced.</p></article>
+          </div>
+        </section>
+      </section>
+
+      <section class="view" id="human-arena" aria-labelledby="human-arena-title" hidden>
+        <div class="page-intro shell">
+          <div>
+            <p class="eyebrow">Agent system H · strategy lab</p>
+            <h1 id="human-arena-title">Play the field. Teach v2.0.</h1>
+            <p>Test phase choices online, explain the junctions that matter, and preserve each season as training evidence.</p>
+          </div>
+          <p class="arena-server-state" id="dojo-server-state" data-state="checking"><span></span><strong>Checking hosted dojo</strong><small>Strategy proxy · anonymous sessions</small></p>
+        </div>
+
+        <section class="section shell arena-launch dojo-launch" aria-labelledby="dojo-launch-title">
+          <div><p class="eyebrow">Hosted strategy dojo</p><h2 id="dojo-launch-title">Choose a seeded economic match</h2><p>A transparent day-level proxy for testing early, middle, late, and closeout strategy. It is not the exact Kaggle engine.</p></div>
+          <div class="arena-launch-controls">
+            <label>Game seed<input id="dojo-seed" type="number" min="1" max="2000000000" value="20260818" /></label>
+            <label>Benchmark<select id="dojo-opponent"><option value="adaptive">Adaptive mix</option><option value="lean">Lean liquidity</option><option value="dense">Dense livestock</option><option value="land">Land compound</option><option value="mixed">Mixed conversion</option></select></label>
+            <button class="button button-primary" id="dojo-start" type="button">Start online match</button>
+          </div>
+          <p class="form-error" id="dojo-launch-error" role="alert"></p>
+        </section>
+
+        <div id="dojo-workspace" class="dojo-workspace" hidden>
+          <ol class="dojo-phase-rail shell" aria-label="Season phases">
+            <li data-dojo-phase="early"><span>D00–08</span><strong>Early</strong><small>keep options alive</small></li>
+            <li data-dojo-phase="middle"><span>D09–20</span><strong>Middle</strong><small>commit the engine</small></li>
+            <li data-dojo-phase="late"><span>D21–27</span><strong>Late</strong><small>convert investments</small></li>
+            <li data-dojo-phase="close"><span>D28–29</span><strong>Close</strong><small>bank reachable value</small></li>
+          </ol>
+
+          <section class="arena-scorebar shell dojo-scorebar" aria-label="Hosted strategy match state">
+            <div><span>Day</span><strong id="dojo-day">00 / 29</strong><small id="dojo-phase">Early</small></div>
+            <div><span>Value margin</span><strong id="dojo-margin">0</strong><small id="dojo-opponent-style">adaptive benchmark</small></div>
+            <div><span>Town demand</span><strong id="dojo-market">crops 1.00× · livestock 1.00×</strong><small id="dojo-weather">normal</small></div>
+            <div><span>Coach line</span><strong id="dojo-coach-action">lean</strong><small id="dojo-coach-score">—</small></div>
+          </section>
+
+          <section class="section shell dojo-comparison" aria-labelledby="dojo-comparison-title">
+            <div class="section-heading"><div><p class="eyebrow">Public state</p><h2 id="dojo-comparison-title">Build value without outrunning service</h2></div><p class="section-note" id="dojo-session-label">session —</p></div>
+            <div class="dojo-farms">
+              <article>
+                <div class="dojo-farm-heading"><span>Your farm</span><strong><b id="dojo-human-value">3,000</b> value</strong></div>
+                <div class="dojo-farm-metrics"><div><span>Bank</span><strong id="dojo-human-bank">3,000</strong></div><div><span>Plots</span><strong id="dojo-human-plots">1</strong></div><div><span>Crops</span><strong id="dojo-human-crops">6</strong></div><div><span>Animals</span><strong id="dojo-human-animals">2</strong></div><div><span>Hands</span><strong id="dojo-human-hands">4</strong></div><div><span>Inventory</span><strong id="dojo-human-inventory">0</strong></div></div>
+                <div class="dojo-service"><span>Service coverage <b id="dojo-human-service">100%</b></span><i><b id="dojo-human-service-bar"></b></i></div>
+              </article>
+              <article>
+                <div class="dojo-farm-heading"><span>Benchmark farm</span><strong><b id="dojo-opponent-value">3,000</b> value</strong></div>
+                <div class="dojo-farm-metrics"><div><span>Bank</span><strong id="dojo-opponent-bank">3,000</strong></div><div><span>Plots</span><strong id="dojo-opponent-plots">1</strong></div><div><span>Crops</span><strong id="dojo-opponent-crops">6</strong></div><div><span>Animals</span><strong id="dojo-opponent-animals">2</strong></div><div><span>Hands</span><strong id="dojo-opponent-hands">4</strong></div><div><span>Inventory</span><strong id="dojo-opponent-inventory">0</strong></div></div>
+                <div class="dojo-service"><span>Service coverage <b id="dojo-opponent-service">100%</b></span><i><b id="dojo-opponent-service-bar"></b></i></div>
+              </article>
+            </div>
+          </section>
+
+          <section class="section shell dojo-decision" aria-labelledby="dojo-decision-title">
+            <div class="section-heading"><div><p class="eyebrow">One macro choice · one day</p><h2 id="dojo-decision-title">Choose the engine move</h2></div><button class="button button-secondary" id="dojo-use-coach" type="button">Select coach line</button></div>
+            <div class="dojo-options" id="dojo-options"></div>
+            <div class="dojo-rationale-row">
+              <label class="dojo-rationale">Why this move?<input id="dojo-rationale" maxlength="500" placeholder="What future state are you trying to reach?" /></label>
+              <label>Confidence<select id="dojo-confidence"><option value="1">1 · guess</option><option value="2">2</option><option value="3" selected>3 · considered</option><option value="4">4</option><option value="5">5 · strong</option></select></label>
+              <label class="arena-turning"><input id="dojo-turning-point" type="checkbox" /> Turning point</label>
+              <button class="button button-primary" id="dojo-play" type="button">Play this day</button>
+            </div>
+            <div class="dojo-statusline"><span id="dojo-selection">Coach line selected</span><strong id="dojo-status" role="status">Ready.</strong></div>
+          </section>
+
+          <section class="section shell dojo-notes" aria-labelledby="dojo-notes-title">
+            <div class="dojo-journal"><div class="section-heading compact"><div><p class="eyebrow">Decision tape</p><h2 id="dojo-notes-title">Watch the divergence form</h2></div></div><ol id="dojo-log" class="dojo-log"></ol></div>
+            <aside class="dojo-feedback">
+              <p class="eyebrow">Submit a lesson</p><h3>What should the next policy learn?</h3>
+              <label>Type<select id="dojo-feedback-category"><option value="strategy">Strategy</option><option value="rules">Rules / mechanics</option><option value="surprise">Surprising result</option><option value="interface">Interface</option><option value="bug">Bug</option></select></label>
+              <label>Usefulness<select id="dojo-feedback-rating"><option value="1">1 · weak</option><option value="2">2</option><option value="3" selected>3 · useful</option><option value="4">4</option><option value="5">5 · critical</option></select></label>
+              <label class="full-field">Note<textarea id="dojo-feedback-note" rows="5" maxlength="1200" placeholder="Name the decision, why it felt wrong, and what you expected instead."></textarea></label>
+              <button class="button button-primary" id="dojo-feedback-submit" type="button">Save feedback</button>
+              <small id="dojo-feedback-status">Anonymous session only; no account or email is collected.</small>
+            </aside>
+          </section>
+
+          <section class="section shell dojo-result" id="dojo-result" aria-labelledby="dojo-result-title" hidden>
+            <div class="section-heading"><div><p class="eyebrow">Season complete</p><h2 id="dojo-result-title">The economic line is now evidence</h2></div><strong class="qa-verdict" id="dojo-result-verdict">—</strong></div>
+            <div class="candidate-evidence"><div><span>Final banks</span><strong id="dojo-result-score">—</strong><small>inventory liquidated</small></div><div><span>Final margin</span><strong id="dojo-result-margin">—</strong><small>your bank minus benchmark</small></div><div><span>Training state</span><strong>Saved</strong><small>choices + rationale + feedback</small></div></div>
+          </section>
+        </div>
+
+        <section class="section shell arena-mode-separator" aria-labelledby="exact-arena-title">
+          <div><p class="eyebrow">Advanced local mode</p><h2 id="exact-arena-title">Exact Kaggle environment</h2><p>Run the Python arena locally for hourly movement, unit actions, market queues, and an exact Alpha5 opponent.</p></div>
+          <p class="arena-server-state" id="arena-server-state" data-state="checking"><span></span><strong>Checking local engine</strong><small>Exact environment · offline learning</small></p>
+        </section>
+
+        <section class="section shell arena-launch" aria-labelledby="arena-launch-title">
+          <div><p class="eyebrow">Exact episode</p><h2 id="arena-launch-title">Choose a reproducible field</h2><p>One deliberate choice per day is enough: override the opener, capital junction, or closer, then let the coach route routine work.</p></div>
+          <div class="arena-launch-controls">
+            <label>Game seed<input id="arena-seed" type="number" min="1" max="2000000000" value="20260818" /></label>
+            <label>Your farm<select id="arena-seat"><option value="0">Farm 1 · first seat</option><option value="1">Farm 2 · second seat</option></select></label>
+            <button class="button button-primary" id="arena-start" type="button">Start against Alpha5</button>
+          </div>
+          <p class="form-error" id="arena-launch-error" role="alert"></p>
+        </section>
+
+        <div id="arena-workspace" hidden>
+          <section class="arena-scorebar shell" aria-label="Current game state">
+            <div><span>Clock</span><strong id="arena-clock">Day 0 · 00:00</strong><small id="arena-turn">turn 0 / 720</small></div>
+            <div><span>Your bank</span><strong id="arena-human-bank">3,000</strong><small>coins</small></div>
+            <div><span>Alpha5 bank</span><strong id="arena-agent-bank">3,000</strong><small>coins</small></div>
+            <div><span>Current margin</span><strong id="arena-margin">0</strong><small id="arena-margin-note">level</small></div>
+            <div><span>Town</span><strong id="arena-shop-count">0 shops</strong><small id="arena-town-summary">no demand yet</small></div>
+          </section>
+
+          <section class="section shell arena-command" aria-labelledby="arena-command-title">
+            <div class="section-heading"><div><p class="eyebrow">Daily command desk</p><h2 id="arena-command-title">Override only what you mean to change</h2></div><p class="section-note" id="arena-session-label">session —</p></div>
+            <div class="arena-command-grid">
+              <div class="arena-action-column">
+                <div class="arena-subhead"><strong>Unit actions</strong><small>Each worker acts on its current tile.</small></div>
+                <div class="arena-direction-pad" aria-label="Farmer movement shortcuts">
+                  <button type="button" data-arena-move="NORTH">↑ North</button>
+                  <button type="button" data-arena-move="WEST">← West</button>
+                  <button type="button" data-arena-move="PASS">Pass</button>
+                  <button type="button" data-arena-move="EAST">East →</button>
+                  <button type="button" data-arena-move="SOUTH">South ↓</button>
+                </div>
+                <div id="arena-unit-actions" class="arena-unit-actions"></div>
+              </div>
+              <div class="arena-action-column">
+                <div class="arena-subhead"><strong>Market queue</strong><small>Orders execute in sequence · maximum 10.</small></div>
+                <div id="arena-market-orders" class="arena-market-orders"></div>
+                <button class="button button-secondary" id="arena-add-market" type="button">Add market order</button>
+                <div class="arena-action-preview"><span>Action preview</span><code id="arena-action-preview">PASS</code></div>
+              </div>
+              <aside class="arena-coach" aria-labelledby="arena-coach-title">
+                <div class="arena-subhead"><strong id="arena-coach-title">Alpha5 coach</strong><small>Advice only · frozen during this match.</small></div>
+                <div id="arena-coach-branch" class="arena-coach-branch"><span>Branch</span><strong>—</strong></div>
+                <div id="arena-coach-action" class="arena-coach-action">Waiting for a game.</div>
+                <div class="arena-attention" aria-label="Coach attention weights">
+                  <div><span>Operations</span><i><b id="arena-attention-operations"></b></i><strong id="arena-attention-operations-value">—</strong></div>
+                  <div><span>Opponent</span><i><b id="arena-attention-opponent"></b></i><strong id="arena-attention-opponent-value">—</strong></div>
+                  <div><span>Horizon</span><i><b id="arena-attention-horizon"></b></i><strong id="arena-attention-horizon-value">—</strong></div>
+                </div>
+                <button class="button button-secondary" id="arena-copy-coach" type="button">Copy coach action</button>
+              </aside>
+            </div>
+
+            <div class="arena-intent-row">
+              <label>Intent<select id="arena-intent"><option value="routine">Routine</option><option value="lean">Lean liquidity</option><option value="dense">Dense livestock</option><option value="land">Land compound</option><option value="town">Town conversion</option><option value="repair">Repair / stabilize</option><option value="close">Terminal close</option><option value="explore">Explore a new line</option></select></label>
+              <label>Confidence<select id="arena-confidence"><option value="1">1 · guess</option><option value="2">2</option><option value="3" selected>3 · considered</option><option value="4">4</option><option value="5">5 · strong</option></select></label>
+              <label class="arena-rationale">Why this move?<input id="arena-rationale" maxlength="500" placeholder="What outcome or engine are you trying to create?" /></label>
+              <label class="arena-turning"><input id="arena-turning-point" type="checkbox" /> Mark as turning point</label>
+            </div>
+            <div class="arena-play-controls">
+              <button class="button button-primary" id="arena-play-turn" type="button">Play my turn</button>
+              <button class="button button-secondary" id="arena-play-coach" type="button">Use coach for 1 turn</button>
+              <button class="button button-secondary" id="arena-next-day" type="button">Coach to next day</button>
+              <button class="button button-secondary" id="arena-save" type="button">Save for training</button>
+              <span id="arena-action-status" role="status">Ready.</span>
+            </div>
+          </section>
+
+          <section class="section shell arena-field" aria-labelledby="arena-field-title">
+            <div class="section-heading"><div><p class="eyebrow">Public board</p><h2 id="arena-field-title">Capacity, routes, and commitments</h2></div><p class="section-note">Select any tile for details.</p></div>
+            <div class="arena-board-pair">
+              <article><div class="arena-board-heading"><span>Your farm</span><strong id="arena-human-land">NW</strong></div><div class="arena-board" id="arena-human-board" role="grid" aria-label="Your 10 by 10 farm"></div></article>
+              <article><div class="arena-board-heading"><span>Alpha5 farm</span><strong id="arena-agent-land">NW</strong></div><div class="arena-board" id="arena-agent-board" role="grid" aria-label="Alpha5 10 by 10 farm"></div></article>
+              <aside class="arena-tile-inspector"><span>Selected tile</span><strong id="arena-tile-title">Choose a cell</strong><p id="arena-tile-detail">Crop age, animal service, carried units, and occupancy appear here.</p></aside>
+            </div>
+          </section>
+
+          <section class="section shell arena-economy" aria-labelledby="arena-economy-title">
+            <div class="section-heading"><div><p class="eyebrow">Decision support</p><h2 id="arena-economy-title">What your next coin and hour can do</h2></div></div>
+            <div class="arena-insight-strip" id="arena-insight-strip"></div>
+            <div class="arena-economy-grid">
+              <article><div class="arena-subhead"><strong>Inventory + market</strong><small>Products score only after sale.</small></div><div class="arena-table-wrap"><table class="arena-table"><thead><tr><th>Item</th><th>Price</th><th>Shed</th><th>Seeds</th><th>Town pull</th></tr></thead><tbody id="arena-market-table"></tbody></table></div></article>
+              <article><div class="arena-subhead"><strong>Rules at hand</strong><small>Current costs and production clocks.</small></div><div id="arena-rule-reference" class="arena-rule-reference"></div></article>
+              <article><div class="arena-subhead"><strong>Recent decisions</strong><small>Gold marks your overrides.</small></div><ol id="arena-turn-log" class="arena-turn-log"></ol></article>
+            </div>
+          </section>
+
+          <section class="section shell arena-result" id="arena-result" aria-labelledby="arena-result-title" hidden>
+            <div class="section-heading"><div><p class="eyebrow">Episode complete</p><h2 id="arena-result-title">Training episode saved</h2></div><strong class="qa-verdict" id="arena-result-verdict">—</strong></div>
+            <div class="candidate-evidence" id="arena-result-stats"></div>
+            <ul id="arena-result-feedback" class="finding-list"></ul>
+          </section>
+        </div>
+      </section>
+
       <section class="view" id="past-agents" aria-labelledby="past-agents-title" hidden>
         <div class="page-intro shell">
           <div><p class="eyebrow">Agent lineage</p><h1 id="past-agents-title">Past agents</h1><p>Keep every policy as evidence—what it knew, where it failed, and what replaced it.</p></div>
           <button class="button button-primary" id="open-agent-form" type="button">Log agent</button>
         </div>
         <section class="section shell" aria-labelledby="current-checkpoint-title">
-          <div class="section-heading"><div><p class="eyebrow">Current checkpoint · August 16</p><h2 id="current-checkpoint-title">v0.8.4 recognizes the plan, then changes the response</h2></div><strong class="qa-verdict" data-state="pass">SUBMITTED · PENDING</strong></div>
+          <div class="section-heading"><div><p class="eyebrow">Current checkpoint · August 17</p><h2 id="current-checkpoint-title">Alpha5 clears Alpha9—but Alpha4 still owns one seed</h2></div><strong class="qa-verdict" data-state="hold">PASS ALPHA9 · HOLD ALPHA4</strong></div>
           <div class="candidate-evidence">
-            <div><span>Fresh v0.7.1 gate</span><strong>13–3–4</strong><small>20 games · both seats</small></div>
-            <div><span>Average margin</span><strong>+1,171</strong><small>worst −2,253</small></div>
-            <div><span>Known lean plan</span><strong>4–0</strong><small>+2,503 average vs v0.8.0</small></div>
-            <div><span>Runtime</span><strong>111 ms</strong><small>zero failures or fallbacks</small></div>
+            <div><span>Alpha5 vs Alpha9</span><strong>20–0</strong><small>average +5,142 · minimum +85</small></div>
+            <div><span>Alpha5 vs Alpha4</span><strong>8–2</strong><small>average +625 · seed 3304 −221</small></div>
+            <div><span>Eight-style arena</span><strong>8–0</strong><small>average +34,085 · livestock coverage 62.5%</small></div>
+            <div><span>Exact candidate</span><strong>43.2 KB</strong><small>62 tests · max direct action 51.4 ms</small></div>
           </div>
-          <p class="source-note"><strong>Read:</strong> v0.8.4 infers a recognizable lean engine from public crop, land, and livestock commitments—never from opponent identity. Counterfactual tests reject sheep and goose pivots; the useful response keeps the lean engine and adds a fifth cow. Kaggle accepted the exact archive on August 16 and currently shows it as pending. The fresh 13–3–4 gate makes this an exploratory submission, not a 20–0 promotion.</p>
+          <p class="source-note"><strong>Read:</strong> the three-path mixture converts every Alpha4 tie against the submitted agent and raises day-15 eight-livestock coverage from 12.5% to 62.5%. Alpha5 qualifies against Alpha9, but its 221-coin seed-3304 loss means it is not a universal replacement for Alpha4 yet.</p>
+        </section>
+        <section class="section shell" aria-labelledby="v110-alpha5-title">
+          <div class="section-heading"><div><p class="eyebrow">v1.1.0-alpha5 · capacity mixture</p><h2 id="v110-alpha5-title">Choose an engine path—not just the next purchase</h2></div><strong class="qa-verdict" data-state="ready">20–0 VS ALPHA9</strong></div>
+          <ol class="system-flow">
+            <li><span>LEAN</span><div><strong>Preserve cash and the mixed core</strong><p>Liquidity remains the baseline when the alternative paths cannot beat its downside estimate.</p></div><em>SAFE BLUEPRINT</em></li>
+            <li><span>DENSE</span><div><strong>Convert one plot into animal capacity</strong><p>Pasture geometry, feed crops, labor, and species mix move together toward an eight-to-sixteen-animal engine.</p></div><em>NEW PATH</em></li>
+            <li><span>LAND</span><div><strong>Compound a funded production bundle</strong><p>Alpha4's staged expansion remains available when density, service, lower tail, and terminal runway prove the next plot.</p></div><em>OPTION VALUE</em></li>
+            <li><span>SHIELD</span><div><strong>Require probability and lower-tail separation</strong><p>A non-lean expert acts only when its risk-adjusted edge and public farm constraints agree.</p></div><em>BASELINE FALLBACK</em></li>
+            <li><span>RESULT</span><div><strong>Break every submitted-agent tie</strong><p>The exact twenty-game Alpha9 panel finishes 20–0 at +5,142 average; the arena remains 8–0.</p></div><em>GATE PASSED</em></li>
+            <li><span>LIMIT</span><div><strong>Deployment timing is still imperfect</strong><p>On seed 3304, animals sit in the shed longer than their productive slots justify; Alpha4 wins by 221.</p></div><em>NEXT LEVER</em></li>
+          </ol>
+          <p class="source-note">Evidence: <code>results/v1_1_0_alpha5_checkpoint.md</code>. Exact artifact: <code>kaggriculture-v1.1.0-alpha5.tar.gz</code> · SHA-256 <code>54d1…9d0</code>.</p>
+        </section>
+        <section class="section shell" aria-labelledby="v110-alpha4-title">
+          <div class="section-heading"><div><p class="eyebrow">v1.1.0-alpha4 · staged lower-tail expansion</p><h2 id="v110-alpha4-title">Keep the option to grow without paying for the mistake immediately</h2></div><strong class="qa-verdict" data-state="hold">NO LOSSES · 8 TIES</strong></div>
+          <ol class="system-flow">
+            <li><span>STAGE</span><div><strong>Reserve cash for one observation</strong><p>An equal-land expansion no longer buys immediately. The compact farm keeps operating while the priced bundle remains protected.</p></div><em>OPTION VALUE</em></li>
+            <li><span>TAIL</span><div><strong>Compare the weaker futures</strong><p>Expected edge is joined by lower-half value, adverse edge, and forecast spread before land can be confirmed.</p></div><em>DISTRIBUTIONAL</em></li>
+            <li><span>RELEASE</span><div><strong>Fall back when the bundle becomes fragile</strong><p>Funding, service, feasibility, weeds, or a weak lower tail release the reserve to compact play.</p></div><em>BASELINE SHIELD</em></li>
+            <li><span>DIRECT</span><div><strong>Remove every Alpha3 loss</strong><p>The same twenty Alpha9 games finish 12–0–8 at +3,482 average and zero minimum margin.</p></div><em>SAFER FLOOR</em></li>
+            <li><span>ARENA</span><div><strong>Win the gym, fail the milestones</strong><p>Eight personas lose, but Alpha4 reaches neither early expansion nor 60k by day 24. The gym is not yet demanding enough.</p></div><em>COVERAGE WARNING</em></li>
+            <li><span>NEXT</span><div><strong>Compare explicit capacity paths</strong><p>Dense livestock, land compound, and lean liquidity need separate proposals and score distributions.</p></div><em>MIXED MODEL</em></li>
+          </ol>
+          <p class="source-note">Evidence: <code>results/v1_1_0_alpha4_checkpoint.md</code>. Exact artifact: <code>kaggriculture-v1.1.0-alpha4.tar.gz</code> · SHA-256 <code>93b1…9bfa</code>.</p>
+        </section>
+        <section class="section shell" aria-labelledby="v110-alpha3-title">
+          <div class="section-heading"><div><p class="eyebrow">v1.1.0-alpha3-i2 · proactive saturation</p><h2 id="v110-alpha3-title">A stronger average is not a safe promotion</h2></div><strong class="qa-verdict" data-state="hold">REJECTED FOR SUBMISSION</strong></div>
+          <ol class="system-flow">
+            <li><span>TRACE</span><div><strong>Find the suppressed day-7 choice</strong><p>On tie seed 3300, expansion had 98.5% policy probability and MPC support, but a stale compact commitment kept the action from the executor.</p></div><em>EARLIEST GAP</em></li>
+            <li><span>PERMIT</span><div><strong>Require six environment checks</strong><p>Density, full-bundle funding, service, runway, auxiliary value, and scenario MPC must agree before proactive equal-land expansion.</p></div><em>MIXED ATTENTION</em></li>
+            <li><span>PARITY</span><div><strong>Risk land only to break an economic tie</strong><p>The first draft lost frozen seed 2700. i2 disables proactive land when the compact engine already has a material bank lead.</p></div><em>REGRESSION FIX</em></li>
+            <li><span>DIRECT</span><div><strong>Convert ties—but introduce four losses</strong><p>The fixed twenty-game Alpha9 panel finishes 16–4 at +5,635 average and −10,689 worst.</p></div><em>FAIL 20–0</em></li>
+            <li><span>ARENA</span><div><strong>Ten persona wins are not representative</strong><p>Five assumed top styles lose both seats by at least 13,603, yet none reproduces the Alpha9 variance failure.</p></div><em>COVERAGE GAP</em></li>
+            <li><span>NEXT</span><div><strong>Stage before committing</strong><p>Reserve expansion cash for one observation, then combine a downside-percentile head with the new evidence before buying land.</p></div><em>OPTION VALUE</em></li>
+          </ol>
+          <p class="source-note">Evidence: <code>results/v1_1_0_alpha3_i2_checkpoint.md</code>. Exact artifact: <code>kaggriculture-v1.1.0-alpha3-i2.tar.gz</code> · SHA-256 <code>9810…6270</code>.</p>
+        </section>
+        <section class="section shell" aria-labelledby="v110-alpha2-title">
+          <div class="section-heading"><div><p class="eyebrow">v1.1.0-alpha2 · decomposed farm value</p><h2 id="v110-alpha2-title">Notice when cash is stranded behind capacity</h2></div><strong class="qa-verdict" data-state="hold">8–0 DIRECT</strong></div>
+          <ol class="system-flow">
+            <li><span>HEADS</span><div><strong>Score five reasons a farm can be strong</strong><p>Capacity, service, capital, runway, and trajectory are evaluated separately before the daily branch is selected.</p></div><em>CONSTANT TIME</em></li>
+            <li><span>FOCUS</span><div><strong>Reweight the three existing spotlights</strong><p>Operations, opponent, and horizon attention still organize the evidence; the new head improves their capital judgment.</p></div><em>NO FOURTH BOT</em></li>
+            <li><span>GUARD</span><div><strong>Do not buy dependencies for rejected land</strong><p>The first draft preferred expansion while the executor correctly blocked equal-land growth, leaving cows and sheep idle. A land-not-authorized fallback now returns the entire bundle to compact play.</p></div><em>REGRESSION FIXED</em></li>
+            <li><span>REAL</span><div><strong>Replay the two observed failure seeds</strong><p>The aggressive-land proxy loses both seats on seeds 845516275 and 1982640029; Alpha2 wins all four by at least 25,515.</p></div><em>4–0</em></li>
+            <li><span>DIRECT</span><div><strong>Separate from the submitted policy</strong><p>Alpha2 beats exact Alpha9 8–0 at +6,830 average and beats v0.9.2 8–0 at +10,932 average, with zero failures or fallbacks.</p></div><em>PROMISING</em></li>
+            <li><span>LIMIT</span><div><strong>The strict release gate is not cleared</strong><p>A fresh 20-episode Alpha9 panel stopped at its cap after 17: eleven wins, six ties, zero losses. The ties already prevent a 20–0 promotion.</p></div><em>HOLD</em></li>
+            <li><span>NEXT</span><div><strong>Break equal-land ties without restoring blind land rushes</strong><p>On seed 3300 both agents were identical all match: one plot, 19 crops, six animals, and 23,807 coins on day 15. The next permit should use saturation + funding + service + runway, not only an opponent land lead.</p></div><em>ALPHA3</em></li>
+          </ol>
+          <p class="source-note">Exact candidate: <code>artifacts/kaggriculture-v1.1.0-alpha2.tar.gz</code> · 39,100 bytes · SHA-256 <code>d70c…9182</code> · 53 policy tests.</p>
+        </section>
+        <section class="section shell" aria-labelledby="alpha9-live-review-title">
+          <div class="section-heading"><div><p class="eyebrow">Alpha9 live replay review · four newest visible games</p><h2 id="alpha9-live-review-title">One compact engine is being beaten in two opposite ways</h2></div><strong class="qa-verdict" data-state="hold">1–3 VISIBLE</strong></div>
+          <div class="match-review-ledger">
+            <article data-result="loss">
+              <div><span>LOSS · episode 94040163</span><strong>vs kiro · −10,103 bank</strong></div>
+              <p><b>Same land, different density:</b> both farms stayed on one quadrant. By day 22 kiro operated 17 animals to our six and led 45,169 to 32,892.</p>
+              <small>Missing path: a dense one-plot livestock proposal. This loss cannot be solved by land attention alone.</small>
+            </article>
+            <article data-result="loss">
+              <div><span>LOSS · episode 94039279</span><strong>vs Aki Lit · −21,989 bank</strong></div>
+              <p><b>Delayed capacity conversion:</b> Aki held three plots and 20 animals by day 14. We still led cash slightly on day 22, then the larger engine closed at 84,472 to 62,483.</p>
+              <small>Missing signal: value the slope of reachable production, not only the current bank.</small>
+            </article>
+            <article data-result="win">
+              <div><span>WIN · episode 94038396</span><strong>vs Yuta Tomimasu · +30,905 bank</strong></div>
+              <p><b>Expansion control:</b> Yuta opened plot two by day 7 but had only 265 coins on day 14. Our funded compact engine kept a five-figure lead.</p>
+              <small>Lesson: early land still needs a cash, service, and conversion proof. Do not turn the fix into an always-expand rule.</small>
+            </article>
+            <article data-result="loss">
+              <div><span>LOSS · episode 94037514</span><strong>vs vlad101 · −18,770 bank</strong></div>
+              <p><b>Bank lead hides terminal slope:</b> we led by 15,278 on day 22. Vlad reached four plots and 11 livestock, then closed at 94,517 to 75,747.</p>
+              <small>Missing path: plot-four support plus a terminal conversion forecast for already-built capacity.</small>
+            </article>
+          </div>
+          <p class="source-note"><strong>Shared diagnosis:</strong> Alpha9 stayed on one quadrant with six animals in all four games. The next mixed selector must compare dense livestock, land compound, and lean liquidity as distinct capacity paths. Evidence: <code>results/kaggle_alpha9_recent_four_review.json</code>.</p>
+        </section>
+        <section class="section shell" aria-labelledby="latest-match-review-title">
+          <div class="section-heading"><div><p class="eyebrow">Latest ladder review</p><h2 id="latest-match-review-title">The first bad junction—not just the final score</h2></div><p class="section-note">observable decision traces</p></div>
+          <div class="match-review-ledger">
+            <article data-result="loss">
+              <div><span>LOSS · seed 845516275</span><strong>vs one · −22,572</strong></div>
+              <p><b>Day 15:</b> we led 13,534 to 13,333, but operated one plot versus two. By day 21 the opponent had three plots while we still had one.</p>
+              <small>Missed alternative: authorize a serviceable second plot while the cash lead and payback runway were still available.</small>
+            </article>
+            <article data-result="loss">
+              <div><span>LOSS · seed 1982640029</span><strong>vs Joe Hall · −8,145</strong></div>
+              <p><b>Day 15:</b> we led 19,994 to 14,099, yet held one plot while Joe operated three. The bank lead masked a productive-capacity deficit.</p>
+              <small>Missed alternative: convert part of the five-figure lead into land plus its complete operating bundle.</small>
+            </article>
+            <article data-result="win">
+              <div><span>CONTROL · seed 1944547331</span><strong>vs fakyyy · +16,898</strong></div>
+              <p><b>Day 15:</b> we led 22,240 to 15,353 and both farms remained on one plot. Compact play was correct when no land gap appeared.</p>
+              <small>Lesson: the fix is conditional expansion—not an always-expand opener.</small>
+            </article>
+          </div>
+          <p class="source-note"><strong>Trace boundary:</strong> these are visible states, chosen branches, and reproducible counterfactuals. They do not claim access to either bot's private reasoning.</p>
+        </section>
+        <section class="section shell" aria-labelledby="v110-alpha1-title">
+          <div class="section-heading"><div><p class="eyebrow">v1.1.0-alpha1 · interruptible engine options</p><h2 id="v110-alpha1-title">Turn a daily preference into a short, breakable plan</h2></div><strong class="qa-verdict" data-state="hold">HOLD</strong></div>
+          <ol class="system-flow">
+            <li><span>GAP</span><div><strong>The planner could like expansion without buying land</strong><p>A trace against the aggressive opener exposed a disconnect between the daily capital plan and the hourly executor.</p></div><em>ROOT CAUSE</em></li>
+            <li><span>OPTION</span><div><strong>Name the multi-day intent</strong><p>Launch, densify, expand, repair, and close each have a start condition, a short commitment window, and a break condition.</p></div><em>LESS THRASH</em></li>
+            <li><span>GUARD</span><div><strong>Feasible does not mean useful</strong><p>One land purchase is allowed only when MPC still prefers it, the full bundle is affordable, and the opponent visibly owns more plots.</p></div><em>ONE PLOT</em></li>
+            <li><span>BREAK</span><div><strong>Operations can interrupt strategy</strong><p>Service overload, weeds, terminal timing, or an infeasible package immediately release the option.</p></div><em>SAFETY FIRST</em></li>
+            <li><span>RESULT</span><div><strong>Specialist gain, no direct separation</strong><p>The six-style arena rises to +29,109 average, but eight direct games with Alpha9 are exact ties.</p></div><em>NOT READY</em></li>
+          </ol>
+          <p class="source-note">Evidence: <code>results/v1_1_0_alpha1_checkpoint.md</code>, 49 policy regressions, exact frozen panels, and a 360-row option-junction dataset.</p>
+        </section>
+        <section class="section shell" aria-labelledby="v100-alpha9-title">
+          <div class="section-heading"><div><p class="eyebrow">v1.0.0-alpha9 · scenario MPC</p><h2 id="v100-alpha9-title">Price the whole expansion bundle before buying the land</h2></div><p class="section-note">36.4 KB exact artifact · first score 606.8</p></div>
+          <ol class="system-flow">
+            <li><span>ROOT</span><div><strong>Alpha8 expanded from an underfilled second plot</strong><p>Its three losing seeds bought plot three at roughly 48–56% projected density, then absorbed animal, feed, labor, and weed debt.</p></div><em>6 LOSSES</em></li>
+            <li><span>PLAN</span><div><strong>Compare four reachable packages</strong><p>Compact, expand, repair, and liquidate are simulated under favorable, base, and adverse demand, service, and weed paths.</p></div><em>4-DAY HORIZON</em></li>
+            <li><span>VETO</span><div><strong>Reject an expansion that cannot operate</strong><p>Cash, full-bundle funding, projected density, service capacity, and remaining payback time are hard feasibility checks.</p></div><em>137 BLOCKED</em></li>
+            <li><span>REPLAN</span><div><strong>Execute today; reconsider tomorrow</strong><p>The controller chooses one daily macro branch while the proven hourly executor keeps movement and survival deterministic.</p></div><em>RECEDING HORIZON</em></li>
+            <li><span>GATE</span><div><strong>Flip every repeatable submitted-control loss</strong><p>Seeds 3203, 3206, and 3208 now win both seats. The exact artifact finishes 20–0 with a +2,032 floor.</p></div><em>PASS</em></li>
+            <li><span>LIMIT</span><div><strong>Reliability improved more than ceiling</strong><p>The average margin is lower than Alpha8 on the same panel. v1.1 must add execution density without giving back this safety floor.</p></div><em>NEXT</em></li>
+          </ol>
+          <p class="source-note">Evidence: <code>results/v1_0_0_alpha9_checkpoint.md</code>, exact gate JSON, packaging QA, and the 360-row MPC arena dataset.</p>
+        </section>
+        <section class="section shell" aria-labelledby="v100-alpha8-title">
+          <div class="section-heading"><div><p class="eyebrow">v1.0.0-alpha8 · selective economic search</p><h2 id="v100-alpha8-title">Spend thought only where the farm is uncertain or unstable</h2></div><p class="section-note">33.2 KB exact artifact · not submitted</p></div>
+          <ol class="system-flow">
+            <li><span>TRIGGER</span><div><strong>Measure uncertainty before spending compute</strong><p>Posterior entropy, top-two separation, and service or capital crises allocate a zero-to-three continuation budget.</p></div><em>BOUNDED</em></li>
+            <li><span>LINE</span><div><strong>Compare the principal macro options</strong><p>Compact and expand lead normal search; repair joins when weeds, service, or capital leave the state tactically unfinished.</p></div><em>SELECTIVE</em></li>
+            <li><span>REJECT</span><div><strong>Full-strength ambiguity was destructive</strong><p>The first draft abandoned productive late expansion and went 1–11 versus Alpha7. It is preserved as a regression trace.</p></div><em>−549 AVG</em></li>
+            <li><span>CALIBRATE</span><div><strong>Intervene lightly unless the state is unstable</strong><p>Ambiguous choices receive a 35% search blend; genuine quiescence crises can use the full correction.</p></div><em>43 TESTS</em></li>
+            <li><span>VERDICT</span><div><strong>Instrumentation improved; playing strength did not separate</strong><p>The exact artifact keeps the +2,075 floor but ties Alpha7 on ten of twelve fresh paired games.</p></div><em>HOLD</em></li>
+          </ol>
+          <p class="source-note">Evidence: <code>results/v1_0_0_alpha8_checkpoint.md</code>, exact comparison JSON, rejected search trace, and the 360-row instrumented arena.</p>
+        </section>
+        <section class="section shell" aria-labelledby="alpha9-research-title">
+          <div class="section-heading"><div><p class="eyebrow">Alpha9 research · control × poker × leagues</p><h2 id="alpha9-research-title">Improve the model beneath search—not the force of the override</h2></div><p class="section-note">ranked research · arena prepared</p></div>
+          <ol class="system-flow">
+            <li><span>01</span><div><strong>Scenario model-predictive control</strong><p>Replan a short crop, livestock, land, labor, and liquidation horizon under explicit cash and service constraints.</p></div><em>ALPHA9A</em></li>
+            <li><span>02</span><div><strong>Poker-style safe resolving</strong><p>Keep a robust blueprint; opponent-specific counters fire only when confidence is high and the lower-bound value is safe.</p></div><em>NO OVERREACTION</em></li>
+            <li><span>03</span><div><strong>Distributional lower-tail value</strong><p>Score 10th, 50th, and 90th percentile returns so one catastrophic seed matters—not only the average margin.</p></div><em>RELIABILITY</em></li>
+            <li><span>04</span><div><strong>AlphaStar / PSRO league</strong><p>Train against frozen history, diverse personas, and targeted exploiters; evaluate the full payoff matrix.</p></div><em>NON-TRANSITIVE</em></li>
+            <li><span>05</span><div><strong>Latent economic dynamics</strong><p>After more counterfactual data, learn only the planning features the explicit simulator repeatedly misses.</p></div><em>LATER</em></li>
+          </ol>
+          <p class="source-note">Research and experiment boundaries: <code>results/alpha9_cross_domain_research_backlog.md</code>. League schedule: <code>results/alpha9_league_arena_preregistration.json</code>.</p>
+        </section>
+        <section class="section shell" aria-labelledby="v100-alpha7-title">
+          <div class="section-heading"><div><p class="eyebrow">v1.0.0-alpha7 · counterfactual commitment</p><h2 id="v100-alpha7-title">A plan can be stable without becoming irreversible</h2></div><p class="section-note">32.7 KB exact artifact · not submitted</p></div>
+          <ol class="system-flow">
+            <li><span>GAP</span><div><strong>Stored expansion could outlive its evidence</strong><p>The posterior could strongly prefer compact while an older expansion commitment kept spending.</p></div><em>FOUND</em></li>
+            <li><span>VETO</span><div><strong>Break only material expansion regret</strong><p>A score and posterior gap can release stale expansion during the capital window.</p></div><em>ASYMMETRIC</em></li>
+            <li><span>FLOOR</span><div><strong>Preserve every frozen control</strong><p>Alpha7 finishes the combined panel 10–0 at +7,829.6 average and +2,075 worst.</p></div><em>SAFE BASE</em></li>
+            <li><span>DIRECT</span><div><strong>Fresh comparisons remain neutral</strong><p>Seat-reversed splits against Alpha5 and Alpha6 are not evidence of a policy lift.</p></div><em>HOLD</em></li>
+          </ol>
+          <p class="source-note">Evidence: <code>results/v1_0_0_alpha7_checkpoint.md</code> and exact paired-seed comparisons.</p>
+        </section>
+        <section class="section shell" aria-labelledby="v100-alpha6-title">
+          <div class="section-heading"><div><p class="eyebrow">v1.0.0-alpha6 · Pokémon-inspired junction search</p><h2 id="v100-alpha6-title">Spend compute where one choice changes the whole engine</h2></div><p class="section-note">32.4 KB exact artifact · not submitted</p></div>
+          <ol class="system-flow">
+            <li><span>TRACE</span><div><strong>Day 13→14 is the live failure junction</strong><p>The Beyond loss cleared crops, bundled livestock, accumulated 17 weeds, and opened a five-figure bank gap in one day.</p></div><em>−20,738 FINAL</em></li>
+            <li><span>SEARCH</span><div><strong>Compare only four reachable macro options</strong><p>Compact, expand, repair, and liquidate receive favorable, base, and adverse continuation values once per day.</p></div><em>CONSTANT TIME</em></li>
+            <li><span>VALUE</span><div><strong>Price downside before headline upside</strong><p>The head measures full bundle shock, unused productive capacity, weeds, and negative service slack before altering the existing softmax.</p></div><em>RISK-AWARE</em></li>
+            <li><span>PRESERVE</span><div><strong>Keep the frozen floor</strong><p>Exact alpha6 remains 10–0 versus v0.9.2 plus Beyond at +7.8K average and +2,075 worst, with no failures or fallbacks.</p></div><em>NO REGRESSION</em></li>
+            <li><span>ARENA</span><div><strong>Generate tree-ready daily transitions</strong><p>Six styles in both seats finish 12–0 and emit 360 rows: 240 train, 120 validation, split by game seed.</p></div><em>CAPPED</em></li>
+            <li><span>HOLD</span><div><strong>Architecture is not yet a promotion</strong><p>Four direct alpha5 games net to zero. Fit and validate the option-value tree before claiming a stronger agent.</p></div><em>HONEST GATE</em></li>
+          </ol>
+          <p class="source-note">Evidence: <code>results/v1_0_0_alpha6_checkpoint.md</code>, <code>results/pokemon_bot_architecture_research.md</code>, and the alpha6 arena/dataset files.</p>
+        </section>
+        <section class="section shell" aria-labelledby="v100-alpha5-title">
+          <div class="section-heading"><div><p class="eyebrow">v1.0.0-alpha5 comparison</p><h2 id="v100-alpha5-title">Cash cannot replace productive density</h2></div><p class="section-note">31.4 KB exact artifact · not submitted</p></div>
+          <ol class="system-flow">
+            <li><span>TRACE</span><div><strong>Find the first shared failure</strong><p>On seeds 2700 and 2703, alpha4 led through day 12, then expanded at 48% two-plot utilization and bought eight animals plus land.</p></div><em>D13 CLIFF</em></li>
+            <li><span>CONFIRM</span><div><strong>Require evidence before the next bundle</strong><p>Expansion must see either 64% productive utilization or repeated town demand. The choice remains scored rather than hard-coded to an opponent identity.</p></div><em>ONE LEVER</em></li>
+            <li><span>PRESERVE</span><div><strong>Keep the good aggressive environment</strong><p>Two Smoothie Shops confirm the Beyond cow engine, preserving alpha4's +8,324 result in both seats.</p></div><em>NO REGRESSION</em></li>
+            <li><span>CONTROL</span><div><strong>Flip the repeatable losses</strong><p>The exact artifact goes 10–0 against v0.9.2 at +7.8K average and +2,075 worst. Alpha4 went 6–4 on the same combined panel.</p></div><em>LOCAL LEAD</em></li>
+            <li><span>ARENA</span><div><strong>Improve the same four-style practice set</strong><p>Alpha5 finishes 8–0 at +34.0K average, +2.3K above alpha4, with the largest gain against the Sarthak frontier proxy.</p></div><em>240 ROWS</em></li>
+            <li><span>NEXT</span><div><strong>Draw a fresh 20-game gate</strong><p>Ten unseen seeds in both seats must finish 20–0 before alpha5 is considered for Kaggle submission.</p></div><em>HOLD</em></li>
+          </ol>
+          <p class="source-note">Evidence: <code>results/v1_0_0_alpha5_checkpoint.md</code>, exact comparison JSON, and the same-seed mini-arena JSON/JSONL.</p>
+        </section>
+        <section class="section shell" aria-labelledby="v100-alpha4-title">
+          <div class="section-heading"><div><p class="eyebrow">v1.0.0-alpha4 comparison</p><h2 id="v100-alpha4-title">Close only value that can still reach the bank</h2></div><p class="section-note">30.9 KB exact artifact · not submitted</p></div>
+          <ol class="system-flow">
+            <li><span>TRACE</span><div><strong>Separate engine deficit from closing leakage</strong><p>Beyond led by 14,332 on day 22 with 16 sheep and 16 strawberry plots. The final −20,738 loss cannot be repaired by liquidation alone.</p></div><em>PRIMARY CAUSE</em></li>
+            <li><span>REACH</span><div><strong>Price the remaining calendar</strong><p>Seed buying and planting now stop when the crop's first useful yield cannot arrive by day 28. Liquidation releases unnecessary inventory holds.</p></div><em>TERMINAL JUNCTION</em></li>
+            <li><span>REJECT</span><div><strong>Do not starve the closer</strong><p>Lower terminal labor and feed floors both reduced the exact Beyond-seed margin, so the frozen artifact keeps alpha3's proven service capacity.</p></div><em>2 ABLATIONS</em></li>
+            <li><span>CONTROL</span><div><strong>Positive value, incomplete consistency</strong><p>Alpha4 goes 6–4 against exact v0.9.2-i1 at +7.4K average, but still loses seeds 2700 and 2703 in both seats.</p></div><em>HOLD</em></li>
+            <li><span>ARENA</span><div><strong>Practice against bounded seeded styles</strong><p>Four persona proxies in both seats finish 8–0 at +31.7K average and produce 240 daily transitions without failures.</p></div><em>8 EPISODES</em></li>
+            <li><span>NEXT</span><div><strong>Trace the first midgame divergence</strong><p>Turn seeds 2700 and 2703 into permanent junction regressions before increasing density or expanding the arena.</p></div><em>ENGINE FIRST</em></li>
+          </ol>
+          <p class="source-note">Evidence: <code>results/v1_0_0_alpha4_checkpoint.md</code>, exact comparison JSON, and the bounded mini-arena JSON/JSONL. Persona opponents are public-behavior proxies, not private agents.</p>
+        </section>
+        <section class="section shell" aria-labelledby="v100-alpha3-title">
+          <div class="section-heading"><div><p class="eyebrow">v1.0.0-alpha3 comparison</p><h2 id="v100-alpha3-title">Expansion must re-earn its capital every day</h2></div><p class="section-note">30.0 KB exact artifact · not submitted</p></div>
+          <ol class="system-flow">
+            <li><span>OPEN</span><div><strong>Keep the proven mixed launch</strong><p>The day-0 wheat, melon, cow, sheep, and six-hand spine remains unchanged. The first junction begins after the opener rather than rewriting it.</p></div><em>D00–04</em></li>
+            <li><span>SCORE</span><div><strong>Compare four reachable continuations</strong><p>Compact, expand, repair, and liquidate receive softmax weights from full-bundle funding, productive utilization, work slack, weeds, town support, opponent land, and remaining horizon.</p></div><em>ONE DAILY CHOICE</em></li>
+            <li><span>BREAK</span><div><strong>Commitments are conditional</strong><p>A high-confidence branch can harden after two days, but prediction breaks, more than 20% weeds, or negative service slack reopen the decision immediately.</p></div><em>NO BLIND LOCK</em></li>
+            <li><span>RESULT</span><div><strong>Large average lift, incomplete consistency</strong><p>The frozen artifact goes 8–0 against v0.9.0, 4–4 against submitted v0.9.1-i4, and 2–2 against v0.9.2-i1 for a 14–6 total at +13.8K average.</p></div><em>HOLD</em></li>
+            <li><span>NEXT</span><div><strong>Trace the two losing environments</strong><p>Seeds 2700 and 2703 lose in both seats. Review their town path, capital regime probabilities, and first bank divergence before changing another subsystem.</p></div><em>CALIBRATE</em></li>
+          </ol>
+          <p class="source-note">Evidence: <code>results/v1_0_0_alpha3_vs_v0_9_series_checkpoint.md</code> and the three exact per-control JSON suites. Alpha3 was not submitted.</p>
+        </section>
+        <section class="section shell" aria-labelledby="live-match-feedback-title">
+          <div class="section-heading"><div><p class="eyebrow">Latest ladder feedback</p><h2 id="live-match-feedback-title">Three wins, one repeated structural warning</h2></div><p class="section-note">newest visible four · exact submission</p></div>
+          <div class="candidate-evidence">
+            <div><span>BeyondAnalytics</span><strong>−20,738</strong><small>day-14 bundle and service collapse</small></div>
+            <div><span>Krupa Vardhan</span><strong>+15,440</strong><small>conversion recovery masks 18 weeds</small></div>
+            <div><span>Kaito Ichikawa</span><strong>+3,816</strong><small>compact recurring engine wins narrowly</small></div>
+            <div><span>Micah Fernando</span><strong>+35,186</strong><small>one productive plot beats three weak plots</small></div>
+          </div>
+          <ol class="system-flow">
+            <li><span>D13</span><div><strong>Pause before a coupled capital jump</strong><p>Beyond was nearly level before our farm cleared crops and committed a large animal bundle. The decision must price its full next-day service load.</p></div><em>MAIN JUNCTION</em></li>
+            <li><span>D14</span><div><strong>Winning does not erase a bad state</strong><p>The Krupa win also reached 18 weeds with crops cleared. Terminal conversion rescued it, but the same state can fail against a cleaner engine.</p></div><em>WARNING</em></li>
+            <li><span>D24</span><div><strong>Compact play still needs a closer</strong><p>Kaito led us by 6,208 on day 24. Reachable liquidation and inventory conversion turned that into a narrow +3,816.</p></div><em>EXECUTE</em></li>
+            <li><span>CORE</span><div><strong>Plots are not production</strong><p>Micah's three underfilled plots lost by 35,186 to our one dense plot. Density remains the best expansion confirmation found so far.</p></div><em>THROUGHPUT</em></li>
+          </ol>
+          <p class="source-note">Evidence: <code>results/kaggle_v0_9_1_latest_four_learning.json</code> and raw public replay JSON for episodes 93979595, 93978702, 93977818, and 93976930.</p>
+        </section>
+        <section class="section shell" aria-labelledby="v092-checkpoint-title">
+          <div class="section-heading"><div><p class="eyebrow">v1.0 foundation</p><h2 id="v092-checkpoint-title">Train branch choices, not movement noise</h2></div><p class="section-note">weighted styles · random seeds · both seats</p></div>
+          <ol class="system-flow">
+            <li><span>STATE</span><div><strong>Record complete daily transitions</strong><p>Every row now includes state, branch label, planned hires, capital quantities, action, next state, terminal boundary, bank delta, and terminal return.</p></div><em>SCHEMA VERIFIED</em></li>
+            <li><span>WEIGHT</span><div><strong>Cover first; weight repeats second</strong><p>Eight play styles receive one shuffled coverage pass when budget permits. Additional matchups follow explicit expansion, liquidity, and livestock weights.</p></div><em>8 / 8 STYLES</em></li>
+            <li><span>SEED</span><div><strong>Randomize without losing reproducibility</strong><p>One arena seed chooses styles and game seeds; each matchup plays both seats against the same opponent and environment.</p></div><em>PAIRED</em></li>
+            <li><span>BOUND</span><div><strong>Checkpoint every episode</strong><p>Episode and wall-clock limits stop runaway sessions. The preregistered development arena completed 12–0 without retries.</p></div><em>NO LOOP</em></li>
+            <li><span>NEXT</span><div><strong>Learn the daily branch value</strong><p>Fit a compact offline model to hold, expand, compound, restructure, or liquidate decisions; keep hourly survival and routing deterministic.</p></div><em>OFFLINE RL</em></li>
+          </ol>
+          <p class="source-note">Evidence: <code>results/v1_0_arena_loop1_baseline.json</code>, <code>results/v1_0_transition_schema_smoke.jsonl</code>, <code>results/v1_0_arena_loop1_checkpoint.md</code>, and <code>results/v0_9_2_i1_vs_v0_8_4_seed_2200.json</code>.</p>
+        </section>
+        <section class="section shell" aria-labelledby="v100-alpha-title">
+          <div class="section-heading"><div><p class="eyebrow">v1.0.0-alpha1 comparison</p><h2 id="v100-alpha-title">More ceiling, but a lower floor than the submitted agent</h2></div><strong class="qa-verdict" data-state="hold">HOLD</strong></div>
+          <div class="candidate-evidence">
+            <div><span>Exact record</span><strong>6–6</strong><small>seed 2200 + fresh 2600–2604 · both seats</small></div>
+            <div><span>Average margin</span><strong>−4,219</strong><small>57.1K vs 61.3K average bank</small></div>
+            <div><span>Worst path</span><strong>−30,308</strong><small>seed 2601 · both seats</small></div>
+            <div><span>Runtime</span><strong>63.4 ms</strong><small>zero failures or fallbacks</small></div>
+          </div>
+          <ol class="system-flow">
+            <li><span>SCOPE</span><div><strong>This is an honest alpha, not a learned v1.0 model</strong><p>The arena dataset and transition schema are ready, but no branch scorer has been fitted. Alpha1 freezes the current default policy and excludes the optional land-rush entry point.</p></div><em>EXACT ARTIFACT</em></li>
+            <li><span>UPSIDE</span><div><strong>Large engines win when the town supports them</strong><p>Seeds 2602 and 2604 finish 2–0 at +7.6K and +11.9K paired margins. Yarn and smoothie-heavy schemas reward the larger mixed livestock engine.</p></div><em>4 WINS</em></li>
+            <li><span>FAIL</span><div><strong>Expansion is still treated as unconditional</strong><p>By day 15 alpha1 owns three plots and 14 animals even on weak paths. On seed 2601 it holds 1.9K cash versus 15.5K for the compact submitted agent, then loses by 30.3K.</p></div><em>EARLIEST MATERIAL</em></li>
+            <li><span>NEXT</span><div><strong>Choose compact or expand before spending</strong><p>A finite-horizon capital branch must compare the second and third plots with continued one-plot compounding, then preserve the two winning seeds as regressions.</p></div><em>v1.0-alpha2</em></li>
+          </ol>
+          <p class="source-note">Evidence: <code>results/v1_0_0_alpha1_vs_submitted_checkpoint.md</code>, <code>results/v1_0_0_alpha1_vs_submitted_v0_9_1_i4_seed_2200.json</code>, and <code>results/v1_0_0_alpha1_vs_submitted_v0_9_1_i4_fresh_seeds_2600_2604.json</code>. Alpha1 was not submitted.</p>
+        </section>
+        <section class="section shell" aria-labelledby="aggressive-route-title">
+          <div class="section-heading"><div><p class="eyebrow">Aggressive route lab</p><h2 id="aggressive-route-title">Land is useful only when the engine can fill it</h2></div><p class="section-note">optional policy · default unchanged</p></div>
+          <ol class="system-flow">
+            <li><span>D00</span><div><strong>Keep a crop-first land rush in the repertoire</strong><p>The selectable route buys a second plot immediately, targets 27 wheat, 5 melons, and 6 hands, and delays livestock until the crop engine is moving.</p></div><em>2 PLOTS D01</em></li>
+            <li><span>FIX</span><div><strong>Assign resource work to equipped hands</strong><p>Feed and fertilizer tasks are no longer routed to workers who lack wheat or fertilizer—the exact failure pattern found in the Fonge replay.</p></div><em>38 TESTS PASS</em></li>
+            <li><span>REJECT</span><div><strong>Do not hand off abruptly on day 6</strong><p>The core policy inherited land without engine continuity and fell from a −12.2K to a −19.8K average margin.</p></div><em>0–2</em></li>
+            <li><span>REJECT</span><div><strong>Do not force the third plot</strong><p>A broader cash-and-capacity gate worsened the average margin to −23.5K. Undeployed animals and incomplete work are a veto, not evidence for more land.</p></div><em>0–2</em></li>
+            <li><span>NEXT</span><div><strong>Optimize day-0 workhand throughput</strong><p>The route planted 26 tiles by day 1 versus roughly 32 in the replay path. Movement density and action throughput are now the bottleneck.</p></div><em>ROUTING FIRST</em></li>
+          </ol>
+          <p class="source-note">Evidence: <code>results/aggressive_route_playbook.md</code>, <code>results/aggressive_crop_first_vs_v0_9_2_seed_164828330.json</code>, and the rejected handoff and capacity-gate checkpoints. This route is research only and was not submitted.</p>
+        </section>
+        <section class="section shell" aria-labelledby="v091-checkpoint-title">
+          <div class="section-heading"><div><p class="eyebrow">v0.9.1-i4 checkpoint</p><h2 id="v091-checkpoint-title">Productive density begins with survival guarantees</h2></div><p class="section-note">26.5 KB artifact · submitted · pending</p></div>
+          <ol class="system-flow">
+            <li><span>REJECT</span><div><strong>Do not mistake lower cost for efficiency</strong><p>A five-hand opener lost both seats by 11.1K average. Six hands remain the minimum serviceable launch crew.</p></div><em>0–2</em></li>
+            <li><span>REJECT</span><div><strong>Do not force raw plot density</strong><p>Holding a 42-strawberry target through day 15 created 31 active plots but lost both seats by 14.9K. Density without route slack displaced the livestock engine.</p></div><em>0–2</em></li>
+            <li><span>CAPITAL</span><div><strong>Credit assets already purchased</strong><p>When prices or town shops change the preferred livestock mix, keep deployed and held animals and buy only the remaining phase slots. No more duplicate rebalancing capital.</p></div><em>+938 ALONE</em></li>
+            <li><span>SERVICE</span><div><strong>Protect the compounding engine first</strong><p>Harvest remains first; feed and care now precede routine watering. A 400–500 coin animal and its future output are protected before one marginal crop-day action.</p></div><em>10–0 DEV</em></li>
+            <li><span>HOLDOUT</span><div><strong>Freeze, redraw, then grade</strong><p>Three newly drawn seeds in both seats finish 6–0, averaging 67.4K terminal bank and +10.8K over exact v0.9.0.</p></div><em>NO RETUNING</em></li>
+            <li><span>REGRESSION</span><div><strong>Keep the one losing town path visible</strong><p>Fresh direct gates finish 19–1 against both v0.7.1-i5 and v0.8.4. Seed 2200 seat 0 needs bounded livestock restructuring, remembered expansion milestones, and earlier liquidation.</p></div><em>v0.9.2 FIRST</em></li>
+          </ol>
+          <p class="source-note">Evidence: <code>results/v0_9_1_checkpoint.json</code>, <code>results/v0_9_1_i4_vs_v0_9_0_release_twenty.json</code>, <code>results/v0_9_1_i4_vs_v0_7_1_i5_release_twenty.json</code>, and <code>results/v0_9_1_i4_vs_v0_8_4_release_twenty.json</code>.</p>
+        </section>
+        <section class="section shell" aria-labelledby="v090-checkpoint-title">
+          <div class="section-heading"><div><p class="eyebrow">v0.9.0 checkpoint</p><h2 id="v090-checkpoint-title">Core first; strategy selection second; attention third</h2></div><p class="section-note">26.3 KB artifact · locally promoted · not submitted</p></div>
+          <ol class="system-flow">
+            <li><span>EARLY</span><div><strong>Launch the shared high-value engine</strong><p>Start from 7 wheat, 12 melon, 2 cows, and 2 sheep. Keep a six-hand safety floor because the leaders' sparse labor timing proved brittle under our more general router.</p></div><em>D00–07</em></li>
+            <li><span>MIDDLE</span><div><strong>Convert cash into serviceable throughput</strong><p>Open land only when the mixed engine is placed, then build toward strawberries, 14 animals, and 12 hands. Land runs once per day and preempts the market-order cap.</p></div><em>D08–21</em></li>
+            <li><span>DYNAMIC</span><div><strong>Vary the portfolio, not the engine spine</strong><p>Milk, wool, and town shops can tilt cows versus sheep. Opponent attention remains an overlay; it cannot force a weak core branch or premature expansion.</p></div><em>ENVIRONMENT FIRST</em></li>
+            <li><span>LATE</span><div><strong>Separate survival from investment</strong><p>Closing new-animal investment no longer closes feed purchases. Existing livestock stays productive while recurring plots expire and the reverse planner liquidates output.</p></div><em>D22–29</em></li>
+            <li><span>GATE</span><div><strong>Require exact superiority</strong><p>The same <code>main.py</code> finishes 20–0 versus v0.7.1-i5 and 20–0 versus v0.8.4 across seeds 1900–1909 in both seats.</p></div><em>40–0 TOTAL</em></li>
+          </ol>
+          <p class="source-note">Evidence: <code>results/kaggle_top20_core_sample.json</code>, <code>results/v0_9_0_checkpoint.json</code>, <code>results/v0_9_0_i5_vs_v0_7_1_i5_twenty.json</code>, and <code>results/v0_9_0_i5_vs_v0_8_4_twenty.json</code>.</p>
+        </section>
+        <section class="section shell" aria-labelledby="v085-checkpoint-title">
+          <div class="section-heading"><div><p class="eyebrow">v0.8.5 checkpoint</p><h2 id="v085-checkpoint-title">Productive support before land</h2></div><p class="section-note">animal-first core · staged expansion · not submitted</p></div>
+          <ol class="system-flow">
+            <li><span>TRACE</span><div><strong>Recognition arrived after compounding</strong><p>Sarthak's land engine and Vignesh's livestock engine both committed before v0.8.4's day-10 classifier could matter.</p></div><em>EARLIEST FAILURE</em></li>
+            <li><span>CORE</span><div><strong>Fund the first production engine</strong><p>The opener allocates capital to four cows, twelve planned wheat cells, nine melons, and six hands. Land waits for three placed animals, seven serviced wheat cells, and conversion cash.</p></div><em>ANIMAL FIRST</em></li>
+            <li><span>ATTENTION</span><div><strong>Adapt livestock without thrashing</strong><p>Town economics can change the livestock family after day 11, but deployed animals remain committed unless the alternative has a material score edge.</p></div><em>STICKY DENSITY</em></li>
+            <li><span>GATE</span><div><strong>Keep the candidate held</strong><p>The Sarthak proxy finishes 2–0, but Vignesh remains 0–2 and the exact v0.8.4 control finishes 2–4. Correct direction, insufficient reliability.</p></div><em>DO NOT SUBMIT</em></li>
+          </ol>
+          <p class="source-note">Evidence: <code>results/v0_8_5_checkpoint.json</code>, <code>results/v0_8_5_land_gate_sarthak.json</code>, <code>results/v0_8_5_land_gate_vignesh.json</code>, and fresh-process seeds 1800–1802.</p>
         </section>
         <section class="section shell" aria-labelledby="v084-checkpoint-title">
-          <div class="section-heading"><div><p class="eyebrow">v0.8.4 checkpoint</p><h2 id="v084-checkpoint-title">Identify the fixed engine before countering it</h2></div><p class="section-note">24.2 KB artifact · 23 regressions · Kaggle pending</p></div>
+          <div class="section-heading"><div><p class="eyebrow">v0.8.4 checkpoint</p><h2 id="v084-checkpoint-title">Identify the fixed engine before countering it</h2></div><p class="section-note">24.2 KB artifact · Kaggle 590.5 · live hold</p></div>
           <ol class="system-flow">
             <li><span>QUESTION</span><div><strong>Does knowing the plan actually help?</strong><p>Forced sheep and goose counters lose all eight trials. A fifth cow wins all four trials against the exact v0.8.0 cow engine, averaging +2,503 with a +652 worst margin.</p></div><em>COUNTERFACTUAL</em></li>
             <li><span>RECOGNIZE</span><div><strong>Infer the plan from public commitments</strong><p>Days 10–12 identify the one-quadrant melon/wheat launchpad, then later evidence confirms its crop conversion and livestock family. A two-quadrant frontier opener does not trigger the response.</p></div><em>NO IDENTITY ORACLE</em></li>
@@ -686,6 +1243,16 @@
 
       <section class="view" id="attention" aria-labelledby="attention-title" hidden>
         <div class="page-intro shell"><div><p class="eyebrow">Agent system D</p><h1 id="attention-title">Attention controller</h1><p>Protect irreversible obligations before spending effort on adaptation.</p></div></div>
+        <section class="section shell strategy-inventory" aria-labelledby="strategy-inventory-title">
+          <div class="section-heading"><div><p class="eyebrow">Strategy inventory · v2.0 cull</p><h2 id="strategy-inventory-title">Keep the mechanisms that earn their phase</h2></div><p class="section-note">Keep = production path · Refine = bounded experiment · Cull = adversary only</p></div>
+          <div class="strategy-inventory-grid">
+            <article data-phase="early"><header><span>Early · D00–08</span><strong>Preserve options</strong></header><ul><li data-status="keep"><b>Keep</b><span>Lean reversible opener</span><small>Liquidity and six-hand service floor.</small></li><li data-status="refine"><b>Refine</b><span>Aggressive land rush</span><small>Only with funded deployment and route capacity.</small></li><li data-status="cull"><b>Cull</b><span>Forced crop-first land</span><small>Lost both seats and stranded the handoff.</small></li></ul></article>
+            <article data-phase="middle"><header><span>Middle · D09–20</span><strong>Compound serviceable value</strong></header><ul><li data-status="keep"><b>Keep</b><span>Recurring crop + livestock core</span><small>Stagger cohorts; protect feed and care.</small></li><li data-status="keep"><b>Keep</b><span>Staged land compound</span><small>Utilization, service, and payback must agree.</small></li><li data-status="refine"><b>Refine</b><span>Mixed conversion</span><small>High upside; weakest lower-tail coverage.</small></li><li data-status="cull"><b>Cull</b><span>Heavy opponent reaction</span><small>Residual influence only; core economy leads.</small></li></ul></article>
+            <article data-phase="late"><header><span>Late · D21–27</span><strong>Convert the engine</strong></header><ul><li data-status="keep"><b>Keep</b><span>Reachability-gated finish</span><small>Fund work only when value can reach bank.</small></li><li data-status="refine"><b>Refine</b><span>Staggered D18–21 replacement</span><small>Test smaller cohorts before terminal demand.</small></li><li data-status="cull"><b>Cull</b><span>Forced day-22 wheat wave</span><small>Added density but reduced terminal value.</small></li></ul></article>
+            <article data-phase="close"><header><span>Close · D28–29</span><strong>Bank the proof</strong></header><ul><li data-status="keep"><b>Keep</b><span>Full reachable liquidation</span><small>Exact feed reserve, return, then sell.</small></li><li data-status="keep"><b>Keep</b><span>Overflow safety</span><small>Inventory has no value until converted.</small></li><li data-status="refine"><b>Refine</b><span>One-day demand timing</span><small>Hold only when tomorrow's gain is reachable.</small></li></ul></article>
+          </div>
+          <p class="source-note"><strong>Current read:</strong> the v2.0 core should be mostly opponent-independent. Persona strategies remain in the arena as stress tests, while production receives only mechanisms with positive direct or holdout evidence.</p>
+        </section>
         <section class="section shell" aria-labelledby="phase-model-title">
           <div class="section-heading"><div><p class="eyebrow">Phase model</p><h2 id="phase-model-title">Play the farm like a match</h2></div><p class="section-note">One clock, eight narrower decision windows.</p></div>
           <ol class="phase-timeline">
@@ -717,6 +1284,27 @@
           </div>
           <div class="attention-equation"><span>Decision score</span><strong>hard obligations + Σ attention<sub>m</sub> × expected value<sub>m</sub> + productive threat − switching cost − failure risk</strong></div>
         </section>
+        <section class="section shell" aria-labelledby="junction-controller-title">
+          <div class="section-heading"><div><p class="eyebrow">Decision junction controller</p><h2 id="junction-controller-title">Explore, harden, then reopen only on evidence</h2></div><p class="section-note">softmax temperature · capital value · break thresholds</p></div>
+          <ol class="system-flow">
+            <li><span>D00–04</span><div><strong>Bootstrap · 55 / 15 / 30</strong><p>Operations leads while the mixed opener stays reversible. Opponent evidence is sparse; horizon protects feed and a cash option.</p></div><em>OPS · OPP · HORIZON</em></li>
+            <li><span>D05–08</span><div><strong>First land · 45 / 15 / 40</strong><p>Compare compact continuation with the complete expansion bundle. Harden only above 70% branch probability for two days with 90% service completion.</p></div><em>T = 0.60</em></li>
+            <li><span>D09–12</span><div><strong>Engine commit · 35 / 25 / 40</strong><p>Town shops, relative product value, and opponent commitments select recurring, cow, sheep, or mixed play. Require an 18-point posterior edge.</p></div><em>HARDEN</em></li>
+            <li><span>D13–18</span><div><strong>Compound or repair · 45 / 20 / 35</strong><p>Keep the engine only while realized return is positive and backlog shrinks. Weeds above 20% or repeated missed service reopens the branch.</p></div><em>BREAK</em></li>
+            <li><span>D19–29</span><div><strong>Convert and close · 35 / 10 / 55 → 30 / 05 / 65</strong><p>Horizon dominates. Reject purchases whose production, transport, and sale cannot complete; preserve only exact feed and executable terminal value.</p></div><em>T = 0.35</em></li>
+          </ol>
+          <p class="source-note"><strong>Softmax rule:</strong> use temperature 1.0 while observing, 0.60 at the decision, and 0.35 after hardening. Reset to 0.90 only when town value shifts 25%, forecast error exceeds 15%, or serviceability breaks.</p>
+        </section>
+        <section class="section shell" aria-labelledby="capital-utilization-title">
+          <div class="section-heading"><div><p class="eyebrow">Capital utilization</p><h2 id="capital-utilization-title">Score the next coin across the whole farm</h2></div><p class="section-note">land · livestock · seeds · hands · feed · cash</p></div>
+          <div class="mechanism-grid">
+            <article data-state="next"><span>Land</span><strong>Projected productive utilization</strong><p>Do not open capacity if crops plus deployed animals remain below 55% after two simulated days.</p></article>
+            <article data-state="next"><span>Labor</span><strong>Completed work per hand</strong><p>Hire only against real routes; measure mandatory work completed before adding another density layer.</p></article>
+            <article data-state="next"><span>Livestock</span><strong>Serviced return by town path</strong><p>Feed and care must exceed 95%; Yarn, Smoothie, and Ice Cream demand select the marginal species.</p></article>
+            <article data-state="next"><span>Liquidity</span><strong>Option value of waiting</strong><p>High cash can fund tomorrow's better branch. Charge every purchase for the flexibility it removes.</p></article>
+          </div>
+          <div class="attention-equation"><span>Marginal capital</span><strong>discounted terminal gain − purchase − service load − switching − stranded risk</strong></div>
+        </section>
         <section class="section shell" aria-labelledby="attention-order-title">
           <div class="section-heading"><div><p class="eyebrow">Priority stack</p><h2 id="attention-order-title">What gets attention first</h2></div><p class="section-note">Lower number wins when tasks compete.</p></div>
           <ol class="decision-tree attention-tree">
@@ -739,9 +1327,147 @@
         </section>
       </section>
 
+      <section class="view" id="research-models" aria-labelledby="research-models-title" hidden>
+        <div class="page-intro shell">
+          <div><p class="eyebrow">Decision lab</p><h1 id="research-models-title">Research agent models</h1><p>A plain-language guide to the optimization ideas we are testing, what each one controls, and how they can become one coherent agent.</p></div>
+          <button class="button button-secondary" data-view-jump="past-agents" type="button">See test history</button>
+        </div>
+        <section class="section shell" aria-labelledby="architecture-plain-title">
+          <div class="section-heading"><div><p class="eyebrow">Current v1.0 architecture · plain language</p><h2 id="architecture-plain-title">A foreman, a scout, and an accountant share one farm plan</h2></div><p class="section-note">rules first · adaptation second</p></div>
+          <p class="section-lede">The agent is not one giant brain. It is a short chain of specialists. Each specialist answers one question, then a safe executor turns the final plan into valid hourly work.</p>
+          <ol class="system-flow">
+            <li><span>SEE</span><div><strong>Read the farm</strong><p>Summarize cash, land, crops, animals, workers, weeds, town demand, public opponent commitments, and days remaining.</p></div><em>STATE</em></li>
+            <li><span>SAFE</span><div><strong>Protect non-negotiable work</strong><p>Harvest, feed, animal care, overflow prevention, and reachable final sales cannot be outvoted by a clever strategy.</p></div><em>REFLEXES</em></li>
+            <li><span>ATTEND</span><div><strong>Move three spotlights</strong><p>Operations, opponent, and horizon attention decide which evidence deserves more influence in this position.</p></div><em>SOFTMAX WEIGHTS</em></li>
+            <li><span>PROPOSE</span><div><strong>Suggest an engine</strong><p>Cash, recurring crops, livestock, and liquidity strategies compete as scored proposals rather than fixed scripts.</p></div><em>POLICY PRIOR</em></li>
+            <li><span>CHECK</span><div><strong>Test the capital package</strong><p>Scenario MPC asks whether compact, expand, repair, or liquidate is affordable, serviceable, dense, and able to pay back.</p></div><em>4-DAY LOOK</em></li>
+            <li><span>WORK</span><div><strong>Route every hand</strong><p>A task queue assigns useful work globally, keeps routes stable, and avoids wasting movement on a new daily whim.</p></div><em>EXECUTOR</em></li>
+            <li><span>CLOSE</span><div><strong>Convert the farm before time expires</strong><p>The terminal planner stops investments that cannot mature and sells reachable inventory before the last day.</p></div><em>END GAME</em></li>
+          </ol>
+          <div class="mechanism-grid research-definitions">
+            <article><span>Operations · foreman</span><strong>What must get done now?</strong><p>Raises deadlines, worker usefulness, service capacity, and farm health.</p></article>
+            <article><span>Opponent · scout</span><strong>What are they committing to?</strong><p>Maintains probabilities over visible styles. It advises; it never gets to sacrifice our own farm.</p></article>
+            <article><span>Horizon · accountant</span><strong>Will this pay back in time?</strong><p>Prices liquidity, maturity, remaining days, and final inventory conversion.</p></article>
+            <article><span>Attention weight</span><strong>Influence, not permission</strong><p>Softmax turns evidence into proportions that sum to 100%. Hard safety constraints still win.</p></article>
+          </div>
+          <div class="attention-equation"><span>Plain decision</span><strong>safe obligations + weighted farm value − cash, labor, switching, and failure risk</strong></div>
+          <p class="source-note"><strong>Important boundary:</strong> each match starts fresh. The live bot does not remember opponents across Kaggle games; learning happens offline in our arena, then a tested tree or parameter set is packaged into a later version.</p>
+        </section>
+        <section class="section shell" aria-labelledby="mpc-explainer-title">
+          <div class="section-heading"><div><p class="eyebrow">Model-predictive control · active in Alpha9</p><h2 id="mpc-explainer-title">Plan a little, act once, then look again</h2></div><strong class="qa-verdict" data-state="ready">SUBMITTED</strong></div>
+          <p class="section-lede">MPC is a rolling plan. Instead of committing to one forecast for the rest of the game, it compares a few feasible near-term packages, executes only today's choice, observes what actually happened, and rebuilds the plan tomorrow.</p>
+          <ol class="system-flow">
+            <li><span>01</span><div><strong>Observe the current farm</strong><p>Cash, productive density, animals, work capacity, weeds, town demand, opponent pressure, and days remaining become the planning state.</p></div><em>STATE</em></li>
+            <li><span>02</span><div><strong>Generate reachable packages</strong><p>Compact or densify, expand, repair, and liquidate specify the land, crops, animals, labor, feed, and reserve they require.</p></div><em>OPTIONS</em></li>
+            <li><span>03</span><div><strong>Reject impossible plans</strong><p>A branch fails if the full bundle lacks cash, service capacity, productive density, or enough days to repay.</p></div><em>CONSTRAINTS</em></li>
+            <li><span>04</span><div><strong>Stress three futures</strong><p>Favorable, base, and adverse demand, weed, and service paths expose a plan whose headline value hides a bad downside.</p></div><em>SCENARIOS</em></li>
+            <li><span>05</span><div><strong>Choose robust value</strong><p>The score blends expected return with the weaker scenario and the value of keeping future choices open.</p></div><em>ROBUST SCORE</em></li>
+            <li><span>06</span><div><strong>Execute one step and replan</strong><p>Only the current macro choice is handed to the hourly executor. New evidence can change tomorrow's plan.</p></div><em>FEEDBACK LOOP</em></li>
+          </ol>
+          <div class="mechanism-grid research-definitions">
+            <article><span>Horizon</span><strong>How far we explicitly simulate</strong><p>Alpha9 looks four days in detail, then uses a simpler continuation estimate through the finish.</p></article>
+            <article><span>Receding</span><strong>The window moves every day</strong><p>We never execute the entire old forecast blindly; the next observation replaces it.</p></article>
+            <article><span>Robust</span><strong>Good across plausible futures</strong><p>A slightly lower average can win when it avoids one catastrophic service or cash state.</p></article>
+            <article><span>Constraint</span><strong>A rule the score cannot bribe</strong><p>Insufficient cash, service, density, or payback time blocks an expansion even when its upside looks attractive.</p></article>
+          </div>
+        </section>
+        <section class="section shell" aria-labelledby="research-library-title">
+          <div class="section-heading"><div><p class="eyebrow">v1.1 research library</p><h2 id="research-library-title">Different models solve different layers</h2></div><p class="section-note">ranked by practical value</p></div>
+          <div class="mechanism-grid research-library">
+            <article data-state="next"><span>01 · Options</span><strong>Interruptible engine playbooks</strong><p>Package a multi-day recurring-crop launch, expansion, repair, or closer with start, stop, and break conditions.</p><small>stable plan without blind commitment</small></article>
+            <article data-state="next"><span>02 · Rollout</span><strong>Workhand action scheduler</strong><p>Try a few service orderings, finish each with the current executor, and keep the sequence with the best reachable value.</p><small>harvest · feed · care · town · exit</small></article>
+            <article data-state="next"><span>03 · Successor features</span><strong>Reuse engines when rewards change</strong><p>Predict what each policy produces, then reprice those outcomes when shops and town demand shift.</p><small>dynamics separate from value</small></article>
+            <article data-state="next"><span>04 · MAP-Elites</span><strong>Keep strong, different specialists</strong><p>Archive the best lean, land-heavy, crop-heavy, livestock-heavy, and high-liquidity agents instead of averaging them away.</p><small>diverse arena pressure</small></article>
+            <article data-state="next"><span>05 · Baseline shield</span><strong>Learn only where evidence is strong</strong><p>A learned choice replaces Alpha9 only when its lower confidence bound clears the proven baseline.</p><small>safe policy improvement</small></article>
+            <article><span>06 · Curriculum</span><strong>Mutate hard, reachable environments</strong><p>Vary weeds, shops, prices, and opponent timing after the core metrics are reliable; transfer useful policies between challenges.</p><small>bounded POET-style training</small></article>
+            <article><span>Later · World model</span><strong>Learn simulator residuals</strong><p>Use a latent model only after enough traces show which interactions the explicit farm simulator repeatedly predicts poorly.</p><small>defer heavy density</small></article>
+          </div>
+        </section>
+        <section class="section shell" aria-labelledby="go-transfer-title">
+          <div class="section-heading"><div><p class="eyebrow">Go-inspired v1.1 upgrades</p><h2 id="go-transfer-title">Borrow the division of labor—not the giant neural network</h2></div><strong class="qa-verdict" data-state="hold">ORDERED</strong></div>
+          <div class="mechanism-grid research-library">
+            <article data-state="ready"><span>01 · KataGo</span><strong>Score the reasons a farm is strong</strong><p>Alpha2 now separates capacity, service, capital, runway, and trajectory before the capital choice.</p><small>built · local candidate</small></article>
+            <article data-state="next"><span>02 · AlphaGo</span><strong>Fast proposal, careful evaluation</strong><p>Let softmax propose likely engines, MPC judge them, and selective search work only at irreversible capital junctions.</p><small>policy · value · search</small></article>
+            <article><span>03 · Gumbel planning</span><strong>Use a few simulations well</strong><p>Sample distinct macro packages, eliminate weak ones in stages, and spend the remaining rollouts on finalists.</p><small>after value calibration</small></article>
+            <article><span>04 · Expert iteration</span><strong>Let slow analysis teach the fast bot</strong><p>Use arena search to label difficult junctions, then distill those choices into a compact tree for submission.</p><small>offline learning</small></article>
+            <article><span>05 · Adversarial Go</span><strong>Keep exploiters in the gym</strong><p>Train against lean, land-rush, livestock, mixed, and closing specialists so self-play cannot hide one repeatable weakness.</p><small>diverse regression league</small></article>
+          </div>
+          <div class="source-links">
+            <a href="https://www.nature.com/articles/nature16961" target="_blank" rel="noreferrer">AlphaGo policy/value/search ↗</a>
+            <a href="https://arxiv.org/abs/1902.10565" target="_blank" rel="noreferrer">KataGo auxiliary targets ↗</a>
+            <a href="https://openreview.net/pdf?id=bERaNdoegnO" target="_blank" rel="noreferrer">Gumbel planning ↗</a>
+            <a href="https://arxiv.org/abs/1705.08439" target="_blank" rel="noreferrer">Expert Iteration ↗</a>
+            <a href="https://arxiv.org/abs/2211.00241" target="_blank" rel="noreferrer">Adversarial Go ↗</a>
+          </div>
+        </section>
+        <section class="section shell" aria-labelledby="cross-game-transfer-title">
+          <div class="section-heading"><div><p class="eyebrow">Cross-game mixed-model ideas</p><h2 id="cross-game-transfer-title">Five engines suggest one safer architecture</h2></div><strong class="qa-verdict" data-state="hold">RESEARCH QUEUE</strong></div>
+          <div class="mechanism-grid research-library">
+            <article data-state="next"><span>StarCraft · league</span><strong>Train against flaw-finders</strong><p>Keep a main agent, a frozen mirror, and exploiters specialized in dense livestock, land rush, liquidity, and closing conversion.</p><small>fix the easy persona gym</small></article>
+            <article data-state="next"><span>Poker · safe re-solving</span><strong>Adapt without discarding the blueprint</strong><p>Refine only the reached capital subgame and replace Alpha9 only when the candidate's lower confidence bound is better.</p><small>baseline shield</small></article>
+            <article data-state="next"><span>KataGo · auxiliary heads</span><strong>Predict why a path works</strong><p>Score terminal bank distribution, productive capacity, service health, reachable inventory, and payback day separately.</p><small>better attention targets</small></article>
+            <article><span>MuZero · relevant dynamics</span><strong>Learn simulator residuals</strong><p>Predict next cash band, density, service debt, and terminal value rather than rebuilding the known farm rules.</p><small>compact world model</small></article>
+            <article><span>Chess · quiescence</span><strong>Search unstable junctions deeper</strong><p>Spend extra compute only when bank and capacity disagree, option values are close, or tomorrow can flip serviceability.</p><small>bounded turn time</small></article>
+          </div>
+          <div class="source-links">
+            <a href="https://deepmind.google/blog/alphastar-grandmaster-level-in-starcraft-ii-using-multi-agent-reinforcement-learning/" target="_blank" rel="noreferrer">AlphaStar league ↗</a>
+            <a href="https://pubmed.ncbi.nlm.nih.gov/28254783/" target="_blank" rel="noreferrer">DeepStack re-solving ↗</a>
+            <a href="https://arxiv.org/abs/1902.10565" target="_blank" rel="noreferrer">KataGo heads ↗</a>
+            <a href="https://www.nature.com/articles/s41586-020-03051-4" target="_blank" rel="noreferrer">MuZero planning ↗</a>
+            <a href="https://github.com/official-stockfish/Stockfish/blob/master/src/search.cpp" target="_blank" rel="noreferrer">Stockfish search ↗</a>
+          </div>
+        </section>
+        <section class="section shell" aria-labelledby="recent-ai-title">
+          <div class="section-heading"><div><p class="eyebrow">Recent AI · practical transfer</p><h2 id="recent-ai-title">Use large intelligence offline; ship a small policy online</h2></div><strong class="qa-verdict" data-state="hold">ALPHA6 RESEARCH</strong></div>
+          <div class="mechanism-grid research-library">
+            <article data-state="next"><span>Searchless chess · distillation</span><strong>Let a slow teacher label junctions</strong><p>Run deeper offline search at hard farm states, then export a shallow tree of the winning capacity choices.</p><small>highest priority</small></article>
+            <article data-state="next"><span>TD-MPC2 · residual world model</span><strong>Learn only simulator error</strong><p>Predict cash, service, density, and terminal residuals instead of replacing known game rules.</p><small>small exported ensemble</small></article>
+            <article data-state="next"><span>Gumbel planning</span><strong>Spend rollouts on the best two paths</strong><p>Give lean, dense, and land one cheap look, then allocate the remaining turn budget by sequential elimination.</p><small>bounded search</small></article>
+            <article><span>Student of Games · belief search</span><strong>Train safe responses to hidden intent</strong><p>Use public-state beliefs and targeted exploiters while retaining the non-exploitable baseline option.</p><small>league upgrade</small></article>
+            <article><span>LLM · offline strategy scientist</span><strong>Generate hypotheses, not live actions</strong><p>Ask for falsifiable engine ideas and persona scripts; keep only candidates verified by the exact simulator.</p><small>discovery tool</small></article>
+          </div>
+          <div class="source-links">
+            <a href="https://github.com/google-deepmind/searchless_chess" target="_blank" rel="noreferrer">Searchless chess ↗</a>
+            <a href="https://proceedings.iclr.cc/paper_files/paper/2024/hash/cf73d57b6dcda32b293df7c2d5341f49-Abstract-Conference.html" target="_blank" rel="noreferrer">TD-MPC2 ↗</a>
+            <a href="https://openreview.net/forum?id=bERaNdoegnO" target="_blank" rel="noreferrer">Gumbel MuZero ↗</a>
+            <a href="https://arxiv.org/abs/2112.03178" target="_blank" rel="noreferrer">Student of Games ↗</a>
+            <a href="https://deepmind.google/research/publications/139455/" target="_blank" rel="noreferrer">LLM + board search ↗</a>
+          </div>
+        </section>
+        <section class="section shell" aria-labelledby="mixed-agent-title">
+          <div class="section-heading"><div><p class="eyebrow">Unified mixed approach</p><h2 id="mixed-agent-title">One agent, seven bounded responsibilities</h2></div><p class="section-note">target v1.x flow</p></div>
+          <ol class="system-flow">
+            <li><span>FLOOR</span><div><strong>Deterministic survival rules</strong><p>Never let search or learning displace mandatory harvest, feed, care, overflow, or reachable terminal sales.</p></div><em>HARD RULES</em></li>
+            <li><span>LIBRARY</span><div><strong>Options propose engine paths</strong><p>Early evidence activates a small set of interruptible plans rather than hundreds of isolated actions.</p></div><em>HIERARCHY</em></li>
+            <li><span>TRANSFER</span><div><strong>Successor features reprice the library</strong><p>Town and market changes alter the reward weights without erasing what each engine is expected to produce.</p></div><em>ADAPT</em></li>
+            <li><span>CAPITAL</span><div><strong>MPC checks feasibility and downside</strong><p>The daily controller chooses a robust package under cash, service, density, weed, and payback constraints.</p></div><em>ALPHA9 FLOOR</em></li>
+            <li><span>ROUTE</span><div><strong>Rollout schedules the critical work</strong><p>Limited lookahead improves hand assignments only at service bottlenecks and end-game conversion junctions.</p></div><em>EXECUTION</em></li>
+            <li><span>SHIELD</span><div><strong>Uncertain learning falls back safely</strong><p>Unsupported tree leaves and policy choices use the proven Alpha9 action.</p></div><em>NO GUESSING</em></li>
+            <li><span>LEARN</span><div><strong>Arena telemetry updates the archive</strong><p>Losses add regression seeds; diverse winners populate strategy cells; no live match writes state into another match.</p></div><em>OFFLINE ONLY</em></li>
+          </ol>
+        </section>
+        <section class="section shell" aria-labelledby="alpha10-path-title">
+          <div class="section-heading"><div><p class="eyebrow">v1.1 path</p><h2 id="alpha10-path-title">Build density in a measured order</h2></div><strong class="qa-verdict" data-state="ready">ALPHA5 GATE PASSED</strong></div>
+          <ol class="decision-tree">
+            <li><span>A1</span><div><strong>Interruptible engine options</strong><p>Launch, densify, expand, repair, and close now expose a multi-day intent and its break conditions.</p></div><em>BUILT · HOLD</em></li>
+            <li><span>A2</span><div><strong>Auxiliary farm score heads</strong><p>Capacity, service, capital, runway, and trajectory now reweight compact, expand, repair, and liquidate.</p></div><em>BUILT · TESTING</em></li>
+            <li><span>A3</span><div><strong>Calibrated option value</strong><p>Proactive saturation was tested; its immediate version lost four games and its staged lower-tail version finished 12–0–8.</p></div><em>BUILT · HOLD</em></li>
+            <li><span>A4</span><div><strong>Capacity-path mixture</strong><p>Dense livestock, land compound, and lean liquidity now receive separate downside-aware scores behind a baseline confidence shield.</p></div><em>BUILT · ALPHA5</em></li>
+            <li><span>GATE</span><div><strong>Beat Alpha9 directly</strong><p>Alpha5 preserves every frozen floor and finishes the exact submitted-agent panel 20–0 at +5,142 average.</p></div><em>PASSED</em></li>
+          </ol>
+          <div class="source-links">
+            <a href="https://www.sciencedirect.com/science/article/pii/S0004370299000521" target="_blank" rel="noreferrer">Options framework ↗</a>
+            <a href="https://papers.nips.cc/paper/2017/hash/350db081a661525235354dd3e19b8c05-Abstract.html" target="_blank" rel="noreferrer">Successor features ↗</a>
+            <a href="https://arxiv.org/abs/1504.04909" target="_blank" rel="noreferrer">MAP-Elites ↗</a>
+            <a href="https://proceedings.mlr.press/v97/laroche19a.html" target="_blank" rel="noreferrer">Baseline safety ↗</a>
+            <a href="https://www.nature.com/articles/s41586-025-08744-2" target="_blank" rel="noreferrer">World models ↗</a>
+          </div>
+        </section>
+      </section>
+
       <section class="view" id="submission" aria-labelledby="submission-title" hidden>
         <div class="page-intro shell">
-          <div><p class="eyebrow">Next ladder entry</p><h1 id="submission-title">Promote evidence, not optimism</h1><p>v0.6.1 remains live. Adaptive Horizon v0.7.1 is a local candidate, not a submitted agent.</p></div>
+          <div><p class="eyebrow">Current ladder entry</p><h1 id="submission-title">v1.0.0-alpha9 is live at 647.3</h1><p>The four newest visible episodes reviewed here finished 1–3. Score and rank can continue moving while episodes run.</p></div>
           <a class="button button-secondary" href="https://www.kaggle.com/competitions/kaggriculture/rules" target="_blank" rel="noreferrer">Official rules ↗</a>
         </div>
         <section class="section shell" aria-labelledby="first-plan-title">
@@ -765,22 +1491,22 @@
           </div>
         </section>
         <section class="section shell" aria-labelledby="submission-decision-title">
-          <div class="section-heading"><div><p class="eyebrow">Submission decision</p><h2 id="submission-decision-title">Promote locally; hold for diverse-arena work</h2></div><strong class="qa-verdict" data-state="hold">HOLD KAGGLE</strong></div>
+          <div class="section-heading"><div><p class="eyebrow">Submission decision</p><h2 id="submission-decision-title">Alpha5 clears the submitted-agent gate</h2></div><strong class="qa-verdict" data-state="hold">QUALIFIED · LOCAL HOLD</strong></div>
           <div class="candidate-evidence">
-            <div><span>Live agent</span><strong>v0.6.1</strong><small>562.2 · 9–9 external</small></div>
-            <div><span>Local checkpoint</span><strong>v0.7.1-i5</strong><small>20–0 predecessor gate</small></div>
-            <div><span>Persona arena</span><strong>4–2</strong><small>mixed-conversion 0–2</small></div>
-            <div><span>Artifact</span><strong>15,356 bytes</strong><small>packaging ready · no upload</small></div>
+            <div><span>Alpha9 public score</span><strong>647.3</strong><small>reviewed snapshot · still moving</small></div>
+            <div><span>Newest visible games</span><strong>1–3</strong><small>four episode replays reviewed</small></div>
+            <div><span>Alpha5 direct gate</span><strong>20–0</strong><small>vs exact Alpha9 · +5,142 average</small></div>
+            <div><span>Alpha4 cross-check</span><strong>8–2</strong><small>Alpha5 loses seed 3304 by 221</small></div>
           </div>
-          <p class="source-note"><strong>Interpretation boundary:</strong> the replay test proves the new model notices the missed compounding signals. It does not prove that the response wins more games; that requires the completed benchmark and later ladder evidence.</p>
+          <p class="source-note"><strong>Interpretation boundary:</strong> Alpha5 satisfies the requested Alpha9 release gate, but its narrow Alpha4 regression leaves a choice between submitted-agent qualification and strict local dominance. Neither proves leaderboard superiority.</p>
         </section>
         <section class="section shell" aria-labelledby="submission-gate-title">
-          <div class="section-heading"><div><p class="eyebrow">Release gate</p><h2 id="submission-gate-title">v0.7.1 candidate readiness</h2></div><strong class="progress-label" id="submission-progress">0 / 6 ready</strong></div>
+          <div class="section-heading"><div><p class="eyebrow">Release gate</p><h2 id="submission-gate-title">v1.1-alpha5 candidate readiness</h2></div><strong class="progress-label" id="submission-progress">0 / 6 ready</strong></div>
           <div class="candidate-evidence" aria-label="Validated candidate evidence">
-            <div><span>Real-loss regression</span><strong>6 checkpoints</strong><small>D00 · D09 · D12 · D15 · D21 · D27</small></div>
-            <div><span>Predecessor challenge</span><strong>20 / 20</strong><small>v0.7.0 · seeds 500–509 · both seats</small></div>
-            <div><span>Average margin</span><strong>+5,685</strong><small>worst +380</small></div>
-            <div><span>Runtime failures</span><strong>0</strong><small>0 fallbacks · max local action 334.7 ms</small></div>
+            <div><span>Policy regressions</span><strong>62 / 62</strong><small>includes path mixture and safety shield</small></div>
+            <div><span>Exact Alpha9 gate</span><strong>20–0</strong><small>20 / 20 complete · +85 minimum</small></div>
+            <div><span>Eight-style arena</span><strong>8–0</strong><small>+34,085 average · livestock coverage 62.5%</small></div>
+            <div><span>Runtime failures</span><strong>0</strong><small>0 fallbacks · max direct action 51.4 ms</small></div>
           </div>
           <div class="progress-track" aria-hidden="true"><span id="submission-progress-bar"></span></div>
           <div class="checklist submission-checklist">
@@ -808,7 +1534,7 @@
               <div><strong>Daily limit</strong><span>Up to five agent submissions per team</span></div>
             </div>
           </div>
-          <p class="source-note"><strong>Frozen controls:</strong> submitted <code>artifacts/kaggriculture-v0.2.1.tar.gz</code> and <code>artifacts/kaggriculture-v0.6.1.tar.gz</code>, plus local v0.4.0 through v0.7.0 controls. The 14,096-byte <code>artifacts/kaggriculture-v0.7.1.tar.gz</code> is packaged locally but remains on hold.</p>
+          <p class="source-note"><strong>Frozen controls:</strong> exact submitted Alpha9, v0.9.2, the two observed loss seeds, and the persona arena. Alpha2 is packaged locally and held until the extended release panel finishes.</p>
           <p class="source-note"><strong>Packaging lesson:</strong> v0.2.0 failed before play because <code>agents</code> collided with a Kaggle-installed module. v0.2.1 packages one self-contained <code>main.py</code> and passed validation.</p>
           <p class="source-note">Submission and ranking behavior: <a href="https://www.kaggle.com/competitions/kaggriculture/overview" target="_blank" rel="noreferrer">official Kaggriculture evaluation section ↗</a>.</p>
         </section>
@@ -984,12 +1710,68 @@
       <section class="view" id="roadmap" aria-labelledby="roadmap-title" hidden>
         <div class="page-intro shell">
           <div>
-            <p class="eyebrow">Priorities</p>
-            <h1 id="roadmap-title">Next move</h1>
-            <p>Impact × confidence ÷ effort.</p>
+            <p class="eyebrow">v2.0 program</p>
+            <h1 id="roadmap-title">Teacher-trained farm control</h1>
+            <p>Learn slowly offline. Decide quickly online. Fall back to Alpha5 when evidence is weak.</p>
           </div>
           <button class="button button-primary" id="add-roadmap-item" type="button">Add idea</button>
         </div>
+
+        <section class="section shell" aria-labelledby="v2-architecture-title">
+          <div class="section-heading"><div><p class="eyebrow">Target architecture</p><h2 id="v2-architecture-title">Exact rules below, learned judgment above</h2></div><strong class="qa-verdict" data-state="hold">FOUNDATION ACTIVE</strong></div>
+          <ol class="system-flow">
+            <li><span>FLOOR</span><div><strong>Deterministic safety kernel</strong><p>Harvest, feed, care, weeds, overflow, and reachable liquidation remain hard rules.</p></div><em>DO NOT LEARN</em></li>
+            <li><span>TEACH</span><div><strong>Exact counterfactual search offline</strong><p>Replay hard junctions and label coherent lean, dense, land, repair, and close options with 32–128 exact rollouts.</p></div><em>SLOW TEACHER</em></li>
+            <li><span>DISTILL</span><div><strong>Compile judgment into a tiny tree</strong><p>Export numeric thresholds for option value, downside, deployment lag, and terminal conversion.</p></div><em>FAST STUDENT</em></li>
+            <li><span>SCHEDULE</span><div><strong>Minimize time to a productive slot</strong><p>Connect every animal or plot purchase to its pasture, feed, building, and farmhand prerequisites.</p></div><em>FIRST FIX</em></li>
+            <li><span>SEARCH</span><div><strong>Think longer only at unstable junctions</strong><p>Use a small sequential-elimination budget when options are close or capital is difficult to reverse.</p></div><em>BOUNDED</em></li>
+            <li><span>SHIELD</span><div><strong>Require calibrated evidence</strong><p>The learned proposal acts only when its lower bound clears Alpha5 and all feasibility tests pass.</p></div><em>SAFE IMPROVEMENT</em></li>
+          </ol>
+          <p class="source-note">Full plan: <code>results/v2_0_series_roadmap.md</code>. No live LLM, cross-match state, or unbounded search is planned for the submitted artifact.</p>
+        </section>
+
+        <section class="section shell" aria-labelledby="v2-progress-title">
+          <div class="section-heading"><div><p class="eyebrow">Implemented now</p><h2 id="v2-progress-title">Better evidence before a denser policy</h2></div><p class="section-note">2026-08-18 · bounded foundation pass</p></div>
+          <ol class="system-flow">
+            <li><span>TRACE</span><div><strong>Productive-slot debt is observable</strong><p>New episodes record animals in the shed, compatible empty structures, blocked deployment, deployed livestock, wheat reserve, and feed runway.</p></div><em>ACTIVE</em></li>
+            <li><span>CORPUS</span><div><strong>1,821 junctions from 81 exact episodes</strong><p>Twenty-three seeds are grouped into 1,444 train and 377 validation rows; repeated actions from one seed cannot leak across the split.</p></div><em>COMPLETE</em></li>
+            <li><span>FOCUS</span><div><strong>651 deployment-debt states</strong><p>The sampler also found 105 cash-versus-capacity conflicts and 53 land-capital decisions for exact counterfactual labeling.</p></div><em>QUEUE</em></li>
+            <li><span>PLAY</span><div><strong>Human training arena</strong><p>The exact rules engine can now freeze Alpha5, accept manual moves, compare the coach, persist checkpoints, and emit training JSONL after a complete season.</p></div><em>LOCAL</em></li>
+            <li><span>BOUND</span><div><strong>Observations are not counterfactuals</strong><p>All archived arena rows in this first corpus were winning policy traces. They identify junctions, but cannot prove an unplayed branch is better.</p></div><em>NO PROMOTION</em></li>
+            <li><span>NEXT</span><div><strong>Replay seed 3304 first</strong><p>Label purchase, structure, feed, and workhand schedules with exact rollouts; only integrate a scheduler that flips both seats without harming Alpha5 or Alpha9.</p></div><em>A1 GATE</em></li>
+          </ol>
+          <p class="source-note">Evidence: <code>results/v2_0_replay_junction_corpus.json</code>. Generator caps: 12,000 rows or 20 seconds; this run completed in under one second.</p>
+        </section>
+
+        <section class="section shell" aria-labelledby="v2-economy-title">
+          <div class="section-heading"><div><p class="eyebrow">Core-economy reset</p><h2 id="v2-economy-title">Maximize the farm before reading the rival</h2></div><strong class="qa-verdict" data-state="hold">VALIDATING</strong></div>
+          <ol class="system-flow" aria-labelledby="v2-economy-title">
+            <li><span>CEILING</span><div><strong>The machinery already clears 90K</strong><p>Alpha5 averaged 92.9K against passive market load. The missing value appears under pressure, not in the raw production rules.</p></div><em>BASELINE</em></li>
+            <li><span>MODEL</span><div><strong>Price serviceable productive slots</strong><p>The transparent simulator combines crop clocks, livestock output, feed, land, workhands, weeds, town demand, and nonlinear market crowding.</p></div><em>EXACT + ANALYTIC</em></li>
+            <li><span>ROUTE</span><div><strong>Three plots before four</strong><p>The robust neutral hypothesis targets 56 productive cells, seven hands, four cows, and four sheep. Plot four waits for labor capacity.</p></div><em>TESTING</em></li>
+            <li><span>ABLATE</span><div><strong>Blindness exposed the overweighted reaction</strong><p>The first Sarthak shard rose from 55.0K to 72.1K, but an earlier lean shard lost 3.3K. The signal justified a core-first architecture—not a blind final agent.</p></div><em>MIXED RESULT</em></li>
+            <li><span>FIX</span><div><strong>Expansion now hands off to recurring density</strong><p>The first trace peaked at 41 productive cells, then collapsed after one-time crops. v2d uses a selective bundle and a 26-tile recurring target.</p></div><em>EXECUTION</em></li>
+            <li><span>HOLDOUT</span><div><strong>Pressure output improved without losing the floor</strong><p>Fresh paired means rose 5.2K against Sarthak and 12.3K against lean liquidity. Passive output stayed within 193 while its minimum rose 3.5K.</p></div><em>FREEZE SEEDS</em></li>
+            <li><span>ELITE</span><div><strong>Different openings, one invariant</strong><p>Sampled elite wins reached 111K and 146K by preserving dense crops and livestock with near-zero midgame weeds.</p></div><em>PUBLIC REPLAYS</em></li>
+            <li><span>CLOSE</span><div><strong>Our sale engine is not the main late deficit</strong><p>Public winners added 18.6K–25.4K after day 28; v2d already adds about 24.6K after day 24. It reaches the close with too few live crops.</p></div><em>DIAGNOSED</em></li>
+            <li><span>REJECT</span><div><strong>Late density without service value</strong><p>A four-cell wheat wave added 3.75 productive tiles on day 24 but lost 194 mean bank and 1,770 at the floor. More cells did not mean more value.</p></div><em>NO PROMOTION</em></li>
+            <li><span>RESIDUAL</span><div><strong>Opponent intelligence stayed in its lane</strong><p>The capped late tiebreak activated at one close junction but changed no outcomes across 16 pressure episodes.</p></div><em>DIAGNOSTIC</em></li>
+            <li><span>NEXT</span><div><strong>Stagger the cohort before the scramble</strong><p>Test days 18–21 replacements with explicit workhand and weed costs. Terminal value—not crop count—is the gate.</p></div><em>CORE FIRST</em></li>
+          </ol>
+          <p class="source-note">Model and evidence: <code>results/v2_0_core_economy_checkpoint.md</code>, <code>results/v2_0_late_game_observations.md</code>, and <code>results/v2_0_late_residual_checkpoint.md</code>. v2d remains the held candidate; no submission was made.</p>
+        </section>
+
+        <section class="section shell" aria-labelledby="v2-sequence-title">
+          <div class="section-heading"><div><p class="eyebrow">Release sequence</p><h2 id="v2-sequence-title">Earn complexity one failure at a time</h2></div><p class="section-note">bounded runs · frozen gates</p></div>
+          <ol class="decision-tree">
+            <li><span>A1</span><div><strong>Productive-slot scheduler</strong><p>Flip the seed-3304 shed-delay loss by pricing pasture, feed, labor, and deployment together.</p></div><em>START HERE</em></li>
+            <li><span>A2</span><div><strong>Counterfactual teacher set</strong><p>Label disagreement states with exact rollouts and keep game seeds disjoint across train and holdout.</p></div><em>ACTIVE DATA</em></li>
+            <li><span>A3</span><div><strong>Distilled mixed policy</strong><p>Ship a shallow tree ensemble behind the Alpha5 confidence shield.</p></div><em>COMPACT AI</em></li>
+            <li><span>A4</span><div><strong>Residual value model</strong><p>Learn only repeated simulator error in cash, service, density, and terminal conversion.</p></div><em>CALIBRATE</em></li>
+            <li><span>BETA</span><div><strong>Adversarial league</strong><p>Exercise Alpha4, Alpha5, Alpha9, and seven engine specialists across a capped 100-game holdout.</p></div><em>DIVERSE GYM</em></li>
+            <li><span>GATE</span><div><strong>Beat both local floors 20–0</strong><p>Require fresh 20–0 gates against Alpha5 and Alpha4, plus 20–0 against submitted Alpha9 and p95 action time below 100 ms.</p></div><em>BEFORE SUBMIT</em></li>
+          </ol>
+        </section>
 
         <section class="section shell next-bet" aria-labelledby="next-bet-title">
           <div>
@@ -1038,6 +1820,8 @@
     </footer>
 
     <script src="results/balanced_tempo_best_run.js"></script>
-    <script src="app.js"></script>
+    <script src="app.js?v=20260818-online-dojo"></script>
+    <script src="strategy-lab.js?v=20260818-online-dojo"></script>
+    <script src="human-arena.js?v=20260818-online-dojo"></script>
   </body>
 </html>
